@@ -23,97 +23,146 @@
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasBirthWeight -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasBirthWeight"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasBirthWeight">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Neonate"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/BirthWeight"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasCorrectedGestationalAge -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasCorrectedGestationalAge"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasCorrectedGestationalAge">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Neonate"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/CorrectedGestationalAge"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasDayOfLife -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasDayOfLife"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasDayOfLife">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Neonate"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/DayOfLife"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasDiagnosticInvestigation -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasDiagnosticInvestigation"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasDiagnosticInvestigation">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/FeedingIntoleranceDetail"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/DiagnosticInvestigation"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasFeedIntoleranceSignAndSymptom -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasFeedIntoleranceSignAndSymptom"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasFeedIntoleranceSignAndSymptom">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/FeedingIntoleranceDetail"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/SignAndSymptom"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasFeedingExclusionCriteria -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasFeedingExclusionCriteria"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasFeedingExclusionCriteria">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Neonate"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/FeedingScheduleExclusion"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasFeedingInformation -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasFeedingInformation"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasFeedingInformation">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Neonate"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/FeedingInformation"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasFeedingIntoleranceDetail -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasFeedingIntoleranceDetail"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasFeedingIntoleranceDetail">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Neonate"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/FeedingIntoleranceDetail"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasGender -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasGender"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasGender">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Neonate"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Gender"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasGestationalAgeAtBirth -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasGestationalAgeAtBirth"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasGestationalAgeAtBirth">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Neonate"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/GestationalAgeAtBirth"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasMaxGestationalAge -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasMaxGestationalAge"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasMaxGestationalAge">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/GestationalAgeAtBirth"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/PretermBabyGroup"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasMinGestationalAge -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasMinGestationalAge"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasMinGestationalAge">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/GestationalAgeAtBirth"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/PretermBabyGroup"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/TermBabyGroup"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasPregnancyType -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasPregnancyType"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasPregnancyType">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Neonate"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/PregnancyType"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasPresentBodyWeight -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasPresentBodyWeight"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasPresentBodyWeight">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Neonate"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/BodyWeight"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasRiskFactorEnteralFeeding -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasRiskFactorEnteralFeeding"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasRiskFactorEnteralFeeding">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Neonate"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/RiskFactor_EnteralFeeding"/>
+    </owl:ObjectProperty>
     
 
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasUnderlyingCondition -->
 
-    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasUnderlyingCondition"/>
+    <owl:ObjectProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasUnderlyingCondition">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/FeedingIntoleranceDetail"/>
+        <rdfs:range rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/FeedIntoleranceCondition"/>
+    </owl:ObjectProperty>
     
 
 
@@ -130,7 +179,10 @@
 
     <!-- https://www.childhealthimprints.com/NutritionGuideline/hasCompressionCondition -->
 
-    <owl:DatatypeProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasCompressionCondition"/>
+    <owl:DatatypeProperty rdf:about="https://www.childhealthimprints.com/NutritionGuideline/hasCompressionCondition">
+        <rdfs:domain rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
     
 
 
@@ -316,6 +368,12 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/hasPresentBodyWeight"/>
                 <owl:allValuesFrom rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/BodyWeight"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/hasRiskFactorEnteralFeeding"/>
+                <owl:allValuesFrom rdf:resource="https://www.childhealthimprints.com/NutritionGuideline/RiskFactor_EnteralFeeding"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
