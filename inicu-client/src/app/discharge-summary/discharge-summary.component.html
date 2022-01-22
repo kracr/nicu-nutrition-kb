@@ -1,0 +1,2867 @@
+<doctor-panel></doctor-panel>
+<div *ngIf="whichDischargeSummaryPage =='page1'">
+	<form name="dischargeSummary1">
+		<div *ngIf="dischargedSummaryData != undefined" style="background-color: white">
+			<div class="assesment-container no-padding-right">
+				<div class="row table full padding-10-x no-padding-right padding-10-y center-aligned">
+					<div class="col-md-4 center-aligned"></div>
+					<div class="col-md-4 center-aligned border-1-grey">
+						<h1 class="bold" *ngIf="dischargedSummaryData.outcome!=null && dischargedSummaryData.outcome.outcomeType!=null && dischargedSummaryData.outcome.outcomeType!=''">{{dischargedSummaryData.outcome.outcomeType}} Summary</h1>
+						<h1 class="bold" *ngIf="!(dischargedSummaryData.outcome!=null && dischargedSummaryData.outcome.outcomeType!=null && dischargedSummaryData.outcome.outcomeType!='')">Discharge Summary</h1>
+					</div>
+					<div class="col-md-4 center-aligned"></div>
+				</div>
+				<div class="row table full padding-10-x no-padding-right padding-10-y center-aligned no-padding-bottom">
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Name :</span>
+							<span>{{dischargedSummaryData.babyDetails.babyname}}
+							{{dischargedSummaryData.babyDetails.babyNumber}}</span>
+						</div>
+					</div>
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Age :</span>
+							<span>{{babyAge}} days/{{dischargedSummaryData.babyDetails.gender}}</span>
+						</div>
+					</div>
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">UHID :</span>
+							<span>{{dischargedSummaryData.babyDetails.uhid}}</span>
+						</div>
+					</div>
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">DOB / TOB :</span>
+							<span>{{dischargedSummaryData.babyDetails.dateofbirth | date: 'dd-MM-yyyy'}}
+								<span *ngIf="timeOfBirthStr != undefined && timeOfBirthStr != null">{{timeOfBirthStr}}</span>	</span>
+						</div>
+					</div>
+					<div class="col-md-4 padding-5-y left-aligned" >
+						<div class="col-md-12 no-padding">
+							<span class="bold">DOA :</span>
+							<span>{{dischargedSummaryData.babyDetails.dateofadmission | date: 'dd-MM-yyyy'}}</span>
+						</div>
+					</div>
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf="dischargedSummaryData.outcome.outcomeType != null
+			     && dischargedSummaryData.outcome.outcomeType != 'Death'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">DOD :</span>
+							<span>{{dischargedSummaryData.outcome.entrytime | date : 'dd - MM - yyyy'}}</span>
+						</div>
+					</div>
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf="dischargedSummaryData.outcome.outcomeType != null
+			     && dischargedSummaryData.outcome.outcomeType == 'Death'">
+						<div class="col-md-12 no-padding">
+						<span class="bold">Date of Death :</span>
+						<span>{{dischargedSummaryData.outcome.deathDate | date : 'dd - MM - yyyy'}}</span>
+						</div>
+					</div>
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">GA at Birth :</span>
+							<span>{{dischargedSummaryData.birthVisit.gestationWeek}} <sup *ngIf="dischargedSummaryData.birthVisit.gestationDays != null"> + {{dischargedSummaryData.birthVisit.gestationDays}}</sup></span>
+						</div>
+					</div>
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">GA at Discharge :</span>
+							<span *ngIf="dischargedSummaryData.dischargeVisit != null">{{dischargedSummaryData.dischargeVisit.gestationWeek}}<sup *ngIf="dischargedSummaryData.dischargeVisit.gestationDays != null"> + {{dischargedSummaryData.dischargeVisit.gestationDays}}</sup></span>
+						</div>
+					</div>
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">EDD :</span>
+							<span *ngIf="dischargedSummaryData.edd!=null">{{dischargedSummaryData.edd | date:'dd - MM - yyyy'}}</span>
+						</div>
+					</div>
+				</div>
+
+				<!--Address-->
+				<div class="row table full padding-10-x no-padding-right padding-5-y">
+					<div class="col-md-12">
+						<span class="bold">Address :</span>
+						<div class="input-group input-group-labeled col-md-12 no-padding">
+							<input type="text" class="input input-medium col-md-12 no-padding" [(ngModel)]="dischargedSummaryData.parenteDetail.address" [ngModelOptions]="{standalone: true}"/>
+						</div>
+					</div>
+				</div>
+
+				<!--Anthropometry-->
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+					<div class="col-md-12 no-padding-right">
+						<h1 class="no-margin system-sub-heading blue-text">Anthropometry</h1>
+					</div>
+				</div>
+
+				<!--Admission Weight-->
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Admission Weight :</span>
+							<span *ngIf="dischargedSummaryData.admissionVisit != null">{{dischargedSummaryData.admissionVisit.currentdateweight}} <span *ngIf="dischargedSummaryData.admissionVisit.currentdateweight != null">gm</span></span>
+						</div>
+					</div>
+
+					<!--Admission Length-->
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Admission Length :</span>
+							<span *ngIf="dischargedSummaryData.admissionVisit != null">{{dischargedSummaryData.admissionVisit.currentdateheight}} <span *ngIf="dischargedSummaryData.admissionVisit.currentdateheight != null">cm</span></span>
+						</div>
+					</div>
+
+					<!--Admission HC-->
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Admission HC :</span>
+							<span *ngIf="dischargedSummaryData.admissionVisit != null">{{dischargedSummaryData.admissionVisit.currentdateheadcircum}} <span *ngIf="dischargedSummaryData.admissionVisit.currentdateheadcircum != null">cm</span></span>
+						</div>
+					</div>
+
+					<!--Discharge Weight-->
+					<div *ngIf="dischargedSummaryData.outcome.outcomeType != null
+			     && dischargedSummaryData.outcome.outcomeType != 'Death'">
+						<div class="col-md-4 padding-5-y left-aligned">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Discharge Weight :</span>
+								<span *ngIf="dischargedSummaryData.dischargeVisit != null">{{dischargedSummaryData.dischargeVisit.currentdateweight}} <span *ngIf="dischargedSummaryData.dischargeVisit.currentdateweight != null">gm</span></span>
+							</div>
+						</div>
+
+						<!--Discharge Length-->
+						<div class="col-md-4 padding-5-y left-aligned">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Discharge Length :</span>
+								<span *ngIf="dischargedSummaryData.dischargeVisit != null">{{dischargedSummaryData.dischargeVisit.currentdateheight}} <span *ngIf="dischargedSummaryData.dischargeVisit.currentdateheight != null">cm</span></span>
+							</div>
+						</div>
+
+						<!--Discharge HC-->
+						<div class="col-md-4 padding-5-y left-aligned">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Discharge HC :</span>
+								<span *ngIf="dischargedSummaryData.dischargeVisit != null">{{dischargedSummaryData.dischargeVisit.currentdateheadcircum}} <span *ngIf="dischargedSummaryData.dischargeVisit.currentdateheadcircum != null">cm</span></span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--Final Diagnosis-->
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+					<div class="col-md-12 no-padding-right">
+						<h1 class="no-margin system-sub-heading blue-text">Final Diagnosis</h1>
+					</div>
+				</div>
+				<div class="row table full padding-10-x no-padding-right padding-10-y">
+						<div class="input-group input-group-labeled col-md-12">
+							<textarea [(ngModel)]="dischargedSummaryData.finalDiagnosis" class="desktop-column-20 max-height-20 set-font-size-default"
+							[ngModelOptions]="{standalone: true}" rows="3"></textarea>
+						</div>
+				</div>
+
+				<!--Maternal Details-->
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "(dischargedSummaryData.parenteDetail.motherage != null && dischargedSummaryData.parenteDetail.motherage != '')
+					|| (dischargedSummaryData.babyAntenatalHistoryDetails.gScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.gScore != '')
+					|| (dischargedSummaryData.babyAntenatalHistoryDetails.pScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.pScore != '')
+					|| (dischargedSummaryData.babyAntenatalHistoryDetails.aScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.aScore != '')
+					|| (dischargedSummaryData.babyAntenatalHistoryDetails.lScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.lScore != '')
+					|| (dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo != null && dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo != '')
+					|| (dischargedSummaryData.parenteDetail.mother_obstetrician != null && dischargedSummaryData.parenteDetail.mother_obstetrician != '')
+					|| (dischargedSummaryData.obstetricCondtiton != null && dischargedSummaryData.obstetricCondtiton != '')
+					|| (dischargedSummaryData.maternalInvestigation != null && dischargedSummaryData.maternalInvestigation != '')">
+					<div class="col-md-12 no-padding-right">
+						<h1 class="no-margin system-sub-heading blue-text">Maternal Details</h1>
+					</div>
+				</div>
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+					<!--Mother Age-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.parenteDetail.motherage != null && dischargedSummaryData.parenteDetail.motherage != ''">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Age :</span>
+							<span>{{dischargedSummaryData.parenteDetail.motherage}} yrs</span>
+						</div>
+					</div>
+
+					<!--Parity-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "(dischargedSummaryData.babyAntenatalHistoryDetails.gScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.gScore != '')
+ 						|| (dischargedSummaryData.babyAntenatalHistoryDetails.pScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.pScore != '')
+						|| (dischargedSummaryData.babyAntenatalHistoryDetails.aScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.aScore != '')
+						|| (dischargedSummaryData.babyAntenatalHistoryDetails.lScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.lScore != '')">
+						<div class="col-md-12 no-padding">
+							<span class="bold ">Parity :</span>
+							<span></span>
+							<span *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.gScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.gScore != ''">G{{dischargedSummaryData.babyAntenatalHistoryDetails.gScore}} </span>
+							<span *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.pScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.pScore != ''">P{{dischargedSummaryData.babyAntenatalHistoryDetails.pScore}} </span>
+							<span *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.aScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.aScore != ''">A{{dischargedSummaryData.babyAntenatalHistoryDetails.aScore}} </span>
+							<span *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.lScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.lScore != ''">L{{dischargedSummaryData.babyAntenatalHistoryDetails.lScore}} </span>
+						</div>
+					</div>
+
+					<!--Blood Group-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo != null && dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo != ''">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Blood Group :</span>
+							<span>{{dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo}} {{dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupRh}}</span>
+						</div>
+					</div>
+
+					<!--MOD-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.modeOfDelivery != null && dischargedSummaryData.babyAntenatalHistoryDetails.modeOfDelivery != ''">
+						<div class="col-md-12 no-padding">
+							<span class="bold">MOD :</span>
+							<span>{{dischargedSummaryData.babyAntenatalHistoryDetails.modeOfDelivery}}</span>
+						</div>
+					</div>
+
+					<!--Obstetrician-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.parenteDetail.mother_obstetrician != null && dischargedSummaryData.parenteDetail.mother_obstetrician != ''">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Obstetrician :</span>
+							<span>{{dischargedSummaryData.parenteDetail.mother_obstetrician}}</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "dischargedSummaryData.obstetricCondtiton != null && dischargedSummaryData.obstetricCondtiton != ''">
+					<!--Obstetric Condtiton-->
+					<div class="col-md-12 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Obstetric Condtiton :</span>
+							<span>{{dischargedSummaryData.obstetricCondtiton}}</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "dischargedSummaryData.maternalInvestigation != null && dischargedSummaryData.maternalInvestigation != ''">
+					<!--Maternal Investigation-->
+					<div class="col-md-12 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Maternal Investigation :</span>
+							<span>{{dischargedSummaryData.maternalInvestigation}}</span>
+						</div>
+					</div>
+				</div>
+
+				<!--Birth Details-->
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+					<div class="col-md-12 no-padding-right">
+						<h1 class="no-margin system-sub-heading blue-text">Birth Details</h1>
+					</div>
+				</div>
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+					<!--Apgar Score-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "(dischargedSummaryData.birthToNicuDetails.apgarOnemin != null && dischargedSummaryData.birthToNicuDetails.apgarOnemin != '')
+ 						|| (dischargedSummaryData.birthToNicuDetails.apgarFivemin != null && dischargedSummaryData.birthToNicuDetails.apgarFivemin != '')
+						|| (dischargedSummaryData.birthToNicuDetails.apgarTenmin != null && dischargedSummaryData.birthToNicuDetails.apgarTenmin != '')">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Apgar Score :</span>
+							<span></span>
+							<span *ngIf = "dischargedSummaryData.birthToNicuDetails.apgarOnemin != null && dischargedSummaryData.birthToNicuDetails.apgarOnemin != ''">{{dischargedSummaryData.birthToNicuDetails.apgarOnemin}} at 1 min,</span>
+							<span *ngIf = "dischargedSummaryData.birthToNicuDetails.apgarFivemin != null && dischargedSummaryData.birthToNicuDetails.apgarFivemin != ''">{{dischargedSummaryData.birthToNicuDetails.apgarFivemin}} at 5 mins,</span>
+							<span *ngIf = "dischargedSummaryData.birthToNicuDetails.apgarTenmin != null && dischargedSummaryData.birthToNicuDetails.apgarTenmin != ''">{{dischargedSummaryData.birthToNicuDetails.apgarTenmin}} at 10 mins</span>
+						</div>
+					</div>
+
+					<!--Resuscitation Details-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.birthToNicuDetails.criedImmediately != null && dischargedSummaryData.birthToNicuDetails.criedImmediately != 'true'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Resuscitation Details :</span>
+							<span>Baby cried immediately after birth</span>
+						</div>
+					</div>
+
+					<div class="col-md-4 padding-5-y left-aligned">
+		      </div>
+				</div>
+
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+					<!--Birth Details-->
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Birth Weight :</span>
+							<span *ngIf = "dischargedSummaryData.birthVisit.currentdateweight != null && dischargedSummaryData.birthVisit.currentdateweight != ''">{{dischargedSummaryData.birthVisit.currentdateweight}}</span>
+						</div>
+					</div>
+
+					<!--Birth Length-->
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Birth Length :</span>
+							<span *ngIf = "dischargedSummaryData.birthVisit.currentdateheight != null && dischargedSummaryData.birthVisit.currentdateheight != ''">{{dischargedSummaryData.birthVisit.currentdateheight}}</span>
+						</div>
+					</div>
+
+					<!--Birth HC-->
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Birth HC :</span>
+							<span *ngIf = "dischargedSummaryData.birthVisit.currentdateheadcircum != null && dischargedSummaryData.birthVisit.currentdateheadcircum != ''">{{dischargedSummaryData.birthVisit.currentdateheadcircum}}</span>
+						</div>
+					</div>
+				</div>
+
+				<!--Status at Admission-->
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+					<div class="col-md-12 no-padding-right">
+				 		<h1 class="no-margin system-sub-heading blue-text">Status at Admission</h1>
+			 		</div>
+				</div>
+
+				<!--Physical Examination-->
+				<div *ngIf = "isPhysicalExamination != true">
+				 <div class="col-md-12 no-padding padding-10-y" style="margin-left:10px;">
+					 <h1 class="no-margin system-sub-heading blue-text">Physical Examination</h1>
+					 <span>Physical Examination was normal,No obvious anomaly found.</span>
+					</div>
+				</div>
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "isPhysicalExamination == true">
+				 <div class="col-md-12 no-padding padding-10-y" style="margin-left:15px;">
+						<h1 class="no-margin system-sub-heading blue-text">Physical Examination</h1>
+					</div>
+				</div>
+
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+					<!--Apearance-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.apearance != null && dischargedSummaryData.babyPhysicalExamData.apearance != 'Active'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">General Apearance :</span>
+							<span> {{dischargedSummaryData.babyPhysicalExamData.apearance}}</span>
+						</div>
+					</div>
+
+					<!--Head Neck-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.head_neck != null && dischargedSummaryData.babyPhysicalExamData.head_neck == 'Abnormal'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Neck :</span>
+								<span> {{dischargedSummaryData.babyPhysicalExamData.head_neck}}
+								<span *ngIf="dischargedSummaryData.babyPhysicalExamData.head_neck_other != null">({{dischargedSummaryData.babyPhysicalExamData.head_neck_other}})</span>
+							</span>
+						</div>
+					</div>
+
+					<!--Palate-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.palate != null && dischargedSummaryData.babyPhysicalExamData.palate != 'Normal'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Palate :</span>
+							<span> {{dischargedSummaryData.babyPhysicalExamData.palate}}</span>
+						</div>
+					</div>
+
+					<!--Lip-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.lip != null && dischargedSummaryData.babyPhysicalExamData.lip != 'Normal'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Lips :</span>
+								<span>{{dischargedSummaryData.babyPhysicalExamData.lip}}
+				      	<span *ngIf="dischargedSummaryData.babyPhysicalExamData.lipCleftSide != null && dischargedSummaryData.babyPhysicalExamData.lipCleftSide == 'true'">(right)</span>
+				      	<span *ngIf="dischargedSummaryData.babyPhysicalExamData.lipCleftSide != null && dischargedSummaryData.babyPhysicalExamData.lipCleftSide == 'false'">(left)</span>
+							</span>
+						</div>
+					</div>
+
+					<!--Eyes-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.eyes != null && dischargedSummaryData.babyPhysicalExamData.eyes == 'Abnormal'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Eyes :</span>
+								<span> {{dischargedSummaryData.babyPhysicalExamData.eyes}}
+								<span *ngIf="dischargedSummaryData.babyPhysicalExamData.eyes_other != null">({{dischargedSummaryData.babyPhysicalExamData.eyes_other}})</span>
+							</span>
+						</div>
+					</div>
+
+					<!--Skin-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.skin != null && dischargedSummaryData.babyPhysicalExamData.skin != 'Normal'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Skin :</span>
+								<span> {{dischargedSummaryData.babyPhysicalExamData.skin}}
+								<span *ngIf="dischargedSummaryData.babyPhysicalExamData.skin == 'Other'">({{dischargedSummaryData.babyPhysicalExamData.skin_other}})</span>
+							</span>
+						</div>
+					</div>
+
+					<!--Chest-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.chest != null && dischargedSummaryData.babyPhysicalExamData.chest == 'Abnormal'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Chest :</span>
+								<span> {{dischargedSummaryData.babyPhysicalExamData.chest}}
+								<span *ngIf="dischargedSummaryData.babyPhysicalExamData.chest_other != null">({{dischargedSummaryData.babyPhysicalExamData.chest_other}})</span>
+							</span>
+						</div>
+					</div>
+
+					<!--Abdomen-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.abdomen != null && dischargedSummaryData.babyPhysicalExamData.abdomen == 'Abnormal'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Abdomen :</span>
+								<span> {{dischargedSummaryData.babyPhysicalExamData.abdomen}}
+								<span *ngIf="dischargedSummaryData.babyPhysicalExamData.abdomen_other != null">({{dischargedSummaryData.babyPhysicalExamData.abdomen_other}})</span>
+							</span>
+						</div>
+					</div>
+
+					<!--Anal-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.anal != null && dischargedSummaryData.babyPhysicalExamData.anal != 'Patent'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Anal Opening :</span>
+								<span> {{dischargedSummaryData.babyPhysicalExamData.anal}}
+								<span *ngIf="dischargedSummaryData.babyPhysicalExamData.anal_other != null">({{dischargedSummaryData.babyPhysicalExamData.anal_other}})</span>
+							</span>
+						</div>
+					</div>
+
+					<!--Genitals-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.genitals != null && dischargedSummaryData.babyPhysicalExamData.genitals == 'Abnormal'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Genitals :</span>
+								<span> {{dischargedSummaryData.babyPhysicalExamData.genitals}}
+								<span *ngIf="dischargedSummaryData.babyPhysicalExamData.genitals_other != null">({{dischargedSummaryData.babyPhysicalExamData.genitals_other}})</span>
+							</span>
+						</div>
+					</div>
+
+					<!--Reflexes-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.reflexes != null && dischargedSummaryData.babyPhysicalExamData.reflexes == 'Abnormal'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Reflexes :</span>
+								<span> {{dischargedSummaryData.babyPhysicalExamData.reflexes}}
+								<span *ngIf="dischargedSummaryData.babyPhysicalExamData.reflexes_other != null">({{dischargedSummaryData.babyPhysicalExamData.reflexes_other}})</span>
+							</span>
+						</div>
+					</div>
+
+					<!--Congential Malformation-->
+					<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.cong_malform != null && dischargedSummaryData.babyPhysicalExamData.cong_malform == 'Yes'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Apparent Congenital malformation :</span>
+								<span> {{dischargedSummaryData.babyPhysicalExamData.cong_malform}}
+			          <span *ngIf="dischargedSummaryData.babyPhysicalExamData.cong_malform_other != null">({{dischargedSummaryData.babyPhysicalExamData.cong_malform_other}})</span>
+			        </span>
+						</div>
+					</div>
+				</div>
+
+				<!--Systemic Examination-->
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "dischargedSummaryData.babySystemicExamData != null && dischargedSummaryData.babySystemicExamData != ''">
+					<div class="col-md-12 no-padding-right">
+						<h1 class="no-margin system-sub-heading blue-text">Systemic Examination</h1>
+					</div>
+				</div>
+				<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "dischargedSummaryData.babySystemicExamData != null && dischargedSummaryData.babySystemicExamData != ''">
+					<div class="col-md-4 padding-5-y left-aligned">
+						<div class="col-md-12 no-padding">
+							<span>{{dischargedSummaryData.babySystemicExamData}}</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- <div class="row table full padding-10-x no-padding-right padding-10-y">
+					<div class="col-md-12">
+						<span class="bold">To attend Nursery / Pediatric Emergency on noticing danger signs like cyanosis / difficulty in breathing /  refusal of feeds / abnormal movement.</span>
+					</div>
+				</div> -->
+
+				<div class="row table full padding-10-x no-padding-right padding-5-y">
+					<div class="col-md-12 center-aligned">
+						<button class="button button-blue button-large" (click)="saveDischargedSummary('1stPage')">Next</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!--Page2-->
+<div *ngIf="whichDischargeSummaryPage == 'page2'">
+	<div style="background-color: white">
+		<div class="assesment-container no-padding-right">
+			<div class="row table full no-padding padding-10-y">
+				<!-- <div class="col-md-2 no-padding-left center-aligned" *ngIf="(dischargedSummaryData.dischargeNotes.antenatalDetails != null && dischargedSummaryData.dischargeNotes.antenatalDetails != '')
+				 || (dischargedSummaryData.dischargeNotes.birthDetails != null && dischargedSummaryData.dischargeNotes.birthDetails != '')
+				 || (dischargedSummaryData.dischargeNotes.statusAtAdmission != null && dischargedSummaryData.dischargeNotes.statusAtAdmission != '')" >
+					<input type="radio" name="dischargeSummaryPage2WhichTab"
+						id="dischargeSummaryPage2WhichTabAntenatal&Birth" [(ngModel)]="dischargeSummaryPage2WhichTab"
+						value="Antenatal&BirthDetails" style="display: none"> <label
+						for="dischargeSummaryPage2WhichTabAntenatal&Birth"
+						class="table full assessment-treatment-tab-box"
+						[ngClass]="{'selected-tab': dischargeSummaryPage2WhichTab == 'Antenatal&BirthDetails'}">Antenatal & Birth Details</label>
+				</div> -->
+				<div class="col-md-2 no-padding-left center-aligned" *ngIf="(dischargedSummaryData.dischargeNotes.stableNotes != null && dischargedSummaryData.dischargeNotes.stableNotes != '')
+				 || (dischargedSummaryData.dischargeNotes.provisionalNotesRds != null && dischargedSummaryData.dischargeNotes.provisionalNotesRds != '')
+ 				 || (dischargedSummaryData.dischargeNotes.provisionalNotesApnea != null && dischargedSummaryData.dischargeNotes.provisionalNotesApnea != '')
+ 				 || (dischargedSummaryData.dischargeNotes.provisionalNotesPphn != null && dischargedSummaryData.dischargeNotes.provisionalNotesPphn != '')
+ 				 || (dischargedSummaryData.dischargeNotes.provisionalNotesPneumothorax != null && dischargedSummaryData.dischargeNotes.provisionalNotesPneumothorax != '')
+				 || (dischargedSummaryData.dischargeNotes.provisionalNotesJaundice != null && dischargedSummaryData.dischargeNotes.provisionalNotesJaundice != '')
+				 || (dischargedSummaryData.dischargeNotes.provisionalNotesAsphyxia != null && dischargedSummaryData.dischargeNotes.provisionalNotesAsphyxia != '')
+				 || (dischargedSummaryData.dischargeNotes.provisionalNotesSeizure != null && dischargedSummaryData.dischargeNotes.provisionalNotesSeizure != '')
+				 || (dischargedSummaryData.dischargeNotes.provisionalNotesSepsis != null && dischargedSummaryData.dischargeNotes.provisionalNotesSepsis != '')
+				 || (dischargedSummaryData.dischargeNotes.provisionalNotesMiscellaneous != null && dischargedSummaryData.dischargeNotes.provisionalNotesMiscellaneous != '')">
+					<input type="radio" name="dischargeSummaryPage2WhichTab"
+						id="dischargeSummaryPage2WhichTabCourse" [(ngModel)]="dischargeSummaryPage2WhichTab"
+						value="Course" style="display: none"> <label
+						for="dischargeSummaryPage2WhichTabCourse"
+						class="table full assessment-treatment-tab-box"
+						[ngClass]="{'selected-tab': dischargeSummaryPage2WhichTab =='Course'}">Course during hospital</label>
+				</div>
+				<div class="col-md-2 no-padding-left center-aligned" *ngIf="(dischargedSummaryData.dischargeNotes.currGrowth != null && dischargedSummaryData.dischargeNotes.currGrowth != '')
+				 || (dischargedSummaryData.dischargeNotes.currNutrition != null && dischargedSummaryData.dischargeNotes.currNutrition != '')" >
+					<input type="radio" name="dischargeSummaryPage2WhichTab"
+						id="dischargeSummaryPage2WhichTabGrowth&Nutrition" [(ngModel)]="dischargeSummaryPage2WhichTab"
+						value="Growth&Nutrition" style="display: none"> <label
+						for="dischargeSummaryPage2WhichTabGrowth&Nutrition"
+						class="table full assessment-treatment-tab-box"
+						[ngClass]="{'selected-tab': dischargeSummaryPage2WhichTab =='Growth&Nutrition'}">Growth & Nutrition</label>
+				</div>
+				<div class="col-md-2 no-padding-left center-aligned" *ngIf="(dischargedSummaryData.dischargeNotes.currProcedure != null && dischargedSummaryData.dischargeNotes.currProcedure != '')
+				 || (dischargedSummaryData.dischargeNotes.currBloodProduct != null && dischargedSummaryData.dischargeNotes.currBloodProduct != '')
+				 || (dischargedSummaryData.dischargeNotes.currVaccination != null && dischargedSummaryData.dischargeNotes.currVaccination != '')">
+					<input type="radio" name="dischargeSummaryPage2WhichTab"
+						id="dischargeSummaryPage2WhichTabInvestigation" [(ngModel)]="dischargeSummaryPage2WhichTab"
+						value="Investigation" style="display: none"> <label
+						for="dischargeSummaryPage2WhichTabInvestigation"
+						class="table full assessment-treatment-tab-box"
+						[ngClass]="{'selected-tab': dischargeSummaryPage2WhichTab =='Investigation'}">Treatments</label>
+				</div>
+				<div class="col-md-2 no-padding-left center-aligned" *ngIf="dischargedSummaryData.dischargeNotes.currScreening != null && dischargedSummaryData.dischargeNotes.currScreening != ''">
+					<input type="radio" name="dischargeSummaryPage2WhichTab"
+						id="dischargeSummaryPage2WhichTabInvestigations" [(ngModel)]="dischargeSummaryPage2WhichTab"
+						value="Investigations" style="display: none"> <label
+						for="dischargeSummaryPage2WhichTabInvestigations"
+						class="table full assessment-treatment-tab-box"
+						[ngClass]="{'selected-tab': dischargeSummaryPage2WhichTab =='Investigations'}">Investigations</label>
+				</div>
+				<div class="col-md-2 no-padding-left center-aligned" *ngIf="dischargedSummaryData.outcome.outcomeType != null
+				 && dischargedSummaryData.outcome.outcomeType != 'Death'">
+					<input type="radio" name="dischargeSummaryPage2WhichTab"
+						id="dischargeSummaryPage2WhichTabAdvice" [(ngModel)]="dischargeSummaryPage2WhichTab"
+						value="Advice" style="display: none"> <label
+						for="dischargeSummaryPage2WhichTabAdvice"
+						class="table full assessment-treatment-tab-box"
+						[ngClass]="{'selected-tab': dischargeSummaryPage2WhichTab =='Advice'}">Advice on Discharge</label>
+				</div>
+				<div class="col-md-2 no-padding-left center-aligned">
+					<span class="button button-green button-large" (click)="backToNextPage('Page3')">
+						<label class="bold" *ngIf="dischargedSummaryData.outcome != null && dischargedSummaryData.outcome.outcomeType != null && dischargedSummaryData.outcome.outcomeType!=''">{{dischargedSummaryData.outcome.outcomeType}} Summary</label>
+						<label class="bold" *ngIf="!(dischargedSummaryData.outcome!=null && dischargedSummaryData.outcome.outcomeType!=null && dischargedSummaryData.outcome.outcomeType!='')">Discharge Summary</label>
+					</span>
+				</div>
+			</div>
+
+			<!--Antenatal & Birth Details-->
+			<!-- <div *ngIf="dischargeSummaryPage2WhichTab =='Antenatal&BirthDetails'">
+				<div class="row table full no-padding padding-10-y">
+					<div class="col-md-2 no-padding-left center-aligned" *ngIf = "dischargedSummaryData.dischargeNotes.antenatalDetails != null && dischargedSummaryData.dischargeNotes.antenatalDetails != ''">
+						<input type="radio" name="courseWhichTab"
+							id="dischargeSummaryPage2WhichTabAntenatal"
+							[(ngModel)]="courseWhichTab" value="antenataldetails"
+							style="display: none"> <label
+							for="dischargeSummaryPage2WhichTabAntenatal"
+							class="table full assessment-treatment-tab-box"
+							[ngClass]="{'selected-tab': courseWhichTab=='antenataldetails'}">Antenatal Details</label>
+					</div>
+					<div class="col-md-2 no-padding-left center-aligned" *ngIf = "dischargedSummaryData.dischargeNotes.birthDetails != null && dischargedSummaryData.dischargeNotes.birthDetails != ''">
+						<input type="radio" name="courseWhichTab"
+							id="dischargeSummaryPage2WhichTabBirth"
+							[(ngModel)]="courseWhichTab" value="birthdetails"
+							style="display: none"> <label
+							for="dischargeSummaryPage2WhichTabBirth"
+							class="table full assessment-treatment-tab-box"
+							[ngClass]="{'selected-tab': courseWhichTab =='birthdetails'}">Birth Details</label>
+					</div>
+				</div>
+				<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'antenataldetails'">
+					<div class="col-md-12 no-padding-right">
+						<div class="desktop-column-20 force-left">
+		        			<textarea name="antenataldetails" id="antenataldetails"
+									rows="10" cols="80" top="20px" bottom="20px"
+									[(ngModel)]="dischargedSummaryData.dischargeNotes.antenatalDetails" class="desktop-column-20"></textarea>
+						</div>
+					</div>
+					<div class="col-md-12 center-aligned padding-10-y">
+						<span class="button button-blue" (click)="savingAntenatalHistory()">Save</span>
+						<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+					</div>
+				</div>
+				<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'birthdetails'">
+					<div class="col-md-12 no-padding-right">
+						<div class="desktop-column-20 force-left">
+		        			<textarea name="birthdetails" id="birthdetails"
+									rows="10" cols="80" top="20px" bottom="20px"
+									[(ngModel)]="dischargedSummaryData.dischargeNotes.birthDetails" class="desktop-column-20"></textarea>
+						</div>
+					</div>
+					<div class="col-md-12 center-aligned padding-10-y">
+						<span class="button button-blue" (click)="savingBirthDetails()">Save</span>
+						<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+					</div>
+				</div>
+			</div> -->
+
+			<!--Course During Hospital-->
+			<div *ngIf="dischargeSummaryPage2WhichTab =='Course'">
+				<div class="row table full no-padding padding-10-y">
+					<!-- <div class="row table full no-padding padding-10-y">
+						<div class="col-md-2 no-padding-left center-aligned" *ngIf = "dischargedSummaryData.dischargeNotes.statusAtAdmission != null && dischargedSummaryData.dischargeNotes.statusAtAdmission != ''">
+							<input type="radio" name="courseWhichTab"
+								id="dischargeSummarySystemWhichTabStatus"
+								[(ngModel)]="courseWhichTab" value="Status"
+								style="display: none"> <label
+								for="dischargeSummarySystemWhichTabStatus"
+								class="table full assessment-treatment-tab-box"
+								[ngClass]="{'selected-tab': courseWhichTab =='Status'}">Status at Admission</label>
+						</div> -->
+						<div class="col-md-2 no-padding-left center-aligned" *ngIf = "dischargedSummaryData.dischargeNotes.stableNotes != null && dischargedSummaryData.dischargeNotes.stableNotes != ''">
+							<input type="radio" name="courseWhichTab"
+								id="dischargeSummarySystemWhichTabStableNotes"
+								[(ngModel)]="courseWhichTab" value="stablenotes"
+								style="display: none"> <label
+								for="dischargeSummarySystemWhichTabStableNotes"
+								class="table full assessment-treatment-tab-box"
+								[ngClass]="{'selected-tab': courseWhichTab=='stablenotes'}">Stable Notes</label>
+						</div>
+						<div class="col-md-2 no-padding-left center-aligned" *ngIf="(dischargedSummaryData.dischargeNotes.provisionalNotesRds != null && dischargedSummaryData.dischargeNotes.provisionalNotesRds != '')
+						 || (dischargedSummaryData.dischargeNotes.provisionalNotesApnea != null && dischargedSummaryData.dischargeNotes.provisionalNotesApnea != '')
+						 || (dischargedSummaryData.dischargeNotes.provisionalNotesPphn != null && dischargedSummaryData.dischargeNotes.provisionalNotesPphn != '')
+						 || (dischargedSummaryData.dischargeNotes.provisionalNotesPneumothorax != null && dischargedSummaryData.dischargeNotes.provisionalNotesPneumothorax != '')">
+							<input type="radio" name="courseWhichTab"
+								id="dischargeSummarySystemWhichTabRespiratorySystem"
+								[(ngModel)]="courseWhichTab" value="respiratory"
+								style="display: none"> <label
+								for="dischargeSummarySystemWhichTabRespiratorySystem"
+								class="table full assessment-treatment-tab-box"
+								[ngClass]="{'selected-tab': courseWhichTab=='respiratory'}">Respiratory
+								System</label>
+						</div>
+						<div class="col-md-2 no-padding-left center-aligned" *ngIf = "dischargedSummaryData.dischargeNotes.provisionalNotesJaundice != null && dischargedSummaryData.dischargeNotes.provisionalNotesJaundice != ''">
+							<input type="radio" name="courseWhichTab"
+								id="dischargeSummarySystemWhichTabJaundice"
+								[(ngModel)]="courseWhichTab" value="jaundice"
+								style="display: none"> <label
+								for="dischargeSummarySystemWhichTabJaundice"
+								class="table full assessment-treatment-tab-box"
+								[ngClass]="{'selected-tab': courseWhichTab=='jaundice'}">Jaundice</label>
+						</div>
+						<div class="col-md-1 no-padding-left center-aligned" *ngIf="(dischargedSummaryData.dischargeNotes.provisionalNotesAsphyxia != null && dischargedSummaryData.dischargeNotes.provisionalNotesAsphyxia != '')
+						 || (dischargedSummaryData.dischargeNotes.provisionalNotesSeizure != null && dischargedSummaryData.dischargeNotes.provisionalNotesSeizure != '')">
+						 	<input type="radio" name="courseWhichTab"
+								id="dischargeSummarySystemWhichTabCNS"
+								[(ngModel)]="courseWhichTab" value="CNS"
+								style="display: none"> <label
+								for="dischargeSummarySystemWhichTabCNS"
+								class="table full assessment-treatment-tab-box"
+								[ngClass]="{'selected-tab': courseWhichTab=='CNS'}">CNS</label>
+						</div>
+						<div class="col-md-2 no-padding-left center-aligned" *ngIf="(dischargedSummaryData.dischargeNotes.provisionalNotesSepsis != null && dischargedSummaryData.dischargeNotes.provisionalNotesSepsis != '')">
+							<input type="radio" name="courseWhichTab"
+								id="dischargeSummarySystemWhichTabInfection"
+								[(ngModel)]="courseWhichTab" value="infection"
+								style="display: none"> <label
+								for="dischargeSummarySystemWhichTabInfection"
+								class="table full assessment-treatment-tab-box"
+								[ngClass]="{'selected-tab': courseWhichTab=='infection'}">Infection</label>
+						</div>
+						<div class="col-md-2 no-padding-left center-aligned" *ngIf = "dischargedSummaryData.dischargeNotes.provisionalNotesMiscellaneous != null && dischargedSummaryData.dischargeNotes.provisionalNotesMiscellaneous != ''">
+							<input type="radio" name="courseWhichTab"
+								id="dischargeSummarySystemWhichTabMiscellaneous"
+								[(ngModel)]="courseWhichTab" value="miscellaneous"
+								style="display: none"> <label
+								for="dischargeSummarySystemWhichTabMiscellaneous"
+								class="table full assessment-treatment-tab-box"
+								[ngClass]="{'selected-tab': courseWhichTab=='miscellaneous'}">Miscellaneous</label>
+						</div>
+
+						<!--Status at admission-->
+						<!-- <div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'Status'">
+							<div class="col-md-12 no-padding-right">
+								<div class="desktop-column-20 force-left">
+				        			<textarea name="statusAtBirth" id="statusAtBirth"
+											rows="10" cols="80" top="20px" bottom="20px"
+											[(ngModel)]="dischargedSummaryData.dischargeNotes.statusAtAdmission" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-12 center-aligned padding-10-y">
+								<span class="button button-blue" (click)="savingStatusAtBirth()">Save</span>
+								<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+							</div>
+						</div> -->
+
+						<!--Stable Notes-->
+						<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab =='stablenotes'">
+							<div class="col-md-12 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="stablenotes" id="stablenotes"
+										rows="10" cols="80" top="20px" bottom="20px"
+										[(ngModel)]="dischargedSummaryData.dischargeNotes.stableNotes" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-12 center-aligned padding-10-y">
+								<span class="button button-blue" (click)="savingStableNotes()">Save</span>
+								<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+							</div>
+						</div>
+
+						<!--Respiratory-->
+						<div *ngIf="courseWhichTab =='respiratory' || ((courseWhichAssesTab =='rdsnotes' || courseWhichAssesTab =='apneanotes'
+									|| courseWhichAssesTab =='pphnnotes' || courseWhichAssesTab =='pneumothoraxnotes') && courseWhichTab =='respiratory')">
+							<div class="row table full no-padding padding-10-y">
+									<div class="col-md-2 center-aligned" *ngIf = "(dischargedSummaryData.dischargeNotes.provisionalNotesRds != null && dischargedSummaryData.dischargeNotes.provisionalNotesRds != '')">
+										<input type="radio" name="courseWhichAssesTab"
+											id="dischargeSummarySystemWhichTabRdsNotes"
+											[(ngModel)]="courseWhichAssesTab" value="rdsnotes"
+											style="display: none"> <label
+											for="dischargeSummarySystemWhichTabRdsNotes"
+											class="table full assessment-treatment-tab-box"
+											[ngClass]="{'selected-tab': courseWhichAssesTab=='rdsnotes'}">Respiratory Distress</label>
+									</div>
+									<div class="col-md-2 no-padding-left center-aligned" *ngIf = "(dischargedSummaryData.dischargeNotes.provisionalNotesApnea != null && dischargedSummaryData.dischargeNotes.provisionalNotesApnea != '')">
+										<input type="radio" name="courseWhichAssesTab"
+											id="dischargeSummarySystemWhichTabApneaNotes"
+											[(ngModel)]="courseWhichAssesTab" value="apneanotes"
+											style="display: none"> <label
+											for="dischargeSummarySystemWhichTabApneaNotes"
+											class="table full assessment-treatment-tab-box"
+											[ngClass]="{'selected-tab': courseWhichAssesTab=='apneanotes'}">Apnea</label>
+									</div>
+									<div class="col-md-2 no-padding-left center-aligned" *ngIf = "(dischargedSummaryData.dischargeNotes.provisionalNotesPphn != null && dischargedSummaryData.dischargeNotes.provisionalNotesPphn != '')">
+										<input type="radio" name="courseWhichAssesTab"
+											id="dischargeSummarySystemWhichTabPphnNotes"
+											[(ngModel)]="courseWhichAssesTab" value="pphnnotes"
+											style="display: none"> <label
+											for="dischargeSummarySystemWhichTabPphnNotes"
+											class="table full assessment-treatment-tab-box"
+											[ngClass]="{'selected-tab': courseWhichAssesTab=='pphnnotes'}">PPHN</label>
+									</div>
+									<div class="col-md-2 no-padding-left center-aligned" *ngIf = "(dischargedSummaryData.dischargeNotes.provisionalNotesPneumothorax != null && dischargedSummaryData.dischargeNotes.provisionalNotesPneumothorax != '')">
+										<input type="radio" name="courseWhichAssesTab"
+											id="dischargeSummarySystemWhichTabPneumothoraxNotes"
+											[(ngModel)]="courseWhichAssesTab" value="pneumothoraxnotes"
+											style="display: none"> <label
+											for="dischargeSummarySystemWhichTabPneumothoraxNotes"
+											class="table full assessment-treatment-tab-box"
+											[ngClass]="{'selected-tab': courseWhichAssesTab=='pneumothoraxnotes'}">Pneumothorax</label>
+									</div>
+							</div>
+						</div>
+
+						<!--Jaundice-->
+						<div class="row table full no-padding" style="padding-top:20px;" *ngIf="courseWhichTab =='jaundice'">
+							<div class="col-md-6 no-padding-right">
+								<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+							<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+								<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+						</div>
+						<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab =='jaundice'">
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="provisionalNotesJaundice" id="provisionalNotesJaundice"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="provisionalNotesJaundice" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="jaundice" id="jaundice"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="dischargedSummaryData.dischargeNotes.jaundice" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-12 center-aligned padding-10-y">
+								<span class="button button-blue" (click)="showUpdatePopUp('Jaundice')">Update</span>
+								<span class="button button-blue" (click)="savingJaundice()">Save</span>
+								<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+							</div>
+						</div>
+
+						<!--CNS-->
+						<div *ngIf="courseWhichTab =='CNS' ||
+									((courseWhichAssesTab =='asphyxianotes' || courseWhichAssesTab =='seizurenotes') &&  courseWhichTab == 'CNS')">
+							<div class="row table full no-padding padding-10-y">
+								<div class="col-md-2 center-aligned" *ngIf = "(dischargedSummaryData.dischargeNotes.provisionalNotesAsphyxia != null && dischargedSummaryData.dischargeNotes.provisionalNotesAsphyxia != '')">
+									<input type="radio" name="courseWhichAssesTab"
+									id="dischargeSummarySystemWhichTabAsphyxiaNotes"
+									[(ngModel)]="courseWhichAssesTab" value="asphyxianotes"
+									style="display: none"> <label
+									for="dischargeSummarySystemWhichTabAsphyxiaNotes"
+									class="table full assessment-treatment-tab-box"
+									[ngClass]="{'selected-tab': courseWhichAssesTab=='asphyxianotes'}">Asphyxia</label>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned" *ngIf = "(dischargedSummaryData.dischargeNotes.provisionalNotesSeizure != null && dischargedSummaryData.dischargeNotes.provisionalNotesSeizure != '')">
+									<input type="radio" name="courseWhichAssesTab"
+									id="dischargeSummarySystemWhichTabSeizureNotes"
+									[(ngModel)]="courseWhichAssesTab" value="seizurenotes"
+									style="display: none"> <label
+									for="dischargeSummarySystemWhichTabSeizureNotes"
+									class="table full assessment-treatment-tab-box"
+									[ngClass]="{'selected-tab': courseWhichAssesTab=='seizurenotes'}">Seizure</label>
+								</div>
+							</div>
+						</div>
+
+						<!--Infection-->
+						<div *ngIf="courseWhichTab =='infection' || (courseWhichAssesTab =='sepsisnotes' && courseWhichTab =='infection')">
+							<div class="row table full no-padding padding-10-y">
+								<div class="col-md-2 center-aligned" *ngIf = "(dischargedSummaryData.dischargeNotes.provisionalNotesSepsis != null && dischargedSummaryData.dischargeNotes.provisionalNotesSepsis != '')">
+									<input type="radio" name="courseWhichAssesTab"
+										id="dischargeSummarySystemWhichTabSepsisNotes"
+										[(ngModel)]="courseWhichAssesTab" value="sepsisnotes"
+										style="display: none"> <label
+										for="dischargeSummarySystemWhichTabSepsisNotes"
+										class="table full assessment-treatment-tab-box"
+										[ngClass]="{'selected-tab': courseWhichAssesTab=='sepsisnotes'}">Sepsis</label>
+								</div>
+							</div>
+						</div>
+
+						<!--Rds-->
+						<div class="row table full no-padding" style="padding-top:20px;"  *ngIf="courseWhichTab == 'respiratory' && courseWhichAssesTab =='rdsnotes'">
+							<div class="col-md-6 no-padding-right">
+								<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+							<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+								<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+						</div>
+						<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'respiratory' && courseWhichAssesTab =='rdsnotes'">
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="provisionalNotesRds" id="provisionalNotesRds"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="provisionalNotesRds" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="rdsnotes" id="rdsnotes"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="dischargedSummaryData.dischargeNotes.rdsNotes" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-12 center-aligned padding-10-y">
+								<span class="button button-blue" (click)="showUpdatePopUp('Rds')">Update</span>
+								<span class="button button-blue" (click)="savingRdsNotes()">Save</span>
+								<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+							</div>
+						</div>
+
+						<!--Apnea-->
+						<div class="row table full no-padding" style="padding-top:20px;"  *ngIf="courseWhichTab == 'respiratory' && courseWhichAssesTab =='apneanotes'">
+							<div class="col-md-6 no-padding-right">
+								<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+							<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+								<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+						</div>
+						<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'respiratory' && courseWhichAssesTab =='apneanotes'">
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="provisionalNotesApnea" id="provisionalNotesApnea"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="provisionalNotesApnea" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="apneanotes" id="apneanotes"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="dischargedSummaryData.dischargeNotes.apneaNotes" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-12 center-aligned padding-10-y">
+								<span class="button button-blue" (click)="showUpdatePopUp('Apnea')">Update</span>
+								<span class="button button-blue" (click)="savingApneaNotes()">Save</span>
+								<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+							</div>
+						</div>
+
+						<!--Pphn-->
+						<div class="row table full no-padding" style="padding-top:20px;"  *ngIf="courseWhichTab == 'respiratory' && courseWhichAssesTab =='pphnnotes'">
+							<div class="col-md-6 no-padding-right">
+								<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+							<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+								<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+						</div>
+						<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'respiratory' && courseWhichAssesTab =='pphnnotes'">
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="provisionalNotesPphn" id="provisionalNotesPphn"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="provisionalNotesPphn" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="pphnnotes" id="pphnnotes"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="dischargedSummaryData.dischargeNotes.pphnNotes" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-12 center-aligned padding-10-y">
+								<span class="button button-blue" (click)="showUpdatePopUp('Pphn')">Update</span>
+								<span class="button button-blue" (click)="savingPphnNotes()">Save</span>
+								<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+							</div>
+						</div>
+
+						<!--Pneumothorax-->
+						<div class="row table full no-padding" style="padding-top:20px;"  *ngIf="courseWhichTab == 'respiratory' && courseWhichAssesTab =='pneumothoraxnotes'">
+							<div class="col-md-6 no-padding-right">
+								<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+							<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+								<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+						</div>
+						<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'respiratory' && courseWhichAssesTab =='pneumothoraxnotes'">
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="provisionalNotesPneumothorax" id="provisionalNotesPneumothorax"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="provisionalNotesPneumothorax" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="pneumothoraxnotes" id="pneumothoraxnotes"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="dischargedSummaryData.dischargeNotes.pneumoNotes" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-12 center-aligned padding-10-y">
+								<span class="button button-blue" (click)="showUpdatePopUp('Pneumothorax')">Update</span>
+								<span class="button button-blue" (click)="savingPneumothoraxNotes()">Save</span>
+								<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+							</div>
+						</div>
+
+						<!--Asphyxia-->
+						<div class="row table full no-padding" style="padding-top:20px;"  *ngIf="courseWhichTab == 'CNS' && courseWhichAssesTab =='asphyxianotes'">
+							<div class="col-md-6 no-padding-right">
+								<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+							<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+								<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+						</div>
+						<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'CNS' && courseWhichAssesTab =='asphyxianotes'">
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="provisionalNotesAsphyxia" id="provisionalNotesAsphyxia"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="provisionalNotesAsphyxia" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="asphyxianotes" id="asphyxianotes"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="dischargedSummaryData.dischargeNotes.asphyxiaNotes" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-12 center-aligned padding-10-y">
+								<span class="button button-blue" (click)="showUpdatePopUp('Asphyxia')">Update</span>
+								<span class="button button-blue" (click)="savingAsphyxiaNotes()">Save</span>
+								<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+							</div>
+						</div>
+
+						<!--Seizure-->
+						<div class="row table full no-padding" style="padding-top:20px;" *ngIf="courseWhichTab == 'CNS' && courseWhichAssesTab =='seizurenotes'">
+							<div class="col-md-6 no-padding-right">
+								<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+							<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+								<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+						</div>
+						<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'CNS' && courseWhichAssesTab =='seizurenotes'">
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="provisionalNotesSeizure" id="provisionalNotesSeizure"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="provisionalNotesSeizure" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="seizurenotes" id="seizurenotes"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="dischargedSummaryData.dischargeNotes.seizureNotes" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-12 center-aligned padding-10-y">
+								<span class="button button-blue" (click)="showUpdatePopUp('Seizure')">Update</span>
+								<span class="button button-blue" (click)="savingSeizureNotes()">Save</span>
+								<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+							</div>
+						</div>
+
+						<!--Sepsis-->
+						<div class="row table full no-padding" style="padding-top:20px;" *ngIf="courseWhichTab == 'infection' && courseWhichAssesTab =='sepsisnotes'">
+							<div class="col-md-6 no-padding-right">
+								<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+							<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+								<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+						</div>
+						<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'infection' && courseWhichAssesTab =='sepsisnotes'">
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="provisionalNotesSepsis" id="provisionalNotesSepsis"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="provisionalNotesSepsis" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="sepsisnotes" id="sepsisnotes"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="dischargedSummaryData.dischargeNotes.sepsisNotes" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-12 center-aligned padding-10-y">
+								<span class="button button-blue" (click)="showUpdatePopUp('Sepsis')">Update</span>
+								<span class="button button-blue" (click)="savingSepsisNotes()">Save</span>
+								<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+							</div>
+						</div>
+
+						<!--Miscelllaneous-->
+						<div class="row table full no-padding" style="padding-top:20px;" *ngIf="courseWhichTab =='miscellaneous' && dischargeSummaryPage2WhichTab == 'Course'">
+							<div class="col-md-6 no-padding-right">
+								<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+							<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+								<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+							</div>
+						</div>
+						<div class="row table full no-padding" *ngIf="courseWhichTab =='miscellaneous' && dischargeSummaryPage2WhichTab == 'Course'">
+							<div class="col-md-6 no-padding-right">
+					      <div class="desktop-column-20 force-left">
+									<textarea name="provisionalNotesMiscellaneous" id="provisionalNotesMiscellaneous"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="provisionalNotesMiscellaneous" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-6 no-padding-right">
+								<div class="desktop-column-20 force-left">
+									<textarea name="miscellaneous" id="miscellaneous"
+										rows="10" cols="40" top="20px" bottom="20px"
+										[(ngModel)]="dischargedSummaryData.dischargeNotes.miscellaneousNotes" class="desktop-column-20"></textarea>
+								</div>
+							</div>
+							<div class="col-md-12 center-aligned padding-10-y">
+								<span class="button button-blue" (click)="showUpdatePopUp('Miscellaneous')">Update</span>
+								<span class="button button-blue" (click)="savingMiscellaneous()">Save</span>
+								<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+							</div>
+						</div>
+			  	</div>
+			 </div>
+
+			<!--Growth & Nutrition-->
+			<div *ngIf="dischargeSummaryPage2WhichTab =='Growth&Nutrition'">
+				<div class="row table full no-padding padding-10-y">
+					<div class="col-md-2 no-padding-left center-aligned" *ngIf = "dischargedSummaryData.dischargeNotes.currGrowth != null && dischargedSummaryData.dischargeNotes.currGrowth != ''">
+						<input type="radio" name="courseWhichTab"
+							id="dischargeSummarySystemWhichTabGrowth"
+							[(ngModel)]="courseWhichTab" value="growth"
+							style="display: none"> <label
+							for="dischargeSummarySystemWhichTabGrowth"
+							class="table full assessment-treatment-tab-box"
+							[ngClass]="{'selected-tab': courseWhichTab=='growth'}">Growth</label>
+					</div>
+					<div class="col-md-2 no-padding-left center-aligned" *ngIf = "(dischargedSummaryData.dischargeNotes.currNutrition != null && dischargedSummaryData.dischargeNotes.currNutrition != '')">
+						<input type="radio" name="courseWhichTab"
+							id="dischargeSummarySystemWhichTabNutrition"
+							[(ngModel)]="courseWhichTab" value="nutrition"
+							style="display: none"> <label
+							for="dischargeSummarySystemWhichTabNutrition"
+							class="table full assessment-treatment-tab-box"
+							[ngClass]="{'selected-tab': courseWhichTab=='nutrition'}">Nutrition</label>
+					</div>
+
+					<!--Growth-->
+					<div class="row table full no-padding" style="padding-top:20px;" *ngIf="courseWhichTab == 'growth'">
+						<div class="col-md-6 no-padding-right">
+							<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+						</div>
+						<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+							<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+						</div>
+					</div>
+					<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab =='growth'">
+						<div class="col-md-6 no-padding-right">
+							<div class="desktop-column-20 force-left">
+								<textarea name="currGrowth" id="currGrowth"
+									rows="10" cols="40" top="20px" bottom="20px"
+									[(ngModel)]="currGrowth" class="desktop-column-20"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6 no-padding-right">
+							<div class="desktop-column-20 force-left">
+								<textarea name="growth" id="growth"
+									rows="10" cols="40" top="20px" bottom="20px"
+									[(ngModel)]="dischargedSummaryData.dischargeNotes.growth" class="desktop-column-20"></textarea>
+							</div>
+						</div>
+						<div class="col-md-12 center-aligned padding-10-y">
+							<span class="button button-blue" (click)="showUpdatePopUp('Growth')">Update</span>
+							<span class="button button-blue" (click)="savingGrowth()">Save</span>
+							<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+						</div>
+					</div>
+
+					<!--Nutrition-->
+					<div class="row table full no-padding" style="padding-top:20px;" *ngIf="courseWhichTab == 'nutrition'">
+						<div class="col-md-6 no-padding-right">
+							<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+						</div>
+						<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+							<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+						</div>
+					</div>
+					<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab =='nutrition'">
+						<div class="col-md-6 no-padding-right">
+							<div class="desktop-column-20 force-left">
+								<textarea name="currNutrition" id="currNutrition"
+									rows="10" cols="40" top="20px" bottom="20px"
+									[(ngModel)]="currNutrition" class="desktop-column-20"></textarea>
+							</div>
+						</div>
+						<div class="col-md-6 no-padding-right">
+							<div class="desktop-column-20 force-left">
+								<textarea name="nutrition" id="nutrition"
+									rows="10" cols="40" top="20px" bottom="20px"
+									[(ngModel)]="dischargedSummaryData.dischargeNotes.nutrition" class="desktop-column-20"></textarea>
+							</div>
+						</div>
+						<div class="col-md-12 center-aligned padding-10-y">
+							<span class="button button-blue" (click)="showUpdatePopUp('Nutrition')">Update</span>
+							<span class="button button-blue" (click)="savingNutrition()">Save</span>
+							<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--Treatment-->
+			<div *ngIf="dischargeSummaryPage2WhichTab =='Investigation'">
+				<div class="row table full no-padding padding-10-y">
+					<div class="col-md-2 no-padding-left center-aligned" *ngIf = "(dischargedSummaryData.dischargeNotes.currBloodProduct != null && dischargedSummaryData.dischargeNotes.currBloodProduct != '')">
+						<input type="radio" name="courseWhichTab"
+							id="dischargeSummarySystemWhichTabBloodProduct"
+							[(ngModel)]="courseWhichTab" value="bloodproduct"
+							style="display: none"> <label
+							for="dischargeSummarySystemWhichTabBloodProduct"
+							class="table full assessment-treatment-tab-box"
+							[ngClass]="{'selected-tab': courseWhichTab=='bloodproduct'}">Blood Product</label>
+					</div>
+					<div class="col-md-2 no-padding-left center-aligned" *ngIf = "(dischargedSummaryData.dischargeNotes.currProcedure != null && dischargedSummaryData.dischargeNotes.currProcedure != '')">
+						<input type="radio" name="courseWhichTab"
+							id="dischargeSummarySystemWhichTabProcedure"
+							[(ngModel)]="courseWhichTab" value="procedure"
+							style="display: none"> <label
+							for="dischargeSummarySystemWhichTabProcedure"
+							class="table full assessment-treatment-tab-box"
+							[ngClass]="{'selected-tab': courseWhichTab=='procedure'}">Procedure</label>
+					</div>
+					<div class="col-md-2 no-padding-left center-aligned" *ngIf = "(dischargedSummaryData.dischargeNotes.currVaccination != null && dischargedSummaryData.dischargeNotes.currVaccination != '')">
+						<input type="radio" name="courseWhichTab"
+							id="dischargeSummarySystemWhichTabVaccination"
+							[(ngModel)]="courseWhichTab" value="vaccination"
+							style="display: none"> <label
+							for="dischargeSummarySystemWhichTabVaccination"
+							class="table full assessment-treatment-tab-box"
+							[ngClass]="{'selected-tab': courseWhichTab=='vaccination'}">Vaccinations</label>
+					</div>
+					<!-- <div class="col-md-2 no-padding-left center-aligned">
+						<input type="radio" name="courseWhichTab"
+							id="dischargeSummarySystemWhichTabTreatment"
+							[(ngModel)]="courseWhichTab" value="treatment"
+							style="display: none"> <label
+							for="dischargeSummarySystemWhichTabTreatment"
+							class="table full assessment-treatment-tab-box"
+							[ngClass]="{'selected-tab': courseWhichTab=='treatment'}">Treatment</label>
+					</div> -->
+				</div>
+
+				<!--Blood Product-->
+				<div class="row table full no-padding" style="padding-top:20px;" *ngIf="courseWhichTab == 'bloodproduct'">
+					<div class="col-md-6 no-padding-right">
+						<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+					</div>
+					<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+						<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+					</div>
+				</div>
+				<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab =='bloodproduct'">
+					<div class="col-md-6 no-padding-right">
+						<div class="desktop-column-20 force-left">
+							<textarea name="currBloodProduct" id="currBloodProduct"
+								rows="10" cols="40" top="20px" bottom="20px"
+								[(ngModel)]="currBloodProduct" class="desktop-column-20"></textarea>
+						</div>
+					</div>
+					<div class="col-md-6 no-padding-right">
+						<div class="desktop-column-20 force-left">
+							<textarea name="bloodproduct" id="bloodproduct"
+								rows="10" cols="40" top="20px" bottom="20px"
+								[(ngModel)]="dischargedSummaryData.dischargeNotes.bloodProduct" class="desktop-column-20"></textarea>
+						</div>
+					</div>
+					<div class="col-md-12 center-aligned padding-10-y">
+						<span class="button button-blue" (click)="showUpdatePopUp('Blood Product')">Update</span>
+						<span class="button button-blue" (click)="savingBloodProduct()">Save</span>
+						<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+					</div>
+				</div>
+
+				<!--Procedure-->
+				<div class="row table full no-padding" style="padding-top:20px;" *ngIf="courseWhichTab == 'procedure'">
+					<div class="col-md-6 no-padding-right">
+						<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+					</div>
+					<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+						<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+					</div>
+				</div>
+				<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'procedure'">
+					<div class="col-md-6 no-padding-right">
+						<div class="desktop-column-20 force-left">
+							<textarea name="currProcedure" id="currProcedure"
+								rows="10" cols="40" top="20px" bottom="20px"
+								[(ngModel)]="currProcedure" class="desktop-column-20"></textarea>
+						</div>
+					</div>
+					<div class="col-md-6 no-padding-right">
+						<div class="desktop-column-20 force-left">
+							<textarea name="procedure" id="procedure"
+								rows="10" cols="40" top="20px" bottom="20px"
+								[(ngModel)]="dischargedSummaryData.dischargeNotes.procedure" class="desktop-column-20"></textarea>
+						</div>
+					</div>
+					<div class="col-md-12 center-aligned padding-10-y">
+						<span class="button button-blue" (click)="showUpdatePopUp('Procedure')">Update</span>
+						<span class="button button-blue" (click)="savingProcedure()">Save</span>
+						<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+					</div>
+				</div>
+
+				<!--Vaccination-->
+				<div class="row table full no-padding" style="padding-top:20px;" *ngIf="courseWhichTab == 'vaccination'">
+					<div class="col-md-6 no-padding-right">
+						<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+					</div>
+					<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+						<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+					</div>
+				</div>
+				<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'vaccination'">
+					<div class="col-md-6 no-padding-right">
+						<div class="desktop-column-20 force-left">
+							<textarea name="currVaccination" id="currVaccination"
+								rows="10" cols="40" top="20px" bottom="20px"
+								[(ngModel)]="currVaccination" class="desktop-column-20"></textarea>
+						</div>
+					</div>
+					<div class="col-md-6 no-padding-right">
+						<div class="desktop-column-20 force-left">
+							<textarea name="vaccination" id="vaccination"
+								rows="10" cols="40" top="20px" bottom="20px"
+								[(ngModel)]="dischargedSummaryData.dischargeNotes.vaccination" class="desktop-column-20"></textarea>
+						</div>
+					</div>
+					<div class="col-md-12 center-aligned padding-10-y">
+						<span class="button button-blue" (click)="showUpdatePopUp('Vaccination')">Update</span>
+						<span class="button button-blue" (click)="savingVaccination()">Save</span>
+						<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+					</div>
+				</div>
+
+				<!--Treatment-->
+				<!-- <div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab =='treatment'">
+					<div class="col-md-12 no-padding-right">
+						<div class="desktop-column-20 force-left">
+							<textarea name="investigation" id="investigation"
+								rows="10" cols="80" top="20px" bottom="20px"
+								[(ngModel)]="dischargedSummaryData.dischargeNotes.treatment" class="desktop-column-20"></textarea>
+						</div>
+					</div>
+					<div class="col-md-12 center-aligned padding-10-y">
+						<span class="button button-blue"
+							(click)="savingTreatment()">Save</span>
+							<span class="button button-blue" (click)="backTocurriousPage('page1')">Back</span>
+					</div>
+				</div> -->
+			</div>
+
+			<!--Investigations-->
+			<div *ngIf="dischargeSummaryPage2WhichTab == 'Investigations'">
+				<div class="row table full no-padding padding-10-y">
+					<!-- Screening-->
+					<div class="col-md-2 no-padding-left center-aligned" *ngIf = "(dischargedSummaryData.dischargeNotes.currScreening != null && dischargedSummaryData.dischargeNotes.currScreening != '')">
+						<input type="radio" name="courseWhichTab"
+							id="dischargeSummarySystemWhichTabScreening"
+							[(ngModel)]="courseWhichTab" value="screening"
+							style="display: none"> <label
+							for="dischargeSummarySystemWhichTabScreening"
+							class="table full assessment-treatment-tab-box"
+							[ngClass]="{'selected-tab': courseWhichTab=='screening'}">Screening</label>
+					</div>
+				</div>
+		  </div>
+
+			<!--Investigation-->
+			<!-- Screening-->
+			<div *ngIf = "dischargeSummaryPage2WhichTab == 'Investigations'">
+				<div class="row table full no-padding" style="padding-top:20px;" *ngIf="courseWhichTab == 'screening'">
+					<div class="col-md-6 no-padding-right">
+						<span class="">Date : {{currDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+					</div>
+					<div class="col-md-6 no-padding-right" *ngIf="prevDischargeDate != null">
+						<span class="">Date : {{prevDischargeDate | date: 'dd-MM-yyyy(hh:mm:ss)'}}</span>
+					</div>
+				</div>
+				<div class="row table full no-padding padding-10-y" *ngIf="courseWhichTab == 'screening'">
+					<div class="col-md-6 no-padding-right">
+						<div class="desktop-column-20 force-left">
+							<textarea name="currScreening" id="currScreening"
+								rows="10" cols="40" top="20px" bottom="20px"
+								[(ngModel)]="currScreening" class="desktop-column-20"></textarea>
+						</div>
+					</div>
+					<div class="col-md-6 no-padding-right">
+						<div class="desktop-column-20 force-left">
+							<textarea name="screening" id="screening"
+								rows="10" cols="40" top="20px" bottom="20px"
+								[(ngModel)]="dischargedSummaryData.dischargeNotes.screening" class="desktop-column-20"></textarea>
+						</div>
+					</div>
+					<div class="col-md-12 center-aligned padding-10-y">
+						<span class="button button-blue" (click)="showUpdatePopUp('Screening')">Update</span>
+						<span class="button button-blue" (click)="savingScreening()">Save</span>
+						<span class="button button-blue" (click)="backToPreviousPage('page1')">Back</span>
+					</div>
+				</div>
+			</div>
+
+			<!--Advice-->
+			<div *ngIf="dischargeSummaryPage2WhichTab =='Advice'">
+					<div class="row table full padding-10-x no-padding-right padding-10-y">
+						<div class="col-md-4 no-padding-right padding-5-y">
+							<button class="blue-bordered-white-button margin-0-left padding-10-x" (click)="dischargeAdviseTemplate()">Generate Advice on Discharge</button>
+						</div>
+					</div>
+					<div class="row table full padding-10-x no-padding-right">
+						<div class="col-md-12"
+							 *ngFor="let template of dischargedSummaryData.dischargeAdviceTemplates; let i = index" [attr.data-index]="i">
+							<div class="col-md-12 padding-5-y" *ngIf="template.isselected == true">
+								<span class="padding-5-x" *ngIf="i != '8'">{{template.fixedvalue}}</span>
+								<span class="padding-5-x" style="padding-right: 0px!important;" *ngIf="i == '8'"></span>
+								<span *ngIf="i !='1' && i !='5' ">{{template.editedvalue}}</span>
+								<span> {{template.secondTempDate | date:'dd-MM-yyyy'}}{{template.sixthTempDate | date:'dd-MM-yyyy'}}</span>
+							</div>
+						</div>
+						<div class="col-md-12 padding-5-y" *ngIf="isSelectedMed == true">
+							<span class="padding-5-x" style="margin-left : 15px"> Medicine:</span><br>
+							<div class="col-md-12 padding-5-y" *ngFor="let med of dischargedSummaryData.prescriptionList; let i = index" [attr.data-index]="i">
+	 							<span class="padding-5-x">{{med.medicinename}} {{med.dose}} {{med.dose_unit}}/{{med.dose_unit_time}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+
+<!--Page3-->
+<div *ngIf="whichDischargeSummaryPage == 'Page3'">
+	<div class="row table full padding-10-x no-padding-right padding-10-y center-aligned"
+		style="position: fixed;bottom: 0;width: 100%;height: 50px;background-color: #fff;box-shadow: 1px 2px 2px 4px #eee;padding: 5px!important;z-index: 2147483647!important;text-align: center;left: 0">
+		<div class="col-md-1 left-aligned" style="left:450px">
+			<span class="button button-blue button-large" (click)="backToPreviousPage('page2')">Back</span>
+		</div>
+		<div class="col-md-1 right-aligned" style="left:450px">
+			<span class="button button-blue button-large" (click)="generateDischargePrint()">Print</span>
+		</div>
+		<div class="col-md-2 right-aligned" style="left: 450px;">
+			<span class="button button-blue button-large" (click)="getDischargePopup()" style="left:-38px">
+				<label class="bold" *ngIf="dischargedSummaryData.outcome!=null && dischargedSummaryData.outcome.outcomeType!=null && dischargedSummaryData.outcome.outcomeType!=''">{{dischargedSummaryData.outcome.outcomeType}} Patient</label>
+				<label class="bold" *ngIf="!(dischargedSummaryData.outcome!=null && dischargedSummaryData.outcome.outcomeType!=null && dischargedSummaryData.outcome.outcomeType!='')">Discharge Patient</label>
+			</span>
+		</div>
+	</div>
+	<div class="assesment-container no-padding-right" style="background-color:white;overflow-y:scroll;" >
+		<div class="row table full padding-10-x no-padding-right padding-10-y center-aligned">
+			<div class="col-md-4 center-aligned"></div>
+			<div class="col-md-4 center-aligned border-1-grey">
+				<h1 class="bold" *ngIf="dischargedSummaryData.outcome!=null && dischargedSummaryData.outcome.outcomeType!=null && dischargedSummaryData.outcome.outcomeType!=''">{{dischargedSummaryData.outcome.outcomeType}} Summary</h1>
+					<h1 class="bold" *ngIf="!(dischargedSummaryData.outcome!=null && dischargedSummaryData.outcome.outcomeType!=null && dischargedSummaryData.outcome.outcomeType!='')">Discharge Summary</h1>
+			</div>
+			<div class="col-md-4 center-aligned"></div>
+		</div>
+		<div class="row table full padding-10-x no-padding-right padding-10-y center-aligned no-padding-bottom">
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Name :</span>
+					<span>{{dischargedSummaryData.babyDetails.babyname}}</span>
+				</div>
+			</div>
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Age :</span>
+					<span>{{babyAge}} days/{{dischargedSummaryData.babyDetails.gender}}</span>
+				</div>
+			</div>
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">UHID :</span>
+					<span>{{dischargedSummaryData.babyDetails.uhid}}</span>
+				</div>
+			</div>
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">DOB / TOB :</span>
+					<span>{{dischargedSummaryData.babyDetails.dateofbirth | date: 'dd-MM-yyyy'}}
+						<span *ngIf="timeOfBirthStr != undefined && timeOfBirthStr != null">{{timeOfBirthStr}}</span>
+					</span>
+				</div>
+			</div>
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">DOA :</span>
+					<span>{{dischargedSummaryData.babyDetails.dateofadmission | date: 'dd-MM-yyyy'}}</span>
+				</div>
+			</div>
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf="dischargedSummaryData.outcome.outcomeType != null
+			 && dischargedSummaryData.outcome.outcomeType != 'Death'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">DOD :</span>
+					<span>{{dischargedSummaryData.outcome.entrytime | date : 'dd - MM - yyyy'}}</span>
+				</div>
+			</div>
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf="dischargedSummaryData.outcome.outcomeType != null
+			 && dischargedSummaryData.outcome.outcomeType == 'Death'">
+				<div class="col-md-12 no-padding">
+				<span class="bold">Date of Death :</span>
+				<span>{{dischargedSummaryData.outcome.deathDate |	date : 'dd - MM - yyyy'}}</span>
+				</div>
+			</div>
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">GA at Birth :</span>
+					<span *ngIf="dischargedSummaryData.birthVisit != null">{{dischargedSummaryData.birthVisit.gestationWeek}} <sup *ngIf="dischargedSummaryData.birthVisit.gestationDays != null"> + {{dischargedSummaryData.birthVisit.gestationDays}}</sup></span>
+				</div>
+			</div>
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">GA at Discharge :</span>
+					<span *ngIf="dischargedSummaryData.dischargeVisit != null">{{dischargedSummaryData.dischargeVisit.gestationWeek}}<sup *ngIf="dischargedSummaryData.dischargeVisit.gestationDays != null"> + {{dischargedSummaryData.dischargeVisit.gestationDays}}</sup></span>
+				</div>
+			</div>
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">EDD :</span>
+					<span>{{dischargedSummaryData.edd | date:'dd - MM - yyyy'}}</span>
+				</div>
+			</div>
+		</div>
+
+		<!--Address-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.parenteDetail.address != null && dischargedSummaryData.parenteDetail.address != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Address :</span>
+				</div>
+				<div class="col-md-12 no-padding padding-5-y">
+					<span>{{dischargedSummaryData.parenteDetail.address}}</span>
+				</div>
+			</div>
+		</div>
+
+		<!--Anthropometry-->
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+			<div class="col-md-12 no-padding-right">
+				<h1 class="no-margin system-sub-heading blue-text">Anthropometry</h1>
+			</div>
+		</div>
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Admission Weight :</span>
+					<span *ngIf="dischargedSummaryData.admissionVisit !=null"
+						class="padding-10-x">{{dischargedSummaryData.admissionVisit.currentdateweight}}<span *ngIf="dischargedSummaryData.admissionVisit.currentdateweight !=null">gm </span></span>
+				</div>
+			</div>
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Admission Length :</span>
+					<span
+						class="padding-10-x" *ngIf="dischargedSummaryData.admissionVisit !=null">{{dischargedSummaryData.admissionVisit.currentdateheight}}<span *ngIf="dischargedSummaryData.admissionVisit.currentdateheight !=null">cm </span></span>
+				</div>
+			</div>
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Admission HC :</span>
+					<span *ngIf="dischargedSummaryData.admissionVisit != null">{{dischargedSummaryData.admissionVisit.currentdateheadcircum}}<span *ngIf="dischargedSummaryData.admissionVisit.currentdateheadcircum !=null">cm </span></span>
+				</div>
+			</div>
+			<div *ngIf="dischargedSummaryData.outcome.outcomeType != null
+			 && dischargedSummaryData.outcome.outcomeType != 'Death'">
+				<div class="col-md-4 padding-5-y left-aligned">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Discharge Weight :</span>
+						<span class="padding-10-x" *ngIf="dischargedSummaryData.dischargeVisit != null">{{dischargedSummaryData.dischargeVisit.currentdateweight}}<span *ngIf="dischargedSummaryData.dischargeVisit.currentdateweight !=null">gm </span></span>
+					</div>
+				</div>
+				<div class="col-md-4 padding-5-y left-aligned">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Discharge Length :</span>
+						<span class="padding-10-x" *ngIf="dischargedSummaryData.dischargeVisit != null">{{dischargedSummaryData.dischargeVisit.currentdateheight}}<span *ngIf="dischargedSummaryData.dischargeVisit.currentdateheight !=null">cm </span></span>
+					</div>
+				</div>
+				<div class="col-md-4 padding-5-y left-aligned">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Discharge HC :</span>
+						<span *ngIf="dischargedSummaryData.dischargeVisit != null">{{dischargedSummaryData.dischargeVisit.currentdateheadcircum}}<span *ngIf="dischargedSummaryData.dischargeVisit.currentdateheadcircum !=null">cm </span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Final Diagnosis-->
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+			<div class="col-md-12 no-padding-right">
+				<h1 class="no-margin system-sub-heading blue-text">Final Diagnosis :</h1>
+			</div>
+		</div>
+
+		<div class="row table full padding-10-x no-padding-right padding-10-y">
+				<div class="col-md-12 padding-5-y">
+					<span>{{dischargedSummaryData.finalDiagnosis}}</span>
+				</div>
+		</div>
+
+		<!--Maternal Details-->
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "(dischargedSummaryData.parenteDetail.motherage != null && dischargedSummaryData.parenteDetail.motherage != '')
+			|| (dischargedSummaryData.babyAntenatalHistoryDetails.gScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.gScore != '')
+			|| (dischargedSummaryData.babyAntenatalHistoryDetails.pScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.pScore != '')
+			|| (dischargedSummaryData.babyAntenatalHistoryDetails.aScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.aScore != '')
+			|| (dischargedSummaryData.babyAntenatalHistoryDetails.lScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.lScore != '')
+			|| (dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo != null && dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo != '')
+			|| (dischargedSummaryData.parenteDetail.mother_obstetrician != null && dischargedSummaryData.parenteDetail.mother_obstetrician != '')
+			|| (dischargedSummaryData.obstetricCondtiton != null && dischargedSummaryData.obstetricCondtiton != '')
+			|| (dischargedSummaryData.maternalInvestigation != null && dischargedSummaryData.maternalInvestigation != '')">
+			<div class="col-md-12 no-padding-right">
+				<h1 class="no-margin system-sub-heading blue-text">Maternal Details</h1>
+			</div>
+		</div>
+
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+			<!--Mother Age-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.parenteDetail.motherage != null && dischargedSummaryData.parenteDetail.motherage != ''">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Age :</span>
+					<span>{{dischargedSummaryData.parenteDetail.motherage}} yrs</span>
+				</div>
+			</div>
+
+			<!--Parity-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "(dischargedSummaryData.babyAntenatalHistoryDetails.gScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.gScore != '')
+				|| (dischargedSummaryData.babyAntenatalHistoryDetails.pScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.pScore != '')
+				|| (dischargedSummaryData.babyAntenatalHistoryDetails.aScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.aScore != '')
+				|| (dischargedSummaryData.babyAntenatalHistoryDetails.lScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.lScore != '')">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Parity :</span>
+					<span></span>
+					<span *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.gScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.gScore != ''">G{{dischargedSummaryData.babyAntenatalHistoryDetails.gScore}} </span>
+					<span *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.pScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.pScore != ''">P{{dischargedSummaryData.babyAntenatalHistoryDetails.pScore}} </span>
+					<span *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.aScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.aScore != ''">A{{dischargedSummaryData.babyAntenatalHistoryDetails.aScore}} </span>
+					<span *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.lScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.lScore != ''">L{{dischargedSummaryData.babyAntenatalHistoryDetails.lScore}} </span>
+				</div>
+			</div>
+
+			<!--Mother Blood Group-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo != null && dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo != ''">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Blood Group :</span>
+					<span>{{dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo}} {{dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupRh}}</span>
+				</div>
+			</div>
+
+			<!--MOD-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.modeOfDelivery != null && dischargedSummaryData.babyAntenatalHistoryDetails.modeOfDelivery != ''">
+				<div class="col-md-12 no-padding">
+					<span class="bold">MOD :</span>
+					<span>{{dischargedSummaryData.babyAntenatalHistoryDetails.modeOfDelivery}}</span>
+				</div>
+			</div>
+
+			<!--Obstetrician-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.parenteDetail.mother_obstetrician != null && dischargedSummaryData.parenteDetail.mother_obstetrician != ''">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Obstetrician :</span>
+					<span>{{dischargedSummaryData.parenteDetail.mother_obstetrician}}</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "dischargedSummaryData.obstetricCondtiton != null && dischargedSummaryData.obstetricCondtiton != ''">
+			<!--Obstetric Condition-->
+			<div class="col-md-12 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Obstetric Condition :</span>
+					<span>{{dischargedSummaryData.obstetricCondtiton}}</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "dischargedSummaryData.maternalInvestigation != null && dischargedSummaryData.maternalInvestigation != ''">
+			<!--Maternal Investigation---->
+			<div class="col-md-12 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Maternal Investigation :</span>
+					<span>{{dischargedSummaryData.maternalInvestigation}}</span>
+				</div>
+			</div>
+		</div>
+
+		<!--Birth Details-->
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+			<div class="col-md-12 no-padding-right">
+				<h1 class="no-margin system-sub-heading blue-text">Birth Details</h1>
+			</div>
+		</div>
+
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+			<!--Apgar Score-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "(dischargedSummaryData.birthToNicuDetails.apgarOnemin != null && dischargedSummaryData.birthToNicuDetails.apgarOnemin != '')
+				|| (dischargedSummaryData.birthToNicuDetails.apgarFivemin != null && dischargedSummaryData.birthToNicuDetails.apgarFivemin != '')
+				|| (dischargedSummaryData.birthToNicuDetails.apgarTenmin != null && dischargedSummaryData.birthToNicuDetails.apgarTenmin != '')">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Apgar Score :</span>
+					<span></span>
+					<span *ngIf = "dischargedSummaryData.birthToNicuDetails.apgarOnemin != null && dischargedSummaryData.birthToNicuDetails.apgarOnemin != ''">{{dischargedSummaryData.birthToNicuDetails.apgarOnemin}} at 1 min,</span>
+					<span *ngIf = "dischargedSummaryData.birthToNicuDetails.apgarFivemin != null && dischargedSummaryData.birthToNicuDetails.apgarFivemin != ''">{{dischargedSummaryData.birthToNicuDetails.apgarFivemin}} at 5 mins,</span>
+					<span *ngIf = "dischargedSummaryData.birthToNicuDetails.apgarTenmin != null && dischargedSummaryData.birthToNicuDetails.apgarTenmin != ''">{{dischargedSummaryData.birthToNicuDetails.apgarTenmin}} at 10 mins</span>
+				</div>
+			</div>
+
+			<!--Resuscitation Details-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.birthToNicuDetails.criedImmediately != null && dischargedSummaryData.birthToNicuDetails.criedImmediately != 'true'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Resuscitation Details :</span>
+					<span>Baby cried immediately after birth</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+			<!--Birth Weight-->
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Birth Weight :</span>
+					<span *ngIf = "dischargedSummaryData.birthVisit.currentdateweight != null && dischargedSummaryData.birthVisit.currentdateweight != ''">{{dischargedSummaryData.birthVisit.currentdateweight}}</span>
+				</div>
+			</div>
+
+			<!--Birth Length-->
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Birth Length :</span>
+					<span *ngIf = "dischargedSummaryData.birthVisit.currentdateheight != null && dischargedSummaryData.birthVisit.currentdateheight != ''">{{dischargedSummaryData.birthVisit.currentdateheight}}</span>
+				</div>
+			</div>
+
+			<!--Birth HC-->
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Birth HC :</span>
+					<span *ngIf = "dischargedSummaryData.birthVisit.currentdateheadcircum != null && dischargedSummaryData.birthVisit.currentdateheadcircum != ''">{{dischargedSummaryData.birthVisit.currentdateheadcircum}}</span>
+				</div>
+			</div>
+		</div>
+
+		<!--Status at Admission-->
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+			<div class="col-md-12 no-padding-right">
+			 <h1 class="no-margin system-sub-heading blue-text">Status at Admission</h1>
+			</div>
+		</div>
+
+		<!--Physical Examination-->
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "isPhysicalExamination != true">
+		 <div class="col-md-12 no-padding-right">
+		  <h1 class="no-margin system-sub-heading blue-text">Physical Examination</h1>
+		  <span>Physical Examination was normal,No obvious anomaly found.</span>
+		 </div>
+	 </div>
+
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "isPhysicalExamination == true">
+			<div class="col-md-12 no-padding-right">
+				<h1 class="no-margin system-sub-heading blue-text">Physical Examination</h1>
+			</div>
+		</div>
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom">
+			<!--Apearance-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.apearance != null && dischargedSummaryData.babyPhysicalExamData.apearance != 'Active'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">General Apearance :</span>
+					<span> {{dischargedSummaryData.babyPhysicalExamData.apearance}}</span>
+				</div>
+			</div>
+
+			<!--Head Neck-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.head_neck != null && dischargedSummaryData.babyPhysicalExamData.head_neck == 'Abnormal'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Neck :</span>
+						<span> {{dischargedSummaryData.babyPhysicalExamData.head_neck}}
+						<span *ngIf="dischargedSummaryData.babyPhysicalExamData.head_neck_other != null">({{dischargedSummaryData.babyPhysicalExamData.head_neck_other}})</span>
+					</span>
+				</div>
+			</div>
+
+			<!--Palate-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.palate != null && dischargedSummaryData.babyPhysicalExamData.palate != 'Normal'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Palate :</span>
+					<span> {{dischargedSummaryData.babyPhysicalExamData.palate}}</span>
+				</div>
+			</div>
+
+			<!--Lip-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.lip != null && dischargedSummaryData.babyPhysicalExamData.lip != 'Normal'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Lips :</span>
+						<span> {{dischargedSummaryData.babyPhysicalExamData.lip}}
+		      	<span *ngIf="dischargedSummaryData.babyPhysicalExamData.lipCleftSide != null && dischargedSummaryData.babyPhysicalExamData.lipCleftSide == 'true'">(right)</span>
+		      	<span *ngIf="dischargedSummaryData.babyPhysicalExamData.lipCleftSide != null && dischargedSummaryData.babyPhysicalExamData.lipCleftSide == 'false'">(left)</span>
+					</span>
+				</div>
+			</div>
+
+			<!--Eyes-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.eyes != null && dischargedSummaryData.babyPhysicalExamData.eyes == 'Abnormal'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Eyes :</span>
+						<span> {{dischargedSummaryData.babyPhysicalExamData.eyes}}
+						<span *ngIf="dischargedSummaryData.babyPhysicalExamData.eyes_other != null">({{dischargedSummaryData.babyPhysicalExamData.eyes_other}})</span>
+					</span>
+				</div>
+			</div>
+
+			<!--Skin-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.skin != null && dischargedSummaryData.babyPhysicalExamData.skin != 'Normal'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Skin :</span>
+						<span> {{dischargedSummaryData.babyPhysicalExamData.skin}}
+						<span *ngIf="dischargedSummaryData.babyPhysicalExamData.skin == 'Other'">({{dischargedSummaryData.babyPhysicalExamData.skin_other}})</span>
+					</span>
+				</div>
+			</div>
+
+			<!--Chest-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.chest != null && dischargedSummaryData.babyPhysicalExamData.chest == 'Abnormal'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Chest :</span>
+						<span> {{dischargedSummaryData.babyPhysicalExamData.chest}}
+						<span *ngIf="dischargedSummaryData.babyPhysicalExamData.chest_other != null">({{dischargedSummaryData.babyPhysicalExamData.chest_other}})</span>
+					</span>
+				</div>
+			</div>
+
+			<!--Abdomen-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.abdomen != null && dischargedSummaryData.babyPhysicalExamData.abdomen == 'Abnormal'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Abdomen :</span>
+						<span> {{dischargedSummaryData.babyPhysicalExamData.abdomen}}
+						<span *ngIf="dischargedSummaryData.babyPhysicalExamData.abdomen_other != null">({{dischargedSummaryData.babyPhysicalExamData.abdomen_other}})</span>
+					</span>
+				</div>
+			</div>
+
+			<!--Anal-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.anal != null && dischargedSummaryData.babyPhysicalExamData.anal != 'Patent'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Anal Opening :</span>
+						<span> {{dischargedSummaryData.babyPhysicalExamData.anal}}
+						<span *ngIf="dischargedSummaryData.babyPhysicalExamData.anal_other != null">({{dischargedSummaryData.babyPhysicalExamData.anal_other}})</span>
+					</span>
+				</div>
+			</div>
+
+			<!--Genitals-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.genitals != null && dischargedSummaryData.babyPhysicalExamData.genitals == 'Abnormal'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Genitals :</span>
+						<span> {{dischargedSummaryData.babyPhysicalExamData.genitals}}
+						<span *ngIf="dischargedSummaryData.babyPhysicalExamData.genitals_other != null">({{dischargedSummaryData.babyPhysicalExamData.genitals_other}})</span>
+					</span>
+				</div>
+			</div>
+
+			<!--Reflexes-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.reflexes != null && dischargedSummaryData.babyPhysicalExamData.reflexes == 'Abnormal'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Reflexes :</span>
+						<span> {{dischargedSummaryData.babyPhysicalExamData.reflexes}}
+						<span *ngIf="dischargedSummaryData.babyPhysicalExamData.reflexes_other != null">({{dischargedSummaryData.babyPhysicalExamData.reflexes_other}})</span>
+					</span>
+				</div>
+			</div>
+
+			<!--Congential Malformation-->
+			<div class="col-md-4 padding-5-y left-aligned" *ngIf = "dischargedSummaryData.babyPhysicalExamData.cong_malform != null && dischargedSummaryData.babyPhysicalExamData.cong_malform == 'Yes'">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Apparent Congenital malformation :</span>
+						<span> {{dischargedSummaryData.babyPhysicalExamData.cong_malform}}
+	          <span *ngIf="dischargedSummaryData.babyPhysicalExamData.cong_malform_other != null">({{dischargedSummaryData.babyPhysicalExamData.cong_malform_other}})</span>
+	        </span>
+				</div>
+			</div>
+		</div>
+
+		<!--Systemic Examination-->
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "dischargedSummaryData.babySystemicExamData != null && dischargedSummaryData.babySystemicExamData != ''">
+			<div class="col-md-12 no-padding-right">
+				<h1 class="no-margin system-sub-heading blue-text">Systemic Examination</h1>
+			</div>
+		</div>
+		<div class="row table full padding-10-x no-padding-right padding-10-y no-padding-bottom" *ngIf = "dischargedSummaryData.babySystemicExamData != null && dischargedSummaryData.babySystemicExamData != ''">
+			<div class="col-md-4 padding-5-y left-aligned">
+				<div class="col-md-12 no-padding">
+					<span>{{dischargedSummaryData.babySystemicExamData}}</span>
+				</div>
+			</div>
+		</div>
+
+		<!--Antenatal Detail-->
+		<!-- <div class="row table full padding-10-x no-padding-right padding-10-y">
+			<div class="col-md-2 no-padding-right line-height-standard middle-aligned" *ngIf="(dischargedSummaryData.dischargeNotes.antenatalDetails != null && dischargedSummaryData.dischargeNotes.antenatalDetails != '')
+				 || (dischargedSummaryData.dischargeNotes.birthDetails != null && dischargedSummaryData.dischargeNotes.birthDetails != '')">
+				<h1 class="no-margin system-sub-heading blue-text">Antenatal and Birth Details</h1>
+			</div>
+		</div>
+		<div class="row table full padding-10-x no-padding-right padding-5-y">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding" *ngIf="dischargedSummaryData.dischargeNotes.antenatalDetails != null && dischargedSummaryData.dischargeNotes.antenatalDetails != ''">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Antenatal Details :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y">
+						{{dischargedSummaryData.dischargeNotes.antenatalDetails}}
+					</div>
+				</div>
+			</div>
+		</div>-->
+
+		<!--Birth Details-->
+		<!--<div class="row table full padding-10-x no-padding-right padding-5-y">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding" *ngIf="dischargedSummaryData.dischargeNotes.birthDetails != null && dischargedSummaryData.dischargeNotes.birthDetails != ''">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Birth Details :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" >
+						{{dischargedSummaryData.dischargeNotes.birthDetails}}
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+		<!-- Status at Admission-->
+		<!-- <div class="row table full padding-10-x no-padding-right padding-5-y">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding" *ngIf="dischargedSummaryData.dischargeNotes.statusAtAdmission != null && dischargedSummaryData.dischargeNotes.statusAtAdmission != ''">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Status at Admission :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" >
+						{{dischargedSummaryData.dischargeNotes.statusAtAdmission}}
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+		<!--Course During Hospital-->
+		<div class="row table full padding-10-x no-padding-right padding-10-y">
+			<div
+				class="col-md-2 no-padding-right line-height-standard middle-aligned" *ngIf="(dischargedSummaryData.dischargeNotes.stableNotes != null && dischargedSummaryData.dischargeNotes.stableNotes != '')
+				 || (dischargedSummaryData.dischargeNotes.rdsNotes != null && dischargedSummaryData.dischargeNotes.rdsNotes != '')
+ 				 || (dischargedSummaryData.dischargeNotes.apneaNotes != null && dischargedSummaryData.dischargeNotes.apneaNotes != '')
+ 				 || (dischargedSummaryData.dischargeNotes.pphnNotes != null && dischargedSummaryData.dischargeNotes.pphnNotes != '')
+ 				 || (dischargedSummaryData.dischargeNotes.pneumoNotes != null && dischargedSummaryData.dischargeNotes.pneumoNotes != '')
+				 || (dischargedSummaryData.dischargeNotes.jaundice != null && dischargedSummaryData.dischargeNotes.jaundice != '')
+				 || (dischargedSummaryData.dischargeNotes.asphyxiaNotes != null && dischargedSummaryData.dischargeNotes.asphyxiaNotes != '')
+				 || (dischargedSummaryData.dischargeNotes.seizureNotes != null && dischargedSummaryData.dischargeNotes.seizureNotes != '')
+				 || (dischargedSummaryData.dischargeNotes.sepsisNotes != null && dischargedSummaryData.dischargeNotes.sepsisNotes != '')
+				 || (dischargedSummaryData.dischargeNotes.miscellaneousNotes != null && dischargedSummaryData.dischargeNotes.miscellaneousNotes != '')">
+				<h1 class="no-margin system-sub-heading blue-text">Course During Hospital</h1>
+			</div>
+		</div>
+
+		<!--Stable Notes-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding" *ngIf="dischargedSummaryData.dischargeNotes.stableNotes != null && dischargedSummaryData.dischargeNotes.stableNotes != ''">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Stable Notes:</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" >
+						<span>{{dischargedSummaryData.dischargeNotes.stableNotes}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Respiratory-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="(dischargedSummaryData.dischargeNotes.rdsNotes != null && dischargedSummaryData.dischargeNotes.rdsNotes != '')
+			|| (dischargedSummaryData.dischargeNotes.apneaNotes != null && dischargedSummaryData.dischargeNotes.apneaNotes != '')
+			|| (dischargedSummaryData.dischargeNotes.pphnNotes != null && dischargedSummaryData.dischargeNotes.pphnNotes != '')
+			|| (dischargedSummaryData.dischargeNotes.pneumoNotes != null && dischargedSummaryData.dischargeNotes.pneumoNotes != '')">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Respiratory System :</span>
+				</div>
+			</div>
+		</div>
+
+		<!--Rds-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.rdsNotes != null && dischargedSummaryData.dischargeNotes.rdsNotes != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Respiratory Distress :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y">
+						{{dischargedSummaryData.dischargeNotes.rdsNotes}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Apnea-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.apneaNotes != null && dischargedSummaryData.dischargeNotes.apneaNotes != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Apnea :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y">
+						{{dischargedSummaryData.dischargeNotes.apneaNotes}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Pphn-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.pphnNotes != null && dischargedSummaryData.dischargeNotes.pphnNotes != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">PPHN :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y">
+						{{dischargedSummaryData.dischargeNotes.pphnNotes}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Pneumothorax-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.pneumoNotes != null && dischargedSummaryData.dischargeNotes.pneumoNotes != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Pneumothorax :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y">
+						{{dischargedSummaryData.dischargeNotes.pneumoNotes}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Jaundice-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.jaundice != null && dischargedSummaryData.dischargeNotes.jaundice != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Jaundice :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" >
+						{{dischargedSummaryData.dischargeNotes.jaundice}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--CNS-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="(dischargedSummaryData.dischargeNotes.asphyxiaNotes != null && dischargedSummaryData.dischargeNotes.asphyxiaNotes != '')
+			|| (dischargedSummaryData.dischargeNotes.seizureNotes != null && dischargedSummaryData.dischargeNotes.seizureNotes != '')">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<span class="bold">CNS :</span>
+				</div>
+			</div>
+		</div>
+
+		<!--Asphyxia-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.asphyxiaNotes != null && dischargedSummaryData.dischargeNotes.asphyxiaNotes != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Asphyxia :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y">
+						{{dischargedSummaryData.dischargeNotes.asphyxiaNotes}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Seizure-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.seizureNotes != null && dischargedSummaryData.dischargeNotes.seizureNotes != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold" >Seizure :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y">
+						{{dischargedSummaryData.dischargeNotes.seizureNotes}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Infection-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf=" (dischargedSummaryData.dischargeNotes.sepsisNotes != null && dischargedSummaryData.dischargeNotes.sepsisNotes != '')">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Infection :</span>
+				</div>
+			</div>
+		</div>
+
+		<!--Sepsis-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.sepsisNotes != null && dischargedSummaryData.dischargeNotes.sepsisNotes != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Sepsis :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" >
+						{{dischargedSummaryData.dischargeNotes.sepsisNotes}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Miscelllaneous-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.miscellaneousNotes != null && dischargedSummaryData.dischargeNotes.miscellaneousNotes != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<!-- <div class="col-md-12 no-padding">
+						<span class="bold">Miscellaneous :</span>
+					</div> -->
+					<div class="col-md-12 no-padding padding-5-y" >
+						{{dischargedSummaryData.dischargeNotes.miscellaneousNotes}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Growth & Nutrition-->
+		<div class="row table full padding-10-x no-padding-right padding-10-y" *ngIf="(dischargedSummaryData.dischargeNotes.growth != null && dischargedSummaryData.dischargeNotes.growth != '')
+			 || (dischargedSummaryData.dischargeNotes.nutrition != null && dischargedSummaryData.dischargeNotes.nutrition != '')">
+			<div class="col-md-2 no-padding-right line-height-standard middle-aligned">
+				<h1 class="no-margin system-sub-heading blue-text">Growth & Nutrition</h1>
+			</div>
+		</div>
+
+		<!--Growth-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding" *ngIf="dischargedSummaryData.dischargeNotes.growth != null && dischargedSummaryData.dischargeNotes.growth != ''">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Growth Summary:</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" >
+						<span>{{dischargedSummaryData.dischargeNotes.growth}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Nutrition-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.nutrition != null && dischargedSummaryData.dischargeNotes.nutrition != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Nutrition :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" >
+						{{dischargedSummaryData.dischargeNotes.nutrition}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Treatment-->
+		<div class="row table full padding-10-x no-padding-right padding-10-y" *ngIf="(dischargedSummaryData.dischargeNotes.procedure != null && dischargedSummaryData.dischargeNotes.procedure != '')
+		|| (dischargedSummaryData.dischargeNotes.bloodProduct != null && dischargedSummaryData.dischargeNotes.bloodProduct != '')
+		|| (dischargedSummaryData.dischargeNotes.vaccination != null && dischargedSummaryData.dischargeNotes.vaccination != '')">
+			<div class="col-md-2 no-padding-right line-height-standard middle-aligned">
+				<h1 class="no-margin system-sub-heading blue-text">Treatments</h1>
+			</div>
+		</div>
+		<!--Screening-->
+		<!-- <div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.screenRop.length > 0 || dischargedSummaryData.length > 0 || dischargedSummaryData.screenNeurological.length > 0|| dischargedSummaryData.screenMetabolical.length > 0 || dischargedSummaryData.screenHearing.length > 0">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Screening :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" *ngIf = "dischargedSummaryData.screenNeurological != null && dischargedSummaryData.screenNeurological.length > 0">
+						<span class="bold"><u>Neurological Screening</u> :</span>
+						<div  class="col-md-12 no-padding padding-5-y" *ngFor="let item of dischargedSummaryData.screenNeurological; let i = index" [attr.data-index]="i" >
+							<div class="col-md-12 no-padding">
+								<span>{{i+1}}) Screening was done on {{item.screening_time | date:'dd-MM-yyyy'}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.reports != null && item.reports != ''" style="margin-left:20px">
+								<span><span class="bold">Reports</span> - {{item.reports}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.other_comments != null && item.other_comments != ''" style="margin-left:20px">
+								<span><span class="bold">Comments</span> - {{item.other_comments}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" *ngIf = "dischargedSummaryData.screenRop != null && dischargedSummaryData.screenRop.length > 0">
+						<span class="bold"><u>ROP Screening</u> :</span>
+						<div  class="col-md-12 no-padding padding-5-y" *ngFor="let item of dischargedSummaryData.screenRop; let i = index" [attr.data-index]="i" >
+							<div class="col-md-12 no-padding">
+								<span>{{i+1}}) Screening was done on {{item.screening_time | date:'dd-MM-yyyy'}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.is_rop == null || item.is_rop == false" style="margin-left:20px">
+								<span><span class="bold">Finding :</span> - No ROP</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.is_rop != null && item.is_rop == true" style="margin-left:20px">
+								<span><span class="bold">Finding :</span> -
+								<div *ngIf = "item.is_rop_left != null && item.is_rop_left == true" style="margin-left:30px"> Left Eye : {{item.rop_left_zone}} zone, {{item.rop_left_stage}} stage, Plus Disease : <span *ngIf="item.rop_left_plus != null && item.rop_left_plus == true"> Present </span> <span *ngIf="item.rop_left_plus != null && item.rop_left_plus == false"> Absent </span></div>
+								<div *ngIf = "item.is_rop_right != null && item.is_rop_right == true" style="margin-left:30px"> Right Eye : {{item.rop_right_zone}} zone, {{item.rop_right_stage}} stage, Plus Disease : <span *ngIf="item.rop_right_plus != null && item.rop_right_plus == true"> Present </span> <span *ngIf="item.rop_right_plus != null && item.rop_right_plus == false"> Absent </span></div>
+								</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "(item.left_laser != null && item.left_laser == true) || (item.right_laser != null && item.right_laser == true)" style="margin-left:20px">
+								<span><span class="bold">Laser :</span> -
+								<div *ngIf = "item.left_laser != null && item.left_laser == true" style="margin-left:30px"> Left Eye : {{item.left_laser_date | date:'dd-MM-yyyy'}} <span *ngIf="item.left_laser_comment != null && item.left_laser_comment != ''"> ({{item.left_laser_comment}}) </span></div>
+								<div *ngIf = "item.right_laser != null && item.right_laser == true" style="margin-left:30px"> Right Eye : {{item.left_right_date | date:'dd-MM-yyyy'}} <span *ngIf="item.right_laser_comment != null && item.right_laser_comment != ''"> ({{item.right_laser_comment}}) </span></div>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" *ngIf = "dischargedSummaryData.screenHearing != null && dischargedSummaryData.screenHearing.length > 0">
+						<span class="bold"><u>Hearing Screening</u> :</span>
+						<div  class="col-md-12 no-padding padding-5-y" *ngFor="let item of dischargedSummaryData.screenHearing; let i = index" [attr.data-index]="i" >
+							<div class="col-md-12 no-padding">
+								<span>{{i+1}}) Screening was done on {{item.screening_time | date:'dd-MM-yyyy'}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.screening_test != null && (item.screening_test == 'OAE' || item.screening_test == 'Both')" style="margin-left:20px">
+								<span><span class="bold">OAE :</span> -
+								<div *ngIf = "item.oae_left != null" style="margin-left:30px"> Left Eye : {{item.oae_left}}</div>
+								<div *ngIf = "item.oae_right != null" style="margin-left:30px"> Right Eye : {{item.oae_right}}</div>
+								</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.screening_test != null && (item.screening_test == 'ABR' || item.screening_test == 'Both')" style="margin-left:20px">
+								<span><span class="bold">ABR :</span> -
+								<div *ngIf = "item.abr_left != null" style="margin-left:30px"> Left Eye : {{item.abr_left}}</div>
+								<div *ngIf = "item.abr_right != null" style="margin-left:30px"> Right Eye : {{item.abr_right}}</div>
+								</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.treatment != null && item.treatment != ''" style="margin-left:20px">
+								<span><span class="bold">Treatment</span> - {{item.treatment}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" *ngIf = "dischargedSummaryData.screenMetabolical != null && dischargedSummaryData.screenMetabolical.length > 0">
+						<span class="bold"><u>Metabolic Screening</u> :</span>
+						<div  class="col-md-12 no-padding padding-5-y" *ngFor="let item of dischargedSummaryData.screenMetabolical; let i = index" [attr.data-index]="i" >
+							<div class="col-md-12 no-padding">
+								<span>{{i+1}}) Screening was done on {{item.screening_time | date:'dd-MM-yyyy'}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.metabolic_screening != null && item.metabolic_screening != ''" style="margin-left:20px">
+								<span><span class="bold">Metabolic Screening of 6 tests</span> - {{item.metabolic_screening}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.screening_panel != null && item.screening_panel == true" style="margin-left:20px">
+								<span><span class="bold">Metabolic Screening of 123 conditions</span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" *ngIf = "dischargedSummaryData.screenUsg != null && dischargedSummaryData.screenUsg.length > 0">
+						<span class="bold"><u>USG Screening</u> :</span>
+						<div  class="col-md-12 no-padding padding-5-y" *ngFor="let item of dischargedSummaryData.screenUsg; let i = index" [attr.data-index]="i" >
+							<div class="col-md-12 no-padding">
+								<span>{{i+1}}) Screening was done on {{item.screening_time | date:'dd-MM-yyyy'}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.brain_parenchyma != null && item.brain_parenchyma != ''"style="margin-left:20px">
+								<span><span class="bold">Brain Parenchyma</span> - {{item.brain_parenchyma}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.ivh_type != null && item.ivh_type != ''" style="margin-left:20px">
+								<span><span class="bold">IVH Type</span> - {{item.ivh_type}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.pvl_type != null && item.pvl_type != ''" style="margin-left:20px">
+								<span><span class="bold">PVL Type</span> - {{item.pvl_type}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+		<!--Blood Product-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.bloodProduct != null && dischargedSummaryData.dischargeNotes.bloodProduct != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Blood Product :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" >
+						{{dischargedSummaryData.dischargeNotes.bloodProduct}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Procedure-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.procedure != null && dischargedSummaryData.dischargeNotes.procedure != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Procedure :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" >
+						{{dischargedSummaryData.dischargeNotes.procedure}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Vaccination-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.vaccination != null && dischargedSummaryData.dischargeNotes.vaccination != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Vaccination :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" >
+						{{dischargedSummaryData.dischargeNotes.vaccination}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Treatment-->
+		<!-- <div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.treatment != null && dischargedSummaryData.dischargeNotes.treatment != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Treatment :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" >
+						{{dischargedSummaryData.dischargeNotes.treatment}}
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+		<!--Investigation-->
+		<div class="row table full padding-10-x no-padding-right padding-10-y" *ngIf="dischargedSummaryData.dischargeNotes.screening != null && dischargedSummaryData.dischargeNotes.screening != ''">
+			<div class="col-md-2 no-padding-right line-height-standard middle-aligned">
+				<h1 class="no-margin system-sub-heading blue-text">Investigations</h1>
+			</div>
+		</div>
+
+		<!--Screening-->
+		<div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.dischargeNotes.screening != null && dischargedSummaryData.dischargeNotes.screening != ''">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Screening :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" >
+						{{dischargedSummaryData.dischargeNotes.screening}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Advice on Discharge-->
+		<div class="row table full padding-10-x no-padding-right padding-10-y" *ngIf="dischargedSummaryData.outcome.outcomeType != null
+		 && dischargedSummaryData.outcome.outcomeType != 'Death'
+		 && dischargedSummaryData.dischargeNotes.advice != null
+		 && dischargedSummaryData.dischargeNotes.advice != ''">
+			<div class="col-md-2 no-padding-right line-height-standard middle-aligned">
+				<h1 class="no-margin system-sub-heading blue-text">Advice on Discharge</h1>
+			</div>
+		</div>
+		<div class="row table full padding-10-x no-padding-right padding-5-y" style="margin-left:0px;white-space: pre-line;margin-top: -20px;" *ngIf="dischargedSummaryData.outcome.outcomeType != null
+		 && dischargedSummaryData.outcome.outcomeType != 'Death'
+		 && dischargedSummaryData.dischargeNotes.advice != null
+		 && dischargedSummaryData.dischargeNotes.advice != ''">
+			{{dischargedSummaryData.dischargeNotes.advice}}
+			<!-- <div class="row table full no-padding-right padding-10-y">
+				<div class="col-md-12">
+					<span class="bold">To attend Nursery / Pediatric Emergency on
+						noticing danger signs like cyanosis / difficulty in breathing /
+						refusal of feeds / abnormal movement</span>
+				</div>
+			</div> -->
+		</div>
+
+		<div class="row table full padding-10-x no-padding-right padding-5-y" style="margin-left:0px;white-space: pre-line;margin-top: -20px;" *ngIf="dischargedSummaryData.hospitalDetails != null">
+      FOLLOW UP:
+
+      Review with Neonatologist/Pediatrician {{dischargedSummaryData.babyDetails.admittingdoctor}} with prior appointment on {{dischargedSummaryData.outcome.appointmenttime | date:'dd-MM-yyyy hh:mm a'}} in OPD. [For appointment please call on {{dischargedSummaryData.hospitalDetails.helplineNumberSecond}}]
+
+      <b>{{dischargedSummaryData.babyDetails.admittingdoctor}}</b>
+      Consultant
+
+      Contact at helpline no. {{dischargedSummaryData.hospitalDetails.helplineNumber}}, {{dischargedSummaryData.hospitalDetails.lactationNumber}} ({{dischargedSummaryData.hospitalDetails.lactationName}}) for feeding and lactation.
+      For medical emergency of newborn, contact at helpline number {{dischargedSummaryData.hospitalDetails.contactNumber}}
+    </div>
+
+		<div style="margin-bottom:50px;">
+		</div>
+  </div>
+
+	<div class="overlay" id="dischargeConfirmOverlay"></div>
+	<div class="modal-box-lg bind-popup" id="OkCancelPopUp" style="width:400px;top:50px;">
+	    <!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+	    <button class="modal-popup-close-btn" (click)="closeOkPopUp()"></button>
+	    <div class="inicu-tab-container">
+	        <div class="tab-content-cont full padding-10-y">
+	            <span class="bold" style="font-size:17px" *ngIf = "dischargedSummaryData.outcome.outcomeType != 'Transfer'">Do you want to Discharge Baby?</span>
+							<span class="bold" style="font-size:17px" *ngIf = "dischargedSummaryData.outcome.outcomeType == 'Transfer'">Do you want to Transfer Baby?</span>
+	            <div class="col-md-12 padding-20-y">
+	            	<div class="col-md-6 center-aligned">
+	            		<span class="center-aligned button button-blue" (click)="dischargeBaby()">Yes</span>
+	            	</div>
+	            	<div class="col-md-6 center-aligned">
+	            		<span class="center-aligned button button-blue-transparent" (click)="closeOkPopUp()">No</span>
+	            	</div>
+	            </div>
+	    	</div>
+		</div>
+	</div>
+</div>
+
+<div class="overlay" id="dischargeRejectOverlay"></div>
+<div class="modal-box-lg bind-popup" id="CancelPopUp" style="width:400px;top:50px;margin-left:245px">
+  <div *ngIf="dischargedSummaryData != undefined">
+		<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+		<button class="modal-popup-close-btn" (click)="cancelOkPopUp()"></button>
+		<div class="inicu-tab-container">
+				<div class="tab-content-cont full padding-10-y">
+						<span class="bold" style="font-size:17px">Baby cannot be discharged</span>
+						<div class="col-md-12 padding-20-y">
+              <span class="center-aligned blue-text">{{dischargedSummaryData.assessmentMessage}}</span>
+						</div>
+			</div>
+   	</div>
+	</div>
+</div>
+<!-- code for the choose template ( Advice on Discharge ) -->
+<div class="overlay" id="dischargeAdviceOverlay"></div>
+<div class="modal-box-lg apgar-popup" id="dischargeAdvicePopup"
+	style="width: 1000px !important">
+	<div *ngIf="dischargedSummaryData != undefined" >
+	<button (click)="closeDischargeAdviseTemplate()" class="modal-popup-close-btn"></button>
+	<!-- <form data-ng-submit="addingApgarScore()"> -->
+	<div class="inicu-tab-container">
+		<div class="tab-header">
+			<div class="tab-header-menu">
+				<div class="col-md-12">
+					<div class="col-md-4 no-padding padding-10-y">
+						<h1
+							class="assessment-heading no-margin font-size-16 padding-10-y no-padding-bottom">Advice on Discharge</h1>
+					</div>
+					<!-- <input type="radio" id="ballardTabRadio02" name="ballard tab menu" data-ng-model="tabContent" value="physical"><label for="ballardTabRadio02">Physical Maturity</label> -->
+				</div>
+				<div class="col-md-12 no-padding">
+					<hr class="no-margin grey-color">
+				</div>
+			</div>
+		</div>
+		<div class="tab-content-cont full padding-10-x">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditFirstDischargeAdvice ,'sprite-edit-grey': !(isEditFirstDischargeAdvice)}"
+							(click)="editFirstDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[0].isselected" id="isfirstChecked"> <label
+								for="isfirstChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">1.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<span class="line-height-standard middle-aligned"
+								*ngIf="!(isEditFirstDischargeAdvice)">{{dischargedSummaryData.dischargeAdviceTemplates[0].fixedvalue}}</span>
+								<span *ngIf="isEditFirstDischargeAdvice"><input type="text" class="input input-medium col-md-12" [(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[0].fixedvalue"/></span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditSecondDischargeAdvice ,'sprite-edit-grey': !(isEditSecondDischargeAdvice)}"
+							(click)="editSecondDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[1].isselected" id="isSecondChecked"> <label
+								for="isSecondChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">2.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<div class="col-md-4 no-padding"><span class="line-height-standard middle-aligned">{{dischargedSummaryData.dischargeAdviceTemplates[1].fixedvalue}}</span></div>
+							<div class="col-md-3 no-padding"><span><input type="date" class="input input-medium desktop-column-20 datepicker" onkeydown="return false"
+							[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[1].secondTempDate" [disabled]="!(isEditSecondDischargeAdvice)"/></span></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditThirdDischargeAdvice ,'sprite-edit-grey': !(isEditThirdDischargeAdvice)}"
+							(click)="editThirdDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[2].isselected" id="isThirdChecked"> <label
+								for="isThirdChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">3.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<div class="col-md-3 no-padding">
+								<span class="line-height-standard middle-aligned">{{dischargedSummaryData.dischargeAdviceTemplates[2].fixedvalue}}</span>
+							</div>
+							<div class="col-md-9 no-padding">
+								<input type="text" class="input input-medium col-md-12" placeholder="1ml per oral once daily" [disabled]="!(isEditThirdDischargeAdvice)"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[2].editedvalue"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditFourDischargeAdvice ,'sprite-edit-grey': !(isEditFourDischargeAdvice)}"
+							(click)="editFourDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[3].isselected" id="isFourChecked"> <label
+								for="isFourChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">4.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<div class="col-md-2 no-padding">
+								<span class="line-height-standard middle-aligned">{{dischargedSummaryData.dischargeAdviceTemplates[3].fixedvalue}}</span>
+							</div>
+							<div class="col-md-10 no-padding">
+								<input type="text" class="input input-medium col-md-12" placeholder="0.4ml per oral once daily" [disabled]="!(isEditFourDischargeAdvice)"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[3].editedvalue"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditFiveDischargeAdvice ,'sprite-edit-grey': !(isEditFiveDischargeAdvice)}"
+							(click)="editFiveDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[4].isselected" id="isFiveChecked"> <label
+								for="isFiveChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">5.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<div class="col-md-2 no-padding">
+								<span class="line-height-standard middle-aligned">{{dischargedSummaryData.dischargeAdviceTemplates[4].fixedvalue}}</span>
+							</div>
+							<div class="col-md-10 no-padding">
+								<input type="text" class="input input-medium col-md-12" placeholder="1 ml per feed (3hourly) per oral-to continue" [disabled]="!(isEditFiveDischargeAdvice)"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[4].editedvalue"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite"  [ngClass]="{'sprite-edit':isEditSixDischargeAdvice ,'sprite-edit-grey': !(isEditSixDischargeAdvice)}"
+							(click)="editSixDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[5].isselected" id="isSixChecked"> <label
+								for="isSixChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">6.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<div class="col-md-2 no-padding"><span class="line-height-standard middle-aligned">{{dischargedSummaryData.dischargeAdviceTemplates[5].fixedvalue}}</span></div>
+							<!-- <div class="col-md-3 no-padding"><span><input type="date" class="input input-medium desktop-column-20 datepicker" (keypress)="return false"
+							[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[5].sixthTempDate" [disabled]="!(isEditSixDischargeAdvice)"/></span></div> -->
+							<div class="col-md-3 no-padding"><span><input type="date" class="input input-medium desktop-column-20 datepicker"
+							[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[5].sixthTempDate" [disabled]="!(isEditSixDischargeAdvice)"/></span></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditSevenDischargeAdvice ,'sprite-edit-grey': !(isEditSevenDischargeAdvice)}"
+							(click)="editSevenDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[6].isselected" id="isSevenChecked"> <label
+								for="isSevenChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">7.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<div class="col-md-4 no-padding">
+								<span class="line-height-standard middle-aligned">{{dischargedSummaryData.dischargeAdviceTemplates[6].fixedvalue}}</span>
+							</div>
+							<div class="col-md-8 no-padding">
+								<input type="text" class="input input-medium col-md-12" placeholder="6 weeks, 3 months, 6 months, 12 months, 18months and 2 years" [disabled]="!(isEditSevenDischargeAdvice)"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[6].fixedvalue"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditEightDischargeAdvice ,'sprite-edit-grey': !(isEditEightDischargeAdvice)}"
+							(click)="editEightDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[7].isselected" id="isEightChecked"> <label
+								for="isEightChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">8.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<div class="col-md-4 no-padding">
+								<span class="line-height-standard middle-aligned">{{dischargedSummaryData.dischargeAdviceTemplates[7].fixedvalue}}</span>
+							</div>
+							<div class="col-md-5 no-padding">
+								<input type="text" class="input input-medium col-md-12" placeholder="2 months Dr. Asha Agarwal (98110161532)" [disabled]="!(isEditEightDischargeAdvice)"
+								[ngModel]="dischargedSummaryData.dischargeAdviceTemplates[7].editedvalue"/>
+							</div>
+							<div class="col-md-3 no-padding-right">
+								<span class="line-height-standard middle-aligned">pediatric Audiologist.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditNinthDischargeAdvice ,'sprite-edit-grey': !(isEditNinthDischargeAdvice)}"
+							(click)="editNinthDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[8].isselected" id="isNinthChecked"> <label
+								for="isNinthChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">9.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<span class="line-height-standard middle-aligned"
+								*ngIf="!(isEditNinthDischargeAdvice)">{{dischargedSummaryData.dischargeAdviceTemplates[8].fixedvalue}}</span>
+								<span *ngIf="isEditNinthDischargeAdvice"><input type="text" class="input input-medium col-md-12" [(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[8].fixedvalue"/></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditTenthDischargeAdvice ,'sprite-edit-grey': !(isEditTenthDischargeAdvice)}"
+							(click)="editTenthDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[9].isselected" id="isTenthChecked"> <label
+								for="isTenthChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">10.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<div class="col-md-3 no-padding">
+								<span class="line-height-standard middle-aligned">{{dischargedSummaryData.dischargeAdviceTemplates[9].fixedvalue}}</span>
+							</div>
+							<div class="col-md-9 no-padding">
+								<input type="text" class="input input-medium col-md-12" placeholder="0.5 ml daily" [disabled]="!(isEditTenthDischargeAdvice)"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[9].editedvalue"/>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditEleventhDischargeAdvice ,'sprite-edit-grey': !(isEditEleventhDischargeAdvice)}"
+							(click)="editEleventhDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[10].isselected" id="isEleventhChecked"> <label
+								for="isEleventhChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">11.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<div class="col-md-3 no-padding">
+								<span class="line-height-standard middle-aligned">{{dischargedSummaryData.dischargeAdviceTemplates[10].fixedvalue}}</span>
+							</div>
+							<div class="col-md-9 no-padding">
+								<input type="text" class="input input-medium col-md-12" placeholder="2 drops in each nostril sos" [disabled]="!(isEditEleventhDischargeAdvice)"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[10].editedvalue"/>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditTwelthDischargeAdvice ,'sprite-edit-grey': !(isEditTwelthDischargeAdvice)}"
+							(click)="editTwelthDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[11].isselected" id="isTwelthChecked"> <label
+								for="isTwelthChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">12.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<span class="line-height-standard middle-aligned"
+								*ngIf="!(isEditTwelthDischargeAdvice)">{{dischargedSummaryData.dischargeAdviceTemplates[11].fixedvalue}}</span>
+								<span *ngIf="isEditTwelthDischargeAdvice"><input type="text" class="input input-medium col-md-12" [(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[11].fixedvalue"/></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditThirteenthDischargeAdvice ,'sprite-edit-grey': !(isEditThirteenthDischargeAdvice)}"
+							(click)="editThirteenthDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[12].isselected" id="isThirteenthChecked"> <label
+								for="isThirteenthChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">13.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<span class="line-height-standard middle-aligned"
+								*ngIf="!(isEditThirteenthDischargeAdvice)">{{dischargedSummaryData.dischargeAdviceTemplates[12].fixedvalue}}</span>
+								<span *ngIf="isEditThirteenthDischargeAdvice"><input type="text" class="input input-medium col-md-12" [(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[12].fixedvalue"/></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditFourteenthDischargeAdvice ,'sprite-edit-grey': !(isEditFourteenthDischargeAdvice)}"
+							(click)="editFourteenthDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[13].isselected" id="isFourteenthChecked"> <label
+								for="isFourteenthChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">14.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<span class="line-height-standard middle-aligned"
+								*ngIf="!(isEditFourteenthDischargeAdvice)">{{dischargedSummaryData.dischargeAdviceTemplates[13].fixedvalue}}</span>
+								<span *ngIf="isEditFourteenthDischargeAdvice"><input type="text" class="input input-medium col-md-12" [(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[13].fixedvalue"/></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-1 no-padding center-aligned">
+						<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditFifteenthDischargeAdvice ,'sprite-edit-grey': !(isEditFifteenthDischargeAdvice)}"
+							(click)="editFifteenthDischargeAdvice()"></span>
+					</div>
+					<div class="col-md-1 no-padding center-aligned padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="first"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[14].isselected" id="isFifteenthChecked"> <label
+								for="isFifteenthChecked"></label>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding left-aligned">
+						<div
+							class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+							<span class="bold">15.</span>
+						</div>
+						<div class="col-md-11 no-padding">
+							<div class="col-md-2 no-padding">
+								<span class="line-height-standard middle-aligned">{{dischargedSummaryData.dischargeAdviceTemplates[14].fixedvalue}}</span>
+							</div>
+							<div class="col-md-10 no-padding">
+								<input type="text" class="input input-medium col-md-12" placeholder="" [disabled]="!(isEditFifteenthDischargeAdvice)"
+								[(ngModel)]="dischargedSummaryData.dischargeAdviceTemplates[14].editedvalue"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding padding-5-y" *ngIf="dischargedSummaryData.prescriptionList != null">
+					<div *ngIf="dischargedSummaryData.prescriptionList.length != 0">
+						<div class="col-md-1 no-padding center-aligned" *ngIf="dischargedSummaryData.prescriptionList.length != 0">
+							<span class="inline-block sprite" [ngClass]="{'sprite-edit':isEditSixteenthDischargeAdvice ,'sprite-edit-grey': !(isEditSixteenthDischargeAdvice)}"
+								(click)="editSixteenthDischargeAdvice()"></span>
+						</div>
+						<div class="col-md-1 no-padding center-aligned padding-5-y" *ngIf="dischargedSummaryData.prescriptionList.length != 0">
+							<div class="blue-round-tick setting-checkbox">
+								<input type="checkbox" name="first"
+									[(ngModel)]="isSelectedMed" value="isSelectedMed"  id="isSixteenthChecked"> <label
+									for="isSixteenthChecked"></label>
+							</div>
+						</div>
+						<div class="col-md-10 no-padding left-aligned" *ngIf="dischargedSummaryData.prescriptionList.length != 0">
+							<div
+								class="col-md-1 no-padding center-aligned line-height-standard middle-aligned">
+								<span class="bold">16.</span>
+							</div>
+							<div class="col-md-11 no-padding">
+								<div class="col-md-8 no-padding">
+									<span class="line-height-standard middle-aligned">Medication:</span>
+									<div  *ngFor="let med of dischargedSummaryData.prescriptionList; let i = index" [attr.data-index]="i" >
+										<div class="col-md-6 no-padding">
+											<span>{{i+1}}) {{med.medicinename}}</span>
+										</div>
+										<div class="col-md-6 no-padding">
+											<span>{{med.dose}} {{med.dose_unit}} {{med.dose_unit_time}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y">
+						<span class=""> </span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- </form> -->
+<!-- end of the above code -->
+</div>
+
+<!--Update Popup-->
+<div class="overlay" id="updateDischargeSummaryOverlay"></div>
+<div class="modal-box-lg ballard-popup" id="updateDischargeSummaryPopup" style="width: 500px;">
+	<button class="modal-popup-close-btn" (click)="closeUpdatePopUp(false)"></button>
+		<div class="tab-content-cont full padding-10-y" style="height:200px">
+			<div class="col-md-12 padding-20-y">
+					<span class="center-aligned blue-text">Are you sure you want to update your discharge summary?</span>
+			</div>
+			<div class="col-md-12 padding-20-y">
+				<div class="col-md-6 center-aligned">
+					<span class="center-aligned button button-blue" (click)="closeUpdatePopUp(true)">Yes</span>
+				</div>
+				<div class="col-md-6 center-aligned">
+					<span class="center-aligned button button-blue-transparent" (click)="closeUpdatePopUp(false)">No</span>
+				</div>
+			</div>
+		</div>
+</div>

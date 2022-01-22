@@ -1,0 +1,918 @@
+ <div style="background-color:white" *ngIf="settingJson.devicesetting != undefined && settingJson.dischargesetting != undefined && registerDevice.registeredDevices != undefined && registerDevice.dropDowns != undefined">
+<div class="tab-container">
+	<div class="container-fluid">
+		<h1>Settings</h1>
+		<div class="container">
+			<div
+				class="row shadow-box padding-20-x padding-20-y margin-20-x margin-20-y">
+				<div class="col-md-12">
+					<h2>Hospital Logo</h2>
+					<form action="" (submit)="logoSubmit()">
+						<div class="table">
+							<div class="table-row">
+								<div class="table-cell padding-5-y required">
+									<span>Name</span>
+								</div>
+								<div class="table-cell padding-5-y">
+									<input type="text"name = "nameName" class="full" required [(ngModel)]="name">
+								</div>
+							</div>
+							<div class="table-row">
+								<div class="table-cell padding-5-y">Logo</div>
+								<div class="table-cell padding-5-y">
+									<input type="file" name = "imageExtractName" required
+										onchange="angular.element(this).scope().imageExtract(this);">
+								</div>
+							</div>
+							<div class="table-row">
+								<div class="table-cell"></div>
+								<div class="table-cell padding-10-y">
+									<button class="button button-md-blue" type="submit">Save</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div
+				class="row shadow-box padding-20-x padding-20-y margin-20-x margin-20-y">
+				<div class="col-md-12">
+					<h2>Edit Uhid</h2>
+					<form>
+						<div class="table">
+							<div class="table-row">
+								<div class="table-cell padding-5-y padding-left required">
+									<span>Old Uhid</span>
+								</div>
+								<div class="table-cell padding-5-y padding-left">
+									<input type="text" name = "oldUhid" class="full" [(ngModel)]="oldUhid" required>
+								</div>
+								<div class="table-cell padding-5-y padding-left required">
+									<span>New Uhid</span>
+								</div>
+								<div class="table-cell padding-left padding-5-y">
+									<input type="text" name = "newUhid" class="full" [(ngModel)]="newUhid" required>
+								</div>
+								<div class="table-cell padding-left padding-5-y">
+									<button class="button button-blue" (click)="editUhid(oldUhid,newUhid)">Edit</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+      <div
+        class="row shadow-box padding-20-x padding-20-y margin-20-x margin-20-y">
+        <div class="col-md-12">
+          <h2>Contact Details</h2>
+          <form>
+            <div class="table">
+              <div class="table-row">
+                <div class="table-cell padding-5-y padding-left required">
+                  <span>Helpline No. 1</span>
+                </div>
+                <div class="table-cell padding-5-y padding-left">
+                  <input type="text" name = "helplineNumber" class="full" [(ngModel)]="refHospitalBranchName.helplineNumber" required>
+                </div>
+                <div class="table-cell padding-5-y padding-left required">
+                  <span>Helpline No. 2</span>
+                </div>
+                <div class="table-cell padding-5-y padding-left">
+                  <input type="text" name = "helplineNumber" class="full" [(ngModel)]="refHospitalBranchName.helplineNumberSecond" required>
+                </div>
+                <div class="table-cell padding-5-y padding-left required">
+                  <span>Emergency Contact No.</span>
+                </div>
+                <div class="table-cell padding-left padding-5-y">
+                  <input type="text" name = "contactNumber" class="full" [(ngModel)]="refHospitalBranchName.contactNumber" required>
+                </div>
+                <div class="table-cell padding-5-y padding-left required">
+                  <span>Lactation No. & Name</span>
+                </div>
+                <div class="table-cell padding-left padding-5-y">
+                  <input type="text" name = "lactationNumber" class="full" [(ngModel)]="refHospitalBranchName.lactationNumber" required>
+                </div>
+                <div class="table-cell padding-left padding-5-y">
+                  <input type="text" name = "lactationName" class="full" [(ngModel)]="refHospitalBranchName.lactationName" required>
+                </div>
+                <div class="table-cell padding-left padding-5-y">
+                  <button class="button button-blue" (click)="addHelplineNumbers()">Add</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div
+				class="row shadow-box padding-20-x padding-20-y margin-20-x margin-20-y">
+				<div class="col-md-12">
+					<h2>Nursing Output Print Format</h2>
+					<form action="">
+            <div class="col-md-12 padding-5-y">
+              <div class="col-md-6 padding-10-y">
+    						<div class="toggle-options-radio">
+    							<input type="radio" id="shrink" name="shrink"
+    								[(ngModel)]="refHospitalBranchName.nursingPrintFormat" value="shrink">
+                    <label for="shrink">One Page Format</label>
+    							<input type="radio" id="expand" name="expand"
+    								[(ngModel)]="refHospitalBranchName.nursingPrintFormat" value="expand">
+                    <label for="expand">Multiple Page Format</label>
+    						</div>
+              </div>
+              <div class="col-md-2 padding-10-y">
+    						<button class="button button-blue" (click)="setNursingPrintFormat()">Set Page Format</button>
+    					</div>
+            </div>
+					</form>
+				</div>
+	  </div>
+	  <div class="row shadow-box padding-20-x padding-20-y margin-20-x margin-20-y">
+			<div class="col-md-12">
+				<div class="col-md-3">
+					<h2>Vitals Parameters</h2>
+				</div>
+				<div class="col-md-9 padding-10-y">
+					<button class="button button-blue" style="float: right;margin-right: 40px;" (click)="setNursingOutputParameters()">Save</button>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isSpO2" name="spO2" type="checkbox"  [(ngModel)]="nursingOutputParameters.spo2">
+							<label for="isSpO2">SpO<sub>2</sub>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="ishr" name="hr" type="checkbox"  [(ngModel)]="nursingOutputParameters.hr">
+							<label for="ishr">Heart Rate
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="ispr" name="pr" type="checkbox"  [(ngModel)]="nursingOutputParameters.pr">
+							<label for="ispr">Pulse Rate
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isBabyColor" name="babyColor" type="checkbox"  [(ngModel)]="nursingOutputParameters.baby_color">
+							<label for="isBabyColor">Baby Color
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isCentralTemp" name="centralTemp" type="checkbox"  [(ngModel)]="nursingOutputParameters.
+							central_temp">
+							<label for="isCentralTemp">Central Temp
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isPeripheralTemp" name="peripheralTemp" type="checkbox"  [(ngModel)]="nursingOutputParameters.peripheral_temp">
+							<label for="isPeripheralTemp">Peripheral Temp
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isDownes" name="downes" type="checkbox"  [(ngModel)]="nursingOutputParameters.downes">
+							<label for="isDownes">Downes
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isHumidification" name="humidification" type="checkbox"  [(ngModel)]="nursingOutputParameters.humidification">
+							<label for="isHumidification">Humidification
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isRr" name="rr" type="checkbox"  [(ngModel)]="nursingOutputParameters.rr">
+							<label for="isRr">Respiratory Rate
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isRbs" name="rbs" type="checkbox"  [(ngModel)]="nursingOutputParameters.rbs">
+							<label for="isRbs">RBS
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isTcb" name="tcb" type="checkbox"  [(ngModel)]="nursingOutputParameters.tcb">
+							<label for="isTcb">TCB
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isConsciousness" name="consciousness" type="checkbox"  [(ngModel)]="nursingOutputParameters.consciousness">
+							<label for="isConsciousness">Consciousness
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isEtco2" name="etco2" type="checkbox"  [(ngModel)]="nursingOutputParameters.etco2">
+							<label for="isEtco2">Etco<sub>2</sub>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isCFT" name="CFT" type="checkbox"  [(ngModel)]="nursingOutputParameters.cft">
+							<label for="isCFT">CFT
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isCvp" name="cvp" type="checkbox"  [(ngModel)]="nursingOutputParameters.cvp">
+							<label for="isCvp">CVP
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isNibp_sys" name="nibp_sys" type="checkbox"  [(ngModel)]="nursingOutputParameters.nibp_sys">
+							<label for="isNibp_sys">Systolic NIBP
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isNibpdia" name="nibp_dia" type="checkbox"  [(ngModel)]="nursingOutputParameters.nibp_dia">
+							<label for="isNibpdia">Diastolic NIBP
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isNibpMean" name="nibpmean" type="checkbox"  [(ngModel)]="nursingOutputParameters.nibp_mean">
+							<label for="isNibpMean">Mean NIBP
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isIbpsys" name="ibpSys" type="checkbox"  [(ngModel)]="nursingOutputParameters.ibp_sys">
+							<label for="isIbpsys">Systolic IBP
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isIbpDia" name="ibpDia" type="checkbox"  [(ngModel)]="nursingOutputParameters.ibp_dia">
+							<label for="isIbpDia">Diastolic IBP
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isIbpMean" name="ibpMean" type="checkbox"  [(ngModel)]="nursingOutputParameters.ibp_mean">
+							<label for="isIbpMean">Mean IBP
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isLeftProbeSite" name="leftProbeSite" type="checkbox"  [(ngModel)]="nursingOutputParameters.left_probe_site">
+							<label for="isLeftProbeSite">Left Probe Site
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isRightProbeSite" name="rightProbeSite" type="checkbox"  [(ngModel)]="nursingOutputParameters.right_probe_site">
+							<label for="isRightProbeSite">Right Probe Site
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="diffTemp" name="diffTemp" type="checkbox"  [(ngModel)]="nursingOutputParameters.diff_temp">
+							<label for="diffTemp">Diff. Temp
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isLeftPupilSize" name="leftPupilSize" type="checkbox"  [(ngModel)]="nursingOutputParameters.left_pupil_size">
+							<label for="isLeftPupilSize">Left Pupil Size
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isLeftPupilReaction" name="leftPupilReaction" type="checkbox"  [(ngModel)]="nursingOutputParameters.left_pupil_reaction">
+							<label for="isLeftPupilReaction">Left Pupil Reaction
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isRightPupilSize" name="rightPupilSize" type="checkbox"  [(ngModel)]="nursingOutputParameters.right_pupil_size">
+							<label for="isRightPupilSize">Right Pupil Size
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isRightPupilReaction" name="rightPupilReaction" type="checkbox"  [(ngModel)]="nursingOutputParameters.right_pupil_reaction">
+							<label for="isRightPupilReaction">Right Pupil Reaction
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input id="isPupilEqual" name="pupilEqual" type="checkbox"  [(ngModel)]="nursingOutputParameters.pupil_equal">
+							<label for="isPupilEqual">Pupil Equal
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+	  </div>
+			<div
+				class="row shadow-box padding-20-x padding-20-y margin-20-x margin-20-y">
+				<div class="col-md-12">
+					<h2>Device Setting</h2>
+					<form action="">
+						<div class="toggle-options-radio">
+							<input type="radio" id="1" name="deviceSetting"
+								[(ngModel)]="settingJson.devicesetting.inicu" [value]="true"
+								(ngModelChange)="submitSetting('inicu')"> <label for="1">iNICU</label>
+							<input type="radio" id="2" name="deviceSetting"
+								[(ngModel)]="settingJson.devicesetting.infinity" [value]="true"
+								(ngModelChange)="submitSetting('infinity')"> <label
+								for="2">INFINITY</label>
+              <input type="radio" id="3"
+								name="deviceSetting"
+								[(ngModel)]="settingJson.devicesetting.carescape" [value]="true"
+								(ngModelChange)="submitSetting('carescape')"> <label
+								for="3">CARESCAPE</label>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-12 no-padding">
+					<div class="col-md-2 padding-10-y">
+						<button class="button button-blue" (click)="addDeviceBox()">Add
+							Device</button>
+					</div>
+				</div>
+				<div class="col-md-12 shadow-box" *ngIf="visibleBox && boxDetail != null && boxDetail != undefined && boxDetail.box != undefined">
+					<div class="col-md-12 padding-5-y">
+						<div
+							class="col-md-2 no-padding line-height-standard middle-aligned">
+							<span class="bold">Box Name : neo - </span>
+            </div>
+            <div
+							class="col-md-2 no-padding line-height-standard middle-aligned">
+              <input type="text" class="input input-medium desktop-column-20 " [(ngModel)]="boxDetail.box.id" [ngModelOptions]="{standalone: true}">
+						</div>
+            <div
+							class="col-md-2 no-padding line-height-standard middle-aligned">
+            </div>
+						<div
+							class="col-md-2 no-padding line-height-standard middle-aligned">
+							<span class="bold">Serial Number : NAP</span>
+            </div>
+            <div
+							class="col-md-2 no-padding line-height-standard middle-aligned">
+              <input type="text" class="input input-medium desktop-column-20 " [(ngModel)]="boxDetail.box.id" [ngModelOptions]="{standalone: true}">
+						</div>
+					</div>
+					<div class="col-md-12 no-padding">
+						<table
+							class="table table-striped table-bordered headed-table desktop-column-20">
+							<tr>
+								<td class="center-aligned">Board Name</td>
+								<td class="center-aligned">Device Type</td>
+								<td class="center-aligned">Brand Name</td>
+								<td class="center-aligned">Device Name</td>
+								<td class="center-aligned">Mac Id</td>
+								<td class="center-aligned"></td>
+							</tr>
+							<tr>
+								<td class="center-aligned middle-aligned line-height-standard">
+									<span class="bold">Beagle Bone 1</span>
+								</td>
+								<td class="center-aligned"><select
+									class="input input-medium desktop-column-20" name = "boardName"
+									[(ngModel)]="boxDetail.box.board1.deviceType"
+									(ngModelChange)="filterBrandName(boxDetail.box.board1.deviceType,'board1')">
+										<option value="" disabled>Device type</option>
+                    <option *ngFor="let item of devicetypelist1" [value]="item">{{item}}</option>
+								</select></td>
+								<td class="center-aligned"><select name = "boardSecondName"
+									class="input input-medium desktop-column-20"
+									[(ngModel)]="boxDetail.box.board1.brandName"
+									(ngModelChange)="filterDeviceName(boxDetail.box.board1.brandName,'board1')">
+										<option value="" disabled>Select Brand</option>
+                    <option *ngFor="let item of devicebrandlist1" [value]="item">{{item}}</option>
+								</select></td>
+								<td class="center-aligned"><select name = "boardThirdName"
+									class="input input-medium desktop-column-20"
+									[(ngModel)]="boxDetail.box.board1.deviceName">
+										<option value="" disabled>Device Name</option>
+                    <option *ngFor="let item of devicenamelist1" [value]="item">{{item}}</option>
+								</select></td>
+								<td class="center-aligned">
+
+								 <select name = "boardMacName"
+									class="input input-medium desktop-column-20"
+									[(ngModel)]="boxDetail.box.board1.macId"
+									(ngModelChange)="checkMacID()">
+										<option value="" disabled>Mac ID</option>
+                    <option *ngFor="let item of boxDetail.macid" [value]="item">{{item}}</option>
+								</select>
+								</td>
+								<td class="center-aligned"><span class="button button-blue"
+									(click)="clearBoradData(board1)">Clear</span></td>
+							</tr>
+							<tr>
+								<td class="center-aligned middle-aligned line-height-standard">
+									<span class="bold">Beagle Bone 2</span>
+								</td>
+								<td class="center-aligned"><select name = "boardTypeName"
+									class="input input-medium desktop-column-20"
+									[(ngModel)]="boxDetail.box.board2.deviceType"
+									(ngModelChange)="filterBrandName(boxDetail.box.board2.deviceType,'board2')">
+										<option value="" disabled>Device type</option>
+                    <option *ngFor="let item of devicetypelist2" [value]="item">{{item}}</option>
+								</select></td>
+								<td class="center-aligned"><select name = "boardBoxName"
+									class="input input-medium desktop-column-20"
+									[(ngModel)]="boxDetail.box.board2.brandName"
+									(ngModelChange)="filterDeviceName(boxDetail.box.board2.brandName,'board2')">
+										<option value="" disabled>Select Brand</option>
+                    <option *ngFor="let item of devicebrandlist2" [value]="item">{{item}}</option>
+								</select></td>
+								<td class="center-aligned"><select name = "boardDetailName"
+									class="input input-medium desktop-column-20"
+									[(ngModel)]="boxDetail.box.board2.deviceName">
+										<option value="" disabled>Device Name</option>
+                    <option *ngFor="let item of devicenamelist2" [value]="item">{{item}}</option>
+								</select></td>
+								<td class="center-aligned"><select name = "boardCheckName"
+									class="input input-medium desktop-column-20"
+									[(ngModel)]="boxDetail.box.board2.macId"
+									(ngModelChange)="checkMacID()">
+										<option value="" disabled>Mac ID</option>
+                    <option *ngFor="let item of boxDetail.macid" [value]="item">{{item}}</option>
+								</select></td>
+								<td class="center-aligned"><span class="button button-blue"
+									(click)="clearBoradData(board2)">Clear</span></td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-md-12 no-padding center-aligned padding-5-y">
+						<span class="button button-blue" (click)="SaveBox()">Save
+							Box</span> <span class="button button-blue" (click)="deleteBox()">Delete
+							Box</span>
+					</div>
+				</div>
+				<div class="col-md-12 shadow-box margin-5-y"
+					*ngFor="let item of registerDevice.registeredDevices">
+					<div class="col-md-12 no-padding padding-5-y">
+						<div
+							class="col-md-2 no-padding line-height-standard middle-aligned">
+							<span class="bold">Box Name : {{item.box_name}}</span>
+						</div>
+						<div
+							class="col-md-2 no-padding line-height-standard middle-aligned">
+							<span class="bold">Serial Number : {{item.box_serial}}</span>
+						</div>
+						<div class="col-md-2"></div>
+						<div class="col-md-6 right-aligned no-padding">
+							<span class="button button-blue"
+								(click)="showHeartBeatModal(item.box_name)">Heartbeat</span>
+							<span class="button button-blue"
+								(click)="mapDevice(item.box_name)">Map</span> <span
+								class="button button-blue"
+								(click)="showException(item.box_serial)">Exception</span>
+							<span class="button button-blue"
+								(click)="showEdit(item)">Edit</span> <span
+								class="button button-blue"
+								(click)="deleteBoxFromList(item.box_serial)">Delete</span>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y">
+						<table
+							class="table table-striped table-bordered headed-table desktop-column-20">
+							<tr>
+								<td class="center-aligned"><span class="bold">Board
+										Name</span></td>
+								<td class="center-aligned"><span class="bold">Device
+										Type</span></td>
+								<td class="center-aligned"><span class="bold">Brand
+										Name</span></td>
+								<td class="center-aligned"><span class="bold">Device
+										Name</span></td>
+								<td class="center-aligned"><span class="bold">Mac Id</span></td>
+							</tr>
+							<tr *ngIf="item.board1 != null">
+								<td class="center-aligned middle-aligned line-height-standard">
+									<span>{{item.board1.boardName}}</span>
+								</td>
+								<td class="center-aligned"><span>{{item.board1.deviceType}}</span>
+								</td>
+								<td class="center-aligned"><span>{{item.board1.brandName}}</span>
+								</td>
+								<td class="center-aligned"><span>{{item.board1.deviceName}}</span>
+								</td>
+								<td class="center-aligned"><span>{{item.board1.macId}}</span>
+								</td>
+							</tr>
+							<tr *ngIf="item.board2 != null">
+								<td class="center-aligned middle-aligned line-height-standard">
+									<span>{{item.board2.boardName}}</span>
+								</td>
+								<td class="center-aligned"><span>{{item.board2.deviceType}}</span>
+								</td>
+								<td class="center-aligned"><span>{{item.board2.brandName}}</span>
+								</td>
+								<td class="center-aligned"><span>{{item.board2.deviceName}}</span>
+								</td>
+								<td class="center-aligned"><span>{{item.board2.macId}}</span>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div
+				class="row shadow-box padding-20-x padding-20-y margin-20-x margin-20-y">
+				<div class="col-md-12">
+					<h2>Discharge Summary setting</h2>
+					<form action="">
+						<div class="toggle-options-radio">
+							<input type="radio" id="dischargeSummarySetting1"
+								name="dischargeSummarySetting"
+								[(ngModel)]="settingJson.dischargesetting.basic"
+								value="true" (click)="submitSetting('basic')">
+							<label for="dischargeSummarySetting1">Basic</label> <input
+								type="radio" id="dischargeSummarySetting2"
+								name="dischargeSummarySetting"
+								[(ngModel)]="settingJson.dischargesetting.advanced"
+								value="true" (click)="submitSetting('advanced')">
+							<label for="dischargeSummarySetting2">Advanced</label>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<!--below code for EditUhid Popup-->
+<div class="overlay" id="editUhidOverlay"></div>
+<div class="modal-box-lg ballard-popup" id="editUhidPopup"
+	style="width: 500px !important;top: 50px;">
+	<button class="modal-popup-close-btn" (click)="closeEditUhidModal()"></button>
+	<div class="inicu-tab-container">
+		<div class="tab-header" data-ng-init="tabContent = 'neuro'">
+			<div class="padding-20-x table full">
+				<div class="table-cell pull-left">
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">{{editUhidMessage}}</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- below code is for the Map popup -->
+<div class="overlay" id="mapOverlay"></div>
+<div class="modal-box-lg ballard-popup" id="mapPopup"
+	style="width: 500px !important">
+	<button class="modal-popup-close-btn" (click)="closeMap()"></button>
+	<div class="inicu-tab-container">
+		<div class="tab-header" data-ng-init="tabContent = 'neuro'">
+			<div class="padding-20-x table full">
+				<div class="table-cell pull-left">
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Map
+						Device</h1>
+				</div>
+			</div>
+		</div>
+		<hr class="no-margin">
+		<div class="tab-content-cont full" style="height: 200px !important">
+			<div class="col-md-12 no-padding padding-20-y">
+				<div class="col-md-3 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">UHID</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<input type="text" name = "mapUhidName" [(ngModel)]="mapUhid"
+							class="input input-medium desktop-column-20 datepicker max-height-36" />
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="col-md-12 no-padding">
+						<span class="visiblity-hidden">dummy</span>
+					</div>
+					<div class="col-md-12 no-padding padding-top-2">
+						<span class="button button-blue"
+							(click)="submitMapDevice(mapUhid)">Connect</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of the above code -->
+<!-- below code is for the Exception popup -->
+<div class="overlay" id="exceptionOverlay"></div>
+<div class="modal-box-lg ballard-popup" id="exceptionPopup">
+	<button class="modal-popup-close-btn" (click)="closeException()"></button>
+
+	<div class="inicu-tab-container" style="width: 960px;" *ngIf= "macExceptionsData != undefined && macExceptionsData != null">
+		<div class="tab-header" data-ng-init="tabContent = 'neuro'">
+			<div class="padding-20-x table full">
+				<div class="table-cell pull-left">
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Exceptions</h1>
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">{{macExceptionsData[0].deviceserialno}}</h1>
+				</div>
+		</div>
+			</div>
+		<hr class="no-margin">
+		<div class="tab-content-cont full">
+			<div class="col-md-12 no-padding">
+				<table
+					class="table table-striped table-bordered headed-table desktop-column-20" style="white-space: nowrap;">
+					<tr>
+						<td class="center-aligned">Date and Time</td>
+						<td class="center-aligned">Exceptions</td>
+					</tr>
+					<tr *ngFor="let item of macExceptionsData">
+						<td class="center-aligned"><span>{{item.creationtime
+								|date:'dd-MM-yyyy hh:mm'}}</span></td>
+						<td class="center-aligned"><p style="width: 815px;word-break: break-all;white-space: normal;">{{item.exceptionmessage}}</p></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of the above code -->
+<!-- below code is for the Edit popup -->
+<div class="overlay" id="editOverlay"></div>
+<div class="modal-box-lg ballard-popup" id="editPopup">
+	<button class="modal-popup-close-btn" (click)="closeEditModal('OK')"></button>
+	<div class="inicu-tab-container" *ngIf = "editObj != null && editObj != undefined">
+		<div class="tab-header">
+			<div class="padding-20-x table full">
+				<div class="table-cell pull-left">
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Edit Box</h1>
+				</div>
+			</div>
+		</div>
+		<hr class="no-margin">
+		<div class="tab-content-cont full">
+			<div class="col-md-12">
+				<div class="col-md-12 padding-5-y">
+					<div
+						class="col-md-2 no-padding line-height-standard middle-aligned">
+						<span class="bold">Box Name : {{editObj.box_name}}</span>
+					</div>
+					<div
+						class="col-md-2 no-padding line-height-standard middle-aligned">
+						<span class="bold">Serial Number :
+							{{editObj.box_name}}</span>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding">
+					<table
+						class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr>
+							<td class="center-aligned">Board Name</td>
+							<td class="center-aligned">Device Type</td>
+							<td class="center-aligned">Brand Name</td>
+							<td class="center-aligned">Device Name</td>
+							<td class="center-aligned">Mac Id</td>
+						</tr>
+						<tr *ngIf="editObj.board1 != null">
+							<td class="center-aligned middle-aligned line-height-standard">
+								<span class="bold">Beagle Bone 1</span>
+							</td>
+							<td class="center-aligned"><select name = "boardEditName"
+								class="input input-medium desktop-column-20"
+								[(ngModel)]="editObj.board1.deviceType"
+								(ngModelChange)="emptyBrandDevice(editObj.board1.deviceType,'board1')">
+									<option value="" disabled>Device type</option>
+                  <option *ngFor="let item of editObj.devicetypelist1" [value]="item">{{item}}</option>
+							</select></td>
+							<td class="center-aligned"><select name = "boardObjName"
+								class="input input-medium desktop-column-20"
+								[(ngModel)]="editObj.board1.brandName"
+								(ngModelChange)="filterDeviceNameEdit(editObj.board1.brandName,'board1')">
+									<option value="" disabled>Select Brand</option>
+                  <option *ngFor="let item of editObj.devicebrandlist1" [value]="item">{{item}}</option>
+							</select></td>
+							<td class="center-aligned"><select name = "boardItemName"
+								class="input input-medium desktop-column-20"
+								[(ngModel)]="editObj.board1.deviceName">
+									<option value="" disabled>Device Name</option>
+                  <option *ngFor="let item of editObj.devicenamelist1" [value]="item">{{item}}</option>
+							</select></td>
+							<td class="center-aligned" style="width: 200px">
+							<input type="text" name = "macId" disabled
+									[(ngModel)]="editObj.board1.macId" class=""/>
+							</td>
+						</tr>
+						<tr *ngIf="editObj.board2 != null">
+							<td class="center-aligned middle-aligned line-height-standard">
+								<span class="bold">Beagle Bone 2</span>
+							</td>
+							<td class="center-aligned"><select name = "boardTypesName"
+								class="input input-medium desktop-column-20"
+								[(ngModel)]="editObj.board2.deviceType"
+								(ngModelChange)="emptyBrandDevice(editObj.board2.deviceType,'board2')">
+									<option value="" disabled>Device type</option>
+                  <option *ngFor="let item of devicetypelist2" [value]="item">{{item}}</option>
+							</select></td>
+							<td class="center-aligned"><select name = "boardListName"
+								class="input input-medium desktop-column-20"
+								[(ngModel)]="editObj.board2.brandName"
+								(ngModelChange)="filterDeviceNameEdit(editObj.board2.brandName,'board2')">
+									<option value="" disabled>Select Brand</option>
+                  <option *ngFor="let item of editObj.devicebrandlist2" [value]="item">{{item}}</option>
+							</select></td>
+							<td class="center-aligned"><select name = "boardDesktopName"
+								class="input input-medium desktop-column-20"
+								[(ngModel)]="editObj.board2.deviceName">
+									<option value="" disabled>Device Name</option>
+                  <option *ngFor="let item of editObj.devicenamelist2" [value]="item">{{item}}</option>
+							</select></td>
+							<td class="center-aligned"><select name = "boardEditObjName"
+								class="input input-medium desktop-column-20"
+								[(ngModel)]="editObj.board2.macId"
+								(ngModelChange)="checkMacID()">
+									<option value="" disabled>Mac ID</option>
+                  <option *ngFor="let item of boxDetail.macid" [value]="item">{{item}}</option>
+							</select></td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12 no-padding center-aligned padding-5-y">
+					<!-- <span class="button button-blue" (click)="editBoxDetails()">Edit Box</span> -->
+					<span class="button button-blue" (click)="editBox()">Edit Box</span>
+					<span class="button button-blue" (click)="closeEditModal('OK')">Cancel</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="overlay" id="HeartBeatOverlay"></div>
+<div class="modal-box-lg ballard-popup" id="HeartBeatPopup">
+	<button class="modal-popup-close-btn" (click)="closeHeartBeat()"></button>
+
+	<div class="inicu-tab-container">
+		<div class="tab-header" data-ng-init="tabContent = 'neuro'">
+			<div class="padding-20-x table full">
+				<div class="table-cell pull-left">
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Heart
+						Beat</h1>
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">{{TempBoxSerialNo}}</h1>
+				</div>
+			</div>
+		</div>
+		<hr class="no-margin">
+		<div class="tab-content-cont full">
+			<h2>Graph View</h2>
+			<div class="col-md-12 no-padding padding-10-y">
+				<div class="col-md-4 no-padding-right">
+					<div class="col-md-12 no-padding left-aligned">
+						<span class="bold">From</span>
+					</div>
+					<div class="col-md-12 no-padding">
+
+            <owl-date-time class="owl-dateTime"
+  						autoClose=true
+				      [(ngModel)]="heartBeatObj.heartBeatFrom"
+  						[ngModelOptions]="{standalone: true}"
+  						dateFormat='DD-MM-YYYY hh:mm A'></owl-date-time>
+
+					</div>
+				</div>
+				<div class="col-md-4 no-padding-right">
+					<div class="col-md-12 no-padding left-aligned">
+						<span class="bold">To</span>
+					</div>
+
+          <div class="col-md-12 no-padding">
+            <owl-date-time class="owl-dateTime"
+              autoClose=true
+              [(ngModel)]="heartBeatObj.heartBeatTo"
+              [ngModelOptions]="{standalone: true}"
+              dateFormat='DD-MM-YYYY hh:mm A'></owl-date-time>
+
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-right left-aligned">
+					<div class="col-md-12 no-padding">
+						<label class="white-color visiblity-hidden"><strong>To
+								Time</strong></label>
+					</div>
+					<div class="col-md-12 no-padding">
+						<span class="button button-blue" (click)="showHeartBeatData()">Show</span>
+					</div>
+				</div>
+			</div>
+			<div class="" style="padding-left: 2%; padding-right: 4%">
+				<div class="desktop-column-20 padding-0-x force-left"
+					style="margin-left: 0%; padding-bottom: 2%">
+					<div id="chartCont" [chart]="chartCont" style="height: auto; width: 100%;"></div>
+					<div class="tab-header toggle"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding"
+			*ngIf="heartBeatData != undefined && heartBeatData.length == 0">
+			<span class="bold">No Heartbeat Found</span>
+		</div>
+	</div>
+</div>

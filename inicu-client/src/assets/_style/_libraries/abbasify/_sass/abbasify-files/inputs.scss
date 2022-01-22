@@ -1,0 +1,232 @@
+::-webkit-input-placeholder{font-weight:100;color:darken($lightGray,10%);}
+::-moz-placeholder{font-weight:lighter;color:$black;}
+::placeholder{font-weight:lighter;color:$black;}
+
+// writable inputs
+input[type=text],input[type=search],input[type=number],input[type=email],input[type=tel],input[type=date],input[type=color],input[type=date],input[type=password],select,textarea{
+	display:inline-block; position:relative; border-style:solid; border-width:1px; font-size:16px; padding-left:5px; padding-right:5px;  height:35px;   font-family:inherit; margin-top:3px; margin-bottom:3px; color:darken($lightGray,10%);
+	
+    //@include makeMixin(transition , (color ease .6s, box-shadow ease .6s, border-color ease .6s !important));
+        
+    @include makeMixin(transition , all ease .3s);
+    
+	/*&:focus{color:darken($gray,30%);}*/
+	
+    &.input-coloured-gray{color:darken($gray,10%);}
+	&.input-coloured-green{color:$green;}
+	&.input-coloured-red{color:$red;}
+	&.input-coloured-blue{color:$blue;}
+	&.input-coloured-yellow{color:$yellow;}
+	&.input-coloured-orange{color:$orange;}
+	&.input-coloured-main-color{color:$mainColor;}
+	&.input-coloured-black{color:$black;}
+
+	&[class*=input-coloured-]{border-color:initial;}
+	
+	&.full{width:100%;}
+}
+
+
+textarea{min-height:100px; resize:none; overflow:hidden;}
+
+textarea[rows]{height:auto !important;}
+
+select{padding-right:0;}
+
+input[type=number]{
+	padding-right:0;
+	::-webkit-inner-spin-button, ::-webkit-outer-spin-button{height:auto; position:relative; right:-5px; }
+}
+// buttons
+
+button,.button{
+	display:inline-block; position:relative;  font-size:16px;  height:35px; padding:7px 25px;   cursor:pointer; font-family:inherit; /* margin-top:3px; margin-bottom:3px; */ color:$white; @extend .transition; text-align:center; border-style:solid; border-width:1px; text-decoration: none;
+	&.button-green{background-color:$green;  border-color:$green;}
+	&.button-red{background-color:$red; border-color:$red;}
+	&.button-blue{background-color:$blue;border-color:$blue;}
+	&.button-yellow{background-color:$yellow;border-color:$yellow;}
+	&.button-orange{background-color:$orange;border-color:$orange;}
+	&.button-gray{/* background-color:darken($gray,20%);border-color:darken($gray,20%) */ }
+	&.button-dark-gray{/* background-color:darken($gray,20%);border-color:darken($gray,20%) */ }
+
+	&.button-main-color{background-color:$mainColor;border-color:$mainColor;}
+	&.button-black{background-color:$black;border-color:$black;}
+	
+	&.empty{background-color:transparent; color:transparent; border:none; height:auto; padding:0;}
+	&[class*=transparent]{background-color:transparent; /* border-style:solid; border-width:1px; */ height:35px;}
+	
+	&.button-green-transparent{color:$green;border-color:$green;}
+	&.button-red-transparent{color:$red;border-color:$red;}
+	&.button-blue-transparent{color:$blue;border-color:$blue;}
+	&.button-yellow-transparent{color:$yellow;border-color:$yellow;}
+	&.button-orange-transparent{color:$orange;border-color:$orange;}
+	&.button-gray-transparent{color:darken($gray,20%);border-color:darken($gray,20%);}
+	&.button-main-color-transparent{color:$mainColor;border-color:$mainColor;}
+	&.button-black-transparent{color:$black;border-color:$black;}
+	
+	&:hover{@include opacity(.7);}
+	&:active{@include opacity(1);}
+	&:focus{@include opacity(1);}
+}
+
+.button:disabled , button:disabled ,.input:disabled , input:disabled , select:disabled , [disabled='disabled']{cursor:not-allowed; *cursor:not-allowed;}
+
+input,button,.button{
+	&.full{width:100%;}
+}
+
+.input-shadow{
+    @include makeMixin(box-shadow , (inset 0px 02px 6px lighten($gray,5%) , 0px 0px 0px #a1dbf5));
+    &:focus{ @include makeMixin(box-shadow , (inset 0px 0px 0px lighten($gray,5%) , 0 0 10px lighten($blue,10%)));}
+    
+    /*
+    @include makeMixin(box-shadow , inset 0px 02px 6px lighten($gray,5%));
+    &:focus{ @include makeMixin(box-shadow , 0 0 10px #a1dbf5);}
+    */
+}
+
+.input-group{
+	font-size:0;/* overflow:hidden;*/ display:inline-block; overflow:hidden; position: relative; margin-top:3px; margin-bottom:3px;
+    .input-group-icon{display:inline-block; position: absolute;left:2px; top:2px; bottom:2px; z-index:100; font-size: 14px;}
+	.input-element,input,button,.button{margin-top:0; margin-bottom:0;float:left;}
+	.button-small{min-width:30px; text-align:center; padding:5px;float:left;}
+    input{z-index:90; position: relative;}
+    
+    &.right{
+        .input-group-icon{right:2px; left:auto;}    
+    }
+}
+
+.relative-input-group{
+    .input{position: relative;float: left; margin:0; @include makeMixin(border-radius , 2px 0px 0px 2px !important);}
+    .input-group-icon{position: relative; padding:9px; border-style:solid; border-width:1px 1px 1px 0px; border-color: lighten($gray,6%); float:left; display: inline-block; height:35px; @include makeMixin(border-radius , 0px 2px 2px 0px !important);}
+}
+
+input,select{
+	&:disabled{background-color:darken($lightGray,3%); cursor:not-allowed;}
+}
+select{border-color:inherit;}
+
+.input-large{height:40px !important; font-size:16px !important;}
+.input-medium{height:35px !important; font-size:14px !important; }
+.input-small{height:25px !important; font-size:12px !important; }
+
+.button, button{white-space:nowrap; @include makeMixin(border-radius , 5px);}
+.button-large{height:40px !important; font-size: 18px; }
+.button-small{height:25px !important; font-size:13px; padding:4px 25px; }
+
+.tabbed-buttons-container{
+	display:inline-block; position:relative; border-style:solid; border-width:1px; border-color:$gray; @extend .borderRadius-5; overflow:hidden;
+	a{text-decoration:none;}
+	.tabbed-button{display:table-cell; position:relative; padding:7px 15px 7px 15px; height:40px; color:$darkGray; font-size:14px; border-left-style:solid; border-width:1px; border-color:$gray; vertical-align:middle;
+	&:hover,&.active{background-color:darken($lightGray,2%);}
+	&:first-child{border-left-style:none;}
+	}
+}
+
+
+
+
+/* customising the checkbox*/
+
+input[type=checkbox]{
+	position:relative;
+	&,&:checked{  @include appearance(none);  /* display:none; */ width:0; height:0; margin-left:-5px;}
+}
+
+
+.label-checkbox-before,.label-checkbox-after{
+	position:relative; min-height:25px; display:inline-block; min-height:22px; min-width:22px; padding-top: 5px;
+    
+	&:before,&:after{display:inline-block; position:absolute;  top:0px; @include makeMixin(user-select,none); @include makeMixin(box-sizing, border-box); /* height:22px; width:22px; */ background-image:url(../../../../_images/sprite.png); background-repeat:no-repeat; /* background-position:-433px -16px; */ background-position:-1069px -20px; height:22px; width:22px; background-clip:content-box; padding:1px;}
+	
+	&.white-bg-checkbox{&:before,&:after{padding:3px; height:21px;}}
+}
+
+
+:root input[type=checkbox]:checked{
+	&+ .label-checkbox-before:before , & + .label-checkbox-after:after { /*background-position:-406px -16px; */ background-position:-1013px -20px;}
+}
+
+:root input[type=checkbox]:disabled{
+	&+ .label-checkbox-before:before , & + .label-checkbox-after:after { @include opacity(.2);}
+}
+
+
+.label-checkbox-before{
+	padding-left:25px;
+	&:before{content:"";left:0px;}
+}
+.label-checkbox-after{
+	padding-right:25px;
+	&:after{content:"";right:0px;}
+}
+
+/* customising the checkbox*/
+
+
+
+
+/* customising the radio button*/
+
+input[type=radio]{
+	position:relative;
+	&,&:checked{  @include appearance(none); /* display:none;*/ width:0; height:0; margin-left:-5px; }
+}
+
+
+.label-radio-before,.label-radio-after{
+	position:relative; min-height:25px; display:inline-block; min-height:35px; min-width:22px; @include makeMixin(user-select,none); padding-top: 8px;
+    &:before,&:after{display:inline-block; position:absolute; height:25px; width:25px; background-image:url(../../../../_images/sprite.png); background-repeat:no-repeat; background-position:-1158px -20px;  top:4px;}
+
+	&.white-radio{
+		&:before,&:after{background-position:-1967px -93px;}
+	}
+
+	/*
+	&:before,&:after{display:inline-block; position:absolute; background-image:none; width:20px; height:20px; @include borderRadius(50%); border-style:solid; border-width:2px; background-clip:content-box; padding:4px; @include boxSizing(border-box); top:-1px; border-color:$green;}
+	*/
+	
+}
+
+
+:root input[type='radio']:checked{
+	/*
+	&+ .label-radio-before:before , & + .label-radio-after:after {background-color:$green;}
+	*/
+	&+ .label-radio-before:before , & + .label-radio-after:after {background-position:-1116px -20px;}
+
+	&+.label-radio-before.white-radio, &+.label-radio-after.white-radio{
+		&:before,&:after{background-position:-2001px -93px;}
+	}
+}
+
+
+:root input[type='radio']:disabled{
+	/* &+ .label-radio-before:before , & + .label-radio-after:after { @include opacity(.2);} */
+	&+ .label-radio-before , & + .label-radio-after { @include opacity(.2);}
+}
+
+
+.label-radio-before{
+	padding-left:25px;
+	&:before{content:"";left:0px;}
+}
+.label-radio-after{
+	padding-right:25px;
+	&:after{content:"";right:0px;}
+}
+
+/* customising the checkbox*/
+
+
+.toggle-button{
+	position:relative;height:26px;width:60px;background-color:$mainColor; @extend .borderRadius-20; border:solid 1px $mainColor;cursor:pointer; @extend .transition;
+		
+	.toggle-slider{display:inline-block;position:absolute;width:18px;height:18px; @extend .circle; background-color:$white; right:4px; top:3px; @extend .transition; }
+
+	&.disabled{
+		background-color:$gray;border:solid 1px darken($gray,7%);
+		.toggle-slider{right:35px;border:solid 1px darken($gray,7%);}
+	}
+}

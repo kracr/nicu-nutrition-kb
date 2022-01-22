@@ -1,0 +1,34 @@
+import { BabyDetailObj } from './babyDetailObj';
+import { PersonalDetailObj } from './personalDetailObj';
+import { ReasonEmptyObj } from './reasonEmptyObject';
+import { BallardObj } from './ballardObj';
+import { AntenatalHistoryObj } from './antenatal';
+import { LeveneObj } from './leveneObj';
+import { RespSupportObj } from './respSupport';
+import { BirthToNicuObj } from './birthToNicu';
+import { MedicineEmptyObj } from './medicineEmpty';
+import { MedicineList } from './medicineList';
+import { DownesObj } from './downes';
+import { GenPhyExamObj } from './genPhyExamination';
+import { SysAssessmentObj } from './systemicAssessment';
+import { AdmissionNotesObj } from './admissionNotes';
+export class AdmitPatientModel{
+    babyDetailObj: BabyDetailObj;
+    personalDetailObj: PersonalDetailObj;
+    reasonEmptyObj: ReasonEmptyObj;
+    selectedReasonList: any[];
+    ballardFlag: boolean;
+    ballardObj: BallardObj;
+    antenatalHistoryObj: AntenatalHistoryObj;
+    leveneFlag: boolean;
+    leveneObj: LeveneObj;
+    respSupportObj: RespSupportObj;
+    birthToNicuObj: BirthToNicuObj;
+    medicineEmptyObj: MedicineEmptyObj;
+    medicineList: MedicineList[];
+    downeFlag: boolean;
+    downesObj: DownesObj;
+    genPhyExamObj: GenPhyExamObj;
+    sysAssessmentObj: SysAssessmentObj;
+    admissionNotesObj: AdmissionNotesObj;
+}

@@ -1,0 +1,12 @@
+.headed-table{
+    td{ /* padding:5px 10px;*/ padding: 10px; border-color:lighten($gray,5%); font-size:13px;}
+    tr{
+        &:first-child{
+            td{ @include grayWhiteGradient(); padding:10px 10px; border-right:solid 1px lighten($gray,12%);}
+        }
+        &:nth-child(2){
+            td{@include makeMixin(box-shadow, inset 0px 15px 15px -15px lighten($black,75%));}
+        }
+    }
+    
+}

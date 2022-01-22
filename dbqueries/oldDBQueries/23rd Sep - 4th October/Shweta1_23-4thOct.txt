@@ -1,0 +1,14 @@
+
+insert into kdah.ref_testslist values('100082','T3','T3','Metabolic Screening',true);
+
+insert into kdah.ref_testslist values('100083','T4','T4','Metabolic Screening',true);
+
+
+
+insert into kdah.ref_testslist values('100085','Free T4','Free T4','Metabolic Screening',true);
+
+
+insert into kdah.ref_testslist values('100086','TFT','TFT','Metabolic Screening',true);
+
+
+Alter table kdah.birth_to_nicu add column apgarAvailable boolean;

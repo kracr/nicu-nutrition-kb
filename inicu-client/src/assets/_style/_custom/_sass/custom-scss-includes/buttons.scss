@@ -1,0 +1,121 @@
+.button-small-transparent {
+    padding: 3px 5px;
+    min-width: 70px;
+    color: #767676;
+    font-size: 13px;
+    height: 30px !important;
+    background-color: #fff !important;
+}
+
+.upload-button {
+    position: relative;
+    display: inline-block;
+    background-color: #eee;
+    border: 1px solid #d4d4d4;
+    margin: 5px 0;
+    padding: 3px 10px;
+    span {
+        position: relative;
+        font-size: 11px;
+    }
+    input {
+        position: absolute;
+        opacity: 0;
+        left: 0px;
+        top: 0px;
+    }
+}
+
+.toggle-radio-grey {
+    background-color: #b6bfc6;
+    box-shadow: 0 0 1px 3px #e7edef;
+    width: 150px;
+    display: table;
+    overflow: hidden;
+    padding: 3px;
+    border-radius: 2px;
+    margin: 5px;
+    input[type="radio"] {
+        display: block;
+        -webkit-appearance: none;
+        appearance:none;
+    }
+    input[type="radio"]+label {
+        display: table-cell;
+        height: 24px;
+        width: 50%;
+        text-align: center;
+        color: #b9c0c3;
+        vertical-align: middle;
+        font-weight: bold;
+        background-color: #fefefe;
+        cursor: pointer;
+        position: relative;
+        background: linear-gradient(#edeeef, #ffffff);
+        &:focus {
+            outline: none;
+        }
+    }
+    input[type="radio"]:nth-child(1):checked+label {
+        color: #499f4f;
+        background: linear-gradient(#fff, #dae7eb);
+    }
+    input[type="radio"]:nth-child(1)+label {
+        &:after {
+            display: block;
+            content: '';
+            width: 2px;
+            height: 100%;
+            position: absolute;
+            background-color: #b6bfc6;
+            right: -1px;
+            z-index: 100;
+            top: 0px;
+        }
+    }
+    input[type="radio"]:nth-child(3):checked+label {
+        color: #ae2935;
+        background: linear-gradient(#fff, #dae7eb);
+    }
+}
+
+.blue-round-tick {
+    input[type="checkbox"] {
+        display: none;
+        &+ {
+            label {
+                position: relative;
+                &:before {
+                    content: '';
+                    display: inline-block;
+                    background-image: url(../../../_images/radio-sprite.png);
+                    background-position: -17px 0;
+                    background-repeat: no-repeat;
+                    height: 15px;
+                    width: 15px;
+                    transition: .3s background-image;
+                    vertical-align: top;
+                    margin-right: 5px;
+                }
+            }
+        }
+        &:checked {
+            &+ {
+                label {
+                    position: relative;
+                    &:before {
+                        content: '';
+                        display: inline-block;
+                        background-image: url(../../../_images/radio-sprite.png);
+                        background-position: 0;
+                        background-repeat: no-repeat;
+                        height: 15px;
+                        width: 15px;
+                        vertical-align: top;
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+    }
+}

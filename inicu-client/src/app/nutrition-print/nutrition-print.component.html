@@ -1,0 +1,415 @@
+<div *ngIf="tempFeed != null && tempFeed != null" style="font-size:17px">
+  <div class="col-md-12 center-aligned padding-10-y">
+    <h1 class="bold">PN Order ({{tempFeed.duration}} hrs) - {{tempFeed.creationtime | date:'dd-MM-yyyy'}}</h1>
+  </div>
+  <div class="col-md-12 no-padding" style="margin-left:140px;">
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12 display-flex display-flex">
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">UHID :</span><span class="padding-10-x"
+          *ngIf="childData.uhid != null">{{childData.uhid}}</span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Baby Name : </span><span class="padding-10-x"
+          *ngIf="childData.name != null">{{childData.name}} <span
+          *ngIf="childData.babyNumber != null">{{childData.babyNumber}}</span></span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Birth Weight :</span><span class="padding-10-x"
+          *ngIf="childData.birthWeight != null">{{childData.birthWeight}}
+          gm</span>
+      </div>
+    </div>
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12 display-flex">
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Gender : </span><span class="padding-10-x"
+          *ngIf="childData.uhid != null">{{childData.gender}}</span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">DOB : </span><span class="padding-10-x"
+          *ngIf="childData.dob != null">{{childData.dob |
+          date:'dd-MM-yyyy'}}</span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Total Fluid(ml) : </span><span class="padding-10-x"
+          *ngIf="tempFeed.totalIntake != null">{{tempFeed.totalIntake}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 no-padding table full margin-5-y print-width-12 display-flex" >
+    <div class="col-md-6 no-padding table-cell" style="width:600px">
+      <div class="col-md-12 no-padding center-aligned">
+        <h1 class="bold">Input Variables</h1>
+      </div>
+      <table class="table table-striped table-bordered headed-table border-black desktop-column-20">
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Wt for calculation (kg)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.workingWeight != null">{{tempFeed.workingWeight}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Fluid Limit (ml/kg)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.totalfluidMlDay != null">{{tempFeed.totalfluidMlDay | number:'1.0-2'}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>GIR (mg/kg/min)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.girvalue != null">{{tempFeed.girvalue}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Lipid (gm/kg)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.lipidConc != null">{{tempFeed.lipidConc}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Amino Acid (gm/kg)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.aminoacidConc != null">{{tempFeed.aminoacidConc}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Sodium (meq/kg)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.sodiumMeg != null">{{tempFeed.sodiumMeg}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Potassium (meq/kg)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.potassiumVolume != null">{{tempFeed.potassiumVolume}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Calcium (ml/kg)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.calciumVolume != null">{{tempFeed.calciumVolume}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Phosphorus (mmmol/kg)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.phosphorousVolume != null">{{tempFeed.phosphorousVolume}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>MVI (ml)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.mviTotal != null">{{tempFeed.mviTotal | number:'1.0-2'}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>NaHCO3 (ml/kg)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.hco3Volume != null">{{tempFeed.hco3Volume}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Magnesium (ml/kg)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.magnesiumVolume != null">{{tempFeed.magnesiumVolume}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Antibiotics vol (ml)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.totalMedvolume != null">{{tempFeed.totalMedvolume}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Blood Product (ml)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.totalBloodProductVolume != null">{{tempFeed.totalBloodProductVolume}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Feed (ml)</span></td>
+          <td class="center-aligned border-black"><span *ngIf="tempFeed.totalenteralvolume != null">{{tempFeed.totalenteralvolume}}</span></td>
+        </tr>
+        <tr class="border-black">
+          <td class="center-aligned bold border-black"><span>Heparin Volume (ml)</span></td>
+          <td class="center-aligned border-black"><span>0</span></td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-md-6 no-padding table-cell" style="width:600px">
+      <div class="col-md-12 no-padding center-aligned">
+        <h1 class="bold">Output</h1>
+      </div>
+      <div>
+        <table class="table table-striped table-bordered headed-table border-black desktop-column-20">
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span>Components</span></td>
+            <td class="center-aligned border-black" style="font-weight: bold;"><span>Volume (ml)</span></td>
+            <td class="center-aligned border-black" style="font-weight: bold;"><span>Rate (ml/hr)</span></td>
+          </tr>
+					<tr class="border-black">
+            <td class="center-aligned bold border-black"><span></span></td>
+            <td class="center-aligned border-black"><span>PN for {{tempFeed.duration}} hrs</span></td>
+            <td class="center-aligned border-black"><span></span></td>
+          </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span>Lipid 20% (ml)</span></td>
+            <td class="center-aligned border-black"><span *ngIf="tempFeed.lipidTotal != null">{{tempFeed.lipidTotal | number:'1.0-2'}}</span></td>
+            <td class="center-aligned border-black"><span *ngIf="lipidRate != null">{{lipidRate | number:'1.0-2'}}</span></td>
+          </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span>AminoAcid 10% (ml)</span></td>
+            <td class="center-aligned border-black"><span *ngIf="tempFeed.aminoacidTotal != null">{{tempFeed.aminoacidTotal | number:'1.0-2'}}</span></td>
+            <td class="center-aligned border-black"><span></span></td>
+          </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span *ngIf="tempFeed.sodiumVolume == '0.15' && tempFeed.sodiumTotal != null">Saline 0.9% (ml)</span><span *ngIf="tempFeed.sodiumVolume == '0.5' && tempFeed.sodiumTotal != null">3% Sodium (ml)</span><span *ngIf="tempFeed.sodiumTotal == null">Sodium (ml)</span></td>
+            <td class="center-aligned border-black"><span *ngIf="tempFeed.sodiumTotal != null">{{tempFeed.sodiumTotal | number:'1.0-2'}}</span></td>
+            <td class="center-aligned border-black"><span></span></td>
+          </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span>KCL (ml)</span></td>
+            <td class="center-aligned border-black"><span *ngIf="tempFeed.potassiumTotal != null">{{tempFeed.potassiumTotal | number:'1.0-2'}}</span></td>
+            <td class="center-aligned border-black"><span></span></td>
+          </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span>MVI (ml)</span></td>
+            <td class="center-aligned border-black"><span *ngIf="tempFeed.mviTotal != null">{{tempFeed.mviTotal | number:'1.0-2'}}</span></td>
+            <td class="center-aligned border-black"><span></span></td>
+          </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span>Cal Gluconate (ml)</span></td>
+            <td class="center-aligned border-black"><span *ngIf="tempFeed.calciumTotal != null">{{tempFeed.calciumTotal | number:'1.0-2'}}</span></td>
+						<td class="center-aligned border-black"><span></span></td>
+				  </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span>Glycophos (ml)</span></td>
+            <td class="center-aligned border-black"><span *ngIf="tempFeed.phosphorousTotal != null">{{tempFeed.phosphorousTotal | number:'1.0-2'}}</span></td>
+						<td class="center-aligned border-black"><span></span></td>
+			    </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span>NaHCO3 (ml)</span></td>
+            <td class="center-aligned border-black"><span *ngIf="tempFeed.hco3Total != null">{{tempFeed.hco3Total | number:'1.0-2'}}</span></td>
+            <td class="center-aligned border-black"><span></span></td>
+          </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span>Magnesium (ml)</span></td>
+            <td class="center-aligned border-black"><span *ngIf="tempFeed.magnesiumTotal != null">{{tempFeed.magnesiumTotal | number:'1.0-2'}}</span></td>
+            <td class="center-aligned border-black"><span></span></td>
+          </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span>Heparin (1000IU/ml)</span></td>
+            <td class="center-aligned border-black"><span></span></td>
+						<td class="center-aligned border-black"><span></span></td>
+			    </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span *ngIf="tempFeed.dextroseConcLow != null">{{tempFeed.dextroseConcLow}}% Dext (ml)</span><span *ngIf="tempFeed.dextroseConcLow == null">Dext 5% (ml)</span></td>
+            <td class="center-aligned border-black"><span *ngIf="tempFeed.dextroseConcLowvolume != null">{{tempFeed.dextroseConcLowvolume | number:'1.0-2'}}</span></td>
+						<td class="center-aligned border-black"><span></span></td>
+			    </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span *ngIf="tempFeed.dextroseConcHigh != null">{{tempFeed.dextroseConcHigh}}% Dext (ml)</span><span *ngIf="tempFeed.dextroseConcHigh == null">Dext 50% (ml)</span></td>
+            <td class="center-aligned border-black"><span *ngIf="tempFeed.dextroseConcHighvolume != null">{{tempFeed.dextroseConcHighvolume | number:'1.0-2'}}</span></td>
+						<td class="center-aligned border-black"><span></span></td>
+				  </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span>Total Volume</span></td>
+            <td class="center-aligned border-black"><span *ngIf="pnVolume != null">{{pnVolume | number:'1.0-2'}}</span></td>
+						<td class="center-aligned border-black"><span *ngIf="pnRate != null">{{pnRate | number:'1.0-2'}}</span></td>
+          </tr>
+          <tr class="border-black">
+            <td class="center-aligned bold border-black"><span>Feeds</span></td>
+            <td class="center-aligned border-black"><span *ngIf="tempFeed.totalfeedMlDay != null">{{(tempFeed.totalfeedMlDay / (tempFeed.duration/tempFeed.feedduration)) | number:'1.0-2'}} ml every {{tempFeed.feedduration}} hrs</span></td>
+						<td class="center-aligned border-black"><span></span></td>
+				  </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 no-padding center-aligned" style="margin-top: 40px;">
+  	<h1 class="bold">Intake Concentrations</h1>
+  </div>
+  <div style="margin-left:140px;">
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12 display-flex">
+      <div class="col-md-6 no-padding table-cell">
+        <span class="bold">Total Calories : </span><span class="padding-10-x">{{energy | number:'1.0-2'}} kcal, {{energy/tempFeed.workingWeight | number:'1.0-2'}} kcal/kg (EN - {{energyEN/tempFeed.workingWeight | number:'1.0-2'}} kcal/kg, PN - {{energyPN/tempFeed.workingWeight | number:'1.0-2'}} kcal/kg)</span>
+      </div>
+      <div class="col-md-6 no-padding table-cell">
+        <span class="bold">Protein : </span><span class="padding-10-x">{{protein | number:'1.0-2'}} gm, {{protein/tempFeed.workingWeight | number:'1.0-2'}} gm/kg (EN - {{proteinEN/tempFeed.workingWeight | number:'1.0-2'}} gm/kg, PN - {{proteinPN/tempFeed.workingWeight | number:'1.0-2'}} gm/kg)</span>
+      </div>
+    </div>
+
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12 display-flex">
+      <div class="col-md-3 no-padding table-cell print-width-3">
+        <span class="bold">Protein Calories : </span><span class="padding-10-x">{{ (proteinEnergyRatio * 100) | number:'1.0-2'}}%</span>
+      </div>
+      <div class="col-md-3 no-padding table-cell print-width-3">
+        <span class="bold">Non Protein Calories : </span><span class="padding-10-x">{{ (100 - (proteinEnergyRatio * 100)) | number:'1.0-2'}}%</span>
+      </div>
+      <div class="col-md-3 no-padding table-cell print-width-3">
+        <span class="bold">Net Conc :</span><span class="padding-10-x" *ngIf="tempFeed.currentDextroseConcentration != null">{{tempFeed.dextroseNetConcentration | number:'1.0-2'}}%</span>
+      </div>
+      <div class="col-md-3 no-padding table-cell print-width-3">
+        <span class="bold">Carb:Fat ratio : </span><span class="padding-10-x"
+          *ngIf="totalCarbohydratesLipidsRatio != null && totalCarbohydratesLipidsRatio != NaN">{{totalCarbohydratesLipidsRatio}}</span>
+      </div>
+    </div>
+
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12 display-flex">
+      <div class="col-md-3 no-padding table-cell print-width-3">
+        <span class="bold">P:E ratio :</span><span class="padding-10-x"
+          *ngIf="proteinEnergyRatio != null && proteinEnergyRatio != NaN && proteinEnergyRatio != 0 && proteinEnergyRatio != Infinity">1 : {{ (1 / proteinEnergyRatio) | number:'1.0-2'}}</span>
+      </div>
+      <div class="col-md-3 no-padding table-cell print-width-3">
+        <span class="bold">PN Osmolarity :</span><span class="padding-10-x" *ngIf="tempFeed.osmolarity != null">{{tempFeed.osmolarity | number:'1.0-2'}} mosmol/L</span>
+      </div>
+      <div class="col-md-3 no-padding table-cell print-width-3">
+        <span class="bold">Final Dextrose Conc :</span><span class="padding-10-x" *ngIf="tempFeed.currentDextroseConcentration != null">{{tempFeed.currentDextroseConcentration | number:'1.0-2'}}%</span>
+      </div>
+    </div>
+ 	</div>
+  <div class="col-md-12 no-padding center-aligned">
+    <h1 class="bold">Deficit as per ESPGHAN Guidelines ({{tempFeed.duration}} hrs)</h1>
+  </div>
+
+
+  <table class="table table-striped table-bordered headed-table border-black desktop-column-20">
+
+    <tr class="border-black">
+      <td class="center-aligned border-black bold"><span></span></td>
+      <td class="center-aligned border-black bold"><span>Deficit</span></td>
+    </tr>
+
+    <tr class="border-black">
+      <td class="center-aligned border-black bold"><span>Energy</span></td>
+			<td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Energy>0 && feedCalculator.deficitCalToShow.parentalIntake.Energy > 0">
+				<span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Energy != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Energy != NaN && feedCalculator.deficitCalToShow.parentalIntake.Energy != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Energy != NaN">
+					{{(feedCalculator.deficitCalToShow.enteralIntake.Energy + feedCalculator.deficitCalToShow.parentalIntake.Energy
+						-
+						(feedCalculator.deficitCalToShow.eshphaganIntake.Energy * durationOffset))
+						| number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Energy>0 && feedCalculator.deficitCalToShow.parentalIntake.Energy <= 0"><span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Energy != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Energy != NaN">
+        {{(feedCalculator.deficitCalToShow.enteralIntake.Energy
+          -
+          (feedCalculator.deficitCalToShow.eshphaganIntake.Energy * durationOffset))
+          | number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Energy<=0"><span *ngIf="feedCalculator.deficitCalToShow.parentalIntake.Energy != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Energy != NaN">
+        {{(feedCalculator.deficitCalToShow.parentalIntake.Energy
+          -
+          (feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Energy * durationOffset))
+          | number:'1.0-2'}}</span></td>
+    </tr>
+
+    <tr class="border-black">
+      <td class="center-aligned border-black bold"><span>Protein</span></td>
+			<td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Protein>0 && feedCalculator.deficitCalToShow.parentalIntake.Protein > 0">
+				<span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Protein != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Protein != NaN && feedCalculator.deficitCalToShow.parentalIntake.Protein != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Protein != NaN">
+					{{(feedCalculator.deficitCalToShow.enteralIntake.Protein + feedCalculator.deficitCalToShow.parentalIntake.Protein
+						-
+						(feedCalculator.deficitCalToShow.eshphaganIntake.Protein * durationOffset))
+						| number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Protein>0 && feedCalculator.deficitCalToShow.parentalIntake.Protein <= 0"><span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Protein != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Protein != NaN">
+        {{(feedCalculator.deficitCalToShow.enteralIntake.Protein
+          -
+          (feedCalculator.deficitCalToShow.eshphaganIntake.Protein * durationOffset))
+          | number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Protein<=0"><span *ngIf="feedCalculator.deficitCalToShow.parentalIntake.Protein != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Protein != NaN">
+        {{(feedCalculator.deficitCalToShow.parentalIntake.Protein
+          -
+          (feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Protein * durationOffset))
+          | number:'1.0-2'}}</span></td>
+    </tr>
+
+    <tr class="border-black">
+      <td class="center-aligned border-black bold"><span>Fat</span></td>
+			<td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Fat>0 && feedCalculator.deficitCalToShow.parentalIntake.Fat > 0">
+				<span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Fat != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Fat != NaN && feedCalculator.deficitCalToShow.parentalIntake.Fat != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Fat != NaN">
+					{{(feedCalculator.deficitCalToShow.enteralIntake.Fat + feedCalculator.deficitCalToShow.parentalIntake.Fat
+						-
+						(feedCalculator.deficitCalToShow.eshphaganIntake.Fat * durationOffset))
+						| number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Fat>0 && feedCalculator.deficitCalToShow.parentalIntake.Fat <= 0"><span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Fat != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Fat != NaN">
+        {{(feedCalculator.deficitCalToShow.enteralIntake.Fat
+          -
+          (feedCalculator.deficitCalToShow.eshphaganIntake.Fat * durationOffset))
+          | number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Fat<=0"><span *ngIf="feedCalculator.deficitCalToShow.parentalIntake.Fat != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Fat != NaN">
+        {{(feedCalculator.deficitCalToShow.parentalIntake.Fat
+          -
+          (feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Fat * durationOffset))
+          | number:'1.0-2'}}</span></td>
+    </tr>
+
+    <tr class="border-black">
+      <td class="center-aligned border-black bold"><span>Vitamin A</span></td>
+			<td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Vitamina>0 && feedCalculator.deficitCalToShow.parentalIntake.Vitamina > 0">
+				<span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Vitamina != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Vitamina != NaN && feedCalculator.deficitCalToShow.parentalIntake.Vitamina != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Vitamina != NaN">
+					{{(feedCalculator.deficitCalToShow.enteralIntake.Vitamina + feedCalculator.deficitCalToShow.parentalIntake.Vitamina
+						-
+						(feedCalculator.deficitCalToShow.eshphaganIntake.Vitamina * durationOffset))
+						| number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Vitamina>0 && feedCalculator.deficitCalToShow.parentalIntake.Vitamina <= 0"><span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Vitamina != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Vitamina != NaN">
+        {{(feedCalculator.deficitCalToShow.enteralIntake.Vitamina
+          -
+          (feedCalculator.deficitCalToShow.eshphaganIntake.Vitamina * durationOffset))
+          | number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Vitamina<=0"><span *ngIf="feedCalculator.deficitCalToShow.parentalIntake.Vitamina != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Vitamina != NaN">
+        {{(feedCalculator.deficitCalToShow.parentalIntake.Vitamina
+          -
+          (feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Vitamina * durationOffset))
+          | number:'1.0-2'}}</span></td>
+    </tr>
+
+    <tr class="border-black">
+      <td class="center-aligned border-black bold"><span>Vitamin D</span></td>
+			<td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Vitamind>0 && feedCalculator.deficitCalToShow.parentalIntake.Vitamind > 0">
+				<span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Vitamind != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Vitamind != NaN && feedCalculator.deficitCalToShow.parentalIntake.Vitamind != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Vitamind != NaN">
+					{{(feedCalculator.deficitCalToShow.enteralIntake.Vitamind + feedCalculator.deficitCalToShow.parentalIntake.Vitamind
+						-
+						(feedCalculator.deficitCalToShow.eshphaganIntake.Vitamind * durationOffset))
+						| number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Vitamind>0 && feedCalculator.deficitCalToShow.parentalIntake.Vitamind <= 0"><span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Vitamind != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Vitamind != NaN">
+        {{(feedCalculator.deficitCalToShow.enteralIntake.Vitamind
+          -
+          (feedCalculator.deficitCalToShow.eshphaganIntake.Vitamind * durationOffset))
+          | number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Vitamind<=0"><span *ngIf="feedCalculator.deficitCalToShow.parentalIntake.Vitamind != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Vitamind != NaN">
+        {{(feedCalculator.deficitCalToShow.parentalIntake.Vitamind
+          -
+          (feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Vitamind * durationOffset))
+          | number:'1.0-2'}}</span></td>
+    </tr>
+
+    <tr class="border-black">
+      <td class="center-aligned border-black bold"><span>Calcium</span></td>
+			<td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Calcium>0 && feedCalculator.deficitCalToShow.parentalIntake.Calcium > 0">
+				<span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Calcium != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Calcium != NaN && feedCalculator.deficitCalToShow.parentalIntake.Calcium != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Calcium != NaN">
+					{{(feedCalculator.deficitCalToShow.enteralIntake.Calcium + feedCalculator.deficitCalToShow.parentalIntake.Calcium
+						-
+						(feedCalculator.deficitCalToShow.eshphaganIntake.Calcium * durationOffset))
+						| number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Calcium>0 && feedCalculator.deficitCalToShow.parentalIntake.Calcium <= 0"><span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Calcium != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Calcium != NaN">
+        {{(feedCalculator.deficitCalToShow.enteralIntake.Calcium
+          -
+          (feedCalculator.deficitCalToShow.eshphaganIntake.Calcium * durationOffset))
+          | number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Calcium<=0"><span *ngIf="feedCalculator.deficitCalToShow.parentalIntake.Calcium != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Calcium != NaN">
+        {{(feedCalculator.deficitCalToShow.parentalIntake.Calcium
+          -
+          (feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Calcium * durationOffset))
+          | number:'1.0-2'}}</span></td>
+    </tr>
+
+    <tr class="border-black">
+      <td class="center-aligned border-black bold"><span>Phosphorous</span></td>
+			<td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Phosphorous>0 && feedCalculator.deficitCalToShow.parentalIntake.Phosphorous > 0">
+				<span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Phosphorous != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Phosphorous != NaN && feedCalculator.deficitCalToShow.parentalIntake.Phosphorous != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Phosphorous != NaN">
+					{{(feedCalculator.deficitCalToShow.enteralIntake.Phosphorous + feedCalculator.deficitCalToShow.parentalIntake.Phosphorous
+						-
+						(feedCalculator.deficitCalToShow.eshphaganIntake.Phosphorous * durationOffset))
+						| number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Phosphorus>0 && feedCalculator.deficitCalToShow.parentalIntake.Phosphorous <= 0"><span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Phosphorus != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Phosphorus != NaN">
+        {{(feedCalculator.deficitCalToShow.enteralIntake.Phosphorus
+          -
+          (feedCalculator.deficitCalToShow.eshphaganIntake.Phosphorus * durationOffset))
+          | number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Phosphorus<=0"><span *ngIf="feedCalculator.deficitCalToShow.parentalIntake.Phosphorus != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Phosphorus != NaN">
+        {{(feedCalculator.deficitCalToShow.parentalIntake.Phosphorus
+          -
+          (feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Phosphorus * durationOffset))
+          | number:'1.0-2'}}</span></td>
+    </tr>
+
+    <tr class="border-black">
+      <td class="center-aligned border-black bold"><span>Iron</span></td>
+			<td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Iron>0 && feedCalculator.deficitCalToShow.parentalIntake.Iron > 0">
+				<span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Iron != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Iron != NaN && feedCalculator.deficitCalToShow.parentalIntake.Iron != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Iron != NaN">
+					{{(feedCalculator.deficitCalToShow.enteralIntake.Iron + feedCalculator.deficitCalToShow.parentalIntake.Iron
+						-
+						(feedCalculator.deficitCalToShow.eshphaganIntake.Iron * durationOffset))
+						| number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Iron>0 && feedCalculator.deficitCalToShow.parentalIntake.Iron <= 0"><span *ngIf="feedCalculator.deficitCalToShow.enteralIntake.Iron != NaN && feedCalculator.deficitCalToShow.eshphaganIntake.Iron != NaN">
+        {{(feedCalculator.deficitCalToShow.enteralIntake.Iron
+          -
+          (feedCalculator.deficitCalToShow.eshphaganIntake.Iron * durationOffset))
+          | number:'1.0-2'}}</span></td>
+      <td class="center-aligned border-black bold" *ngIf = "feedCalculator.deficitCalToShow.enteralIntake.Iron<=0"><span *ngIf="feedCalculator.deficitCalToShow.parentalIntake.Iron != NaN && feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Iron != NaN">
+        {{(feedCalculator.deficitCalToShow.parentalIntake.Iron
+          -
+          (feedCalculator.deficitCalToShow.eshphaganParenteralIntake.Iron * durationOffset))
+          | number:'1.0-2'}}</span></td>
+    </tr>
+  </table>
+</div>

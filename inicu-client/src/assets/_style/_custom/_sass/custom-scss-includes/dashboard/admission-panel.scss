@@ -1,0 +1,92 @@
+.admission-panel{
+    $borderColor: $gray;
+    display: table; width:100%; overflow: hidden; clear: both; border-style: solid; border-color:$borderColor; border-width: 1px; @include makeMixin(box-shadow , 0 0 2px lighten($gray,10%)); @include makeMixin(border-radius , 5px);
+    .left-panel{display: table-cell;  padding: 20px 10px 20px 20px; @include grayWhiteGradient(); min-height: 100%; width: 200px; vertical-align: top; }
+    
+    .mothers-box{
+        padding-right: 100px; position: relative;
+        &:before{content:""; display: block;position: absolute; right:0px; top:20px; bottom:20px; border-left:solid 1px lighten($gray,10%);}
+    }
+    .fathers-box{
+        padding-left:100px; position: relative;
+    }
+    .mothers-box , .fathers-box{ .input-boxes-cont{margin:15px 0px;}} 
+    
+    .accordion{
+        border:solid 1px lighten($gray,10%); margin-top:20px; margin-bottom:20px;
+        .expanded-content{padding:10px;}
+    }
+}
+
+    .right-panel{
+        $borderColor: $gray;
+        display: table-cell; border-left-style:inherit; overflow: auto;  border-left-color:inherit; border-left-width:inherit; padding: 20px; background-color: $white; min-height: 100%; vertical-align: top;
+        .input-boxes-cont{
+            display: inline-block; padding-left:5px; padding-right: 5px; margin:10px 0px; overflow:auto;
+            .input-label{display: block; /* margin-bottom: 5px;*/ margin:0;}
+            .input-description{margin: 5px 0px;}
+            .input{display: block;  @include makeMixin(border-radius , 2px);}
+            &.only-text{
+                margin:15px 0px;
+                input,select,textarea{
+                
+                    &:disabled{border-color:transparent; cursor: default; background-color: transparent; padding-left:0;}
+               }
+                input[type=number]:disabled{width:50px;}
+                .input:disabled + .input-group-icon{border-color:transparent; }
+            }
+        }
+        
+        
+    }
+    
+.static-datebox{
+    overflow: auto;
+    .date-label{display: inline-block; float: left; border:solid 1px $gray; padding: 14px 15px;  @include grayWhiteGradient();  color:lighten($darkGray,25%); font-size:14px; @include makeMixin(border-radius , 4px); }
+    .date-icon{display: inline-block; float: left; margin-top: 5px; margin-left: 10px;}
+}
+
+.ordered-list-circular{
+    display:block; position: relative; list-style-type: none; clear: both; padding: 0;
+    li{
+        counter-increment: subsection; margin-top:10px; position: relative; cursor: pointer;  padding:0;
+        
+        a{
+            display:inline-block; width:100%; color:$gray; padding:3px 0px; @include makeMixin(transition , color ease-in .3s);
+            &:before{
+                content: counter(subsection); width:35px; height: 35px; border:solid 2px; display: inline-block; text-align: center; @include makeMixin(border-radius , 50%); color:$gray; padding: 8px; @include makeMixin(box-sizing , border-box); margin-right:10px; top:2px; position: relative; background-color: lighten($gray,30%);z-index:100; @include makeMixin(transition , color ease-in .3s); float:left;
+            }
+            .linkText{position: relative; top:12px;}
+        }
+        
+        &.active, &:hover{   
+            a{
+                color:$black;
+                &:before{color:$black;}
+            }
+        }
+        &.current{
+            a{
+                color:$blue;
+                &:before{color:$blue;}
+            }
+        }
+        &:after{content:""; display: block; position: absolute; height: 30px; border-right: 1px; border-right:solid 1px $gray; top:30px; left:17px; z-index:90;}
+        &:last-child{&:after{content:none;}}
+    }
+}
+
+.white-cross-cont{display: inline-block;float: right; @include makeMixin(border-radius , 50%); background-color: darken($gray,20%); margin:10px 0px 0px 0px; height: 50px; width: 50px; cursor: pointer; @include makeMixin(transition , transform ease-in  .3s); padding: 5px; @include makeMixin(box-shadow , 0 0 10px darken($gray,5%));
+    &:hover{@include makeMixin(transform , rotate(90deg));}
+}
+
+.accordion{
+    clear: both;
+    .accordion-title{display: block; clear: both;}
+    .expanded-content{display: none; overflow: auto; clear: both;}
+    &.active{
+        .expanded-content{display: block;}
+    }
+    .expand-button{ position: relative; float: right; margin-right: 10px; position: relative; top:-9px;}
+    
+}

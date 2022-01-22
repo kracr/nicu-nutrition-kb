@@ -1,0 +1,78 @@
+
+ALTER TABLE apollo.dashboard_device_monitor_detail ADD COLUMN ra character varying(50);
+ALTER TABLE apollo.dashboard_device_monitor_detail ADD COLUMN pls character varying(50);
+ALTER TABLE apollo.dashboard_device_monitor_detail ADD COLUMN cvp character varying(50);
+
+ALTER TABLE apollo.device_monitor_detail ADD COLUMN ra character varying(50);
+ALTER TABLE apollo.device_monitor_detail ADD COLUMN pls character varying(50);
+ALTER TABLE apollo.device_monitor_detail ADD COLUMN cvp character varying(50);
+
+
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_cpap character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_insp_time character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_hfo_delta character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_hfo_mean character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_hfo_rate character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN ventilation_mode character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_termination_sensitivity character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_breath_trig_threshold character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_waveshape character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_patient_leak_alarm character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_apnoea_alarm character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_low_pressure_alarm character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_cycle_fail_alarm character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_high_pressure_alarm character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_low_tidal_vol_alarm character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_high_tidal_vol_alarm character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_low_minute_vol_alarm character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN set_high_minute_vol_alarm character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN measured_total_bpm character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN measured_cpap character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN measured_insp_volume character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN measured_exp_volume character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN measured_pip character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN measured_fio2 character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN measured_hfo_delta_p character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN measured_hfo_mean character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN trigger_count character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN measure_leak character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN measured_resistance character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN measured_compliance character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN measured_c20 character varying(50);
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD COLUMN current_alarm character varying(50);
+
+
+
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_cpap character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_insp_time character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_hfo_delta character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_hfo_mean character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_hfo_rate character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN ventilation_mode character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_termination_sensitivity character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_breath_trig_threshold character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_waveshape character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_patient_leak_alarm character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_apnoea_alarm character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_low_pressure_alarm character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_cycle_fail_alarm character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_high_pressure_alarm character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_low_tidal_vol_alarm character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_high_tidal_vol_alarm character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_low_minute_vol_alarm character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN set_high_minute_vol_alarm character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN measured_total_bpm character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN measured_cpap character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN measured_insp_volume character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN measured_exp_volume character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN measured_pip character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN measured_fio2 character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN measured_hfo_delta_p character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN measured_hfo_mean character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN trigger_count character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN measure_leak character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN measured_resistance character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN measured_compliance character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN measured_c20 character varying(50);
+ALTER TABLE apollo.device_ventilator_detail ADD COLUMN current_alarm character varying(50);
+

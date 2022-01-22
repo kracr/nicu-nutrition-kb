@@ -1,0 +1,57 @@
+  <div class="container" style="width: 359mm;background-color: #fff;">
+     <!--  <div class="col-md-12 center-aligned padding-10-y">
+        <h1 class="bold" *ngIf="growthChart=='true'">Growth Chart ({{today | date:'dd-MM-yyyy'}})</h1>
+        <h1 class="bold" *ngIf="growthChart=='false'">InterGrowth Chart ({{today | date:'dd-MM-yyyy'}})</h1>
+      </div>
+ -->
+        <div class="col-md-12 table full margin-10-y">
+          <div class="col-md-4 table-cell">
+            <span class="bold">UHID :</span><span *ngIf="childData.uhid != null">{{childData.uhid}}</span>
+          </div>
+         <!--  <div class="col-md-4 table-cell">
+            <span class="bold">Baby Name : </span><span *ngIf="childData.name != null">{{childData.name}} <span
+				*ngIf="childData.babyNumber != null">{{childData.babyNumber}}</span></span>
+          </div> -->
+          <!-- <div class="col-md-4 table-cell">
+            <span class="bold">Birth Weight :</span><span *ngIf="childData.birthWeight != null">{{childData.birthWeight}}
+				gm</span>
+          </div> -->
+          <div class="col-md-4 table-cell">
+            <span class="bold">Gender : </span><span *ngIf="childData.uhid != null">{{childData.gender}}</span>
+          </div>
+          <div class="col-md-4  table-cell">
+            <span class="bold">CGA : </span><span class="padding-10-x" *ngIf="gestationWeeks != null">{{gestationWeeks}}
+					  <sup *ngIf="gestationDays != null"> +
+						{{gestationDays}}</sup>
+			       </span>
+          </div>
+          <!-- <div class="col-md-4 table-cell">
+            <span class="bold">DOB : </span><span *ngIf="childData.dob != null">{{childData.dob |
+			      	date:'dd-MM-yyyy'}}</span>
+          </div> -->
+
+      </div>
+
+    <div>
+      <div class="clear overflow-auto desktop-column-20" style="overflow: hidden;text-align:center;" *ngIf="growthChart=='true'">
+        <div style="padding-left: 2%; padding-right: 4%">
+          <div class="desktop-column-20 padding-0-x force-left" style=" padding-bottom: 2%">
+            <div [chart]="chartGrowthOne" id="combinedContainer" style="height: 1380px; width: 100%;border-style:solid;border:1px;overflow: hidden"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="clear overflow-auto desktop-column-20" style="overflow: hidden;text-align:center;" *ngIf="growthChart == 'false'">
+      <div style="padding-left: 2%; padding-right: 4%">
+        <div class="desktop-column-20 padding-0-x force-left" style=" padding-bottom: 2%">
+          <div [chart]="chartOne" id="interCombinedContainer" style="height: 1380px; width: 100%;border-style:solid;border:1px;overflow: hidden"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 center-aligned padding-10-y" style="margin-top: -55px;">
+        <h1 class="bold" *ngIf="growthChart=='true'">Growth Chart ({{today | date:'dd-MM-yyyy'}})</h1>
+        <h1 class="bold" *ngIf="growthChart=='false'">InterGrowth Chart ({{today | date:'dd-MM-yyyy'}})</h1>
+    </div>
+
+
+  </div>

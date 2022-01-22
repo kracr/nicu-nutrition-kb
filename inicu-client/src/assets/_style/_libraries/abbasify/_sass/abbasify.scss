@@ -1,0 +1,27 @@
+
+/* Colors' Variables */
+@import "abbasify-files/colors.scss";
+
+/* Fonts */
+@import "abbasify-files/roboto-font.scss";
+
+/* Mixins for the repetetion of code */
+@import "abbasify-files/mixins.scss";
+
+/* Default styles applied to the elements */
+@import "abbasify-files/inputs.scss";
+
+/* Default styles applied to the elements */
+@import "abbasify-files/default.scss";
+
+/* classes that are extended throughout the css*/
+@import "abbasify-files/extendable-classes.scss";
+
+/* Griding of Boxes*/
+@import "abbasify-files/griding.scss";
+
+/* Styling the tables*/
+@import "abbasify-files/tables.scss";
+
+/* Styling the progress bars*/
+@import "abbasify-files/progress-bars.scss";

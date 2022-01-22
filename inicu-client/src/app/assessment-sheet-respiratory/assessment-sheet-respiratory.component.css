@@ -1,0 +1,92 @@
+.padding-2-y
+{
+	padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid lightgrey;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 58px;
+}
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+	.assessment{
+		width: 19.67%;
+	}
+	.owl-timer-wrapper .owl-timer-input{
+		width: 60%;
+		height: 110%
+	}
+	.calender{
+		width: 70%;
+	}
+	.down-score{
+		margin-top: -16px;
+	}
+	.treatment{
+		padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 2px !important;
+	}
+	.clinical-assessment{
+	width: 24%;
+	}
+	.other{
+		margin-top: 20px;
+	}
+	.colfour{
+		width: 235px;
+	}
+	.colnine{
+		padding-right: 0px;
+	}
+	.colseven{
+		position: relative;
+		top: -200px !important;
+	}
+	.date-assesment{
+		margin-left: -15px;
+		width: 230px;
+	}
+	.firstApnea{
+		margin-left: -45px;
+	}
+	.episode{
+		position: absolute;
+		bottom: -60px;
+		right: 0px;
+	}
+	.pphn-episode{
+		position: relative;
+		bottom: 210px;
+	}
+	.Surfactant{
+		width: 12%;
+	}
+	.chestTube{
+		width: 20%;
+	}
+	.rightButton{
+		padding: 7px 12px;
+	}
+	.leftTube{
+		width: 45%;
+	}
+	.respiratory-support-popup{
+		width: 855px !important;
+	}
+	.RDSEntryType{
+		width: 110%;
+	}
+	.rds{
+		margin-left: -12px;
+	}
+	.apneadateandtime{
+		margin-left: -12px;
+		width: 22%;
+	}
+	.apneaEntryType{
+		width: 19%;
+		position: absolute;
+		right: -28px;
+	}
+
+}

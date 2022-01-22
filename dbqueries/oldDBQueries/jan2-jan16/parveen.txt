@@ -1,0 +1,8 @@
+ALTER TABLE kdah.nursing_vitalparameters
+ALTER COLUMN left_probe_site TYPE character varying(200) ;
+
+ALTER TABLE kdah.nursing_vitalparameters
+ALTER COLUMN right_probe_site TYPE character varying(200) ;
+
+
+

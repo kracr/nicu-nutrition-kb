@@ -1,0 +1,46 @@
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+.procedure{
+  width: 10%;
+}
+.surgery{
+  width: 13%;
+}
+.hspda{
+  width: 11%;
+}
+.immune{
+  width: 21%;
+}
+.symptomatic{
+  width: 30%;
+}
+.ventilated{
+  width: 60%;
+}
+.apneicspell{
+  margin-left: 12px;
+  width: 30%;
+}
+.international{
+  width: 23%;
+}
+.owl-timer-wrapper .owl-timer-input{
+  height: 110%;
+}
+.causesslect{
+  width: 31%;
+}
+.vitals{
+  width: 22%;
+}
+.summaryblood{
+  position: absolute;
+  bottom: 72px;
+}
+.bloodProduct{
+  width: 18%;
+}
+.bloodproductsummary{
+  margin-top: 52px;
+}
+}

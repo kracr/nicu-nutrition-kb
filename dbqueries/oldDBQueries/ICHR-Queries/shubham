@@ -1,0 +1,96 @@
+alter table apollo.nursing_vitalparameters add column round_consultants character varying(50);
+alter table apollo.nursing_vitalparameters add column round_residents character varying(50);
+alter table apollo.nursing_vitalparameters add column round_specialists character varying(50);
+alter table apollo.nursing_vitalparameters add column assessments_consultants character varying(50);
+alter table apollo.nursing_vitalparameters add column assessments_residents character varying(50);
+alter table apollo.nursing_vitalparameters add column assessments_specialists character varying(50);
+
+
+
+
+CREATE SEQUENCE apollo.satisfaction_form_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE apollo.satisfaction_form_seq
+  OWNER TO postgres;
+
+
+CREATE OR REPLACE FUNCTION apollo.satisfaction_form_creationtime()
+  RETURNS trigger AS
+$BODY$
+    BEGIN
+        NEW.creationtime := current_timestamp;
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION apollo.satisfaction_form_creationtime()
+  OWNER TO postgres;
+
+
+
+CREATE OR REPLACE FUNCTION apollo.satisfaction_form_modificationtime()
+  RETURNS trigger AS
+$BODY$
+    BEGIN
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION apollo.satisfaction_form_modificationtime()
+  OWNER TO postgres;
+
+
+CREATE TABLE apollo.satisfaction_form
+(
+  satisfactionformid bigint NOT NULL DEFAULT nextval('apollo.satisfaction_form_seq'::regclass),
+  creationtime timestamp with time zone NOT NULL,
+  modificationtime timestamp with time zone NOT NULL,
+  uhid character varying(50) NOT NULL,
+  loggeduser character varying(100) NOT NULL,
+  type character varying(50),
+  experience integer,
+  easeofuse integer,
+  quality integer,
+  information integer,
+  CONSTRAINT satisfaction_form_pkey PRIMARY KEY (satisfactionformid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE apollo.satisfaction_form
+  OWNER TO postgres;
+
+
+CREATE TRIGGER set_creationtime
+  BEFORE INSERT
+  ON apollo.satisfaction_form
+  FOR EACH ROW
+  EXECUTE PROCEDURE apollo.satisfaction_form_creationtime();
+
+CREATE TRIGGER set_modificationtime
+  BEFORE UPDATE
+  ON apollo.satisfaction_form
+  FOR EACH ROW
+  EXECUTE PROCEDURE apollo.satisfaction_form_modificationtime();
+
+
+alter table apollo.baby_detail add column gestation_quartile boolean;
+alter table apollo.baby_detail add column energy_deviation boolean;
+alter table apollo.baby_detail add column protein_deviation boolean;
+alter table apollo.baby_detail add column medication_deviation integer;
+
+
+alter table apollo.baby_detail add column monoamniotic boolean;
+alter table apollo.antenatal_history_detail add column iugr boolean;
+
+alter table apollo.birth_to_nicu add column delayed_clamping character varying(10);
+alter table apollo.birth_to_nicu add column chord_duration integer;
+alter table apollo.birth_to_nicu add column duration_unit_chord character varying(10);

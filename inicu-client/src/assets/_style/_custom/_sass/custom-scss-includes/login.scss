@@ -1,0 +1,31 @@
+.body-login{background-image: url(../../../_images/login.png); background-repeat: no-repeat; background-position: 0px 0px; background-size: 100%; min-height: 100%;}
+
+
+.login-box{
+    display: block; position:  relative; background-color: $white; width: 480px; margin:100px auto 0px auto; @include makeMixin(border-radius,10px); @include makeMixin(box-shadow , 0 0 10px lighten($black,35%)); 
+    
+    .logo-h1-hidden{width:0px; height: 0px; overflow: hidden; position: absolute;}
+    a{
+        display: block; overflow: auto; text-decoration: none; text-align:center; border-bottom:solid 1px lighten($gray,10%); padding:20px 0px;
+        .logo-items-cont{display:inline-block;}
+        .logo-pic{display: inline-block; float:left;}
+        .logo-desc{display: inline-block; font-size: 60px; float:left; margin-top:30px; margin-left:20px;}
+    }
+    
+    .welcome{font-size:25px; color:$darkGray; margin:15px 0px 15px 0px;}
+    
+    .controls-cont{
+        padding:0px 50px 50px 50px;
+        .input-group{margin:5px 0px; padding:10px;}
+        .input-group-icon{top:10px; left:10px; bottom:0px;}
+        
+        input{
+            color:darken($gray,25%); border-color:$gray; padding-left:55px; height:50px; /* @include makeMixin(transition , all .3s);*/
+            &:focus{/* box-shadow: 0 0 8px #a1dbf5; border-color: #129fe6; */ border-color: #129fe6;}
+        }
+        
+        .login-button{text-transform: uppercase; padding-left:90px; padding-right:90px;}
+    }
+    
+    
+}

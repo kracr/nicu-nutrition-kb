@@ -1,0 +1,24 @@
+.doctor-check-boxes-cont{
+    padding-left:20px; padding-right: 20px; margin-top: 5px;
+    .label-checkbox-after{display: block;margin-bottom: 5px;}
+}
+
+.input-group-small{
+    //.input-group-icon{height: 22px;}
+}
+
+.doctor-notes-table{
+    .table-cell{
+        vertical-align: middle; padding:2px 10px;
+        input{margin-bottom: 0; margin-top: 0;}
+        .input-group{margin-top:5px;}
+    }
+}
+
+.neg-pos-buttons{
+    display: inline-block; position: relative; @include makeMixin(border-radius, 3px); border:solid 1px lighten($gray,10%); vertical-align: middle;
+    .neg-button, .pos-button {display:inline-block;position: relative; font-size: 20px; color:$black; padding:1px; height:25px; width:25px; text-align: center; height:23px; width: 25px; float: left; }
+    
+    .neg-button{border-right: solid 1px lighten($gray,10%);}
+    .pos-button{}
+}

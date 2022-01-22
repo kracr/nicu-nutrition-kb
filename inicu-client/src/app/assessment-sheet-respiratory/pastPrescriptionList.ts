@@ -1,0 +1,34 @@
+import { StopTime } from './stopTime';
+export class PastPrescriptionList{
+  babyPresid: number;
+  medid: string;
+  comments: string;
+  creationtime: any;
+  dose: number;
+  enddate: any;
+  frequency: string;
+  medicationtype: string;
+  medicinename: string;
+  modificationtime: any;
+  route: string;
+  startdate: any;
+  starttime: any;
+  startTimeObject: any;
+  uhid: string;
+  loggeduser: string;
+  isactive: boolean;
+  calculateddose: string;
+  dilusion: any;
+  frequencyInt: any;
+  medicationTypeStr: any;
+  medicationFreqStr: any;
+  eventid: any;
+  eventname: any;
+  isInEditMode: boolean;
+  stopTime: StopTime;
+  bolus: any;
+  freq_type: any;
+  dilution_type: any;
+  dilution_volume: any;
+  rate: any;
+}

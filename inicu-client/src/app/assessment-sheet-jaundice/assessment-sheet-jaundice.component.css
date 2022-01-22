@@ -1,0 +1,44 @@
+.padding-2-y
+{
+	padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid lightgrey;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 58px;
+}
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+.clinical-assessment{
+width: 24%;
+}
+.owl-timer-wrapper .owl-timer-input{
+	width: 60%;
+	height: 110%
+}
+.ass-container{
+	margin-top: 45px;
+}
+.jaundice-active-episode{
+	position: relative;
+	bottom: 165px;
+}
+.riskfactor{
+	width: 30%;
+}
+.tcb{
+	width: 122%;
+}
+.transfusion{
+	margin-top: 15px;
+	width: 44%;
+}
+#bindScorePopup{
+	width: 90%;
+}
+.bind-score-list{
+	margin-left: -22px;
+}
+.inline{
+	padding-left: 22px;
+}
+}

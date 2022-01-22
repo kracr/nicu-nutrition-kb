@@ -1,0 +1,7 @@
+alter  table apollo.sa_infection_sepsis
+    add column rs_others varchar(50),
+    add column rs_shock varchar(20),
+    add column rs_breathing_difficulty varchar(20),
+    add column rs_tachypnea varchar(20),
+    add column rs_fever varchar(20),
+    add column rs_respiratory_distress(20);

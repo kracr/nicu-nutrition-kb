@@ -1,0 +1,102 @@
+<div *ngIf="printRopList != null && printRopList != undefined && printRopList != ''">
+  <div class="col-md-12 no-padding table full margin-5-y print-width-12 font-size">
+    <div class="col-md-4 no-padding table-cell print-width-4">
+      <span class="bold print-text-nursing print-padding">UHID :</span><span class="padding-10-x print-text-nursing " 
+        *ngIf="childData.uhid != null">{{childData.uhid}}</span>
+    </div>
+    <div class="col-md-4 no-padding table-cell print-width-4">
+      <span class="bold print-text-nursing print-padding">Baby Name :</span><span class="padding-10-x print-text-nursing" *ngIf="childData.name != null">{{childData.name}}</span>
+    </div>
+    <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold print-text-nursing print-padding">GA at Birth :</span>
+        <span class="print-text-nursing">{{gestWeek}}<sup *ngIf="gestationDays != null"> +{{gestDays}} </sup></span>
+    </div>
+  </div>
+  <div class="col-md-12 no-padding table full margin-5-y print-width-12 font-size">
+      <div class="col-md-4 no-padding table-cell print-width-4">
+          <span class="bold print-text-nursing print-padding">Birth Wt :</span>
+          <span class="padding-10-x print-text-nursing" *ngIf="childData.uhid != null">{{childData.birthWeight}} gm</span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+          <span class="bold print-text-nursing print-padding">Date of Exam :</span>
+          <span class="padding-10-x print-text-nursing">{{dateAndTimeOfScreening | date: 'dd/MM/yyyy'}}</span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+          <span class="bold print-text-nursing print-padding">Adjusted GA :</span>
+        <span class="print-text-nursing"*ngIf="gestWeek != null">{{gestationWeeks}}<sup *ngIf="gestDays != null"> +{{gestationDays}} </sup></span>
+      </div> 
+  </div>
+  <div class="col-md-12 no-padding table full margin-5-y print-width-12 font-size" >
+    <div class="col-md-4 no-padding table-cell print-width-4">
+        <div class="col-md-12 left-aligned no-padding">
+            <span class="bold print-text-nursing print-padding">Opthalmologist :</span><span class="padding-10-x print-text-nursing" *ngIf="printRopList.ophthalmologist != null">{{printRopList.ophthalmologist}}</span>
+        </div>
+    </div>
+  </div>
+  <div class="col-md-12 no-padding table full margin-5-y print-width-12 font-size" style="margin-top:50px">
+    <span class="bold print-text-nursing print-padding">Examination :</span>
+  </div>
+  <div class="col-md-12 no-padding table full margin-5-y print-width-12" style="margin-top:30px;">
+    <!-- <div class="col-md-2 no-padding table-cell print-width-4">
+        <span class="bold print-text-nursing"></span>
+    </div> -->
+    <div class="no-padding table-cell print-width-12">
+      <img class="eyesimg" src="/assets/_images/eyes.jpg"/>
+    </div>
+    <!-- <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold print-text-nursing"></span>
+    </div> -->
+
+  </div>
+  <div class="col-md-12 no-padding table full margin-5-y print-width-12 font-size" style="display:flex;">
+    <div class="col-md-4 no-padding table-cell print-width-4" style="margin-top: 4vh;">
+      <div class="col-md-12">
+          <span class="bold print-text-nursing print-padding"><u>Right Eye :</u></span>
+      </div>
+      <div class="col-md-12" style="margin-top:12px;">
+          <span class="bold print-text-nursing print-padding">Zone :</span> <span class="padding-10-x print-text-nursing" *ngIf="printRopList.rop_right_zone!=null">{{printRopList.rop_right_zone}}</span>
+      </div>
+      <div class="col-md-12"> 
+          <span class="bold print-text-nursing print-padding">Stage :</span><span class="padding-10-x print-text-nursing" *ngIf="printRopList.rop_right_stage!=null">{{printRopList.rop_right_stage}}</span>
+      </div>
+      <div class="col-md-12" *ngIf="rop_right_plus!=null" >
+          <span class="bold print-text-nursing print-padding">Plus Disease :</span><span class="padding-10-x print-text-nursing">{{rop_right_plus}}</span>
+      </div>
+    </div>
+    <div class="col-md-4 no-padding table-cell print-width-4">
+      <div class="col-md-12" style="margin-top:12px;"><span class="bold print-text-nursing print-padding"><u>Summary Diagnosis:</u></span></div>
+      <div class="col-md-12" style="margin-top:16px;"><span class="print-text-nursing print-padding"><label for="mutureRetina">1. Muture Retina</label></span></div>
+      <div class="col-md-12"><span class="print-text-nursing print-padding"><label for="ImutureNoRop">2. Imuture, No Rop</label></span></div>
+      <div class="col-md-12"><span class="print-text-nursing print-padding"><label for="rop">3. Rop</label></span></div>
+    </div>
+    <div class="col-md-4 no-padding table-cell print-width-4" style="margin-top: 4vh;">
+      <div class="col-md-12">
+          <span class="bold print-text-nursing print-padding"><u>Left Eye :</u></span>
+      </div>
+      <div class="col-md-12" style="margin-top:12px;">
+          <span class="bold print-text-nursing print-padding">Zone :</span> <span class="padding-10-x print-text-nursing" *ngIf="printRopList.rop_left_zone!=null">{{printRopList.rop_left_zone}}</span>
+      </div>
+      <div class="col-md-12">
+          <span class="bold print-text-nursing print-padding">Stage :</span><span class="padding-10-x print-text-nursing" *ngIf="printRopList.rop_left_stage!=null">{{printRopList.rop_left_stage}}</span>
+      </div>
+      <div class="col-md-12" *ngIf="rop_left_plus!=null">
+          <span class="bold print-text-nursing print-padding">Plus Disease :</span><span class="padding-10-x print-text-nursing">{{rop_left_plus}}</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-12 no-padding table full margin-5-y print-width-12 font-size" style="margin-top:30px;">
+      <span class="bold print-text-nursing print-padding">Comments :</span><span class="padding-10-x print-text-nursing" *ngIf="printRopList.reassess_comments != null">{{printRopList.reassess_comments}}</span>
+  </div>
+  <div class="col-md-12 no-padding table full margin-5-y print-width-12 font-size" style="margin-top:20px;">
+      <span class="bold print-text-nursing print-padding">Plan Repeat Examination In :</span><span class="padding-10-x print-text-nursing" *ngIf = "printRopList.reassess_date != null">{{printRopList.reassess_date | date: 'dd/MM/yyyy'}}</span>
+  </div>
+  <div class="col-md-12 no-padding table full margin-5-y print-width-12 font-size" style="margin-top:20px;">
+      <span class="bold print-text-nursing print-padding">Examined By :</span><span class="padding-10-x print-text-nursing" *ngIf = "printRopList.ophthalmologist != null">{{printRopList.ophthalmologist}}</span>
+  </div>
+  <div class="col-md-12 no-padding table full margin-5-y print-width-12 font-size" style="margin-top:20px;">
+      <span class="bold print-text-nursing print-padding">Signature :</span><span class="padding-10-x print-text-nursing">................</span>
+  </div>
+</div>
+
+

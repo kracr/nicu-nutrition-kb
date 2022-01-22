@@ -1,0 +1,91 @@
+CREATE SEQUENCE kdah.edited_doctor_notes_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE kdah.edited_doctor_notes_seq
+  OWNER TO postgres;
+
+
+CREATE OR REPLACE FUNCTION kdah.edited_doctor_notes_creationtime()
+    RETURNS trigger AS
+  $BODY$
+      BEGIN
+          NEW.creationtime := current_timestamp;
+          NEW.modificationtime := current_timestamp;
+          RETURN NEW;
+      END;
+  $BODY$
+    LANGUAGE plpgsql VOLATILE
+    COST 100;
+
+ALTER FUNCTION kdah.edited_doctor_notes_creationtime()
+    OWNER TO postgres;
+
+
+CREATE OR REPLACE FUNCTION kdah.edited_doctor_notes_modificationtime()
+  RETURNS trigger AS
+$BODY$
+    BEGIN
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION kdah.edited_doctor_notes_modificationtime()
+  OWNER TO postgres;
+
+
+
+CREATE TABLE kdah.edited_doctor_notes(
+  edited_note_id bigint default nextval('kdah.edited_doctor_notes_seq'::regclass) not null
+        constraint edited_doctor_pkey
+        primary key,
+  uhid character varying(50),
+  progress_notes text,
+  logged_user varchar(50),
+  branchname varchar(100),
+  entrydate date,
+  creationtime timestamp,
+  modificationtime timestamp)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE kdah.edited_doctor_notes
+  OWNER TO postgres;
+
+-- Trigger: set_creationtime on kdah.edited_doctor_notes
+
+-- DROP TRIGGER set_creationtime ON kdah.edited_doctor_notes;
+
+CREATE TRIGGER set_creationtime
+  BEFORE INSERT
+  ON kdah.edited_doctor_notes
+  FOR EACH ROW
+  EXECUTE PROCEDURE kdah.edited_doctor_notes_creationtime();
+
+-- Trigger: set_modificationtime on kdah.edited_doctor_notes
+
+-- DROP TRIGGER set_modificationtime ON kdah.edited_doctor_notes;
+
+CREATE TRIGGER set_modificationtime
+  BEFORE UPDATE
+  ON kdah.edited_doctor_notes
+  FOR EACH ROW
+  EXECUTE PROCEDURE kdah.edited_doctor_notes_modificationtime();
+
+
+
+
+
+  -- updated on 5th Feb
+  alter table kdah.antenatal_steroid_detail
+  	add second_dose_entrytime timestamp with time zone;
+
+  alter table kdah.antenatal_steroid_detail
+  	add third_dose_entrytime timestamp with time zone;
+
+  alter table kdah.antenatal_steroid_detail
+  	add fourth_dose_entrytime timestamp with time zone;

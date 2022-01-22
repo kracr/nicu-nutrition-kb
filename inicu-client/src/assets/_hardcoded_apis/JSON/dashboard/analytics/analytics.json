@@ -1,0 +1,10 @@
+{
+	"bedOccupancy": {
+		"currentBedVaccent": 20,
+		"currentBedOccupied": 80,
+		"weeklyBedVaccent": 30,
+		"weeklyBedOccupied": 70,
+		"monthlyBedVaccent": 40,
+		"monthlyBedOccupied": 60
+	}
+}

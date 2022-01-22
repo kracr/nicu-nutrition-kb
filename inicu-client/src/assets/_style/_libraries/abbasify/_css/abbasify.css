@@ -1,0 +1,2835 @@
+/* Colors' Variables */
+/* Fonts */
+@font-face {
+  font-family: 'Roboto-Light';
+  font-style: normal;
+  font-weight: 100;
+  src: url(.../../../../../../_fonts/roboto/from-harmeet/Roboto-Light.ttf);
+                                                                         /* local('Roboto'), local('Roboto-Regular'), url(../../../roboto/v15/CWB0XYA8bzo0kSThX0UTuA.woff2) format('woff2');
+unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+    */
+}
+@font-face {
+  font-family: 'Roboto-Regular';
+  font-style: normal;
+  font-weight: 400;
+  src: url(.../../../../../../_fonts/roboto/from-harmeet/Roboto-Regular.ttf);
+                                                                           /* local('Roboto'), local('Roboto-Regular'), url(../../../roboto/v15/CWB0XYA8bzo0kSThX0UTuA.woff2) format('woff2');
+unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+    */
+}
+/* cyrillic-ext */
+/*
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(../../../roboto/v15/ek4gzZ-GeXAPcSbHtCeQI_esZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+20B4, U+2DE0-2DFF, U+A640-A69F;
+}
+/* cyrillic *
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(../../../roboto/v15/mErvLBYg_cXG3rLvUsKT_fesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext *
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(../../../roboto/v15/-2n2p-_Y08sg57CNWQfKNvesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek *
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(../../../roboto/v15/u0TOpm082MNkS5K0Q4rhqvesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese *
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(../../../roboto/v15/NdF9MtnOpLzo-noMoG0miPesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+1EA0-1EF1, U+20AB;
+}
+/* latin-ext *
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(../../../roboto/v15/Fcx7Wwv8OzT71A3E1XOAjvesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin *
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(../../../roboto/v15/CWB0XYA8bzo0kSThX0UTuA.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+*/
+/* Mixins for the repetetion of code */
+/* Default styles applied to the elements */
+/* line 1, ../_sass/abbasify-files/inputs.scss */
+::-webkit-input-placeholder {
+  font-weight: 100;
+  color: #e4e4e4;
+}
+
+/* line 2, ../_sass/abbasify-files/inputs.scss */
+::-moz-placeholder {
+  font-weight: lighter;
+  color: #000;
+}
+
+/* line 3, ../_sass/abbasify-files/inputs.scss */
+::placeholder {
+  font-weight: lighter;
+  color: #000;
+}
+
+/* line 6, ../_sass/abbasify-files/inputs.scss */
+input[type=text], input[type=search], input[type=number], input[type=email], input[type=tel], input[type=date], input[type=color], input[type=date], input[type=password], select, textarea {
+  display: inline-block;
+  position: relative;
+  border-style: solid;
+  border-width: 1px;
+  font-size: 16px;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 35px;
+  font-family: inherit;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  color: #e4e4e4;
+  transition: all ease 0.3s;
+  -ms-transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  -webkit-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  /*&:focus{color:darken($gray,30%);}*/
+}
+/* line 15, ../_sass/abbasify-files/inputs.scss */
+input[type=text].input-coloured-gray, input[type=search].input-coloured-gray, input[type=number].input-coloured-gray, input[type=email].input-coloured-gray, input[type=tel].input-coloured-gray, input[type=date].input-coloured-gray, input[type=color].input-coloured-gray, input[type=date].input-coloured-gray, input[type=password].input-coloured-gray, select.input-coloured-gray, textarea.input-coloured-gray {
+  color: #b3b3b3;
+}
+/* line 16, ../_sass/abbasify-files/inputs.scss */
+input[type=text].input-coloured-green, input[type=search].input-coloured-green, input[type=number].input-coloured-green, input[type=email].input-coloured-green, input[type=tel].input-coloured-green, input[type=date].input-coloured-green, input[type=color].input-coloured-green, input[type=date].input-coloured-green, input[type=password].input-coloured-green, select.input-coloured-green, textarea.input-coloured-green {
+  color: #6ad969;
+}
+/* line 17, ../_sass/abbasify-files/inputs.scss */
+input[type=text].input-coloured-red, input[type=search].input-coloured-red, input[type=number].input-coloured-red, input[type=email].input-coloured-red, input[type=tel].input-coloured-red, input[type=date].input-coloured-red, input[type=color].input-coloured-red, input[type=date].input-coloured-red, input[type=password].input-coloured-red, select.input-coloured-red, textarea.input-coloured-red {
+  color: #D40505;
+}
+/* line 18, ../_sass/abbasify-files/inputs.scss */
+input[type=text].input-coloured-blue, input[type=search].input-coloured-blue, input[type=number].input-coloured-blue, input[type=email].input-coloured-blue, input[type=tel].input-coloured-blue, input[type=date].input-coloured-blue, input[type=color].input-coloured-blue, input[type=date].input-coloured-blue, input[type=password].input-coloured-blue, select.input-coloured-blue, textarea.input-coloured-blue {
+  color: #74afff;
+}
+/* line 19, ../_sass/abbasify-files/inputs.scss */
+input[type=text].input-coloured-yellow, input[type=search].input-coloured-yellow, input[type=number].input-coloured-yellow, input[type=email].input-coloured-yellow, input[type=tel].input-coloured-yellow, input[type=date].input-coloured-yellow, input[type=color].input-coloured-yellow, input[type=date].input-coloured-yellow, input[type=password].input-coloured-yellow, select.input-coloured-yellow, textarea.input-coloured-yellow {
+  color: #ffe017;
+}
+/* line 20, ../_sass/abbasify-files/inputs.scss */
+input[type=text].input-coloured-orange, input[type=search].input-coloured-orange, input[type=number].input-coloured-orange, input[type=email].input-coloured-orange, input[type=tel].input-coloured-orange, input[type=date].input-coloured-orange, input[type=color].input-coloured-orange, input[type=date].input-coloured-orange, input[type=password].input-coloured-orange, select.input-coloured-orange, textarea.input-coloured-orange {
+  color: #f8a844;
+}
+/* line 21, ../_sass/abbasify-files/inputs.scss */
+input[type=text].input-coloured-main-color, input[type=search].input-coloured-main-color, input[type=number].input-coloured-main-color, input[type=email].input-coloured-main-color, input[type=tel].input-coloured-main-color, input[type=date].input-coloured-main-color, input[type=color].input-coloured-main-color, input[type=date].input-coloured-main-color, input[type=password].input-coloured-main-color, select.input-coloured-main-color, textarea.input-coloured-main-color {
+  color: #49982d;
+}
+/* line 22, ../_sass/abbasify-files/inputs.scss */
+input[type=text].input-coloured-black, input[type=search].input-coloured-black, input[type=number].input-coloured-black, input[type=email].input-coloured-black, input[type=tel].input-coloured-black, input[type=date].input-coloured-black, input[type=color].input-coloured-black, input[type=date].input-coloured-black, input[type=password].input-coloured-black, select.input-coloured-black, textarea.input-coloured-black {
+  color: #000;
+}
+/* line 24, ../_sass/abbasify-files/inputs.scss */
+input[type=text][class*=input-coloured-], input[type=search][class*=input-coloured-], input[type=number][class*=input-coloured-], input[type=email][class*=input-coloured-], input[type=tel][class*=input-coloured-], input[type=date][class*=input-coloured-], input[type=color][class*=input-coloured-], input[type=date][class*=input-coloured-], input[type=password][class*=input-coloured-], select[class*=input-coloured-], textarea[class*=input-coloured-] {
+  border-color: initial;
+}
+/* line 26, ../_sass/abbasify-files/inputs.scss */
+input[type=text].full, input[type=search].full, input[type=number].full, input[type=email].full, input[type=tel].full, input[type=date].full, input[type=color].full, input[type=date].full, input[type=password].full, select.full, textarea.full {
+  width: 100%;
+}
+
+/* line 30, ../_sass/abbasify-files/inputs.scss */
+textarea {
+  min-height: 100px;
+  resize: none;
+  overflow: hidden;
+}
+
+/* line 32, ../_sass/abbasify-files/inputs.scss */
+textarea[rows] {
+  height: auto !important;
+}
+
+/* line 34, ../_sass/abbasify-files/inputs.scss */
+select {
+  padding-right: 0;
+}
+
+/* line 36, ../_sass/abbasify-files/inputs.scss */
+input[type=number] {
+  padding-right: 0;
+}
+/* line 38, ../_sass/abbasify-files/inputs.scss */
+input[type=number] ::-webkit-inner-spin-button, input[type=number] ::-webkit-outer-spin-button {
+  height: auto;
+  position: relative;
+  right: -5px;
+}
+
+/* line 42, ../_sass/abbasify-files/inputs.scss */
+button, .button {
+  display: inline-block;
+  position: relative;
+  font-size: 16px;
+  height: 35px;
+  padding: 7px 25px;
+  cursor: pointer;
+  font-family: inherit;
+  /* margin-top:3px; margin-bottom:3px; */
+  color: #FFF;
+  text-align: center;
+  border-style: solid;
+  border-width: 1px;
+  text-decoration: none;
+}
+/* line 44, ../_sass/abbasify-files/inputs.scss */
+button.button-green, .button.button-green {
+  background-color: #6ad969;
+  border-color: #6ad969;
+}
+/* line 45, ../_sass/abbasify-files/inputs.scss */
+button.button-red, .button.button-red {
+  background-color: #D40505;
+  border-color: #D40505;
+}
+/* line 46, ../_sass/abbasify-files/inputs.scss */
+button.button-blue, .button.button-blue {
+  background-color: #74afff;
+  border-color: #74afff;
+}
+/* line 47, ../_sass/abbasify-files/inputs.scss */
+button.button-yellow, .button.button-yellow {
+  background-color: #ffe017;
+  border-color: #ffe017;
+}
+/* line 48, ../_sass/abbasify-files/inputs.scss */
+button.button-orange, .button.button-orange {
+  background-color: #f8a844;
+  border-color: #f8a844;
+}
+/* line 49, ../_sass/abbasify-files/inputs.scss */
+button.button-gray, .button.button-gray {
+  /* background-color:darken($gray,20%);border-color:darken($gray,20%) */
+}
+/* line 50, ../_sass/abbasify-files/inputs.scss */
+button.button-dark-gray, .button.button-dark-gray {
+  /* background-color:darken($gray,20%);border-color:darken($gray,20%) */
+}
+/* line 52, ../_sass/abbasify-files/inputs.scss */
+button.button-main-color, .button.button-main-color {
+  background-color: #49982d;
+  border-color: #49982d;
+}
+/* line 53, ../_sass/abbasify-files/inputs.scss */
+button.button-black, .button.button-black {
+  background-color: #000;
+  border-color: #000;
+}
+/* line 55, ../_sass/abbasify-files/inputs.scss */
+button.empty, .button.empty {
+  background-color: transparent;
+  color: transparent;
+  border: none;
+  height: auto;
+  padding: 0;
+}
+/* line 56, ../_sass/abbasify-files/inputs.scss */
+button[class*=transparent], .button[class*=transparent] {
+  background-color: transparent;
+  /* border-style:solid; border-width:1px; */
+  height: 35px;
+}
+/* line 58, ../_sass/abbasify-files/inputs.scss */
+button.button-green-transparent, .button.button-green-transparent {
+  color: #6ad969;
+  border-color: #6ad969;
+}
+/* line 59, ../_sass/abbasify-files/inputs.scss */
+button.button-red-transparent, .button.button-red-transparent {
+  color: #D40505;
+  border-color: #D40505;
+}
+/* line 60, ../_sass/abbasify-files/inputs.scss */
+button.button-blue-transparent, .button.button-blue-transparent {
+  color: #74afff;
+  border-color: #74afff;
+}
+/* line 61, ../_sass/abbasify-files/inputs.scss */
+button.button-yellow-transparent, .button.button-yellow-transparent {
+  color: #ffe017;
+  border-color: #ffe017;
+}
+/* line 62, ../_sass/abbasify-files/inputs.scss */
+button.button-orange-transparent, .button.button-orange-transparent {
+  color: #f8a844;
+  border-color: #f8a844;
+}
+/* line 63, ../_sass/abbasify-files/inputs.scss */
+button.button-gray-transparent, .button.button-gray-transparent {
+  color: #999999;
+  border-color: #999999;
+}
+/* line 64, ../_sass/abbasify-files/inputs.scss */
+button.button-main-color-transparent, .button.button-main-color-transparent {
+  color: #49982d;
+  border-color: #49982d;
+}
+/* line 65, ../_sass/abbasify-files/inputs.scss */
+button.button-black-transparent, .button.button-black-transparent {
+  color: #000;
+  border-color: #000;
+}
+/* line 67, ../_sass/abbasify-files/inputs.scss */
+button:hover, .button:hover {
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+}
+/* line 68, ../_sass/abbasify-files/inputs.scss */
+button:active, .button:active {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+/* line 69, ../_sass/abbasify-files/inputs.scss */
+button:focus, .button:focus {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+/* line 72, ../_sass/abbasify-files/inputs.scss */
+.button:disabled, button:disabled, .input:disabled, input:disabled, select:disabled, [disabled='disabled'] {
+  cursor: not-allowed;
+  *cursor: not-allowed;
+}
+
+/* line 75, ../_sass/abbasify-files/inputs.scss */
+input.full, button.full, .button.full {
+  width: 100%;
+}
+
+/* line 78, ../_sass/abbasify-files/inputs.scss */
+.input-shadow {
+  box-shadow: inset 0px 2px 6px #d9d9d9, 0px 0px 0px #a1dbf5;
+  -ms-box-shadow: inset 0px 2px 6px #d9d9d9, 0px 0px 0px #a1dbf5;
+  -o-box-shadow: inset 0px 2px 6px #d9d9d9, 0px 0px 0px #a1dbf5;
+  -webkit-box-shadow: inset 0px 2px 6px #d9d9d9, 0px 0px 0px #a1dbf5;
+  -moz-box-shadow: inset 0px 2px 6px #d9d9d9, 0px 0px 0px #a1dbf5;
+  /*
+  @include makeMixin(box-shadow , inset 0px 02px 6px lighten($gray,5%));
+  &:focus{ @include makeMixin(box-shadow , 0 0 10px #a1dbf5);}
+  */
+}
+/* line 80, ../_sass/abbasify-files/inputs.scss */
+.input-shadow:focus {
+  box-shadow: inset 0px 0px 0px #d9d9d9, 0 0 10px #a7ccff;
+  -ms-box-shadow: inset 0px 0px 0px #d9d9d9, 0 0 10px #a7ccff;
+  -o-box-shadow: inset 0px 0px 0px #d9d9d9, 0 0 10px #a7ccff;
+  -webkit-box-shadow: inset 0px 0px 0px #d9d9d9, 0 0 10px #a7ccff;
+  -moz-box-shadow: inset 0px 0px 0px #d9d9d9, 0 0 10px #a7ccff;
+}
+
+/* line 88, ../_sass/abbasify-files/inputs.scss */
+.input-group {
+  font-size: 0;
+  /* overflow:hidden;*/
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+/* line 90, ../_sass/abbasify-files/inputs.scss */
+.input-group .input-group-icon {
+  display: inline-block;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  bottom: 2px;
+  z-index: 100;
+  font-size: 14px;
+}
+/* line 91, ../_sass/abbasify-files/inputs.scss */
+.input-group .input-element, .input-group input, .input-group button, .input-group .button {
+  margin-top: 0;
+  margin-bottom: 0;
+  float: left;
+}
+/* line 92, ../_sass/abbasify-files/inputs.scss */
+.input-group .button-small {
+  min-width: 30px;
+  text-align: center;
+  padding: 5px;
+  float: left;
+}
+/* line 93, ../_sass/abbasify-files/inputs.scss */
+.input-group input {
+  z-index: 90;
+  position: relative;
+}
+/* line 96, ../_sass/abbasify-files/inputs.scss */
+.input-group.right .input-group-icon {
+  right: 2px;
+  left: auto;
+}
+
+/* line 101, ../_sass/abbasify-files/inputs.scss */
+.relative-input-group .input {
+  position: relative;
+  float: left;
+  margin: 0;
+  border-radius: 2px 0px 0px 2px !important;
+  -ms-border-radius: 2px 0px 0px 2px !important;
+  -o-border-radius: 2px 0px 0px 2px !important;
+  -webkit-border-radius: 2px 0px 0px 2px !important;
+  -moz-border-radius: 2px 0px 0px 2px !important;
+}
+/* line 102, ../_sass/abbasify-files/inputs.scss */
+.relative-input-group .input-group-icon {
+  position: relative;
+  padding: 9px;
+  border-style: solid;
+  border-width: 1px 1px 1px 0px;
+  border-color: #dbdbdb;
+  float: left;
+  display: inline-block;
+  height: 35px;
+  border-radius: 0px 2px 2px 0px !important;
+  -ms-border-radius: 0px 2px 2px 0px !important;
+  -o-border-radius: 0px 2px 2px 0px !important;
+  -webkit-border-radius: 0px 2px 2px 0px !important;
+  -moz-border-radius: 0px 2px 2px 0px !important;
+}
+
+/* line 106, ../_sass/abbasify-files/inputs.scss */
+input:disabled, select:disabled {
+  /* background-color: whitesmoke; */
+  background-color: #e6f1ff;
+  cursor: not-allowed;
+}
+
+/* line 108, ../_sass/abbasify-files/inputs.scss */
+select {
+  border-color: inherit;
+}
+
+/* line 110, ../_sass/abbasify-files/inputs.scss */
+.input-large {
+  height: 40px !important;
+  font-size: 16px !important;
+}
+
+/* line 111, ../_sass/abbasify-files/inputs.scss */
+.input-medium {
+  height: 35px !important;
+  font-size: 14px !important;
+}
+
+/* line 112, ../_sass/abbasify-files/inputs.scss */
+.input-small {
+  height: 25px !important;
+  font-size: 12px !important;
+}
+
+/* line 114, ../_sass/abbasify-files/inputs.scss */
+.button, button {
+  white-space: nowrap;
+  border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+
+/* line 115, ../_sass/abbasify-files/inputs.scss */
+.button-large {
+  height: 40px !important;
+  font-size: 18px;
+}
+
+/* line 116, ../_sass/abbasify-files/inputs.scss */
+.button-small {
+  height: 25px !important;
+  font-size: 13px;
+  padding: 4px 25px;
+}
+
+/* line 118, ../_sass/abbasify-files/inputs.scss */
+.tabbed-buttons-container {
+  display: inline-block;
+  position: relative;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #CCC;
+  overflow: hidden;
+}
+/* line 120, ../_sass/abbasify-files/inputs.scss */
+.tabbed-buttons-container a {
+  text-decoration: none;
+}
+/* line 121, ../_sass/abbasify-files/inputs.scss */
+.tabbed-buttons-container .tabbed-button {
+  display: table-cell;
+  position: relative;
+  padding: 7px 15px 7px 15px;
+  height: 40px;
+  color: #666;
+  font-size: 14px;
+  border-left-style: solid;
+  border-width: 1px;
+  border-color: #CCC;
+  vertical-align: middle;
+}
+/* line 122, ../_sass/abbasify-files/inputs.scss */
+.tabbed-buttons-container .tabbed-button:hover, .tabbed-buttons-container .tabbed-button.active {
+  background-color: #f8f8f8;
+}
+/* line 123, ../_sass/abbasify-files/inputs.scss */
+.tabbed-buttons-container .tabbed-button:first-child {
+  border-left-style: none;
+}
+
+/* customising the checkbox*/
+/* line 132, ../_sass/abbasify-files/inputs.scss */
+input[type=checkbox] {
+  position: relative;
+}
+/* line 134, ../_sass/abbasify-files/inputs.scss */
+input[type=checkbox], input[type=checkbox]:checked {
+  appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  /* display:none; */
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+}
+
+/* line 138, ../_sass/abbasify-files/inputs.scss */
+.label-checkbox-before, .label-checkbox-after {
+  position: relative;
+  min-height: 25px;
+  display: inline-block;
+  min-height: 22px;
+  min-width: 22px;
+  padding-top: 5px;
+}
+/* line 141, ../_sass/abbasify-files/inputs.scss */
+.label-checkbox-before:before, .label-checkbox-before:after, .label-checkbox-after:before, .label-checkbox-after:after {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  /* height:22px; width:22px; */
+  background-image: url(../../../../_images/sprite.png);
+  background-repeat: no-repeat;
+  /* background-position:-433px -16px; */
+  background-position: -1069px -20px;
+  height: 22px;
+  width: 22px;
+  background-clip: content-box;
+  padding: 1px;
+}
+/* line 143, ../_sass/abbasify-files/inputs.scss */
+.label-checkbox-before.white-bg-checkbox:before, .label-checkbox-before.white-bg-checkbox:after, .label-checkbox-after.white-bg-checkbox:before, .label-checkbox-after.white-bg-checkbox:after {
+  padding: 3px;
+  height: 21px;
+}
+
+/* line 148, ../_sass/abbasify-files/inputs.scss */
+:root input[type=checkbox]:checked + .label-checkbox-before:before, :root input[type=checkbox]:checked + .label-checkbox-after:after {
+  /*background-position:-406px -16px; */
+  background-position: -1013px -20px;
+}
+
+/* line 152, ../_sass/abbasify-files/inputs.scss */
+:root input[type=checkbox]:disabled + .label-checkbox-before:before, :root input[type=checkbox]:disabled + .label-checkbox-after:after {
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+
+/* line 156, ../_sass/abbasify-files/inputs.scss */
+.label-checkbox-before {
+  padding-left: 25px;
+}
+/* line 158, ../_sass/abbasify-files/inputs.scss */
+.label-checkbox-before:before {
+  content: "";
+  left: 0px;
+}
+
+/* line 160, ../_sass/abbasify-files/inputs.scss */
+.label-checkbox-after {
+  padding-right: 25px;
+}
+/* line 162, ../_sass/abbasify-files/inputs.scss */
+.label-checkbox-after:after {
+  content: "";
+  right: 0px;
+}
+
+/* customising the checkbox*/
+/* customising the radio button*/
+/* line 172, ../_sass/abbasify-files/inputs.scss */
+input[type=radio] {
+  position: relative;
+}
+/* line 174, ../_sass/abbasify-files/inputs.scss */
+input[type=radio], input[type=radio]:checked {
+  appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  /* display:none;*/
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+}
+
+/* line 178, ../_sass/abbasify-files/inputs.scss */
+.label-radio-before, .label-radio-after {
+  position: relative;
+  min-height: 25px;
+  display: inline-block;
+  min-height: 35px;
+  min-width: 22px;
+  user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  padding-top: 8px;
+  /*
+  &:before,&:after{display:inline-block; position:absolute; background-image:none; width:20px; height:20px; @include borderRadius(50%); border-style:solid; border-width:2px; background-clip:content-box; padding:4px; @include boxSizing(border-box); top:-1px; border-color:$green;}
+  */
+}
+/* line 180, ../_sass/abbasify-files/inputs.scss */
+.label-radio-before:before, .label-radio-before:after, .label-radio-after:before, .label-radio-after:after {
+  display: inline-block;
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  background-image: url(../../../../_images/sprite.png);
+  background-repeat: no-repeat;
+  background-position: -1158px -20px;
+  top: 4px;
+}
+/* line 183, ../_sass/abbasify-files/inputs.scss */
+.label-radio-before.white-radio:before, .label-radio-before.white-radio:after, .label-radio-after.white-radio:before, .label-radio-after.white-radio:after {
+  background-position: -1967px -93px;
+}
+
+/* line 193, ../_sass/abbasify-files/inputs.scss */
+:root input[type='radio']:checked {
+  /*
+  &+ .label-radio-before:before , & + .label-radio-after:after {background-color:$green;}
+  */
+}
+/* line 197, ../_sass/abbasify-files/inputs.scss */
+:root input[type='radio']:checked + .label-radio-before:before, :root input[type='radio']:checked + .label-radio-after:after {
+  background-position: -1116px -20px;
+}
+/* line 200, ../_sass/abbasify-files/inputs.scss */
+:root input[type='radio']:checked + .label-radio-before.white-radio:before, :root input[type='radio']:checked + .label-radio-before.white-radio:after, :root input[type='radio']:checked + .label-radio-after.white-radio:before, :root input[type='radio']:checked + .label-radio-after.white-radio:after {
+  background-position: -2001px -93px;
+}
+
+/* line 205, ../_sass/abbasify-files/inputs.scss */
+:root input[type='radio']:disabled {
+  /* &+ .label-radio-before:before , & + .label-radio-after:after { @include opacity(.2);} */
+}
+/* line 207, ../_sass/abbasify-files/inputs.scss */
+:root input[type='radio']:disabled + .label-radio-before, :root input[type='radio']:disabled + .label-radio-after {
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+
+/* line 211, ../_sass/abbasify-files/inputs.scss */
+.label-radio-before {
+  padding-left: 25px;
+}
+/* line 213, ../_sass/abbasify-files/inputs.scss */
+.label-radio-before:before {
+  content: "";
+  left: 0px;
+}
+
+/* line 215, ../_sass/abbasify-files/inputs.scss */
+.label-radio-after {
+  padding-right: 25px;
+}
+/* line 217, ../_sass/abbasify-files/inputs.scss */
+.label-radio-after:after {
+  content: "";
+  right: 0px;
+}
+
+/* customising the checkbox*/
+/* line 223, ../_sass/abbasify-files/inputs.scss */
+.toggle-button {
+  position: relative;
+  height: 26px;
+  width: 60px;
+  background-color: #49982d;
+  border: solid 1px #49982d;
+  cursor: pointer;
+}
+/* line 226, ../_sass/abbasify-files/inputs.scss */
+.toggle-button .toggle-slider {
+  display: inline-block;
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background-color: #FFF;
+  right: 4px;
+  top: 3px;
+}
+/* line 228, ../_sass/abbasify-files/inputs.scss */
+.toggle-button.disabled {
+  background-color: #CCC;
+  border: solid 1px #bababa;
+}
+/* line 230, ../_sass/abbasify-files/inputs.scss */
+.toggle-button.disabled .toggle-slider {
+  right: 35px;
+  border: solid 1px #bababa;
+}
+
+/* Default styles applied to the elements */
+/* line 9, ../_sass/abbasify-files/default.scss */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto-Regular, sans-serif, Verdana, Geneva;
+}
+
+/* line 12, ../_sass/abbasify-files/default.scss */
+* {
+  outline: none;
+  box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+/* line 13, ../_sass/abbasify-files/default.scss */
+img {
+  border: none;
+}
+
+/* line 15, ../_sass/abbasify-files/default.scss */
+.full {
+  width: 100%;
+}
+
+/* line 17, ../_sass/abbasify-files/default.scss */
+.no-underline {
+  text-decoration: none;
+}
+
+/* line 21, ../_sass/abbasify-files/default.scss */
+.no-margin {
+  margin: 0 !important;
+}
+
+/* line 23, ../_sass/abbasify-files/default.scss */
+.margin-2-x-y {
+  margin: 2px;
+}
+
+/* line 24, ../_sass/abbasify-files/default.scss */
+.margin-2-y {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+/* line 25, ../_sass/abbasify-files/default.scss */
+.margin-2-x {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+/* line 27, ../_sass/abbasify-files/default.scss */
+.margin-5-x-y {
+  margin: 5px;
+}
+
+/* line 28, ../_sass/abbasify-files/default.scss */
+.margin-5-x {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+/* line 29, ../_sass/abbasify-files/default.scss */
+.margin-5-y {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+/* line 31, ../_sass/abbasify-files/default.scss */
+.margin-10-x {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* line 32, ../_sass/abbasify-files/default.scss */
+.margin-10-y {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* line 34, ../_sass/abbasify-files/default.scss */
+.margin-20-x {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/* line 35, ../_sass/abbasify-files/default.scss */
+.margin-20-y {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* line 38, ../_sass/abbasify-files/default.scss */
+.margin-40-x {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+/* line 39, ../_sass/abbasify-files/default.scss */
+.margin-40-y {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+/* line 43, ../_sass/abbasify-files/default.scss */
+.margin-10-top {
+  margin-top: 10px;
+}
+
+/* line 44, ../_sass/abbasify-files/default.scss */
+.margin-10-right {
+  margin-right: 10px;
+}
+
+/* line 45, ../_sass/abbasify-files/default.scss */
+.margin-10-bottom {
+  margin-bottom: 10px;
+}
+
+/* line 46, ../_sass/abbasify-files/default.scss */
+.margin-10-left {
+  margin-left: 10px;
+}
+
+/* line 49, ../_sass/abbasify-files/default.scss */
+.margin-20-top {
+  margin-top: 20px;
+}
+
+/* line 50, ../_sass/abbasify-files/default.scss */
+.margin-20-right {
+  margin-right: 20px;
+}
+
+/* line 51, ../_sass/abbasify-files/default.scss */
+.margin-20-bottom {
+  margin-bottom: 20px;
+}
+
+/* line 52, ../_sass/abbasify-files/default.scss */
+.margin-20-left {
+  margin-left: 20px;
+}
+
+/* line 54, ../_sass/abbasify-files/default.scss */
+.margin-40-top {
+  margin-top: 40px;
+}
+
+/* line 55, ../_sass/abbasify-files/default.scss */
+.margin-40-right {
+  margin-right: 40px;
+}
+
+/* line 56, ../_sass/abbasify-files/default.scss */
+.margin-40-bottom {
+  margin-bottom: 40px;
+}
+
+/* line 57, ../_sass/abbasify-files/default.scss */
+.margin-40-left {
+  margin-left: 40px;
+}
+
+/* line 60, ../_sass/abbasify-files/default.scss */
+.no-border {
+  border: none !important;
+}
+
+/* line 64, ../_sass/abbasify-files/default.scss */
+.no-padding {
+  padding: 0;
+}
+
+/* line 66, ../_sass/abbasify-files/default.scss */
+.padding-2-x-y {
+  padding: 2px;
+}
+
+/* line 67, ../_sass/abbasify-files/default.scss */
+.padding-2-y {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* line 68, ../_sass/abbasify-files/default.scss */
+.padding-2-x {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+/* line 71, ../_sass/abbasify-files/default.scss */
+.padding-5-x-y {
+  padding: 5px;
+}
+
+/* line 72, ../_sass/abbasify-files/default.scss */
+.padding-5-x {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+/* line 73, ../_sass/abbasify-files/default.scss */
+.padding-5-y {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* line 75, ../_sass/abbasify-files/default.scss */
+.padding-10-x-y {
+  padding: 10px;
+}
+
+/* line 78, ../_sass/abbasify-files/default.scss */
+.padding-10-x {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* line 79, ../_sass/abbasify-files/default.scss */
+.padding-10-y {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* line 81, ../_sass/abbasify-files/default.scss */
+.padding-20-x {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* line 82, ../_sass/abbasify-files/default.scss */
+.padding-20-y {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* line 84, ../_sass/abbasify-files/default.scss */
+.padding-40-x {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+/* line 85, ../_sass/abbasify-files/default.scss */
+.padding-40-y {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* line 89, ../_sass/abbasify-files/default.scss */
+.padding-10-top {
+  padding-top: 10px;
+}
+
+/* line 90, ../_sass/abbasify-files/default.scss */
+.padding-10-right {
+  padding-right: 10px;
+}
+
+/* line 91, ../_sass/abbasify-files/default.scss */
+.padding-10-bottom {
+  padding-bottom: 10px;
+}
+
+/* line 92, ../_sass/abbasify-files/default.scss */
+.padding-10-left {
+  padding-left: 10px;
+}
+
+/* line 95, ../_sass/abbasify-files/default.scss */
+.padding-20-top {
+  padding-top: 20px;
+}
+
+/* line 96, ../_sass/abbasify-files/default.scss */
+.padding-20-right {
+  padding-right: 20px;
+}
+
+/* line 97, ../_sass/abbasify-files/default.scss */
+.padding-20-bottom {
+  padding-bottom: 20px;
+}
+
+/* line 98, ../_sass/abbasify-files/default.scss */
+.padding-20-left {
+  padding-left: 20px;
+}
+
+/* line 100, ../_sass/abbasify-files/default.scss */
+.padding-40-top {
+  padding-top: 40px;
+}
+
+/* line 101, ../_sass/abbasify-files/default.scss */
+.padding-40-right {
+  padding-right: 40px;
+}
+
+/* line 102, ../_sass/abbasify-files/default.scss */
+.padding-40-bottom {
+  padding-bottom: 40px;
+}
+
+/* line 103, ../_sass/abbasify-files/default.scss */
+.padding-40-left {
+  padding-left: 40px;
+}
+
+/* line 108, ../_sass/abbasify-files/default.scss */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* line 109, ../_sass/abbasify-files/default.scss */
+.overflow-auto {
+  overflow: auto;
+}
+
+/* line 113, ../_sass/abbasify-files/default.scss */
+.clear:before {
+  content: "";
+  min-height: 1px;
+  display: table;
+  clear: both;
+}
+
+/* line 118, ../_sass/abbasify-files/default.scss */
+.center-aligned {
+  position: relative;
+  text-align: center !important;
+}
+
+/* line 119, ../_sass/abbasify-files/default.scss */
+.right-aligned {
+  text-align: right !important;
+}
+
+/* line 120, ../_sass/abbasify-files/default.scss */
+.left-aligned {
+  text-align: left !important;
+}
+
+/* line 121, ../_sass/abbasify-files/default.scss */
+.justified {
+  text-align: justify !important;
+}
+
+/* line 122, ../_sass/abbasify-files/default.scss */
+.middle-aligned {
+  vertical-align: middle !important;
+}
+
+/* line 123, ../_sass/abbasify-files/default.scss */
+.top-aligned {
+  vertical-align: top !important;
+}
+
+/* line 127, ../_sass/abbasify-files/default.scss */
+.break-word {
+  word-break: break-word;
+}
+
+/* line 128, ../_sass/abbasify-files/default.scss */
+.no-break-word {
+  word-break: initial;
+  white-space: nowrap;
+}
+
+/* line 132, ../_sass/abbasify-files/default.scss */
+.lowercase {
+  text-transform: lowercase;
+}
+
+/* line 133, ../_sass/abbasify-files/default.scss */
+.uppercase {
+  text-transform: uppercase;
+}
+
+/* line 134, ../_sass/abbasify-files/default.scss */
+.capitalize {
+  text-transform: capitalize;
+}
+
+/* line 136, ../_sass/abbasify-files/default.scss */
+.strong, .bold, strong {
+  font-weight: bold;
+}
+
+/* line 138, ../_sass/abbasify-files/default.scss */
+.light {
+  font-weight: 400;
+}
+
+/* line 142, ../_sass/abbasify-files/default.scss */
+code, kbd {
+  font-family: monospace;
+}
+
+/* line 144, ../_sass/abbasify-files/default.scss */
+.h1, h1 {
+  font-size: 24px;
+}
+
+/* line 145, ../_sass/abbasify-files/default.scss */
+.h2, h2 {
+  font-size: 18px;
+}
+
+/* line 146, ../_sass/abbasify-files/default.scss */
+.h3, h3 {
+  font-size: 14px;
+}
+
+/* line 147, ../_sass/abbasify-files/default.scss */
+.h4, h4 {
+  font-size: 12px;
+}
+
+/* line 148, ../_sass/abbasify-files/default.scss */
+.h5, h5 {
+  font-size: 10px;
+}
+
+/* line 149, ../_sass/abbasify-files/default.scss */
+.h6, h6 {
+  font-size: 8px;
+}
+
+/* line 151, ../_sass/abbasify-files/default.scss */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* line 152, ../_sass/abbasify-files/default.scss */
+p {
+  font-size: 14px;
+  color: #000;
+  line-height: 1.3;
+}
+
+/* line 154, ../_sass/abbasify-files/default.scss */
+.font-12 {
+  font-size: 12px;
+}
+
+/* line 155, ../_sass/abbasify-files/default.scss */
+.font-14 {
+  font-size: 14px;
+}
+
+/* line 156, ../_sass/abbasify-files/default.scss */
+.font-16 {
+  font-size: 16px;
+}
+
+/* line 157, ../_sass/abbasify-files/default.scss */
+.font-18 {
+  font-size: 18px;
+}
+
+/* line 158, ../_sass/abbasify-files/default.scss */
+.font-20 {
+  font-size: 20px;
+}
+
+/* line 160, ../_sass/abbasify-files/default.scss */
+.red-text {
+  color: #D40505;
+}
+
+/* line 161, ../_sass/abbasify-files/default.scss */
+.green-text {
+  color: #6ad969;
+}
+
+/* line 162, ../_sass/abbasify-files/default.scss */
+.blue-text {
+  color: #74afff;
+}
+
+/* line 163, ../_sass/abbasify-files/default.scss */
+.yellow-text {
+  color: #ffe017;
+}
+
+/* line 164, ../_sass/abbasify-files/default.scss */
+.orange-text {
+  color: #f8a844;
+}
+
+/* line 165, ../_sass/abbasify-files/default.scss */
+.main-color-text {
+  color: #49982d;
+}
+
+/* line 166, ../_sass/abbasify-files/default.scss */
+.white-text {
+  color: #FFF;
+}
+
+/* line 168, ../_sass/abbasify-files/default.scss */
+.black-text {
+  color: #000;
+}
+
+/* line 169, ../_sass/abbasify-files/default.scss */
+.gray-text {
+  color: #CCC;
+}
+
+/* line 170, ../_sass/abbasify-files/default.scss */
+.dark-gray-text {
+  color: #999999;
+}
+
+/* line 174, ../_sass/abbasify-files/default.scss */
+.red-border, .green-border, .blue-border, .yellow-border, .orange-border, .main-color-border, .white-border, .transparent-border {
+  border-style: solid;
+  border-width: 1px;
+}
+
+/* line 177, ../_sass/abbasify-files/default.scss */
+.red-border {
+  borde-color: #D40505 !important;
+}
+
+/* line 178, ../_sass/abbasify-files/default.scss */
+.green-border {
+  border-color: #6ad969 !important;
+}
+
+/* line 179, ../_sass/abbasify-files/default.scss */
+.blue-border {
+  border-color: #74afff !important;
+}
+
+/* line 180, ../_sass/abbasify-files/default.scss */
+.yellow-border {
+  border-color: #ffe017 !important;
+}
+
+/* line 181, ../_sass/abbasify-files/default.scss */
+.orange-border {
+  border-color: #f8a844 !important;
+}
+
+/* line 182, ../_sass/abbasify-files/default.scss */
+.main-color-border {
+  border-color: #49982d !important;
+}
+
+/* line 183, ../_sass/abbasify-files/default.scss */
+.white-border {
+  border-color: #FFF !important;
+}
+
+/* line 184, ../_sass/abbasify-files/default.scss */
+.transparent-border {
+  border-color: transparent !important;
+}
+
+/* line 191, ../_sass/abbasify-files/default.scss */
+.red-background {
+  background-color: #D40505;
+}
+
+/* line 192, ../_sass/abbasify-files/default.scss */
+.green-background {
+  background-color: #6ad969;
+}
+
+/* line 193, ../_sass/abbasify-files/default.scss */
+.blue-background {
+  background-color: #74afff;
+}
+
+/* line 194, ../_sass/abbasify-files/default.scss */
+.yellow-background {
+  background-color: #ffe017;
+}
+
+/* line 195, ../_sass/abbasify-files/default.scss */
+.orange-background {
+  background-color: #f8a844;
+}
+
+/* line 196, ../_sass/abbasify-files/default.scss */
+.main-color-background {
+  background-color: #49982d;
+}
+
+/* line 197, ../_sass/abbasify-files/default.scss */
+.white-background {
+  background-color: #FFF;
+}
+
+/* line 198, ../_sass/abbasify-files/default.scss */
+.transparent-background {
+  background-color: transparent;
+}
+
+/* line 200, ../_sass/abbasify-files/default.scss */
+[class*=alert-] {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+/* line 201, ../_sass/abbasify-files/default.scss */
+[class*=alert-small] {
+  padding: 8px 5px;
+}
+
+/* line 202, ../_sass/abbasify-files/default.scss */
+[class*=alert-large] {
+  padding: 15px 5px;
+  font-weight: 500;
+}
+
+/* line 205, ../_sass/abbasify-files/default.scss */
+.alert-red {
+  color: #700303;
+  border-color: #fda8a8;
+  background-color: #fff3f3;
+}
+
+/* line 206, ../_sass/abbasify-files/default.scss */
+.alert-green {
+  color: #2eb02c;
+  border-color: #a7e8a6;
+  background-color: #e3f8e3;
+}
+
+/* line 207, ../_sass/abbasify-files/default.scss */
+.alert-blue {
+  color: #0e74ff;
+  border-color: #4192ff;
+  background-color: white;
+}
+
+/* line 208, ../_sass/abbasify-files/default.scss */
+.alert-yellow {
+  color: #b09800;
+  border-color: #e3c500;
+  background-color: #fffbe3;
+}
+
+/* line 209, ../_sass/abbasify-files/default.scss */
+.alert-orange {
+  color: #ce7608;
+  border-color: #f69113;
+  background-color: white;
+}
+
+/* line 210, ../_sass/abbasify-files/default.scss */
+.alert-main-color {
+  color: #234916;
+  border-color: #367121;
+  background-color: #bae6ab;
+}
+
+/* line 214, ../_sass/abbasify-files/default.scss */
+.relative {
+  position: relative;
+}
+
+/* line 218, ../_sass/abbasify-files/default.scss */
+.inline-block {
+  display: inline-block;
+}
+
+/* line 219, ../_sass/abbasify-files/default.scss */
+.table {
+  display: table;
+}
+
+/* line 220, ../_sass/abbasify-files/default.scss */
+.table-row {
+  display: table-row;
+  width: 100%;
+}
+
+/* line 221, ../_sass/abbasify-files/default.scss */
+.table-cell {
+  display: table-cell !important;
+}
+
+/* line 222, ../_sass/abbasify-files/default.scss */
+.block {
+  display: block !important;
+}
+
+/* line 225, ../_sass/abbasify-files/default.scss */
+.force-right {
+  float: right;
+}
+
+/* line 226, ../_sass/abbasify-files/default.scss */
+.force-left {
+  float: left;
+}
+
+/* line 230, ../_sass/abbasify-files/default.scss */
+hr, .hr {
+  display: block;
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  min-height: 1px;
+  border-top-style: none;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
+  border-color: #CCC;
+}
+/* line 232, ../_sass/abbasify-files/default.scss */
+hr.dotted, .hr.dotted {
+  border-bottom-style: dotted;
+}
+/* line 233, ../_sass/abbasify-files/default.scss */
+hr.dashed, .hr.dashed {
+  border-bottom-style: dashed;
+}
+
+/* classes that are extended throughout the css*/
+/* line 3, ../_sass/abbasify-files/extendable-classes.scss */
+.transition, button, .button, .toggle-button, .toggle-button .toggle-slider, body {
+  transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+}
+
+/* line 5, ../_sass/abbasify-files/extendable-classes.scss */
+.borderBox {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+/* line 6, ../_sass/abbasify-files/extendable-classes.scss */
+.contentBox {
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -ms-box-sizing: content-box;
+  -o-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+}
+
+/* line 7, ../_sass/abbasify-files/extendable-classes.scss */
+.contentBox {
+  box-sizing: padding-box;
+  -moz-box-sizing: padding-box;
+  -ms-box-sizing: padding-box;
+  -o-box-sizing: padding-box;
+  -webkit-box-sizing: padding-box;
+}
+
+/* line 9, ../_sass/abbasify-files/extendable-classes.scss */
+.circle, .toggle-button .toggle-slider {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  -webkit-border-radius: 50%;
+}
+
+/* line 10, ../_sass/abbasify-files/extendable-classes.scss */
+.no-radius {
+  border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -ms-border-radius: 0 !important;
+  -o-border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+}
+
+/* line 12, ../_sass/abbasify-files/extendable-classes.scss */
+.borderRadius-20, .toggle-button {
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
+
+/* line 13, ../_sass/abbasify-files/extendable-classes.scss */
+.borderRadius-10 {
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+/* line 14, ../_sass/abbasify-files/extendable-classes.scss */
+.borderRadius-5, .tabbed-buttons-container {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+/* line 15, ../_sass/abbasify-files/extendable-classes.scss */
+.borderRadius-3 {
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+
+/* line 18, ../_sass/abbasify-files/extendable-classes.scss */
+.bottomRadius {
+  border-radius: 0px 0px 5px 5px;
+  -moz-border-radius: 0px 0px 5px 5px;
+  -ms-border-radius: 0px 0px 5px 5px;
+  -o-border-radius: 0px 0px 5px 5px;
+  -webkit-border-radius: 0px 0px 5px 5px;
+}
+
+/* line 19, ../_sass/abbasify-files/extendable-classes.scss */
+.leftRadius {
+  border-radius: 5px 0px 0px 5px;
+  -moz-border-radius: 5px 0px 0px 5px;
+  -ms-border-radius: 5px 0px 0px 5px;
+  -o-border-radius: 5px 0px 0px 5px;
+  -webkit-border-radius: 5px 0px 0px 5px;
+}
+
+/* line 20, ../_sass/abbasify-files/extendable-classes.scss */
+.topRadius {
+  border-radius: 5px 5px 0px 0px;
+  -moz-border-radius: 5px 5px 0px 0px;
+  -ms-border-radius: 5px 5px 0px 0px;
+  -o-border-radius: 5px 5px 0px 0px;
+  -webkit-border-radius: 5px 5px 0px 0px;
+}
+
+/* line 21, ../_sass/abbasify-files/extendable-classes.scss */
+.rightRadius {
+  border-radius: 0px 5px 5px 0px;
+  -moz-border-radius: 0px 5px 5px 0px;
+  -ms-border-radius: 0px 5px 5px 0px;
+  -o-border-radius: 0px 5px 5px 0px;
+  -webkit-border-radius: 0px 5px 5px 0px;
+}
+
+/* line 24, ../_sass/abbasify-files/extendable-classes.scss */
+.noShadow {
+  box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -ms-box-shadow: none !important;
+  -o-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* Griding of Boxes*/
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-0 {
+  width: 0%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-1 {
+  width: 5%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-2 {
+  width: 10%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-3 {
+  width: 15%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-4 {
+  width: 20%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-5 {
+  width: 25%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-6 {
+  width: 30%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-7 {
+  width: 35%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-8 {
+  width: 40%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-9 {
+  width: 45%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-10 {
+  width: 50%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-11 {
+  width: 55%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-12 {
+  width: 60%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-13 {
+  width: 65%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-14 {
+  width: 70%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-15 {
+  width: 75%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-16 {
+  width: 80%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-17 {
+  width: 85%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-18 {
+  width: 90%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-19 {
+  width: 95%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mobile-column-20 {
+  width: 100%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-0 {
+  margin-left: 0%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-1 {
+  margin-left: 5%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-2 {
+  margin-left: 10%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-3 {
+  margin-left: 15%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-4 {
+  margin-left: 20%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-5 {
+  margin-left: 25%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-6 {
+  margin-left: 30%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-7 {
+  margin-left: 35%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-8 {
+  margin-left: 40%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-9 {
+  margin-left: 45%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-10 {
+  margin-left: 50%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-11 {
+  margin-left: 55%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-12 {
+  margin-left: 60%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-13 {
+  margin-left: 65%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-14 {
+  margin-left: 70%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-15 {
+  margin-left: 75%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-16 {
+  margin-left: 80%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-17 {
+  margin-left: 85%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-18 {
+  margin-left: 90%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-19 {
+  margin-left: 95%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mobile-offset-20 {
+  margin-left: 100%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-0 {
+  width: 0%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-1 {
+  width: 5%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-2 {
+  width: 10%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-3 {
+  width: 15%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-4 {
+  width: 20%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-5 {
+  width: 25%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-6 {
+  width: 30%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-7 {
+  width: 35%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-8 {
+  width: 40%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-9 {
+  width: 45%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-10 {
+  width: 50%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-11 {
+  width: 55%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-12 {
+  width: 60%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-13 {
+  width: 65%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-14 {
+  width: 70%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-15 {
+  width: 75%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-16 {
+  width: 80%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-17 {
+  width: 85%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-18 {
+  width: 90%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-19 {
+  width: 95%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.tablet-column-20 {
+  width: 100%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-0 {
+  margin-left: 0%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-1 {
+  margin-left: 5%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-2 {
+  margin-left: 10%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-3 {
+  margin-left: 15%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-4 {
+  margin-left: 20%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-5 {
+  margin-left: 25%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-6 {
+  margin-left: 30%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-7 {
+  margin-left: 35%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-8 {
+  margin-left: 40%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-9 {
+  margin-left: 45%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-10 {
+  margin-left: 50%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-11 {
+  margin-left: 55%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-12 {
+  margin-left: 60%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-13 {
+  margin-left: 65%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-14 {
+  margin-left: 70%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-15 {
+  margin-left: 75%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-16 {
+  margin-left: 80%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-17 {
+  margin-left: 85%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-18 {
+  margin-left: 90%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-19 {
+  margin-left: 95%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.tablet-offset-20 {
+  margin-left: 100%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-0 {
+  width: 0%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-1 {
+  width: 5%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-2 {
+  width: 10%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-3 {
+  width: 15%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-4 {
+  width: 20%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-5 {
+  width: 25%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-6 {
+  width: 30%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-7 {
+  width: 35%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-8 {
+  width: 40%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-9 {
+  width: 45%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-10 {
+  width: 50%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-11 {
+  width: 55%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-12 {
+  width: 60%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-13 {
+  width: 65%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-14 {
+  width: 70%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-15 {
+  width: 75%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-16 {
+  width: 80%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-17 {
+  width: 85%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-18 {
+  width: 90%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-19 {
+  width: 95%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.desktop-column-20 {
+  width: 100%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-0 {
+  margin-left: 0%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-1 {
+  margin-left: 5%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-2 {
+  margin-left: 10%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-3 {
+  margin-left: 15%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-4 {
+  margin-left: 20%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-5 {
+  margin-left: 25%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-6 {
+  margin-left: 30%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-7 {
+  margin-left: 35%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-8 {
+  margin-left: 40%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-9 {
+  margin-left: 45%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-10 {
+  margin-left: 50%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-11 {
+  margin-left: 55%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-12 {
+  margin-left: 60%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-13 {
+  margin-left: 65%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-14 {
+  margin-left: 70%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-15 {
+  margin-left: 75%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-16 {
+  margin-left: 80%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-17 {
+  margin-left: 85%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-18 {
+  margin-left: 90%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-19 {
+  margin-left: 95%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.desktop-offset-20 {
+  margin-left: 100%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-0 {
+  width: 0%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-1 {
+  width: 5%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-2 {
+  width: 10%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-3 {
+  width: 15%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-4 {
+  width: 20%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-5 {
+  width: 25%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-6 {
+  width: 30%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-7 {
+  width: 35%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-8 {
+  width: 40%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-9 {
+  width: 45%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-10 {
+  width: 50%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-11 {
+  width: 55%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-12 {
+  width: 60%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-13 {
+  width: 65%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-14 {
+  width: 70%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-15 {
+  width: 75%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-16 {
+  width: 80%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-17 {
+  width: 85%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-18 {
+  width: 90%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-19 {
+  width: 95%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.laptop-column-20 {
+  width: 100%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-0 {
+  margin-left: 0%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-1 {
+  margin-left: 5%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-2 {
+  margin-left: 10%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-3 {
+  margin-left: 15%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-4 {
+  margin-left: 20%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-5 {
+  margin-left: 25%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-6 {
+  margin-left: 30%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-7 {
+  margin-left: 35%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-8 {
+  margin-left: 40%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-9 {
+  margin-left: 45%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-10 {
+  margin-left: 50%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-11 {
+  margin-left: 55%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-12 {
+  margin-left: 60%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-13 {
+  margin-left: 65%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-14 {
+  margin-left: 70%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-15 {
+  margin-left: 75%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-16 {
+  margin-left: 80%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-17 {
+  margin-left: 85%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-18 {
+  margin-left: 90%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-19 {
+  margin-left: 95%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.laptop-offset-20 {
+  margin-left: 100%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-0 {
+  width: 0%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-1 {
+  width: 5%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-2 {
+  width: 10%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-3 {
+  width: 15%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-4 {
+  width: 20%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-5 {
+  width: 25%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-6 {
+  width: 30%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-7 {
+  width: 35%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-8 {
+  width: 40%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-9 {
+  width: 45%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-10 {
+  width: 50%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-11 {
+  width: 55%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-12 {
+  width: 60%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-13 {
+  width: 65%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-14 {
+  width: 70%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-15 {
+  width: 75%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-16 {
+  width: 80%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-17 {
+  width: 85%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-18 {
+  width: 90%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-19 {
+  width: 95%;
+}
+
+/* line 14, ../_sass/abbasify-files/griding.scss */
+.mac-column-20 {
+  width: 100%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-0 {
+  margin-left: 0%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-1 {
+  margin-left: 5%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-2 {
+  margin-left: 10%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-3 {
+  margin-left: 15%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-4 {
+  margin-left: 20%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-5 {
+  margin-left: 25%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-6 {
+  margin-left: 30%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-7 {
+  margin-left: 35%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-8 {
+  margin-left: 40%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-9 {
+  margin-left: 45%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-10 {
+  margin-left: 50%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-11 {
+  margin-left: 55%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-12 {
+  margin-left: 60%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-13 {
+  margin-left: 65%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-14 {
+  margin-left: 70%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-15 {
+  margin-left: 75%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-16 {
+  margin-left: 80%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-17 {
+  margin-left: 85%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-18 {
+  margin-left: 90%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-19 {
+  margin-left: 95%;
+}
+
+/* line 22, ../_sass/abbasify-files/griding.scss */
+.mac-offset-20 {
+  margin-left: 100%;
+}
+
+/* line 32, ../_sass/abbasify-files/griding.scss */
+[class*="offset-"] {
+  position: relative;
+}
+
+/* line 33, ../_sass/abbasify-files/griding.scss */
+[class*="column-"] {
+  min-height: 1px;
+}
+
+/* line 35, ../_sass/abbasify-files/griding.scss */
+.wrapper {
+  display: block;
+  position: relative;
+  overflow: auto;
+}
+/* line 37, ../_sass/abbasify-files/griding.scss */
+.wrapper .inner {
+  display: block;
+  position: relative;
+  width: 1100px;
+  margin: auto;
+  overflow: auto;
+}
+/* line 38, ../_sass/abbasify-files/griding.scss */
+.wrapper .inner-fluid {
+  display: block;
+  position: relative;
+  overflow: auto;
+}
+/* line 39, ../_sass/abbasify-files/griding.scss */
+.wrapper.overflow-visible {
+  overflow: visible !important;
+}
+/* line 41, ../_sass/abbasify-files/griding.scss */
+.wrapper.overflow-visible .inner, .wrapper.overflow-visible .inner-fluid {
+  overflow: visible !important;
+}
+
+/* line 45, ../_sass/abbasify-files/griding.scss */
+.row-5-x {
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+/* line 46, ../_sass/abbasify-files/griding.scss */
+.row-10-x {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+/* line 47, ../_sass/abbasify-files/griding.scss */
+.row-15-x {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+/* line 48, ../_sass/abbasify-files/griding.scss */
+.row-20-x {
+  margin-left: -20px;
+  margin-right: -20px;
+}
+
+/*
+Extra small devices (phones, less than 768px)  No media query since this is the default in Bootstrap 
+
+Small devices (tablets, 768px and up)  @media (min-width: @screen-sm-min) { ... }
+
+ Medium devices (desktops, 992px and up)  @media (min-width: @screen-md-min) { ... }
+
+Large devices (large desktops, 1200px and up)  @media (min-width: @screen-lg-min) { ... }
+
+*/
+/* Styling the tables*/
+/* line 1, ../_sass/abbasify-files/tables.scss */
+table {
+  position: relative;
+  border: 0;
+  border-collapse: collapse;
+  cell-spacing: "0";
+  cell-padding: "0";
+  border-spacing: 0 !important;
+  padding: 0;
+  margin: 0;
+}
+/* line 3, ../_sass/abbasify-files/tables.scss */
+table tr {
+  position: relative;
+}
+/* line 5, ../_sass/abbasify-files/tables.scss */
+table tr td {
+  position: relative;
+  /* background-color:$white; */
+  border-color: #EEE;
+  border-width: 1px;
+  padding: 20px 7px;
+  font-size: 14px;
+  color: #333333;
+}
+/* line 12, ../_sass/abbasify-files/tables.scss */
+table.table-bordered tr td {
+  border-bottom-style: solid;
+}
+/* line 14, ../_sass/abbasify-files/tables.scss */
+table.table-bordered tr td:first-child {
+  border-left-style: solid;
+}
+/* line 15, ../_sass/abbasify-files/tables.scss */
+table.table-bordered tr td:last-child {
+  border-right-style: solid;
+}
+/* line 18, ../_sass/abbasify-files/tables.scss */
+table.table-bordered tr:first-child td {
+  border-top-style: solid;
+}
+/* line 27, ../_sass/abbasify-files/tables.scss */
+table.table-striped tr:nth-of-type(even) td {
+  background-color: #f7f7f7;
+}
+/* line 33, ../_sass/abbasify-files/tables.scss */
+table.table-striped tr:nth-of-type(odd) td {
+  background-color: #FFF;
+}
+/* line 43, ../_sass/abbasify-files/tables.scss */
+table.table-striped-main-color tr:nth-of-type(even) td {
+  background-color: #fbfdfa;
+}
+/* line 51, ../_sass/abbasify-files/tables.scss */
+table.table-hovered tr:hover td, table.table-striped tr:hover td {
+  background-color: #f8f8f8;
+}
+/* line 56, ../_sass/abbasify-files/tables.scss */
+table.no-padding tr td {
+  padding: 0;
+}
+/* line 60, ../_sass/abbasify-files/tables.scss */
+table.padding-5 tr td {
+  padding: 5px;
+}
+/* line 64, ../_sass/abbasify-files/tables.scss */
+table.padding-10-5 tr td {
+  padding: 10px 5px;
+}
+
+/* Styling the progress bars*/
+/* line 1, ../_sass/abbasify-files/progress-bars.scss */
+.progressbar-rail {
+  display: block;
+  position: relative;
+  height: 20px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #e4e4e4;
+  background-color: #fafafa;
+}
+/* line 3, ../_sass/abbasify-files/progress-bars.scss */
+.progressbar-rail .progress-bar {
+  display: inline-block;
+  position: relative;
+  height: 18px;
+  width: 30%;
+  text-align: center;
+  padding: 2px;
+}
+/* line 5, ../_sass/abbasify-files/progress-bars.scss */
+.progressbar-rail .progress-bar .progressbar-label {
+  color: #FFF;
+  font-size: 14px;
+}
+/* line 8, ../_sass/abbasify-files/progress-bars.scss */
+.progressbar-rail.fixed {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  border-right-style: none;
+  border-left-style: none;
+}
+/* line 12, ../_sass/abbasify-files/progress-bars.scss */
+.progressbar-rail.thin {
+  height: 6px;
+}
+/* line 14, ../_sass/abbasify-files/progress-bars.scss */
+.progressbar-rail.thin .progress-bar {
+  height: 4px;
+}
+/* line 16, ../_sass/abbasify-files/progress-bars.scss */
+.progressbar-rail.thin .progress-bar .progressbar-label {
+  display: none;
+}

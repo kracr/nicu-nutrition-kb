@@ -1,0 +1,106 @@
+@mixin transition($value){
+	transition:$value;
+	-moz-transition:$value;
+	-ms-transition:$value;
+	-o-transition:$value; 
+	-webkit-transition:$value;
+}
+
+@mixin userSelect($value){
+	user-select:$value;
+	-moz-user-select:$value;
+	-ms-user-select:$value;
+	-o-user-select:$value; 
+	-webkit-user-select:$value;
+}
+
+@mixin animation($value){
+	animation:$value;
+	-moz-animation:$value;
+	-ms-animation:$value;
+	-o-animation:$value;
+	-webkit-animation:$value;
+}
+
+
+@mixin boxShadow($value){
+	box-shadow:$value;
+	-moz-box-shadow:$value;
+	-ms-box-shadow:$value;
+	-o-box-shadow:$value;
+	-webkit-box-shadow:$value;
+}
+
+
+@mixin textShadow($value){
+	text-shadow:$value;
+	-moz-text-shadow:$value;
+	-ms-text-shadow:$value;
+	-o-text-shadow:$value;
+	-webkit-text-shadow:$value;
+}
+
+
+@mixin rotate($value){
+	transform:rotate($value);
+	-moz-transform:rotate($value);
+	-ms-transform:rotate($value);
+	-o-transform:rotate($value);
+	-webkit-transform:rotate($value);
+}
+
+@mixin borderRadius($value){
+	border-radius:$value;
+	-moz-border-radius:$value;
+	-ms-border-radius:$value;
+	-o-border-radius:$value;
+	-webkit-border-radius:$value;
+}
+
+
+@mixin boxSizing($value){
+	box-sizing:$value;
+	-moz-box-sizing:$value;
+	-ms-box-sizing:$value;
+	-o-box-sizing:$value;
+	-webkit-box-sizing:$value;
+}
+
+@mixin perspective($value){
+	perspective:$value;
+	-moz-perspective:$value;
+	-ms-perspective:$value;
+	-o-perspective:$value;
+	-webkit-perspective:$value;
+}
+
+@mixin filter($value){
+	filter:$value;
+	-moz-filter:$value;
+	-ms-filter:$value;
+	-o-filter:$value;
+	-webkit-filter:$value;
+}
+
+@mixin appearance($value){
+	appearance:$value;
+	-moz-appearance:$value;
+	-ms-appearance:$value;
+	-o-appearance:$value;
+	-webkit-appearance:$value;
+}
+
+
+@mixin opacity($value){
+	opacity:$value;
+	filter:alpha(opacity=$value*100);
+}
+
+
+@mixin makeMixin($propertyName, $propertyValue){
+	#{$propertyName} : $propertyValue;
+	-ms-#{$propertyName} : $propertyValue;
+	-o-#{$propertyName} : $propertyValue;
+	-webkit-#{$propertyName} : $propertyValue;
+	-moz-#{$propertyName} : $propertyValue;
+}

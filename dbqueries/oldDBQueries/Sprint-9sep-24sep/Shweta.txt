@@ -1,0 +1,357 @@
+-- View: kdah.vw_baby_visit_csvdata
+
+-- DROP VIEW kdah.vw_baby_visit_csvdata;
+
+CREATE OR REPLACE VIEW kdah.vw_baby_visit_csvdata AS 
+ SELECT bv.visitid,
+    bv.uhid,
+    bd.babyname,
+    bv.ga_at_birth,
+    bv.corrected_ga,
+    bv.visitdate AS entrydate,
+    bv.visittime AS entrytime,
+    bv.nicuday,
+    bv.currentage AS age,
+    bv.currentdateweight AS weight,
+    bv.currentdateheight AS height,
+    bv.currentdateheadcircum AS headcircumferrence,
+    bv.workingweight,
+    bv.weight_for_cal AS weightforcal
+   FROM kdah.baby_visit bv,
+    kdah.baby_detail bd
+  WHERE bv.uhid::text = bd.uhid::text AND bd.admissionstatus = true;
+
+ALTER TABLE kdah.vw_baby_visit_csvdata
+  OWNER TO postgres;
+
+
+
+
+-- Table: kdah.ref_kuppuswamy_education
+
+-- DROP TABLE kdah.ref_kuppuswamy_education;
+
+CREATE TABLE kdah.ref_kuppuswamy_education
+(
+  id character varying(10) NOT NULL,
+  education character varying(200),
+  score character varying(10),
+  CONSTRAINT ref_kuppuswamy_education_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE kdah.ref_kuppuswamy_education
+  OWNER TO postgres;
+
+
+
+
+  insert into kdah.ref_kuppuswamy_education values(1,'Profession or Honours',7);
+  insert into kdah.ref_kuppuswamy_education values(2,'Graduate',6);
+  insert into kdah.ref_kuppuswamy_education values(3,'Intermediate or diploma',5);
+  insert into kdah.ref_kuppuswamy_education values(4,'High school certificate',4);
+  insert into kdah.ref_kuppuswamy_education values(5,'Middle school certificate',3);
+  insert into kdah.ref_kuppuswamy_education values(6,'Primary school certificate',2);
+  insert into kdah.ref_kuppuswamy_education values(7,'Illiterate',1);
+
+
+
+-- Table: kdah.ref_kuppuswamy_occupation
+
+-- DROP TABLE kdah.ref_kuppuswamy_occupation;
+
+CREATE TABLE kdah.ref_kuppuswamy_occupation
+(
+  id character varying(10) NOT NULL,
+  occupation character varying(200),
+  score character varying(10),
+  CONSTRAINT ref_kuppuswamy_occupation_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE kdah.ref_kuppuswamy_occupation
+  OWNER TO postgres;
+
+
+
+
+  insert into kdah.ref_kuppuswamy_occupation values(1,'Legislators, Senior Officials & Managers ',10);
+  insert into kdah.ref_kuppuswamy_occupation values(2,'Professionals',9);
+  insert into kdah.ref_kuppuswamy_occupation values(3,'Technicians and Associate Professionals',8);
+  insert into kdah.ref_kuppuswamy_occupation values(4,'Clerks',7);
+  insert into kdah.ref_kuppuswamy_occupation values(5,'Skilled Workers and Shop & Market Sales Workers',6);
+  insert into kdah.ref_kuppuswamy_occupation values(6,'Skilled Agricultural & Fishery Workers',5);
+  insert into kdah.ref_kuppuswamy_occupation values(7,'Craft & Related Trade Workers',4);
+  insert into kdah.ref_kuppuswamy_occupation values(8,'Plant & Machine Operators and Assemblers',3);
+  insert into kdah.ref_kuppuswamy_occupation values(9,'Elementary Occupation',2);
+  insert into kdah.ref_kuppuswamy_occupation values(10,'Unemployed',1);
+
+
+
+
+Alter table kdah.birth_to_nicu add column transportVolumeGuarantee character varying(50);
+Alter table kdah.birth_to_nicu add column tsvolumeGaurantee character varying(50);
+Alter table kdah.birth_to_nicu add column tsPressureSupport character varying(50);
+Alter table kdah.birth_to_nicu add column controlledventtype character varying(100);
+Alter table kdah.respsupport add column rs_pressure_support character varying(20);
+
+
+
+drop view kdah.vw_assesment_respsystem_final ;
+
+drop view kdah.vw_assesment_respsystem_raw ;
+
+
+
+alter table kdah.sa_resp_rds alter column causeofrds type varchar(500) using causeofrds::varchar(500);
+
+
+
+alter table kdah.sa_resp_rds alter column riskfactor type varchar(500) using riskfactor::varchar(500);
+
+
+
+-- View: kdah.vw_assesment_respsystem_raw
+
+-- DROP VIEW kdah.vw_assesment_respsystem_raw;
+
+CREATE OR REPLACE VIEW kdah.vw_assesment_respsystem_raw AS 
+ SELECT concat(sa_resp_rds.creationtime, sa_resp_rds.uhid) AS uniquekey,
+    sa_resp_rds.resprdsid AS id,
+    sa_resp_rds.uhid,
+    sa_resp_rds.assessment_time AS creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_rds.resp_system_status,
+        CASE
+            WHEN sa_resp_rds.eventstatus::text = 'Yes'::text THEN 'Active'::text
+            WHEN sa_resp_rds.eventstatus::text = 'No'::text THEN 'Passive'::text
+            WHEN sa_resp_rds.eventstatus::text = 'Inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'Respiratory Distress'::text AS event,
+    (sa_resp_rds.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_resp_rds.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_resp_rds.causeofrds AS cause,
+    sa_resp_rds.progressnotes
+   FROM kdah.sa_resp_rds
+UNION
+ SELECT concat(sa_resp_apnea.creationtime, sa_resp_apnea.uhid) AS uniquekey,
+    sa_resp_apnea.apneaid AS id,
+    sa_resp_apnea.uhid,
+    sa_resp_apnea.assessment_time AS creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_apnea.resp_system_status,
+        CASE
+            WHEN sa_resp_apnea.eventstatus::text = 'Yes'::text THEN 'Active'::text
+            WHEN sa_resp_apnea.eventstatus::text = 'No'::text THEN 'Passive'::text
+            WHEN sa_resp_apnea.eventstatus::text = 'Inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'Apnea'::text AS event,
+    (sa_resp_apnea.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_resp_apnea.ageinhours IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_resp_apnea.apnea_cause AS cause,
+    sa_resp_apnea.apnea_comment AS progressnotes
+   FROM kdah.sa_resp_apnea
+UNION
+ SELECT concat(sa_resp_pphn.creationtime, sa_resp_pphn.uhid) AS uniquekey,
+    sa_resp_pphn.resppphnid AS id,
+    sa_resp_pphn.uhid,
+    sa_resp_pphn.assessment_time AS creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_pphn.resp_system_status,
+        CASE
+            WHEN sa_resp_pphn.eventstatus::text = 'Yes'::text THEN 'Active'::text
+            WHEN sa_resp_pphn.eventstatus::text = 'No'::text THEN 'Passive'::text
+            WHEN sa_resp_pphn.eventstatus::text = 'Inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'PPHN'::text AS event,
+    (sa_resp_pphn.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_resp_pphn.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_resp_pphn.causeofpphn AS cause,
+    sa_resp_pphn.progressnotes
+   FROM kdah.sa_resp_pphn
+UNION
+ SELECT concat(sa_resp_pneumothorax.creationtime, sa_resp_pneumothorax.uhid) AS uniquekey,
+    sa_resp_pneumothorax.resppneumothoraxid AS id,
+    sa_resp_pneumothorax.uhid,
+    sa_resp_pneumothorax.assessment_time AS creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_pneumothorax.resp_system_status,
+        CASE
+            WHEN sa_resp_pneumothorax.eventstatus::text = 'Yes'::text THEN 'Active'::text
+            WHEN sa_resp_pneumothorax.eventstatus::text = 'No'::text THEN 'Passive'::text
+            WHEN sa_resp_pneumothorax.eventstatus::text = 'Inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'Pneumothorax'::text AS event,
+    (sa_resp_pneumothorax.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_resp_pneumothorax.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_resp_pneumothorax.causeofpneumothorax AS cause,
+    sa_resp_pneumothorax.progressnotes
+   FROM kdah.sa_resp_pneumothorax
+UNION
+ SELECT concat(sa_resp_others.creationtime, sa_resp_others.uhid) AS uniquekey,
+    sa_resp_others.respotherid AS id,
+    sa_resp_others.uhid,
+    sa_resp_others.creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_others.resp_system_status,
+        CASE
+            WHEN sa_resp_others.eventstatus::text = 'Yes'::text THEN 'Active'::text
+            WHEN sa_resp_others.eventstatus::text = 'No'::text THEN 'Passive'::text
+            WHEN sa_resp_others.eventstatus::text = 'Inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'Others'::text AS event,
+    (sa_resp_others.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_resp_others.ageinhours IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_resp_others.causeofdisease AS cause,
+    sa_resp_others.progressnotes
+   FROM kdah.sa_resp_others;
+
+ALTER TABLE kdah.vw_assesment_respsystem_raw
+  OWNER TO postgres;
+
+
+
+-- View: kdah.vw_assesment_respsystem_final
+
+-- DROP VIEW kdah.vw_assesment_respsystem_final;
+
+CREATE OR REPLACE VIEW kdah.vw_assesment_respsystem_final AS 
+ SELECT vw_assesment_respsystem_raw.uniquekey,
+    vw_assesment_respsystem_raw.id,
+    vw_assesment_respsystem_raw.uhid,
+    vw_assesment_respsystem_raw.creationtime,
+    vw_assesment_respsystem_raw.category,
+    vw_assesment_respsystem_raw.resp_system_status,
+    vw_assesment_respsystem_raw.event,
+    vw_assesment_respsystem_raw.eventstatus,
+    vw_assesment_respsystem_raw.duration,
+    vw_assesment_respsystem_raw.cause,
+    vw_assesment_respsystem_raw.progressnotes,
+    vw_assesment_respsystem_raw.progressnotes AS comment
+   FROM kdah.vw_assesment_respsystem_raw
+  ORDER BY vw_assesment_respsystem_raw.creationtime DESC;
+
+ALTER TABLE kdah.vw_assesment_respsystem_final
+  OWNER TO postgres;
+
+
+drop view kdah.vw_icdcode_final;
+
+
+Drop view kdah.vw_icdcode_raw;
+
+
+alter table kdah.sa_resp_rds alter column icdcauseofrds type varchar(500) using icdcauseofrds::varchar(500);
+
+
+-- View: kdah.vw_icdcode_raw
+
+-- DROP VIEW kdah.vw_icdcode_raw;
+
+CREATE OR REPLACE VIEW kdah.vw_icdcode_raw AS 
+ SELECT concat(sa_resp_rds.creationtime, sa_resp_rds.uhid) AS uniquekey,
+    sa_resp_rds.resprdsid AS id,
+    sa_resp_rds.uhid,
+    sa_resp_rds.icdcauseofrds AS icdcause,
+    sa_resp_rds.creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_rds.eventstatus,
+    'RDS'::text AS event
+   FROM kdah.sa_resp_rds
+UNION
+ SELECT concat(sa_resp_apnea.creationtime, sa_resp_apnea.uhid) AS uniquekey,
+    sa_resp_apnea.apneaid AS id,
+    sa_resp_apnea.uhid,
+    sa_resp_apnea.icdcauseofapnea AS icdcause,
+    sa_resp_apnea.creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_apnea.eventstatus,
+    'Apnea'::text AS event
+   FROM kdah.sa_resp_apnea
+UNION
+ SELECT concat(sa_resp_pphn.creationtime, sa_resp_pphn.uhid) AS uniquekey,
+    sa_resp_pphn.resppphnid AS id,
+    sa_resp_pphn.uhid,
+    sa_resp_pphn.icdcauseofpphn AS icdcause,
+    sa_resp_pphn.creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_pphn.eventstatus,
+    'PPHN'::text AS event
+   FROM kdah.sa_resp_pphn
+UNION
+ SELECT concat(sa_resp_pneumothorax.creationtime, sa_resp_pneumothorax.uhid) AS uniquekey,
+    sa_resp_pneumothorax.resppneumothoraxid AS id,
+    sa_resp_pneumothorax.uhid,
+    sa_resp_pneumothorax.icdcauseofpneumo AS icdcause,
+    sa_resp_pneumothorax.creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_pneumothorax.eventstatus,
+    'Pneumothorax'::text AS event
+   FROM kdah.sa_resp_pneumothorax
+UNION
+ SELECT concat(sa_infection_sepsis.creationtime, sa_infection_sepsis.uhid) AS uniquekey,
+    sa_infection_sepsis.sasepsisid AS id,
+    sa_infection_sepsis.uhid,
+    sa_infection_sepsis.icdcauseofsepsis AS icdcause,
+    sa_infection_sepsis.creationtime,
+    'Infection'::text AS category,
+    sa_infection_sepsis.eventstatus,
+    'Sepsis'::text AS event
+   FROM kdah.sa_infection_sepsis
+UNION
+ SELECT concat(sa_jaundice.creationtime, sa_jaundice.uhid) AS uniquekey,
+    sa_jaundice.sajaundiceid AS id,
+    sa_jaundice.uhid,
+    sa_jaundice.icdcauseofjaundice AS icdcause,
+    sa_jaundice.creationtime,
+    'Jaundice'::text AS category,
+    sa_jaundice.jaundicestatus AS eventstatus,
+    'Jaundice'::text AS event
+   FROM kdah.sa_jaundice;
+
+ALTER TABLE kdah.vw_icdcode_raw
+  OWNER TO postgres;
+
+
+
+-- View: kdah.vw_icdcode_final
+
+-- DROP VIEW kdah.vw_icdcode_final;
+
+CREATE OR REPLACE VIEW kdah.vw_icdcode_final AS 
+ SELECT v.uniquekey,
+    v.id,
+    v.uhid,
+    v.icdcause,
+    v.eventstatus,
+    v.event,
+    v.category,
+    v.creationtime
+   FROM kdah.vw_icdcode_raw v
+  ORDER BY v.creationtime DESC;
+
+ALTER TABLE kdah.vw_icdcode_final
+  OWNER TO postgres;
+

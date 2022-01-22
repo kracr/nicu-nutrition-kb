@@ -1,0 +1,3 @@
+alter table kdah.investigation_ordered add column "issamplevisible" boolean default true;
+update kdah.investigation_ordered set issamplevisible=false where lower(testname) like '%x-ray%';
+update kdah.investigation_ordered set issamplevisible=false where lower(testname) like '%ecg%';

@@ -1,0 +1,21 @@
+Alter table kdah.nursing_ventilaor add column nursing_volume_guarantee character varying(100);
+
+
+
+Alter table kdah.ref_ventilationmode add column status character varying(50);
+
+update kdah.ref_ventilationmode set status = 'active' where ventmodeid = 'VM0001';
+update kdah.ref_ventilationmode set status = 'active' where ventmodeid = 'VM0002';
+update kdah.ref_ventilationmode set status = 'active' where ventmodeid = 'VM0003';
+update kdah.ref_ventilationmode set status = 'active' where ventmodeid = 'VM0004';
+update kdah.ref_ventilationmode set status = 'active' where ventmodeid = 'VM0005';
+update kdah.ref_ventilationmode set status = 'active' where ventmodeid = 'VM0006';
+update kdah.ref_ventilationmode set status = 'active' where ventmodeid = 'VM0007';
+update kdah.ref_ventilationmode set status = 'active' where ventmodeid = 'VM0008';
+update kdah.ref_ventilationmode set status = 'active' where ventmodeid = 'VM0009';
+
+update kdah.ref_ventilationmode set status = 'inactive' where ventmodeid = 'VM0010';
+update kdah.ref_ventilationmode set status = 'inactive' where ventmodeid = 'VM0011';
+update kdah.ref_ventilationmode set status = 'inactive' where ventmodeid = 'VM0012';
+update kdah.ref_ventilationmode set status = 'inactive' where ventmodeid = 'VM0013';
+update kdah.ref_ventilationmode set status = 'inactive' where ventmodeid = 'VM0018';

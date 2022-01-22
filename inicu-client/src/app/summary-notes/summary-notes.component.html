@@ -1,0 +1,547 @@
+<doctor-panel></doctor-panel>
+<div style="background-color:white" *ngIf="doctorNotesPrintData != undefined">
+<div
+	class="col-md-12 set-AssessmentSystemtEvent-background padding-10-y">
+	<div class="col-md-1 no-padding"></div>
+	<div class="col-md-2 no-padding">
+		<div class="pull-right">
+			<span class="bold">Filter By</span>
+			<div class="toggle-options-radio background-white">
+				<input type="radio" name="notesStatus" [value]="true"
+					[(ngModel)]="printDataObj.isNotesBySystem"
+					(ngModelChange)="getDoctorNotesPrintData()" id="notesStatusSystem"> <label for="notesStatusSystem">System</label>
+				<input type="radio" [value]="false" [(ngModel)]="printDataObj.isNotesBySystem"
+					(ngModelChange)="getDoctorNotesPrintData()" name="notesStatus" id="notesStatusDate"> <label for="notesStatusDate">Date</label>
+			</div>
+		</div>
+	</div>
+  <!-- *ngIf="printDataObj.isNotesBySystem == true" -->
+	<div class="col-md-2" *ngIf="printDataObj.isNotesBySystem == true">
+		<div class="col-md-12 no-padding" >
+			<span class="bold">System</span>
+		</div>
+		<div class="col-md-12 no-padding">
+			<div class="multiselect  desktop-column-20 no-padding">
+				<!--  desktop-column-15 -->
+				<div class="selectBox"
+					(click)="showCheckboxes('multiple-selectbox-2')"
+					id="multiple-selectbox-2">
+					<select class="no-margin">
+						<option>-- Select --</option>
+					</select>
+					<div class="overSelect"></div>
+				</div>
+				<ul id="checkboxes-2" class="multiple-select full">
+					<!-- value="item.key" [(ngModel)]="statusSepsis.sepsis.symptoms" (ngModelChange)="selectedSymptoms()" -->
+					<li *ngFor="let item of notesTempObj.moduleNamesDropDown"><input
+						type="checkbox" id="{{item.key}}"
+						(click)="systemValue(item.key,'system')"
+						[(ngModel)]="item.flag" value=true [ngModelOptions]="{standalone: true}" /><label for="{{item.key}}">{{item.value}}</label></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+ <div class="col-md-2 no-padding-right">
+		<div class="col-md-12 no-padding">
+			<span class="bold">From <span class="font-size-11">(
+					Time : 24 hrs format )</span></span>
+		</div>
+			<div class="col-md-12 no-padding">
+        <owl-date-time class="owl-dateTime" [(ngModel)]="printDataObj.dateFrom" (ngModelChange)="getDoctorNotesPrintData()" [ngModelOptions]="{standalone: true}" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+			</div>
+	</div>
+	<div class="col-md-2 no-padding-right">
+		<div class="col-md-12 no-padding">
+			<span class="bold">To <span class="font-size-11">( Time
+					: 24 hrs format ) </span></span>
+		</div>
+		<div class="col-md-12 no-padding">
+        <owl-date-time class="owl-dateTime" [(ngModel)]="printDataObj.dateTo" (ngModelChange)="getDoctorNotesPrintData()" [ngModelOptions]="{standalone: true}" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+		</div>
+	</div>
+	<div class="col-md-1 no-padding-right right-aligned">
+		<div class="col-md-12 no-padding">
+			<label class="visiblity-hidden"><strong>To Time</strong></label>
+		</div>
+		<div class="col-md-12 no-padding">
+			<span class="button button-blue"
+				(click)="getDoctorNotesPrintData()">Show</span>
+		</div>
+	</div>
+	 <div class="col-md-2 no-padding-right right-aligned">
+		<div class="col-md-12 no-padding">
+			<label class="visiblity-hidden"><strong>To Time</strong></label>
+		</div>
+		<div class="col-md-12 no-padding">
+			<span class="button button-blue" (click)="printPdf()">Print
+				Progress Notes</span>
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row padding-10-x">
+		<form name="doctorNotesForm">
+			<fieldset>
+				<div class="summary-container" [hidden]="graph">
+					<div class="col-md-12 no-padding padding-10-y">
+						<div class="col-md-4 no-padding-left border-right">
+							<div
+								class="col-md-12 no-padding border-bottom-grey no-padding-bottom"
+								style="background-color: #cce1ff">
+								<!-- <div class="col-md-1 no-padding">
+									<span class="sprite sprite-current-weight"></span>
+								</div> -->
+								<div class="col-md-12 padding-5-y no-padding center-aligned">
+									<span class="font-18 blue-text">Weight</span>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding padding-5-y">
+								<div class="col-md-3 no-padding center-aligned">
+									<div class="col-md-12 no-padding">
+										<span class="bold font-size-16">Previous Wt</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<span class="blue-text font-size-16">{{doctorNotesPrintData.basicDetails.prevDateWeight}}</span>
+									</div>
+								</div>
+								<div class="col-md-3 no-padding center-aligned">
+									<div class="col-md-12 no-padding">
+										<span class="bold font-size-16">Today's Wt</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<span class="blue-text font-size-16">{{doctorNotesPrintData.basicDetails.currentdateweight}}</span>
+									</div>
+								</div>
+								<div class="col-md-3 no-padding center-aligned">
+									<div class="col-md-12 no-padding">
+										<span class="bold font-size-16">Diff</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<span class="blue-text font-size-16">{{doctorNotesPrintData.basicDetails.currentdateweight*1-doctorNotesPrintData.basicDetails.prevDateWeight*1}}</span>
+									</div>
+								</div>
+								<div class="col-md-3 no-padding center-aligned">
+									<div class="col-md-12 no-padding">
+										<span class="bold font-size-16">Working Wt</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<span class="blue-text font-size-16">{{doctorNotesPrintData.basicDetails.workingweight}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 border-right">
+							<!-- <div class="col-md-12 no-padding padding-10-y border-bottom-grey">
+
+							</div> -->
+							<div
+								class="col-md-12 no-padding border-bottom-grey no-padding-bottom"
+								style="background-color: #e6f0ff">
+								<!-- <div class="col-md-1 no-padding">
+									<span class="sprite sprite-notes-intake"></span>
+								</div> -->
+								<div class="col-md-12 padding-5-y no-padding center-aligned">
+									<span class="font-18 blue-text">Intake</span>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding padding-5-y">
+								<div class="col-md-6 no-padding center-aligned">
+									<div class="col-md-12 no-padding">
+										<span class="bold font-size-16">Total Intake (ml/day)</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<span class="blue-text font-size-16">{{doctorNotesPrintData.intakeDetails.enTotal+doctorNotesPrintData.intakeDetails.pnTotal}}</span>
+									</div>
+								</div>
+								<div class="col-md-3 no-padding center-aligned">
+									<div class="col-md-12 no-padding">
+										<span class="bold font-size-16">EN</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<span class="blue-text font-size-16">{{doctorNotesPrintData.intakeDetails.enTotal}}</span>
+									</div>
+								</div>
+								<div class="col-md-3 no-padding center-aligned">
+									<div class="col-md-12 no-padding">
+										<span class="bold font-size-16">PN</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<span class="blue-text font-size-16">{{doctorNotesPrintData.intakeDetails.pnTotal}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<!-- <div class="col-md-12 no-padding padding-10-y border-bottom-grey">
+								<span class="bold font-18">Output</span>
+							</div> -->
+							<div
+								class="col-md-12 no-padding border-bottom-grey no-padding-bottom"
+								style="background-color: #cce1ff">
+								<!-- <div class="col-md-1 no-padding">
+									<span class="sprite sprite-notes-output"></span>
+								</div> -->
+								<div class="col-md-12 padding-5-y no-padding center-aligned">
+									<span class="font-18 blue-text">Output</span>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding padding-5-y">
+								<div class="col-md-4 no-padding center-aligned">
+									<div class="col-md-12 no-padding">
+										<span class="bold font-size-16">Urine ml/kg/hr</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<span class="blue-text font-size-16">{{doctorNotesPrintData.outputDetails.urineOutput}}</span>
+									</div>
+								</div>
+								<div class="col-md-5 no-padding center-aligned">
+									<div class="col-md-12 no-padding">
+										<span class="bold font-size-16">No. of Stools / Day</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<span class="blue-text font-size-16">{{doctorNotesPrintData.outputDetails.numberOfStool}}</span>
+									</div>
+								</div>
+								<div class="col-md-3 no-padding center-aligned">
+									<div class="col-md-12 no-padding">
+										<span class="bold font-size-16">Drain ml/day</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<span class="blue-text font-size-16">{{doctorNotesPrintData.outputDetails.drainOutput}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="col-md-12 no-padding-left">
+							<div class="table full padding-10-y">
+								<div class="table-cell left-aligned">
+									<label for="doctorNotes" class="font-18">Diagnosis</label>
+								</div>
+							</div>
+							<div class="table full">
+								<div class="doctor-note-content" style="height: 36px">
+									<div class="padding-5-x">
+										<span> {{doctorNotesPrintData.diagnosis}} </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="col-md-12 no-padding-left">
+							<div class="table full padding-10-y">
+								<div class="table-cell left-aligned">
+									<label for="doctorNotes" class="font-18">Vitals</label>
+								</div>
+							</div>
+							<div class="table full">
+								<div class="doctor-note-content" style="height: 60px; overflow:hidden">
+									<div class="padding-5-x">
+										<span class="bold">{{doctorNotesPrintData.vital_time |
+											date:'dd-MM-yyyy hh:mm a'}}</span> <br> <span>{{doctorNotesPrintData.vitalDetails}}
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="col-md-12 no-padding-left">
+							<div class="table full padding-10-y">
+								<div class="table-cell left-aligned">
+									<label for="doctorNotes" class="font-18">Doctor Notes</label>
+								</div>
+								<div class="table-cell blue-round-tick right-aligned">
+									<input type="checkbox" id="additionalAssessment"
+										[(ngModel)]="isAdditionalAssessment" [ngModelOptions]="{standalone: true}"> <label
+										for="additionalAssessment">Additional Assessment</label>
+								</div>
+							</div>
+							<div *ngIf="printDataObj.isNotesBySystem">
+								<div
+									*ngFor="let key of doctorNotesPrintData.assessmentDetails | KeysPipe">
+									<div class="table full">
+										<div class="padding-10-y padding-20-x"
+											[ngClass]="{'jaundice-note-main-strip' : key.key=='Jaundice','resp-note-main-strip' : key.key=='RespSystems','cns-note-main-strip' : key.key=='CNS','infection-note-main-strip' : key.key=='Infection','misc-note-main-strip' : key.key=='Misc'}">
+											<span class="bold">{{key.key}}</span>
+										</div>
+									</div>
+									<div class="table full"
+										*ngFor="let data of key.value; let i = index" [attr.data-index]="i">
+										<div class="padding-5-y padding-20-x"
+											*ngIf="i %2 == 0"
+											[ngClass]="{'jaundice-note-dark-strip' : key.key=='Jaundice','resp-note-dark-strip' : key.key=='RespSystems','cns-note-dark-strip' : key.key=='CNS','infection-note-dark-strip' : key.key=='Infection','misc-note-dark-strip' : key.key=='Misc'}">
+											<span class="bold">{{data.creationtime |
+												date:'dd-MM-yyyy hh:mm a'}}</span> <br> <span
+												*ngIf="data.vitalInfo!=null && data.vitalInfo!=''"><span
+												class="bold">Vital: </span>{{data.vitalInfo}}<br></span> <span><span
+												class="bold">Assessment:</span> {{data.progressnotes}}</span>
+										</div>
+										<div class="padding-5-y padding-20-x"
+											*ngIf="i %2 != 0"
+											[ngClass]="{'jaundice-note-light-strip' : key.key=='Jaundice','resp-note-light-strip' : key.key=='RespSystems','cns-note-light-strip' : key.key=='CNS','infection-note-light-strip' : key.key=='Infection','misc-note-light-strip' : key.key=='Misc'}">
+											<span class="bold">{{data.creationtime |
+												date:'dd-MM-yyyy hh:mm a'}}</span> <br> <span
+												*ngIf="data.vitalInfo!=null && data.vitalInfo!=''"><span
+												class="bold">Vital: </span>{{data.vitalInfo}}<br></span> <span><span
+												class="bold">Assessment:</span> {{data.progressnotes}}</span>
+										</div>
+									</div>
+									<hr>
+								</div>
+							</div>
+							<div
+								*ngIf="printDataObj.isNotesBySystem!=null && !(printDataObj.isNotesBySystem)">
+								<div
+									*ngFor="let key of doctorNotesPrintData.assessmentDetails | KeysPipe">
+									<div class="table full">
+										<div class="date-display-note-strip padding-10-y padding-20-x">
+											<span class="bold">{{key.key}}</span>
+										</div>
+									</div>
+									<div class="table full"
+										*ngFor="let data of key.value; let i = index" [attr.data-index]="i">
+										<div class="padding-5-y padding-20-x"
+											*ngIf="i %2 == 0"
+											[ngClass]="{'jaundice-note-dark-strip' : data.systemName=='Jaundice','resp-note-dark-strip' : data.systemName=='RespSystems','cns-note-dark-strip' : key.key=='CNS','infection-note-dark-strip' : key.key=='Infection','misc-note-dark-strip' : key.key=='Misc'}">
+											<span class="bold">{{data.creationtime |
+												date:'dd-MM-yyyy hh:mm a'}}</span> <br> <span
+												*ngIf="data.vitalInfo!=null && data.vitalInfo!=''"><span
+												class="bold">Vital: </span>{{data.vitalInfo}}<br></span> <span><span
+												class="bold">Assessment:</span> {{data.progressnotes}}</span>
+										</div>
+										<div class="padding-5-y padding-20-x"
+											*ngIf="i %2 != 0"
+											[ngClass]="{'jaundice-note-light-strip' : data.systemName=='Jaundice','resp-note-light-strip' : data.systemName=='RespSystems','cns-note-light-strip' : key.key=='CNS','infection-note-light-strip' : key.key=='Infection','misc-note-light-strip' : key.key=='Misc'}">
+											<span class="bold">{{data.creationtime |
+												date:'dd-MM-yyyy hh:mm a'}}</span> <br> <span
+												*ngIf="data.vitalInfo!=null && data.vitalInfo!=''"><span
+												class="bold">Vital: </span>{{data.vitalInfo}}<br></span> <span><span
+												class="bold">Assessment:</span> {{data.progressnotes}}</span>
+										</div>
+									</div>
+									<hr>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row padding-5-y">
+						<div class="col-md-12 padding-10-y">
+							<div class="col-md-2 no-padding-left center-aligned">
+								<input type="radio" name="NoteType" id="NoteTypeInvegtigation"
+									[(ngModel)]="notesTempObj.Type"
+									value="Invegtigation" style="display: none">
+								<label for="NoteTypeInvegtigation"
+									class="table full assessment-treatment-tab-box"
+									[ngClass]="{'resp-event-box-selected': notesTempObj.Type=='Invegtigation'}">Investigation</label>
+							</div>
+							<div class="col-md-2 no-padding-left center-aligned">
+								<input type="radio" name="NoteType" id="NoteTypeTreatment"
+									[(ngModel)]="notesTempObj.Type" value="Treatment"
+									style="display: none"> <label for="NoteTypeTreatment"
+									class="table full assessment-treatment-tab-box"
+									[ngClass]="{'resp-event-box-selected': notesTempObj.Type=='Treatment'}">Treatment</label>
+							</div>
+							<div class="col-md-2 no-padding-left center-aligned">
+								<input type="radio" name="NoteType" id="NoteTypePlan"
+									[(ngModel)]="notesTempObj.Type" value="Plan"
+									style="display: none"> <label for="NoteTypePlan"
+									class="table full assessment-treatment-tab-box"
+									[ngClass]="{'resp-event-box-selected': notesTempObj.Type=='Plan'}">Plan</label>
+							</div>
+						</div>
+					</div>
+					<div class="clear table padding-10-y full no-padding-top">
+						<div class="col-md-12 no-padding">
+							<div class="col-md-12 no-padding-left"
+								*ngIf="notesTempObj.Type=='Invegtigation'">
+								<div class="col-md-12 no-padding">
+									<label for="" class="inline-block force-left">Investigation</label>
+								</div>
+								<div class="col-md-12 no-padding">
+
+									<div class="doctor-note-content"
+										*ngIf="printDataObj.isNotesBySystem!=null && (printDataObj.isNotesBySystem)">
+										<div class="padding-5-x"
+											*ngFor="let key of doctorNotesPrintData.assessmentDetails | KeysPipe">
+											<!-- system wise information -->
+											<div class="padding-10-y padding-20-x"
+												[ngClass]="{'jaundice-note-main-strip' : key.key=='Jaundice','resp-note-main-strip' : key.key=='RespSystems','cns-note-main-strip' : key.key=='CNS','infection-note-main-strip' : key.key=='Infection','misc-note-main-strip' : key.key=='Misc'}">
+												<span class="bold">{{key.key}}</span>
+											</div>
+											<div class="table full"
+												*ngFor="let data of key.value; let i = index" [attr.data-index]="i">
+												<div class="padding-5-y padding-20-x"
+													*ngIf="i %2 == 0 && data.testname!=null && data.testname!='' && data.testname!='NA'"
+													[ngClass]="{'jaundice-note-dark-strip' : key.key=='Jaundice','resp-note-dark-strip' : key.key=='RespSystems','cns-note-dark-strip' : key.key=='CNS','infection-note-dark-strip' : key.key=='Infection','misc-note-dark-strip' : key.key=='Misc'}">
+													<span><span class="bold">{{data.creationtime
+															| date:'dd-MM-yyyy hh:mm a'}} : </span> {{data.testname}}</span>
+												</div>
+												<div class="padding-5-y padding-20-x"
+													*ngIf="i %2 != 0 && data.testname!=null && data.testname!='' && data.testname!='NA'"
+													[ngClass]="{'jaundice-note-light-strip' : key.key=='Jaundice','resp-note-light-strip' : key.key=='RespSystems','cns-note-light-strip' : key.key=='CNS','infection-note-light-strip' : key.key=='Infection','misc-note-light-strip' : key.key=='Misc'}">
+													<span><span class="bold">{{data.creationtime
+															| date:'dd-MM-yyyy hh:mm a'}}</span> {{data.testname}}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="doctor-note-content"
+										*ngIf="printDataObj.isNotesBySystem!=null && !(printDataObj.isNotesBySystem)">
+										<div class="padding-5-x"
+											*ngFor="let key of doctorNotesPrintData.assessmentDetails | KeysPipe">
+											<!-- system wise information -->
+											<div class="padding-10-y padding-20-x"
+												[ngClass]="{'jaundice-note-main-strip' : key.key.systemName=='Jaundice','resp-note-main-strip' : key.key.systemName=='RespSystems','cns-note-main-strip' : key.key=='CNS','infection-note-main-strip' : key.key=='Infection','misc-note-main-strip' : key.key=='Misc'}">
+												<span class="bold">{{key.key}}</span>
+											</div>
+											<div class="table full"
+												*ngFor="let data of key.value; let i = index" [attr.data-index]="i">
+												<div class="padding-5-y padding-20-x"
+													*ngIf="i %2 == 0 && data.testname!=null && data.testname!='' && data.testname!='NA'"
+													[ngClass]="{'jaundice-note-dark-strip' : data.systemName=='Jaundice','resp-note-dark-strip' : data.systemName=='RespSystems','cns-note-dark-strip' : key.key=='CNS','infection-note-dark-strip' : key.key=='Infection','misc-note-dark-strip' : key.key=='Misc'}">
+													<span><span class="bold">{{data.creationtime
+															| date:'hh:mm a'}} : </span>{{data.testname}}</span>
+												</div>
+												<div class="padding-5-y padding-20-x"
+													*ngIf="i %2 != 0 && data.testname!=null && data.testname!='' && data.testname!='NA'"
+													[ngClass]="{'jaundice-note-light-strip' : data.systemName=='Jaundice','resp-note-light-strip' : data.systemName=='RespSystems','cns-note-light-strip' : key.key=='CNS','infection-note-light-strip' : key.key=='Infection', 'misc-note-light-strip' : key.key=='Misc'}">
+													<span><span class="bold">{{data.creationtime
+															| date:'hh:mm a'}} : </span> {{data.testname}}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding-left"
+								*ngIf="notesTempObj.Type=='Treatment'">
+								<div class="col-md-12 no-padding">
+									<label for="" class="inline-block force-left">Treatment</label>
+								</div>
+								<div class="col-md-12 no-padding">
+
+									<div class="doctor-note-content"
+										*ngIf="printDataObj.isNotesBySystem!=null && (printDataObj.isNotesBySystem)">
+										<div class="padding-5-x"
+											*ngFor="let key of doctorNotesPrintData.assessmentDetails | KeysPipe">
+											<!-- system wise information -->
+											<div class="padding-10-y padding-20-x"
+												[ngClass]="{'jaundice-note-main-strip' : key.key=='Jaundice','resp-note-main-strip' : key.key=='RespSystems','cns-note-main-strip' : key.key=='CNS','infection-note-main-strip' : key.key=='Infection','misc-note-main-strip' : key.key=='Misc'}">
+												<span class="bold">{{key.key}}</span>
+											</div>
+											<div class="table full"
+												*ngFor="let data of key.value; let i = index" [attr.data-index]="i">
+												<div class="padding-5-y padding-20-x"
+													*ngIf="i %2 == 0 && data.treatment!=null && data.treatment!=''"
+													[ngClass]="{'jaundice-note-dark-strip' : key.key=='Jaundice','resp-note-dark-strip' : key.key=='RespSystems','cns-note-dark-strip' : key.key=='CNS','infection-note-dark-strip' : key.key=='Infection','misc-note-dark-strip' : key.key=='Misc'}">
+													<span><span class="bold">{{data.creationtime
+															| date:'dd-MM-yyyy hh:mm a'}}: </span> {{data.treatment}}</span>
+												</div>
+												<div class="padding-5-y padding-20-x"
+													*ngIf="i %2 != 0 && data.treatment!=null && data.treatment!=''"
+													[ngClass]="{'jaundice-note-light-strip' : key.key=='Jaundice','resp-note-light-strip' : key.key=='RespSystems','cns-note-light-strip' : key.key=='CNS','infection-note-light-strip' : key.key=='Infection','misc-note-light-strip' : key.key=='Misc'}">
+													<span><span class="bold">{{data.creationtime
+															| date:'dd-MM-yyyy hh:mm a'}}:</span> {{data.treatment}}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="doctor-note-content"
+										*ngIf="printDataObj.isNotesBySystem!=null && !(printDataObj.isNotesBySystem)">
+										<div class="padding-5-x"
+											*ngFor="let key of doctorNotesPrintData.assessmentDetails | KeysPipe">
+											<!-- system wise information -->
+											<div class="padding-10-y padding-20-x"
+												[ngClass]="{'jaundice-note-main-strip' : key.key=='Jaundice','resp-note-main-strip' : key.key=='RespSystems','cns-note-main-strip' : key.key=='CNS','infection-note-main-strip' : key.key=='Infection','misc-note-main-strip' : key.key=='Misc'}">
+												<span class="bold">{{key.key}}</span>
+											</div>
+											<div class="table full"
+												*ngFor="let data of key.value; let i = index" [attr.data-index]="i">
+												<div class="padding-5-y padding-20-x"
+													*ngIf="i %2 == 0 && data.treatment!=null && data.treatment!=''"
+													[ngClass]="{'jaundice-note-dark-strip' : data.systemName=='Jaundice','resp-note-dark-strip' : data.systemName=='RespSystems','cns-note-dark-strip' : key.key=='CNS','infection-note-dark-strip' : key.key=='Infection','misc-note-dark-strip' : key.key=='Misc'}">
+													<span><span class="bold">{{data.creationtime
+															| date:'hh:mm a'}}: </span> {{data.treatment}}</span>
+												</div>
+												<div class="padding-5-y padding-20-x"
+													*ngIf="i %2 != 0 && data.treatment!=null && data.treatment!=''"
+													[ngClass]="{'jaundice-note-light-strip' : data.systemName=='Jaundice','resp-note-light-strip' : data.systemName=='RespSystems','cns-note-light-strip' : key.key=='CNS','infection-note-light-strip' : key.key=='Infection', 'misc-note-light-strip' : key.key=='Misc'}">
+													<span><span class="bold">{{data.creationtime
+															| date:'hh:mm a'}}: </span> {{data.treatment}}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<div class="col-md-12 no-padding-left"
+								*ngIf="notesTempObj.Type=='Plan'">
+								<div class="col-md-12 no-padding">
+									<label for="" class="inline-block force-left">Plan</label>
+								</div>
+								<div class="col-md-12 no-padding">
+									<div class="doctor-note-content"
+										*ngIf="printDataObj.isNotesBySystem!=null && (printDataObj.isNotesBySystem)">
+										<div class="padding-5-x"
+											*ngFor="let key of doctorNotesPrintData.assessmentDetails | KeysPipe">
+											<!-- system wise information -->
+											<div class="padding-10-y padding-20-x"
+												[ngClass]="{'jaundice-note-main-strip' : key.key=='Jaundice','resp-note-main-strip' : key.key=='RespSystems','cns-note-main-strip' : key.key=='CNS','infection-note-main-strip' : key.key=='Infection','misc-note-main-strip' : key.key=='Misc'}">
+												<span class="bold">{{key.key}}</span>
+											</div>
+											<div class="table full"
+												*ngFor="let data of key.value; let i = index" [attr.data-index]="i">
+												<div class="padding-5-y padding-20-x"
+													*ngIf="i %2 == 0 && data.plan!=null && data.plan!=''"
+													[ngClass]="{'jaundice-note-dark-strip' : key.key=='Jaundice','resp-note-dark-strip' : key.key=='RespSystems','cns-note-dark-strip' : key.key=='CNS','infection-note-dark-strip' : key.key=='Infection','misc-note-dark-strip' : key.key=='Misc'}">
+													<span><span class="bold">{{data.creationtime
+															| date:'dd-MM-yyyy hh:mm a'}}: </span> {{data.plan}}</span>
+												</div>
+												<div class="padding-5-y padding-20-x"
+													*ngIf="i %2 != 0 && data.plan!=null && data.plan!=''"
+													[ngClass]="{'jaundice-note-light-strip' : key.key=='Jaundice','resp-note-light-strip' : key.key=='RespSystems','cns-note-light-strip' : key.key=='CNS','infection-note-light-strip' : key.key=='Infection','misc-note-light-strip' : key.key=='Misc'}">
+													<span><span class="bold">{{data.creationtime
+															| date:'dd-MM-yyyy hh:mm a'}}: </span> {{data.plan}}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="doctor-note-content"
+										*ngIf="printDataObj.isNotesBySystem!=null && !(printDataObj.isNotesBySystem)">
+										<div class="padding-5-x"
+											*ngFor="let key of doctorNotesPrintData.assessmentDetails | KeysPipe">
+											<!-- system wise information -->
+											<div class="padding-10-y padding-20-x"
+												[ngClass]="{'jaundice-note-main-strip' : key.key=='Jaundice','resp-note-main-strip' : key.key=='RespSystems','cns-note-main-strip' : key.key=='CNS','infection-note-main-strip' : key.key=='Infection','misc-note-main-strip' : key.key=='Misc'}">
+												<span class="bold">{{key.key}}</span>
+											</div>
+											<div class="table full"
+												*ngFor="let data of key.value; let i = index" [attr.data-index]="i">
+												<div class="padding-5-y padding-20-x"
+													*ngIf="i %2 == 0 && data.plan!=null && data.plan!=''"
+													[ngClass]="{'jaundice-note-dark-strip' : data.systemName=='Jaundice','resp-note-dark-strip' : data.systemName=='RespSystems','cns-note-dark-strip' : key.key=='CNS','infection-note-dark-strip' : key.key=='Infection','misc-note-dark-strip' : key.key=='Misc'}">
+													<span><span class="bold">{{data.creationtime
+															| date:'hh:mm a'}}: </span> {{data.plan}}</span>
+												</div>
+												<div class="padding-5-y padding-20-x"
+													*ngIf="i %2 != 0 && data.plan!=null && data.plan!=''"
+													[ngClass]="{'jaundice-note-light-strip' : data.systemName=='Jaundice','resp-note-light-strip' : data.systemName=='RespSystems','cns-note-light-strip' : key.key=='CNS','infection-note-light-strip' : key.key=='Infection', 'misc-note-light-strip' : key.key=='Misc'}">
+													<span><span class="bold">{{data.creationtime
+															| date:'hh:mm a'}}: </span>{{data.plan}}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

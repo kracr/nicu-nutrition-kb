@@ -1,0 +1,16 @@
+
+insert into kdah.ref_testslist values('2359','Ascites Fluid Culture','Ascites Fluid Culture','Infection',true);
+
+insert into kdah.ref_testslist values('2360','Ascites Fluid Analysis','Ascites Fluid Analysis','Infection',true);
+
+alter table kdah.nursing_medication add column flag boolean;
+
+alter table kdah.doctor_blood_products add column flag boolean;
+
+alter table kdah.nursing_heplock add column flag boolean;
+
+
+--------------------------------------------------------------------------------------------------------------------------
+alter table kdah.nursing_blood_product add column flag boolean;
+
+alter table kdah.doctor_blood_products drop column flag;

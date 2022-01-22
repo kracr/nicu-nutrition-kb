@@ -1,0 +1,5 @@
+alter table kdah.et_intubation alter  column reasonintubation TYPE character varying(200);
+alter table kdah.et_intubation alter  column reasonreintubation TYPE character varying(200);
+
+
+update kdah.ref_et_intubation_reason  set etintubationreason = 'High pCO2', description= 'High pCO2' where etintubationreasonid = 'ETR003';

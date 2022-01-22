@@ -1,0 +1,57 @@
+CREATE SEQUENCE apollo.baby_view_timings_seq  INCREMENT 1  MINVALUE 1  MAXVALUE 9223372036854775807  START 1  CACHE 1;
+ALTER TABLE apollo.baby_view_timings_seq  OWNER TO postgres;
+
+CREATE OR REPLACE FUNCTION apollo.baby_view_timings_creationtime()  RETURNS trigger AS
+$BODY$
+BEGIN
+NEW.creationtime := current_timestamp;
+NEW.modificationtime := current_timestamp;
+RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE  COST 100;
+ALTER FUNCTION apollo.baby_view_timings_creationtime()
+OWNER TO postgres;
+
+CREATE OR REPLACE FUNCTION apollo.baby_view_timings_modificationtime()  RETURNS trigger AS
+$BODY$
+BEGIN
+NEW.modificationtime := current_timestamp;
+RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE  COST 100;
+ALTER FUNCTION apollo.baby_view_timings_modificationtime()
+OWNER TO postgres;
+
+
+drop table apollo.baby_view_timings;
+
+CREATE TABLE apollo.baby_view_timings(
+ baby_view_timings_id  bigint  default nextval('apollo.baby_view_timings_seq'::regclass) not null
+        constraint baby_view_timings_pkey
+            primary key,
+uhid character varying(50) NOT NULL,
+morning_from_time varchar(10),
+morning_to_time varchar(10),
+evening_from_time varchar(10),
+evening_to_time varchar(10),
+
+isactive boolean default true,
+creationtime timestamp NOT NULL,
+modificationtime timestamp NOT NULL);
+
+
+ALTER TABLE apollo.baby_view_timings OWNER TO postgres;
+
+CREATE TRIGGER set_creationtime
+BEFORE INSERT
+ON apollo.baby_view_timings
+FOR EACH ROW
+EXECUTE PROCEDURE apollo.baby_view_timings_creationtime();
+
+CREATE TRIGGER set_modificationtime
+BEFORE UPDATE
+ON apollo.baby_view_timings
+FOR EACH ROW
+EXECUTE PROCEDURE apollo.baby_view_timings_modificationtime();

@@ -1,0 +1,11 @@
+ select * into kdah.backup_et_intubation from kdah.et_intubation;
+
+ update kdah.et_intubation t
+ set isextubation = t1.isextubation , removal_reason = t1.removal_reason , removal_timestamp = t1.removal_timestamp,
+ progressnotes = CONCAT(t.progressnotes,substring(t1.progressnotes from (position('by' in t1.progressnotes )+2)))
+ from kdah.et_intubation t1
+ where t.uhid = t1.uhid
+and t.et_intubation_id = (t1.et_intubation_id - 1) and  t.removal_timestamp is null and  t1.removal_timestamp is not null;
+
+
+delete from kdah.et_intubation where isextubation is true and (reasonintubation = '' or reasonintubation is null);

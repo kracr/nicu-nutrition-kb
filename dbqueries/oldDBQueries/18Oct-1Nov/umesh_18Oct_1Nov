@@ -1,0 +1,10 @@
+CREATE OR REPLACE view kdah.vw_occupancy_baby_final AS
+select uhid,dateofadmission,dateofbirth,babyname,inout_patient_status,timeofadmission,birthweight,gestationdaysbylmp,
+       gestationweekbylmp,actualgestationweek,actualgestationdays,dischargeddate,dischargestatus,hisdischargedate,hisdischargestatus,
+       admissionstatus,activestatus,branchname,babydetailid AS id,admissionweight,timeofbirth,isreadmitted
+    from
+        kdah.baby_detail babydetail0_
+		where uhid not in (select uhid from kdah.baby_detail babydetail0_ where babydetail0_.hisdischargedate is null
+		                                                                    and babydetail0_.dischargeddate is null and babydetail0_.admissionstatus='false')
+    order by
+        babydetail0_.dateofadmission desc;

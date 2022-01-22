@@ -1,0 +1,10 @@
+<div style="text-align: center" *ngIf = "babyVideoData != undefined && babyDisplayDataObj != undefined">
+	<h1>Baby video</h1>
+	<span *ngIf="babyVideoData.framesList==null || babyVideoData.framesList.length==0" style="line-height: 210px;">No data recieved. Please check your camera and internet connection.</span>
+	<img src="{{babyDisplayDataObj.babyDisplayString}}" height="320" width="480" style="position:absolute; left: 9px"/>
+		<!--
+<video src="rtsp://192.168.225.53:554"  height="320" width="480" style="position:absolute; left: 9px" controls>
+      Your browser does not support the video tag.
+    </video>
+ -->
+</div>

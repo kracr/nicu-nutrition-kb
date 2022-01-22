@@ -1,0 +1,33 @@
+<div class="col-md-12 no-padding table full margin-10-y center-aligned">
+  <div class="col-md-12 no-padding table-cell center-aligned">
+    <span class="print-heading" *ngIf="doctorTasksList != null && doctorTasksList != undefined">Doctor's To Do List ( {{currentDate | date:'dd-MM-yyyy'}} )</span>
+  </div>
+</div>
+<div class="col-md-12 no-padding table full margin-10-y" *ngIf="doctorTasksList != null && doctorTasksList != undefined">
+  <table class="table table-striped table-bordered headed-table desktop-column-20">
+    <tr class="border-black">
+
+      <td class="center-aligned table-cell border-black"><span>UHID</span></td>
+      <td class="center-aligned table-cell border-black"><span>Name</span></td>
+      <td class="center-aligned table-cell border-black"><span>Investigations</span></td>
+      <td class="center-aligned table-cell border-black"><span>Add Med</span></td>
+      <td class="center-aligned table-cell border-black"><span>Stop Med</span></td>
+      <td class="center-aligned table-cell border-black"><span>Feeds</span></td>
+      <td class="center-aligned table-cell border-black"><span>Comments</span></td>
+      <td class="center-aligned table-cell border-black"><span>Reports</span></td>
+      <td class="center-aligned table-cell border-black"><span>Active Disease Assessment</span></td>
+    </tr>
+    <tr *ngFor="let bed of doctorTasksList"
+      class="bed-row border-black">
+      <td class="center-aligned table-cell border-black"><span>{{bed.uhid}}</span></td>
+      <td class="center-aligned table-cell border-black"><span>{{bed.name}}</span></td>
+      <td class="center-aligned table-cell border-black"><span>{{bed.investigations}}</span></td>
+      <td class="center-aligned table-cell border-black"><span>{{bed.addMedicine}}</span></td>
+      <td class="center-aligned table-cell border-black"><span>{{bed.stopMedicine}}</span></td>
+      <td class="center-aligned table-cell border-black"><span>{{bed.feeds}}</span></td>
+      <td class="center-aligned table-cell border-black"><span>{{bed.comments}}</span></td>
+      <td class="center-aligned table-cell border-black"><span>{{bed.reports}}</span></td>
+      <td class="center-aligned table-cell border-black"><span>{{bed.assessments}}</span></td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,337 @@
+<div class="container-fluid">
+	<div class="">
+		<div class="table full padding-10-x padding-right-zero padding-10-y no-padding-bottom">
+			<div class="col-md-10 no-padding padding-10-y">
+				<div class="col-md-3 col-lg-4 no-padding table full">
+					<div class="col-md-1 no-padding table">
+						<!-- <div id="messageTooltip" class="profile-message-tooltip"
+							data-ng-blur="hideTooltip()">
+							<ul>
+								<li
+									data-ng-repeat="data in child.notificationObject.meessageArr track by $index"
+									id="{{data.uhid}}&index"><span>{{data}}</span></li>
+							</ul>
+						</div> -->
+						<!-- <span class="messages-notifier" style="margin: 0%"
+							(click)="showMessage()"> <span
+							class="sprite sprite-messages-icon"></span> <span class="count">{{child.notificationObject.count}}</span>
+						</span> -->
+			            <!-- <span class="messages-notifier" style="margin: 0%">
+			              <span class="sprite sprite-messages-icon"></span> <span class="count" *ngIf="child.notificationObject != undefined">{{child.notificationObject.count}}</span> -->
+              <!-- <span class="sprite sprite-messages-icon"></span> <span class="count">2</span> -->
+						<!-- </span> -->
+					</div>
+					<div class="col-md-5 no-padding uhid">
+						<div class="table full">
+							<span class="bold">UHID</span>
+						</div>
+						<div class="table full">
+							<span class="blue-text">{{child.uhid}}</span>
+						</div>
+					</div>
+					<div class="col-md-5 no-padding name">
+						<div class="table full">
+							<span class="bold">Name</span>
+						</div>
+						<div class="table full">
+							<div class="table full">
+								<span class="blue-text">{{child.name}}</span><span class="blue-text right-aligned padding-5-x">{{child.babyNumber}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1 gender no-padding">
+					<div class="col-md-5 no-padding">
+						<div class="table full">
+							<span class="bold">Gender</span>
+						</div>
+						<div class="table full">
+							<span class="blue-text">{{child.gender}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 bedno no-padding">
+					<div class="col-md-5 col-lg-4 no-padding">
+						<div class="table full">
+							<span class="bold">Bed No</span>
+						</div>
+						<div class="table full">
+							<span class="blue-text">{{child.bed.bedNo}}</span>
+						</div>
+					</div>
+					<div class="col-md-7 col-lg-8 no-padding">
+						<div class="table full">
+							<span class="bold">Criticality</span>
+						</div>
+						<div class="table full">
+							<span class=""
+								[ngClass]="{ 'red-text' : child.condition=='CRITICAL' ,'green-text' : child.condition=='STABLE' ,'yellow-text' : child.condition=='SATISFACTORY', 'black-text' : child.isvacant, 'hide-data' : child.condition=='NA','blue-text' : child.condition=='SICK'  }">{{child.condition}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 initial-patient no-padding line-height-standard middle-aligned">
+					<!-- below is the error message -->
+					<span class="red-text" style="font-size:13px" *ngIf="!child.isassessmentsubmit">Patient initial assessment is still PENDING</span>
+				</div>
+				<div class="col-md-2 admissionform no-padding padding-5-y center-aligned">
+					<button class="blue-bordered-white-button margin-0-left"
+						style="padding-left: 10px !important; padding-right: 10px !important"
+						[disabled]="hideViewDetails"
+						(click)="setViewProfile()">ADMISSION FORM</button>
+				</div>
+			</div>
+			<div
+				class="col-md-2 no-padding vital-upper-box padding-5-y border-upper-pannel-top-layer no-padding-top">
+				<div class="col-md-12 no-padding center-aligned">
+					<div class="table-cell font-size-12 left-aligned grey-text padding-5-x"><span  class="red-text" [ngClass]="{'vital-upper-box-color' : child.deviceTime == null}"><span [ngClass]="{'black-color': child.deviceTime}">Last updated at :</span></span> <span>{{child.deviceTime | date:'dd-MM-yyyy H:mm'}}</span></div>
+				</div>
+				<div class="col-md-6 no-padding">
+					<div class="col-md-12 no-padding">
+						<div class="col-md-12 no-padding center-aligned line-height-15">
+							<span class="hr-text" style="font-size:11px">HR</span>
+						</div>
+						<div class="col-md-12 no-padding center-aligned">
+							<!-- <span class="blue-text">{{child.HR}}</span> -->
+							<span class="hr-text bold font-size-18" *ngIf="child.hr != null">{{child.hr}}</span>
+							<span class="hr-text bold font-size-18" *ngIf="child.hr == null"> -- </span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 no-padding">
+					<div class="col-md-12 no-padding">
+						<div class="col-md-12 no-padding center-aligned line-height-15">
+							<span class="temp-text" style="font-size:11px">Temp</span>
+						</div>
+						<div class="col-md-12 no-padding center-aligned">
+							<span class="temp-text bold font-size-18" *ngIf="child.temp != null">{{child.temp}}</span>
+							<span class="temp-text bold font-size-18" *ngIf="child.temp == null"> -- </span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="table full padding-10-x padding-right-zero padding-10-y no-padding-top"
+			style="background-color: #eaeff1">
+			<div class="col-md-10 no-padding padding-10-y no-padding-bottom">
+				<div class="col-md-5 col-lg-4 dob no-padding">
+					<div class="col-md-3 no-padding">
+						<div class="col-md-12 no-padding">
+							<div class="col-md-12 no-padding left-aligned">
+								<span class="black-text bold">DOB</span>
+							</div>
+							<div class="col-md-12 no-padding left-aligned">
+								<span class="blue-text">{{child.dob | date:'dd-MM-yyyy'}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 no-padding">
+						<div class="table full">
+							<span class="bold">TOB</span>
+						</div>
+						<div class="table full">
+							<span class="blue-text">{{timeOfBirthValue}}</span>
+						</div>
+					</div>
+					<div class="col-md-4 col-lg-3 no-padding">
+						<div class="col-md-12 no-padding">
+							<div class="table full">
+								<span class="bold">DOA</span>
+							</div>
+							<div class="table full">
+								<span class="blue-text">{{child.admitDate | date:'dd-MM-yyyy'}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 dol no-padding">
+						<div class="table full">
+							<span class="bold">DOL <span *ngIf="ageHours != null">(hours)</span></span>
+						</div>
+						<div class="table full">
+							<span class="blue-text">{{ageDays}} <span *ngIf="ageHours != null">({{ageHours}})</span></span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 GA-Birth col-lg-3 no-padding">
+					<div class="col-md-7 col-lg-6 no-padding column-6">
+						<div class="table full">
+							<span class="bold">GA at Birth</span>
+						</div>
+						<div class="table full gABirth">
+							<span class="blue-text">{{gestWeek}}<sup *ngIf="gestDays != null"> + {{gestDays}}</sup></span>
+						</div>
+					</div>
+					<div class="col-md-4 col-lg-6 cga no-padding">
+						<div class="table full">
+							<span class="bold">CGA</span>
+						</div>
+
+						<div class="table full gABirth">
+							<span class="blue-text">{{gestationWeeks}}<sup *ngIf="gestationDays != null"> + {{gestationDays}}</sup></span>
+						</div>
+							<!-- <span class="blue-text">{{gestWeek}}<sup *ngIf="gestDays != null"> + {{gestDays}}</sup></span> -->
+
+					</div>
+				</div>
+				<div class="col-md-3 col-lg-2 no-padding birthWt">
+					<div class="col-md-6 birthwt1 no-padding">
+						<div class="table full">
+							<span class="bold">Birth Wt</span>
+						</div>
+						<div class="table full">
+							<span class="blue-text">{{child.birthWeight}}</span>
+						</div>
+					</div>
+					<div class="col-md-6 no-padding">
+						<div class="table full">
+							<span class="bold">Today's Wt</span>
+						</div>
+						<div class="table full">
+							<span class="blue-text">{{child.todayWeight}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 col-lg-1 yest no-padding">
+					<div class="table full">
+						<span class="bold">Yest's Wt.</span>
+					</div>
+					<div class="table full">
+						<span class="blue-text">{{child.lastDayWeight}}</span>
+					</div>
+				</div>
+				<div class="col-md-2 col-lg-1 diffYet no-padding">
+					<div class="table full">
+						<span class="bold">Diff. Wt</span>
+					</div>
+					<div *ngIf = "child.todayWeight !=null && child.lastDayWeight != null" class="table full">
+						<span class="blue-text">{{child.difference}}</span>
+					</div>
+				</div>
+				<div class="col-md-1 video no-padding">
+					<div class="table full">
+            <button class="blue-bordered-white-button margin-0-left"
+						(click)="runVideo()"
+						style="padding-left: 10px !important; padding-right: 10px !important">V</button>
+
+					</div>
+				</div>
+			</div>
+			<div
+				class="col-md-2 no-padding vital-upper-box padding-5-y no-padding-top border-upper-pannel-bottom-layer">
+				<div class="col-md-6 no-padding">
+					<div class="col-md-12 no-padding">
+						<div class="col-md-12 no-padding center-aligned">
+							<span class="bp-text" style="font-size:11px">Mean BP</span>
+						</div>
+						<div class="col-md-12 no-padding center-aligned">
+							<span class="bp-text bold font-size-18" *ngIf="child.mean_bp != null">{{child.mean_bp}}</span>
+							<span class="bp-text bold font-size-18" *ngIf="child.mean_bp == null"> -- </span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 no-padding">
+					<div class="col-md-12 no-padding">
+						<div class="col-md-12 no-padding center-aligned line-height-15">
+							<span class="spo-text" style="font-size:11px">SpO<sub>2</sub></span>
+						</div>
+						<div class="col-md-12 no-padding center-aligned line-height-15">
+							<span class="spo-text bold font-size-18" *ngIf="child.SPO2 != null">{{child.SPO2}}</span>
+							<span class="spo-text bold font-size-18" *ngIf="child.SPO2 == null"> -- </span>
+							<!-- <span class="blue-text">{{child.SPO2}}</span> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+  <div class="doctor-tab-container">
+		<div class="tab-header">
+			<ul class="table full">
+				<!-- <li data-ng-class="{'active' : activeTab == 2}"
+					data-ui-sref="dashboard.fullDashboard.doctorPanel.assesmentSheetResp"><a class="tab">Assessment</a>
+				</li> -->
+		        <li [ngClass]="{'active': doctorPanelObj.whichDoctorPanelTab=='assessment'}" (click)="doctorPanelObj.whichDoctorPanelTab != 'assessment' && selectTab('assessment')"><a class="tab" >Assessment</a></li>
+		        <li [ngClass]="{'active': doctorPanelObj.whichDoctorPanelTab=='labreport'}" (click)="doctorPanelObj.whichDoctorPanelTab !='labreport' && selectTab('labreport')"> <a class="tab" >Lab Orders & Reports</a></li>
+		        <li [ngClass]="{'active': doctorPanelObj.whichDoctorPanelTab=='nutrition'}" (click)="doctorPanelObj.whichDoctorPanelTab !='nutrition' && selectTab('nutrition')"><a class="tab">Nutrition</a></li>
+				<li [ngClass]="{'active': doctorPanelObj.whichDoctorPanelTab=='medications'}" (click)="doctorPanelObj.whichDoctorPanelTab !='medications' && selectTab('medications')"><a class="tab">Medications</a></li>
+				<li [ngClass]="{'active': doctorPanelObj.whichDoctorPanelTab=='bloodproduct'}" (click)="selectTab('bloodproduct')"><a class="tab">Blood Products</a></li>
+				<li [ngClass]="{'active': doctorPanelObj.whichDoctorPanelTab=='procedures'}" (click)="doctorPanelObj.whichDoctorPanelTab != 'procedures' && selectTab('procedures')"><a class="tab">Procedures</a></li>
+			</ul>
+			<ul class="table full">
+				<!-- <li (click)="selectTab('nursing-panel')"><a class="tab">Nursing Panel</a></li> -->
+        <li (click)="doctorPanelObj.whichDoctorPanelTab !='nursing-panel' && selectTab('nursing-panel')" [ngClass]="{'active': doctorPanelObj.whichDoctorPanelTab=='nursing-panel'}"><a class="tab">Nursing Panel</a></li>
+				<li [ngClass]="{'active': doctorPanelObj.whichDoctorPanelTab=='trends' }" (click)="doctorPanelObj.whichDoctorPanelTab !='trends' && selectTab('trends')"><a class="tab">Trends</a></li>
+				<li [ngClass]="{'active': doctorPanelObj.whichDoctorPanelTab=='growthchart' }" (click)="doctorPanelObj.whichDoctorPanelTab !='growthchart' && selectTab('growthchart')"><a class="tab">Growth Charts</a></li>
+				<li [ngClass]="{'active': doctorPanelObj.whichDoctorPanelTab=='screening' }" (click)="doctorPanelObj.whichDoctorPanelTab != 'screening' && selectTab('screening')"><a class="tab">Screening</a></li>
+				<li [ngClass]="{'active': doctorPanelObj.whichDoctorPanelTab=='progress-notes' }" (click)="doctorPanelObj.whichDoctorPanelTab != 'progress-notes' && selectTab('progress-notes')"><a class="tab">Progress Notes</a></li>
+				<li [ngClass]="{'active': doctorPanelObj.whichDoctorPanelTab=='outcomes' }" (click)="doctorPanelObj.whichDoctorPanelTab != 'outcomes' && selectTab('outcomes')"><a class="tab">Outcomes</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- code of loader -->
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+	<span class="inicu-loader-content">
+        <span class="inicu-adding-image"></span>
+		<span class="inicu-loading-content">{{loaderContent}}</span>
+	</span>
+</span>
+<!-- end of Above Code -->
+<!-- below commented code is for the Video rendering -->
+<!-- <div id="picDiv" *ngIf="changeValue==true" style="background-color : transparent">
+<div class="pull-right crossDiv">
+		<span class="cross-symbol-red" (click)="closeBabyVideo()">X</span>
+	</div>
+<div id="pic">
+
+	<div class="middle-aligned">
+		<center>
+			<iframe src="/#/stream" allowfullscreen=""
+				webkitallowfullscreen="" mozallowfullscreen="" width="500"
+				height="400"></iframe>
+		</center>
+	</div>
+</div> -->
+<div id="picDiv" *ngIf="changeValue==true" style="background-color : transparent">
+<div class="pull-right crossDiv">
+		<span class="cross-symbol-red" (click)="closeBabyVideo()">X</span>
+	</div>
+<div id="pic">
+
+	<div class="middle-aligned">
+		<!-- <center> -->
+			<!-- <iframe [src]='/cam/camera' allowfullscreen=""
+				webkitallowfullscreen="" mozallowfullscreen="" width="500"
+				height="400"></iframe> -->
+        <camera  width="500" height="400"></camera>
+		<!-- </center> -->
+	</div>
+</div><!--   -->
+<script>
+function addListeners() {
+    document.getElementById('pic').addEventListener('mousedown', mouseDown, false);
+    window.addEventListener('mouseup', mouseUp, false);
+}
+
+function mouseUp() {
+    window.removeEventListener('mousemove', divMove, true);
+}
+
+function mouseDown() {
+    window.addEventListener('mousemove', divMove, true);
+}
+
+function divMove(e){
+    var div = document.getElementById('picDiv');
+    div.style.position = 'fixed';
+    div.style.top = e.clientY + 'px';
+    div.style.left = e.clientX + 'px';
+	/* console.log(div.style.top +" " + e.clientY);
+
+	console.log(div.style.left  + " " + e.clientX); */
+}
+addListeners();
+
+</script>
+</div>

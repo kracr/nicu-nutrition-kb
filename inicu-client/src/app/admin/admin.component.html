@@ -1,0 +1,24 @@
+<div class="admin-panel-cont admin-margin-top no-admin-margin">
+	<div class="tab-container">
+		<div class="tab-header">
+			<ul>
+				<li><a class="tab" (click)="adminTab('userPanel')">User Panel</a> </li>
+				<li><a class="tab" (click)="adminTab('roommanagement')">Room Management</a> </li>
+				<li><a class="tab" (click)="adminTab('drugmanagement')">Drug Management</a> </li>
+				<li><a class="tab" (click)="adminTab('smsmanagement')">SMS Settings</a> </li>
+				<li><a class="tab" (click)="adminTab('settings')">Settings</a> </li>
+				<li><a class="tab" (click)="adminTab('investigation')">Investigation Management</a> </li>
+				<li><a class="tab" (click)="adminTab('emailManagement')">Email Management</a> </li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div id="content">
+	<userpanel *ngIf="whichAdminTab == 'userPanel'"></userpanel>
+	<roommanagement *ngIf="whichAdminTab == 'roommanagement'"></roommanagement>
+	<drugmanagement *ngIf="whichAdminTab == 'drugmanagement'"></drugmanagement>
+	<smsmanagement *ngIf="whichAdminTab == 'smsmanagement'"></smsmanagement>
+	<settings *ngIf="whichAdminTab == 'settings'"></settings>
+	<investigation-mgmnt *ngIf="whichAdminTab == 'investigation'"></investigation-mgmnt>
+	<email-management *ngIf="whichAdminTab == 'emailManagement'"></email-management>
+</div>

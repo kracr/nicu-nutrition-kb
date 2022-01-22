@@ -1,0 +1,48 @@
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+.date-time{
+  width: 22%;
+}
+.gestation{
+  width: 12%;
+}
+.weight{
+  margin-left: -12px!important;
+  left: 12px;
+}
+.weight-for-cal{
+  position: relative;
+  right: 500px;
+  margin-bottom: 12px;
+  margin-top: 8px !important
+}
+.anthropometry{
+  position: absolute;
+  top: -12px;
+}
+.dol{
+  left: 15px!important;
+  width:90px !important;
+}
+
+.from-date{
+  width: 22%;
+  position: relative;
+  right: 32%;
+  top: 32px
+}
+.show-print-exportcsv{
+  margin-left: -282px;
+  margin-top: 34px;
+}
+.visibility-text{
+	-webkit-text-fill-color: black;
+	-webkit-opacity: 1;
+	background: #e6f1ff;
+}
+
+}
+@media only screen and (min-device-width:1160px){
+  .Anthropometryforipad{
+    display: none;
+  }
+}

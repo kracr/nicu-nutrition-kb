@@ -1,0 +1,51 @@
+<div class="col-md-12" *ngIf = "recentTransfusionList != null || recentTransfusionList != undefined">
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12">
+    	<span class="col-md-4 no-padding table-cell print-width-4"><b>Weight of Baby :</b>  {{workingWeight}} kg</span>
+    	<span class="col-md-4 no-padding table-cell print-width-4"><b>Volume to be exchanged :</b> {{totalVolume}} ml</span>
+		<span class="col-md-4 no-padding table-cell print-width-4"><b>Volume per Aliquot :</b> {{recentTransfusionList.aliquot}} ml</span>
+	</div>
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12">
+			<span class="col-md-4 no-padding table-cell print-width-4" *ngIf="isCurrentExchange"><b>Total Volume In :</b> {{currentExchangeTotalVolumeIn}} ml</span>
+			<span class="col-md-4 no-padding table-cell print-width-4" *ngIf="isCurrentExchange"><b>Total Volume Out :</b> {{currentExchangeTotalVolumeOut}} ml</span>
+			<span class="col-md-4 no-padding table-cell print-width-4" *ngIf="!isCurrentExchange"><b>Total Volume In :</b> {{pastExchangeTotalVolumeIn}} ml</span>
+			<span class="col-md-4 no-padding table-cell print-width-4" *ngIf="!isCurrentExchange"><b>Total Volume Out :</b> {{pastExchangeTotalVolumeOut}} ml</span>
+			<span class="col-md-4 no-padding table-cell print-width-4" *ngIf = "motherBloodGroup!=null"><b>Mother Blood Group :</b> {{motherBloodGroup}}</span>
+			<span class="col-md-4 no-padding table-cell print-width-4" *ngIf = "motherBloodGroup==null"></span>
+	</div>
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12">
+		<span class="col-md-4 no-padding table-cell print-width-4" *ngIf = "babyBloodGroup!=null"><b>Baby’s Blood group :</b> {{babyBloodGroup}}</span>
+		<span class="col-md-4 no-padding table-cell print-width-4" *ngIf = "babyBloodGroup==null"></span>
+		<span class="col-md-4 no-padding table-cell print-width-4"><b>Group of Blood for exchange :</b> {{recentTransfusionList.exchangeBloodGroup}}</span>
+		<span class="col-md-4 no-padding table-cell print-width-4"><b>Bag No. :</b> {{recentTransfusionList.bagNo}}</span>
+	</div>
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12" style="margin-bottom: 30px;">
+		<span class="col-md-4 no-padding table-cell print-width-4"><b>Date of collection :</b> {{recentTransfusionList.collectionDate | date:'dd-MM-yyyy hh:mm a'}}</span>
+
+	</div>
+	<table class="table table-striped table-bordered headed-table desktop-column-20">
+		<h2 *ngIf="isCurrentExchange == true">Current Exchange Transfusion</h2>
+		<h2 *ngIf="isCurrentExchange == false">Past Exchange Transfusion</h2>
+		<tr>
+			<td class="left-aligned"><b>SNo.</b></td>
+			<td class="left-aligned"><b>Time In</b></td>
+			<td class="left-aligned"><b>Volume In</b></td>
+			<td class="left-aligned"><b>Time Out</b></td>
+			<td class="left-aligned"><b>Volume Out</b></td>
+			<td class="left-aligned"><b>SPO2</b></td>
+			<td class="left-aligned"><b>HR</b></td>
+			<td class="left-aligned"><b>Comment</b></td>
+		</tr>
+		<ng-container *ngFor="let item of printExchangeTransfusionList; let i = index" [attr.data-index]="i">
+			<tr>
+				<td class="left-aligned">{{i+1}}</td>
+				<td class="left-aligned">{{item.timeIn | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+				<td class="left-aligned">{{item.volumeIn}}</td>
+				<td class="left-aligned">{{item.timeOut | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+				<td class="left-aligned">{{item.volumeOut}}</td>
+				<td class="left-aligned">{{item.spo2}}</td>
+				<td class="left-aligned">{{item.hr}}</td>
+				<td class="left-aligned">{{item.comment}}</td>
+			</tr>
+		</ng-container>
+	</table>
+</div>

@@ -1,0 +1,45 @@
+
+<div *ngIf="response != null && response != undefined">
+	<div class=" container-fluid clear desktop-column-20 overflow-hidden">
+		<div class="nursing-notes-menu" style="background-color:white">
+			<ul class="table full assesment-nav-bar no-margin no-padding-right">
+				<li class="table-cell middle-aligned" [ngClass]="{'active': whichAssessmentPanelTab=='stableNotes'}" (click)="selectTab('stableNotes')" style="width: 15%">
+					<label><a class="center-aligned black-color">Gen Assess St Note</a></label>
+				</li>
+				<li  class="table-cell middle-aligned" [ngClass]="{'active': whichAssessmentPanelTab=='respiratory'}" (click)="selectTab('respiratory')"
+					style="width: 10%">
+					<label><a [ngClass]="{'blue-text': whichAssessmentPanelTab =='respiratory', 'active-assessment': response.respiratory == true, 'non-active-assessment': response.respiratory == false}" >Resp. System</a></label>
+				</li>
+				<li  class="table-cell middle-aligned" [ngClass]="{'active': whichAssessmentPanelTab=='jaundice'}" (click)="selectTab('jaundice')" style="width: 10%">
+					<label><a [ngClass]="{'blue-text': whichAssessmentPanelTab=='jaundice', 'active-assessment': response.jaundice == true, 'non-active-assessment': response.jaundice == false}">Jaundice</a></label>
+				</li>
+				<li class="table-cell middle-aligned"  [ngClass]="{'active': whichAssessmentPanelTab=='infection'}" (click)="selectTab('infection')" style="width: 10%">
+					<label><a class="center-aligned" [ngClass]="{'blue-text': whichAssessmentPanelTab=='infection', 'active-assessment': response.infection == true, 'non-active-assessment': response.infection == false}">Infection</a></label>
+				</li>
+				<li class="table-cell middle-aligned"  [ngClass]="{'active': whichAssessmentPanelTab=='cns'}" (click)="selectTab('cns')" style="width: 6%">
+					<label><a class="center-aligned" [ngClass]="{'blue-text': whichAssessmentPanelTab=='cns', 'active-assessment': response.cns == true, 'non-active-assessment': response.cns == false}">CNS</a></label>
+				</li>
+				<li class="table-cell middle-aligned"  [ngClass]="{'active': whichAssessmentPanelTab=='metabolic'}" (click)="selectTab('metabolic')" style="width: 10%">
+					<label><a class="black-color center-aligned" [ngClass]="{'blue-text': whichAssessmentPanelTab=='metabolic'}">Metabolic</a></label>
+				</li>
+				<li class="table-cell middle-aligned"  [ngClass]="{'active': whichAssessmentPanelTab=='renal'}" (click)="selectTab('renal')" style="width: 8%">
+					<label><a class="black-color" [ngClass]="{'blue-text': whichAssessmentPanelTab=='renal'}">Renal</a></label>
+				</li>
+				<li class="table-cell middle-aligned"  [ngClass]="{'active': whichAssessmentPanelTab=='cardiac'}" (click)="selectTab('cardiac')" style="width: 10%">
+					<label><a class="black-color center-aligned" [ngClass]="{'blue-text': whichAssessmentPanelTab=='cardiac'}">Cardiac</a></label>
+				</li>
+				<li class="table-cell middle-aligned"  [ngClass]="{'active': whichAssessmentPanelTab=='miscellaneous'}" (click)="selectTab('miscellaneous')" style="width: 15%">
+					<label><a class="center-aligned black-color" [ngClass]="{'blue-text': whichAssessmentPanelTab=='miscellaneous'}">Miscellaneous Assessment</a></label>
+				</li>
+			</ul>
+		</div>
+  </div>
+</div>
+<!-- code of loader -->
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+	<span class="inicu-loader-content">
+        <span class="inicu-adding-image"></span>
+		<span class="inicu-loading-content">{{loaderContent}}</span>
+	</span>
+</span>
+<!-- end of Above Code -->

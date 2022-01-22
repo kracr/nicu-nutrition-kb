@@ -1,0 +1,70 @@
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+  .padding-right-zero{
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+  }
+  .dob{
+    width:38%;
+  }
+/*  .uhid{
+    margin-left: -20px;
+  }*/
+  .name{
+    position: relative;
+    margin-left: -18px;
+    left: 50px;
+  }
+  .dol{
+    width: 30%;
+    position: relative;
+    left: 235px;
+    bottom: 42px
+  }
+  .column-6{
+    margin-left: 12px;
+  }
+  .cga{
+    margin-left: -15px;
+  }
+  .gender{
+    position: relative;
+    left: 25px;
+  }
+  .bedno{
+    position: relative;
+    left: 12px
+  }
+.initial-patient{
+  width:30% !important;
+  position: relative;
+  left: 18px
+}
+.admissionform{
+  margin-left: 22px;
+}
+.GA-Birth{
+  width: 22% !important;
+}
+.gABirth{
+  margin-top: -4px;
+}
+.birthwt1{
+  width: 40%;
+}
+.yest{
+  width: 10%;
+  margin-left: -35px
+}
+.diffYet{
+  width:9%;
+}
+.video{
+  position: relative;
+  right: -110px;
+  bottom: 30px
+}
+.birthWt{
+  position: relative;
+  margin-left: -25px;
+}
+}

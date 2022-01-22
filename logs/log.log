@@ -1,0 +1,155 @@
+08-10-2020 17:07:57.518 [main] INFO  com.inicu.main.InicuApplication.<init> - Logger Enabled ::
+08-10-2020 17:07:58.448 [main] INFO  com.inicu.main.InicuApplication.logStarting - Starting InicuApplication on LAPTOP-CECFIR4G with PID 9656 (C:\Users\monika\chil\target\classes started by monika in C:\Users\monika\chil)
+08-10-2020 17:07:58.722 [main] INFO  org.springframework.boot.logging.ClasspathLoggingApplicationListener.onApplicationEvent - Application failed to start with classpath: unknown
+08-10-2020 17:07:58.730 [main] ERROR org.springframework.boot.SpringApplication.run - Application startup failed
+org.codehaus.groovy.GroovyBugError: BUG! UNCAUGHT EXCEPTION: java.lang.invoke.MethodHandles$Lookup.<init>(java.lang.Class,int)
+	at org.codehaus.groovy.vmplugin.v7.Java7.<clinit>(Java7.java:44) ~[groovy-2.3.11.jar:2.3.11]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500) ~[na:na]
+	at java.base/java.lang.reflect.ReflectAccess.newInstance(ReflectAccess.java:124) ~[na:na]
+	at java.base/jdk.internal.reflect.ReflectionFactory.newInstance(ReflectionFactory.java:346) ~[na:na]
+	at java.base/java.lang.Class.newInstance(Class.java:604) ~[na:na]
+	at org.codehaus.groovy.vmplugin.VMPluginFactory.createPlugin(VMPluginFactory.java:56) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.vmplugin.VMPluginFactory.<clinit>(VMPluginFactory.java:37) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl.<init>(MetaClassRegistryImpl.java:99) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl.<init>(MetaClassRegistryImpl.java:71) ~[groovy-2.3.11.jar:2.3.11]
+	at groovy.lang.GroovySystem.<clinit>(GroovySystem.java:33) ~[groovy-2.3.11.jar:2.3.11]
+	at org.springframework.beans.factory.groovy.GroovyBeanDefinitionReader.<init>(GroovyBeanDefinitionReader.java:151) ~[spring-beans-4.1.7.RELEASE.jar:4.1.7.RELEASE]
+	at org.springframework.boot.BeanDefinitionLoader.<init>(BeanDefinitionLoader.java:84) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.createBeanDefinitionLoader(SpringApplication.java:663) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:604) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:957) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:946) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at com.inicu.main.InicuApplication.main(InicuApplication.java:117) ~[classes/:na]
+Caused by: java.lang.NoSuchMethodException: java.lang.invoke.MethodHandles$Lookup.<init>(java.lang.Class,int)
+	at java.base/java.lang.Class.getConstructor0(Class.java:3427) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructor(Class.java:2631) ~[na:na]
+	at org.codehaus.groovy.vmplugin.v7.Java7.<clinit>(Java7.java:42) ~[groovy-2.3.11.jar:2.3.11]
+	... 20 common frames omitted
+08-10-2020 18:18:49.853 [main] INFO  com.inicu.main.InicuApplication.<init> - Logger Enabled ::
+08-10-2020 18:18:49.853 [main] INFO  com.inicu.main.InicuApplication.<init> - Logger Enabled ::
+08-10-2020 18:18:52.504 [main] INFO  com.inicu.main.InicuApplication.logStarting - Starting InicuApplication on LAPTOP-CECFIR4G with PID 8096 (C:\Users\monika\chil\target\classes started by monika in C:\Users\monika\chil)
+08-10-2020 18:18:52.504 [main] INFO  com.inicu.main.InicuApplication.logStarting - Starting InicuApplication on LAPTOP-CECFIR4G with PID 18196 (C:\Users\monika\chil\target\classes started by monika in C:\Users\monika\chil)
+08-10-2020 18:18:53.131 [main] INFO  org.springframework.boot.logging.ClasspathLoggingApplicationListener.onApplicationEvent - Application failed to start with classpath: unknown
+08-10-2020 18:18:53.131 [main] INFO  org.springframework.boot.logging.ClasspathLoggingApplicationListener.onApplicationEvent - Application failed to start with classpath: unknown
+08-10-2020 18:18:53.155 [main] ERROR org.springframework.boot.SpringApplication.run - Application startup failed
+org.codehaus.groovy.GroovyBugError: BUG! UNCAUGHT EXCEPTION: java.lang.invoke.MethodHandles$Lookup.<init>(java.lang.Class,int)
+	at org.codehaus.groovy.vmplugin.v7.Java7.<clinit>(Java7.java:44) ~[groovy-2.3.11.jar:2.3.11]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500) ~[na:na]
+	at java.base/java.lang.reflect.ReflectAccess.newInstance(ReflectAccess.java:124) ~[na:na]
+	at java.base/jdk.internal.reflect.ReflectionFactory.newInstance(ReflectionFactory.java:346) ~[na:na]
+	at java.base/java.lang.Class.newInstance(Class.java:604) ~[na:na]
+	at org.codehaus.groovy.vmplugin.VMPluginFactory.createPlugin(VMPluginFactory.java:56) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.vmplugin.VMPluginFactory.<clinit>(VMPluginFactory.java:37) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl.<init>(MetaClassRegistryImpl.java:99) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl.<init>(MetaClassRegistryImpl.java:71) ~[groovy-2.3.11.jar:2.3.11]
+	at groovy.lang.GroovySystem.<clinit>(GroovySystem.java:33) ~[groovy-2.3.11.jar:2.3.11]
+	at org.springframework.beans.factory.groovy.GroovyBeanDefinitionReader.<init>(GroovyBeanDefinitionReader.java:151) ~[spring-beans-4.1.7.RELEASE.jar:4.1.7.RELEASE]
+	at org.springframework.boot.BeanDefinitionLoader.<init>(BeanDefinitionLoader.java:84) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.createBeanDefinitionLoader(SpringApplication.java:663) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:604) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:957) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:946) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at com.inicu.main.InicuApplication.main(InicuApplication.java:117) ~[classes/:na]
+Caused by: java.lang.NoSuchMethodException: java.lang.invoke.MethodHandles$Lookup.<init>(java.lang.Class,int)
+	at java.base/java.lang.Class.getConstructor0(Class.java:3427) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructor(Class.java:2631) ~[na:na]
+	at org.codehaus.groovy.vmplugin.v7.Java7.<clinit>(Java7.java:42) ~[groovy-2.3.11.jar:2.3.11]
+	... 20 common frames omitted
+08-10-2020 18:18:53.155 [main] ERROR org.springframework.boot.SpringApplication.run - Application startup failed
+org.codehaus.groovy.GroovyBugError: BUG! UNCAUGHT EXCEPTION: java.lang.invoke.MethodHandles$Lookup.<init>(java.lang.Class,int)
+	at org.codehaus.groovy.vmplugin.v7.Java7.<clinit>(Java7.java:44) ~[groovy-2.3.11.jar:2.3.11]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500) ~[na:na]
+	at java.base/java.lang.reflect.ReflectAccess.newInstance(ReflectAccess.java:124) ~[na:na]
+	at java.base/jdk.internal.reflect.ReflectionFactory.newInstance(ReflectionFactory.java:346) ~[na:na]
+	at java.base/java.lang.Class.newInstance(Class.java:604) ~[na:na]
+	at org.codehaus.groovy.vmplugin.VMPluginFactory.createPlugin(VMPluginFactory.java:56) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.vmplugin.VMPluginFactory.<clinit>(VMPluginFactory.java:37) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl.<init>(MetaClassRegistryImpl.java:99) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl.<init>(MetaClassRegistryImpl.java:71) ~[groovy-2.3.11.jar:2.3.11]
+	at groovy.lang.GroovySystem.<clinit>(GroovySystem.java:33) ~[groovy-2.3.11.jar:2.3.11]
+	at org.springframework.beans.factory.groovy.GroovyBeanDefinitionReader.<init>(GroovyBeanDefinitionReader.java:151) ~[spring-beans-4.1.7.RELEASE.jar:4.1.7.RELEASE]
+	at org.springframework.boot.BeanDefinitionLoader.<init>(BeanDefinitionLoader.java:84) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.createBeanDefinitionLoader(SpringApplication.java:663) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:604) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:957) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:946) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at com.inicu.main.InicuApplication.main(InicuApplication.java:117) ~[classes/:na]
+Caused by: java.lang.NoSuchMethodException: java.lang.invoke.MethodHandles$Lookup.<init>(java.lang.Class,int)
+	at java.base/java.lang.Class.getConstructor0(Class.java:3427) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructor(Class.java:2631) ~[na:na]
+	at org.codehaus.groovy.vmplugin.v7.Java7.<clinit>(Java7.java:42) ~[groovy-2.3.11.jar:2.3.11]
+	... 20 common frames omitted
+08-10-2020 18:20:02.698 [main] INFO  com.inicu.main.InicuApplication.<init> - Logger Enabled ::
+08-10-2020 18:20:03.241 [main] INFO  com.inicu.main.InicuApplication.logStarting - Starting InicuApplication on LAPTOP-CECFIR4G with PID 13192 (C:\Users\monika\chil\target\classes started by monika in C:\Users\monika\chil)
+08-10-2020 18:20:03.392 [main] INFO  org.springframework.boot.logging.ClasspathLoggingApplicationListener.onApplicationEvent - Application failed to start with classpath: unknown
+08-10-2020 18:20:03.397 [main] ERROR org.springframework.boot.SpringApplication.run - Application startup failed
+org.codehaus.groovy.GroovyBugError: BUG! UNCAUGHT EXCEPTION: java.lang.invoke.MethodHandles$Lookup.<init>(java.lang.Class,int)
+	at org.codehaus.groovy.vmplugin.v7.Java7.<clinit>(Java7.java:44) ~[groovy-2.3.11.jar:2.3.11]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500) ~[na:na]
+	at java.base/java.lang.reflect.ReflectAccess.newInstance(ReflectAccess.java:124) ~[na:na]
+	at java.base/jdk.internal.reflect.ReflectionFactory.newInstance(ReflectionFactory.java:346) ~[na:na]
+	at java.base/java.lang.Class.newInstance(Class.java:604) ~[na:na]
+	at org.codehaus.groovy.vmplugin.VMPluginFactory.createPlugin(VMPluginFactory.java:56) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.vmplugin.VMPluginFactory.<clinit>(VMPluginFactory.java:37) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl.<init>(MetaClassRegistryImpl.java:99) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl.<init>(MetaClassRegistryImpl.java:71) ~[groovy-2.3.11.jar:2.3.11]
+	at groovy.lang.GroovySystem.<clinit>(GroovySystem.java:33) ~[groovy-2.3.11.jar:2.3.11]
+	at org.springframework.beans.factory.groovy.GroovyBeanDefinitionReader.<init>(GroovyBeanDefinitionReader.java:151) ~[spring-beans-4.1.7.RELEASE.jar:4.1.7.RELEASE]
+	at org.springframework.boot.BeanDefinitionLoader.<init>(BeanDefinitionLoader.java:84) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.createBeanDefinitionLoader(SpringApplication.java:663) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:604) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:957) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:946) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at com.inicu.main.InicuApplication.main(InicuApplication.java:117) ~[classes/:na]
+Caused by: java.lang.NoSuchMethodException: java.lang.invoke.MethodHandles$Lookup.<init>(java.lang.Class,int)
+	at java.base/java.lang.Class.getConstructor0(Class.java:3427) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructor(Class.java:2631) ~[na:na]
+	at org.codehaus.groovy.vmplugin.v7.Java7.<clinit>(Java7.java:42) ~[groovy-2.3.11.jar:2.3.11]
+	... 20 common frames omitted
+08-10-2020 18:21:38.393 [main] INFO  com.inicu.main.InicuApplication.<init> - Logger Enabled ::
+08-10-2020 18:21:39.121 [main] INFO  com.inicu.main.InicuApplication.logStarting - Starting InicuApplication on LAPTOP-CECFIR4G with PID 7388 (C:\Users\monika\chil\target\classes started by monika in C:\Users\monika\chil)
+08-10-2020 18:21:39.339 [main] INFO  org.springframework.boot.logging.ClasspathLoggingApplicationListener.onApplicationEvent - Application failed to start with classpath: unknown
+08-10-2020 18:21:39.346 [main] ERROR org.springframework.boot.SpringApplication.run - Application startup failed
+org.codehaus.groovy.GroovyBugError: BUG! UNCAUGHT EXCEPTION: java.lang.invoke.MethodHandles$Lookup.<init>(java.lang.Class,int)
+	at org.codehaus.groovy.vmplugin.v7.Java7.<clinit>(Java7.java:44) ~[groovy-2.3.11.jar:2.3.11]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500) ~[na:na]
+	at java.base/java.lang.reflect.ReflectAccess.newInstance(ReflectAccess.java:124) ~[na:na]
+	at java.base/jdk.internal.reflect.ReflectionFactory.newInstance(ReflectionFactory.java:346) ~[na:na]
+	at java.base/java.lang.Class.newInstance(Class.java:604) ~[na:na]
+	at org.codehaus.groovy.vmplugin.VMPluginFactory.createPlugin(VMPluginFactory.java:56) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.vmplugin.VMPluginFactory.<clinit>(VMPluginFactory.java:37) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl.<init>(MetaClassRegistryImpl.java:99) ~[groovy-2.3.11.jar:2.3.11]
+	at org.codehaus.groovy.runtime.metaclass.MetaClassRegistryImpl.<init>(MetaClassRegistryImpl.java:71) ~[groovy-2.3.11.jar:2.3.11]
+	at groovy.lang.GroovySystem.<clinit>(GroovySystem.java:33) ~[groovy-2.3.11.jar:2.3.11]
+	at org.springframework.beans.factory.groovy.GroovyBeanDefinitionReader.<init>(GroovyBeanDefinitionReader.java:151) ~[spring-beans-4.1.7.RELEASE.jar:4.1.7.RELEASE]
+	at org.springframework.boot.BeanDefinitionLoader.<init>(BeanDefinitionLoader.java:84) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.createBeanDefinitionLoader(SpringApplication.java:663) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.load(SpringApplication.java:604) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:957) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:946) ~[spring-boot-1.2.5.RELEASE.jar:1.2.5.RELEASE]
+	at com.inicu.main.InicuApplication.main(InicuApplication.java:117) ~[classes/:na]
+Caused by: java.lang.NoSuchMethodException: java.lang.invoke.MethodHandles$Lookup.<init>(java.lang.Class,int)
+	at java.base/java.lang.Class.getConstructor0(Class.java:3427) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructor(Class.java:2631) ~[na:na]
+	at org.codehaus.groovy.vmplugin.v7.Java7.<clinit>(Java7.java:42) ~[groovy-2.3.11.jar:2.3.11]
+	... 20 common frames omitted

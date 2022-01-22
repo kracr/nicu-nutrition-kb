@@ -1,0 +1,132 @@
+CREATE SEQUENCE rainbow.device_incubator_warmer_detail_seq  INCREMENT 1  MINVALUE 1  MAXVALUE 9223372036854775807  START 1  CACHE 1;
+ALTER TABLE rainbow.device_incubator_warmer_detail_seq  OWNER TO postgres;
+
+CREATE OR REPLACE FUNCTION rainbow.device_incubator_warmer_detail_creationtime()  RETURNS trigger AS
+$BODY$    
+BEGIN        
+NEW.creationtime := current_timestamp;        
+NEW.modificationtime := current_timestamp;        
+RETURN NEW;    
+END;
+$BODY$  
+LANGUAGE plpgsql VOLATILE  COST 100;
+ALTER FUNCTION rainbow.device_incubator_warmer_detail_creationtime()  
+OWNER TO postgres;
+
+CREATE OR REPLACE FUNCTION rainbow.device_incubator_warmer_detail_modificationtime()  RETURNS trigger AS
+$BODY$    
+BEGIN        
+NEW.modificationtime := current_timestamp;        
+RETURN NEW;    
+END;
+$BODY$  
+LANGUAGE plpgsql VOLATILE  COST 100;
+ALTER FUNCTION rainbow.device_incubator_warmer_detail_modificationtime()  
+OWNER TO postgres;
+
+CREATE TABLE rainbow.device_incubator_warmer_detail(  
+deviceincubatorid bigint NOT NULL DEFAULT nextval('rainbow.device_incubator_warmer_detail_seq'::regclass),
+creationtime timestamp without time zone NOT NULL,
+modificationtime timestamp without time zone NOT NULL,
+uhid character varying(50) NOT NULL,
+beddeviceid character varying(50),
+
+
+air_temperature character varying(50),
+set_air_temperature character varying(50),
+humidity character varying(50),
+set_humidity character varying(50),
+
+baby_weight character varying(50),
+heater_power character varying(50),
+temp_from_probe1 character varying(50),
+temp_from_probe2 character varying(50),
+ambient_temperature character varying(50),
+
+incubator_mode character varying(50),
+warmer_mode character varying(50),
+warmer_set_temp character varying(50),
+patient_control_temp character varying(50),
+patient_mode character varying(50),
+open_bed_mode character varying(50),
+closed_bed_mode character varying(50),
+o2_set_point character varying(50),
+o2_measurment character varying(50),
+spo2_measurment character varying(50),
+pulse_rate_measurment character varying(50),
+
+starttime timestamp with time zone,
+
+CONSTRAINT device_incubator_warmer_detail_pkey PRIMARY KEY (deviceincubatorid)) WITH (OIDS=FALSE);
+
+ALTER TABLE rainbow.device_incubator_warmer_detail OWNER TO postgres;
+
+CREATE TRIGGER set_creationtime  
+BEFORE INSERT  
+ON rainbow.device_incubator_warmer_detail 
+FOR EACH ROW  
+EXECUTE PROCEDURE rainbow.device_incubator_warmer_detail_creationtime();
+
+CREATE TRIGGER set_modificationtime  
+BEFORE UPDATE  
+ON rainbow.device_incubator_warmer_detail  
+FOR EACH ROW  
+EXECUTE PROCEDURE rainbow.device_incubator_warmer_detail_modificationtime();
+
+
+INSERT INTO rainbow.ref_device_type (devicetypeid,device_type,description) VALUES ('6','Incubator/Warmer','Incubator/Warmer');
+
+
+
+
+
+
+CREATE TABLE rainbow.dashboard_device_incubator_warmer_detail
+(
+  creationtime timestamp without time zone NOT NULL,
+modificationtime timestamp without time zone NOT NULL,
+uhid character varying(50) NOT NULL,
+beddeviceid character varying(50),
+
+
+air_temperature character varying(50),
+set_air_temperature character varying(50),
+humidity character varying(50),
+set_humidity character varying(50),
+
+baby_weight character varying(50),
+heater_power character varying(50),
+temp_from_probe1 character varying(50),
+temp_from_probe2 character varying(50),
+ambient_temperature character varying(50),
+
+incubator_mode character varying(50),
+warmer_mode character varying(50),
+warmer_set_temp character varying(50),
+patient_control_temp character varying(50),
+patient_mode character varying(50),
+open_bed_mode character varying(50),
+closed_bed_mode character varying(50),
+o2_set_point character varying(50),
+o2_measurment character varying(50),
+spo2_measurment character varying(50),
+pulse_rate_measurment character varying(50),
+
+starttime timestamp with time zone,
+CONSTRAINT dashboard_device_incubator_warmer_detail_pkey PRIMARY KEY (uhid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE rainbow.dashboard_device_incubator_warmer_detail
+  OWNER TO postgres;
+
+
+
+
+
+Alter table rainbow.device_monitor_detail add column pa character varying(50);
+Alter table rainbow.dashboard_device_monitor_detail add column pa character varying(50);
+
+
+

@@ -1,0 +1,33 @@
+export class RespSupport{
+  respsupportid: any;
+  creationtime: any;
+  modificationtime: any;
+  eventid: string;
+  eventname: string;
+  uhid: string;
+  rsVentType: string;
+  rsFlowRate: string;
+  rsFio2: string;
+  rsMap: string;
+  rsMechVentType: string;
+  rsPeep: string;
+  rsPip: string;
+  rsIt: string;
+  rsEt: string;
+  rsTv: string;
+  rsMv: string;
+  rsAmplitude: string;
+  rsFrequency: string;
+  rsRate: string;
+  rsIsEndotracheal: boolean;
+  rsTubeSize: string;
+  rsFixation: string;
+  rsSpo2: string;
+  rspCO2: string;
+  rsBackuprate: string;
+  isactive: boolean;
+  rsControlType : string;
+  rsCpapType : string;
+  dco2 : string;
+  iTime : string;
+}

@@ -1,0 +1,83 @@
+alter table apollo.twilio_room add column participant_name varchar(20);
+alter table apollo.twilio_room add column caller_name  varchar(20);
+alter table apollo.notification_email add column device_exception boolean;
+
+-- Updated on 13 August,2020
+alter table apollo.ref_hospitalbranchname add column include_header_space varchar(10);
+
+-- Updated on 17th August,2020
+
+alter table apollo.twilio_room add column call_accepted boolean default false,
+                              add column  accepted_timestamp timestamp;
+
+
+-- Updated on 28th August,2020
+
+
+create sequence apollo.remote_view_push_notifcation_seq
+    INCREMENT 1
+    MINVALUE  1
+    MAXVALUE 9223372036854775807
+    START  1
+    cache 1;
+
+alter table apollo.remote_view_push_notifcation_seq owner to postgres;
+
+create table apollo.remote_view_push_notifcation
+(
+    notification_id  bigint default nextval('apollo.remote_view_push_notifcation_seq'::regclass) not null
+        constraint remote_view_push_notifcation_pk primary key,
+    uhid varchar(20) not null ,
+    message text not null ,
+    response varchar(50),
+    time_type varchar(10),
+    delay boolean,
+    delay_message varchar(15),
+    is_active boolean default  true,
+    response_time timestamp,
+    branchname varchar(30),
+    creationtime     timestamp                                                          not null,
+    modificationtime timestamp                                                          not null
+);
+
+alter table apollo.remote_view_push_notifcation
+    owner to postgres;
+
+
+create function apollo.remoteview_pushnotifcation_creationtime() returns trigger
+    language plpgsql
+as
+$$
+BEGIN
+    NEW.creationtime := current_timestamp;
+    NEW.modificationtime := current_timestamp;
+    RETURN NEW;
+END;
+$$;
+
+alter function apollo.remoteview_pushnotifcation_creationtime() owner to postgres;
+
+
+create function apollo.remoteview_pushnotifcation_modificationtime() returns trigger
+    language plpgsql
+as
+$$
+BEGIN
+    NEW.modificationtime := current_timestamp;
+    RETURN NEW;
+END;
+$$;
+
+alter function apollo.remoteview_pushnotifcation_modificationtime() owner to postgres;
+
+create trigger set_creationtime
+    before insert
+    on apollo.remote_view_push_notifcation
+    for each row
+execute procedure apollo.remoteview_pushnotifcation_creationtime();
+
+create trigger set_modificationtime
+    before insert
+    on apollo.remote_view_push_notifcation
+    for each row
+execute procedure apollo.remoteview_pushnotifcation_modificationtime();

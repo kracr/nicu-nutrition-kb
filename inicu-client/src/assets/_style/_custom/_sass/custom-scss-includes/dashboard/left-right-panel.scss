@@ -1,0 +1,35 @@
+.both-panels-cont{
+    display: table; width: 100%; z-index:90; position: relative; background-color: $dashboardBG; 
+    .panels-row{display: table-row;}
+    
+    .left-panel-expandable{display: table-cell; width: 12%; background-color: $blue; position: relative; z-index: 85;  @include makeMixin(box-shadow , 0 7px 23px darken($gray,10%)); min-width: 150px;}
+    
+    
+    .right-panel-expandable{
+        display: table-cell; width: 88%;position: relative; z-index: 80; padding-left:10px; padding-right:10px;
+        .patient-details{
+            .messages-notifier{float: none; top:5px; margin: 0;}
+            .patient-details-p{padding: 5px; margin:0px 5px; display: inline-block;}
+            .patient-details-p [class*='text']{margin:0px 5px;}
+        }
+        
+    }
+}
+
+.menu-list{
+    list-style-type: none; padding:0 0 10px 0; margin:0; position:relative;
+    &:after{content:""; position: absolute; bottom:0px; left:0px; right:0px; height:1px; background-color:darken($blue,12%); border-bottom:solid 1px lighten($blue,12%);}
+    li{
+        display: block;
+        a{
+            font-size:11px; letter-spacing:1px; color:$white; display: block; padding:5px 5px; @include makeMixin(transition, (color linear .3s , background-color linear .3s));
+            &:hover{
+                &[href]{background-color:$white; color:$blue; }
+            }
+        }
+    }
+}
+.left-menu-icon{display:inline-block; width:40px; height:40px;}
+.left-menu-icon-cont{margin:5px 0 0 0; padding:0;}
+
+.bordered-bg-box{background-color:$dashboardBG; border:solid 1px lighten($gray,10%);}

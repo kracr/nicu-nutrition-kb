@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1642246514393" name="duplicate:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="Nutrition.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1642246514393" name="duplicate:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="NutritionalGuidelinesOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1642246514393" name="duplicate:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="NutritionOntology15Jan.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1642246514393" name="duplicate:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="old.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1642246514393" name="shadowed:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="target/Nutrition.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1642246514393" name="shadowed:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="target/NutritionalGuidelinesOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1642246514393" name="shadowed:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="target/NutritionOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1642246514393" name="shadowed:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="src/Nutrition.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1642246514393" name="shadowed:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="src/NutritionalGuidelinesOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1642246514393" name="shadowed:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="src/NutritionOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1642246514393" name="shadowed:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="src/NutritionOntology15Jan.owl"/>
+    </group>
+</catalog>

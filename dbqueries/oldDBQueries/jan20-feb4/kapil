@@ -1,0 +1,6 @@
+alter table kdah.sa_infection_clabsi add column order_investigation text;
+alter table kdah.sa_infection_vap add column order_investigation text;
+
+alter table kdah.sa_infection_sepsis add column order_investigation text;
+
+alter table kdah.sa_feed_intolerance add column cause_of_feed_other text;

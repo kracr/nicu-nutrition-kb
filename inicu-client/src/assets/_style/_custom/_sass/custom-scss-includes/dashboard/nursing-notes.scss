@@ -1,0 +1,25 @@
+.nursing-data-table{
+    td{padding:5px 2px;}
+    
+    tr:first-child{
+        td{padding:2px 6px;}
+    }
+    .input-small{width:50px; }
+    span{min-width:40px; display: block;}
+}
+
+.child-details{
+    float: left; border-top:solid 1px lighten($gray,12%);  padding-top:10px; padding-bottom: 10px; position:relative;
+    td{
+        padding:1px 10px;  font-size:13px; vertical-align: middle;
+    }
+    
+    .input-small{width:80px;}
+    
+    &.feeds{
+        padding-left:30px; @include makeMixin(box-shadow, -5px -2px 10px lighten($gray,12%));
+        .input-small{width:60px;}
+        
+        .feeds-label{display: inline-block; position: absolute; @include makeMixin(transform , rotate(-90deg)); left:0px; top:50px;}
+    }
+}

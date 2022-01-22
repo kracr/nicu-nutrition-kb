@@ -1,0 +1,31 @@
+export class GenPhyExamObj {
+       genPhyExamId?: any;
+       creationtime?: any;
+       modificationtime?: any;
+       uhid?: string;
+       episodeid?: string;
+       loggeduser?: string;
+       apearance?: string;
+       skin?: string;
+       skin_other?: string;
+       head_neck?: string;
+       head_neck_other?: string;
+       eyes?: string;
+       eyes_other?: string;
+       palate?: string;
+       lip?: string;
+       lipCleftSide?: boolean;
+       anal?: string;
+       anal_other?: string;
+       genitals?: string;
+       genitals_other?: string;
+       reflexes?: string;
+       reflexes_other?: string;
+       chest?: string;
+       chest_other?: string;
+       abdomen?: string;
+       abdomen_other?: string;
+       cong_malform?: string;
+       cong_malform_other?: string;
+       other?: string;
+   }

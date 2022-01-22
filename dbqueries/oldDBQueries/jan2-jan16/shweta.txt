@@ -1,0 +1,471 @@
+Alter table kdah.birth_to_nicu add column surfactant_name character varying(60);
+
+Alter table kdah.birth_to_nicu add column surfactant_dose character varying(60);
+
+Alter table kdah.birth_to_nicu add column surfactant_dose_in_ml character varying(60);
+
+Alter table kdah.birth_to_nicu add column site character varying(60);
+
+Alter table kdah.birth_to_nicu add column size character varying(60);
+
+Alter table kdah.birth_to_nicu add column fixation character varying(60);
+--------------------------------------------------------------------------------------------------------------------
+
+Alter table kdah.nursing_medication add column episodeid text;
+Alter table kdah.nursing_intake_output add column episodeid text;
+
+
+-- View: kdah.vw_assesments_discharge_raw
+-- DROP VIEW kdah.vw_assesments_discharge_raw;
+
+CREATE OR REPLACE VIEW kdah.vw_assesments_discharge_raw
+ AS
+ SELECT concat(sa_infection_sepsis.creationtime, sa_infection_sepsis.uhid) AS uniquekey,
+    sa_infection_sepsis.sasepsisid AS id,
+    sa_infection_sepsis.uhid,
+    sa_infection_sepsis.assessment_time AS creationtime,
+	sa_infection_sepsis.episodeid,
+    'Infection'::text AS category
+   FROM kdah.sa_infection_sepsis
+UNION
+ SELECT concat(sa_infection_vap.creationtime, sa_infection_vap.uhid) AS uniquekey,
+    sa_infection_vap.savapid AS id,
+    sa_infection_vap.uhid,
+    sa_infection_vap.assessment_time AS creationtime,
+	sa_infection_vap.episodeid,
+    'Infection'::text AS category
+   FROM kdah.sa_infection_vap
+UNION
+ SELECT concat(sa_infection_clabsi.creationtime, sa_infection_clabsi.uhid) AS uniquekey,
+    sa_infection_clabsi.saclabsiid AS id,
+    sa_infection_clabsi.uhid,
+    sa_infection_clabsi.assessment_date AS creationtime,
+	sa_infection_clabsi.episodeid,
+    'Infection'::text AS category
+   FROM kdah.sa_infection_clabsi
+UNION
+ SELECT concat(sa_infection_intrauterine.creationtime, sa_infection_intrauterine.uhid) AS uniquekey,
+    sa_infection_intrauterine.saintrauterineid AS id,
+    sa_infection_intrauterine.uhid,
+    sa_infection_intrauterine.creationtime,
+	sa_infection_intrauterine.episodeid,
+    'Infection'::text AS category
+   FROM kdah.sa_infection_intrauterine
+UNION
+ SELECT concat(sa_infection_nec.creationtime, sa_infection_nec.uhid) AS uniquekey,
+    sa_infection_nec.sanec_id AS id,
+    sa_infection_nec.uhid,
+    sa_infection_nec.assessment_time AS creationtime,
+	sa_infection_nec.episodeid,
+    'Infection'::text AS category
+   FROM kdah.sa_infection_nec
+UNION
+SELECT concat(sa_resp_rds.creationtime, sa_resp_rds.uhid) AS uniquekey,
+    sa_resp_rds.resprdsid AS id,
+    sa_resp_rds.uhid,
+    sa_resp_rds.assessment_time AS creationtime,
+	sa_resp_rds.episodeid,
+    'RDS'::text AS category
+   FROM kdah.sa_resp_rds
+UNION
+SELECT concat(sa_resp_apnea.creationtime, sa_resp_apnea.uhid) AS uniquekey,
+    sa_resp_apnea.apneaid AS id,
+    sa_resp_apnea.uhid,
+    sa_resp_apnea.assessment_time AS creationtime,
+	sa_resp_apnea.episodeid,
+    'Apnea'::text AS category
+   FROM kdah.sa_resp_apnea
+UNION
+SELECT concat(sa_resp_pphn.creationtime, sa_resp_pphn.uhid) AS uniquekey,
+    sa_resp_pphn.resppphnid AS id,
+    sa_resp_pphn.uhid,
+    sa_resp_pphn.assessment_time AS creationtime,
+	sa_resp_pphn.episodeid,
+    'PPHN'::text AS category
+   FROM kdah.sa_resp_pphn
+UNION
+SELECT concat(sa_resp_pneumothorax.creationtime, sa_resp_pneumothorax.uhid) AS uniquekey,
+    sa_resp_pneumothorax.resppneumothoraxid AS id,
+    sa_resp_pneumothorax.uhid,
+    sa_resp_pneumothorax.assessment_time AS creationtime,
+	sa_resp_pneumothorax.episodeid,
+    'Pneumo'::text AS category
+   FROM kdah.sa_resp_pneumothorax
+UNION
+SELECT concat(sa_jaundice.creationtime, sa_jaundice.uhid) AS uniquekey,
+    sa_jaundice.sajaundiceid AS id,
+    sa_jaundice.uhid,
+    sa_jaundice.assessment_time AS creationtime,
+	sa_jaundice.episodeid,
+    'Jaundice'::text AS category
+   FROM kdah.sa_jaundice
+UNION
+SELECT concat(sa_hypoglycemia.creationtime, sa_hypoglycemia.uhid) AS uniquekey,
+    sa_hypoglycemia.hypoglycemiaid AS id,
+    sa_hypoglycemia.uhid,
+    sa_hypoglycemia.assessment_time AS creationtime,
+	sa_hypoglycemia.episodeid,
+    'Hypoglycemia'::text AS category
+   FROM kdah.sa_hypoglycemia
+UNION
+SELECT concat(sa_renalfailure.creationtime, sa_renalfailure.uhid) AS uniquekey,
+    sa_renalfailure.renalid AS id,
+    sa_renalfailure.uhid,
+    sa_renalfailure.assessment_time AS creationtime,
+	sa_renalfailure.episodeid,
+    'Renal'::text AS category
+   FROM kdah.sa_renalfailure
+UNION
+SELECT concat(sa_cns_ivh.creationtime, sa_cns_ivh.uhid) AS uniquekey,
+    sa_cns_ivh.sacnsivhid AS id,
+    sa_cns_ivh.uhid,
+    sa_cns_ivh.assessment_date AS creationtime,
+	sa_cns_ivh.episodeid,
+    'IVH'::text AS category
+   FROM kdah.sa_cns_ivh
+UNION
+ SELECT concat(sa_cns_seizures.creationtime, sa_cns_seizures.uhid) AS uniquekey,
+    sa_cns_seizures.sacnsseizuresid AS id,
+    sa_cns_seizures.uhid,
+    sa_cns_seizures.assessment_time AS creationtime,
+	sa_cns_seizures.episodeid,
+    'Seizures'::text AS category
+   FROM kdah.sa_cns_seizures
+UNION
+ SELECT concat(sa_cns_asphyxia.creationtime, sa_cns_asphyxia.uhid) AS uniquekey,
+    sa_cns_asphyxia.sacnsasphyxiaid AS id,
+    sa_cns_asphyxia.uhid,
+    sa_cns_asphyxia.assessment_time AS creationtime,
+	sa_cns_asphyxia.episodeid,
+    'Asphyxia'::text AS category
+   FROM kdah.sa_cns_asphyxia
+UNION
+ SELECT concat(sa_cns_encephalopathy.creationtime, sa_cns_encephalopathy.uhid) AS uniquekey,
+    sa_cns_encephalopathy.saencephalopathyid AS id,
+    sa_cns_encephalopathy.uhid,
+    sa_cns_encephalopathy.assessment_date AS creationtime,
+	sa_cns_encephalopathy.episodeid,
+    'encephalopathy'::text AS category
+   FROM kdah.sa_cns_encephalopathy
+UNION
+ SELECT concat(sa_cns_neuromuscular_disorder.creationtime, sa_cns_neuromuscular_disorder.uhid) AS uniquekey,
+    sa_cns_neuromuscular_disorder.sa_neuromuscular_disorderid AS id,
+    sa_cns_neuromuscular_disorder.uhid,
+    sa_cns_neuromuscular_disorder.assessment_date AS creationtime,
+	sa_cns_neuromuscular_disorder.episodeid,
+    'neuromuscular_disorder'::text AS category
+   FROM kdah.sa_cns_neuromuscular_disorder
+UNION
+ SELECT concat(sa_cns_hydrocephalus.creationtime, sa_cns_hydrocephalus.uhid) AS uniquekey,
+    sa_cns_hydrocephalus.sacnshydrocephalusid AS id,
+    sa_cns_hydrocephalus.uhid,
+    sa_cns_hydrocephalus.assessment_date AS creationtime,
+	sa_cns_hydrocephalus.episodeid,
+    'hydrocephalus'::text AS category
+   FROM kdah.sa_cns_hydrocephalus
+UNION
+SELECT concat(sa_miscellaneous.creationtime, sa_miscellaneous.uhid) AS uniquekey,
+    sa_miscellaneous.sa_miscellaneous_id AS id,
+    sa_miscellaneous.uhid,
+    sa_miscellaneous.assessment_time AS creationtime,
+	sa_miscellaneous.episodeid,
+    'Misc'::text AS category
+   FROM kdah.sa_miscellaneous
+UNION
+SELECT concat(sa_miscellaneous_2.creationtime, sa_miscellaneous_2.uhid) AS uniquekey,
+    sa_miscellaneous_2.sa_miscellaneous_2_id AS id,
+    sa_miscellaneous_2.uhid,
+    sa_miscellaneous_2.assessment_time AS creationtime,
+	sa_miscellaneous_2.episodeid,
+    'Misc2'::text AS category
+   FROM kdah.sa_miscellaneous_2
+UNION
+SELECT concat(stable_notes.creationtime, stable_notes.uhid) AS uniquekey,
+    stable_notes.id AS id,
+    stable_notes.uhid,
+    stable_notes.entrytime AS creationtime,
+	stable_notes.episodeid,
+    'Stable Notes'::text AS category
+   FROM kdah.stable_notes
+UNION
+   SELECT concat(sa_feed_intolerance.creationtime, sa_feed_intolerance.uhid) AS uniquekey,
+    sa_feed_intolerance.feedintoleranceid AS id,
+    sa_feed_intolerance.uhid,
+    sa_feed_intolerance.assessment_time AS creationtime,
+	sa_feed_intolerance.episodeid,
+    'Feed Intolerance'::text AS category
+   FROM kdah.sa_feed_intolerance
+UNION
+	SELECT concat(nursing_intake_output.creationtime, nursing_intake_output.uhid) AS uniquekey,
+    nursing_intake_output.nursing_intakeid AS id,
+    nursing_intake_output.uhid,
+    nursing_intake_output.entry_timestamp AS creationtime,
+	nursing_intake_output.episodeid,
+    'Nursing_Intake_Output'::text AS category
+   FROM kdah.nursing_intake_output
+UNION
+	SELECT concat(nursing_medication.creationtime, nursing_medication.uhid) AS uniquekey,
+    nursing_medication.nursing_medication_id AS id,
+    nursing_medication.uhid,
+    nursing_medication.given_time AS creationtime,
+	nursing_medication.episodeid,
+    'Nursing_Medication'::text AS category
+   FROM kdah.nursing_medication;
+ 
+ALTER TABLE kdah.vw_assesments_discharge_raw
+    OWNER TO postgres;
+	
+	
+	
+	
+	
+	-- View: kdah.vw_assesment_discharge_final
+
+-- DROP VIEW kdah.vw_assesment_discharge_final;
+
+CREATE OR REPLACE VIEW kdah.vw_assesment_discharge_final
+ AS
+ SELECT vw_assesments_discharge_raw.uniquekey,
+    vw_assesments_discharge_raw.id,
+    vw_assesments_discharge_raw.uhid,
+    vw_assesments_discharge_raw.creationtime,
+	vw_assesments_discharge_raw.episodeid,
+    vw_assesments_discharge_raw.category
+   FROM kdah.vw_assesments_discharge_raw
+  ORDER BY vw_assesments_discharge_raw.creationtime DESC;
+
+ALTER TABLE kdah.vw_assesment_discharge_final
+    OWNER TO postgres;
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+DROP VIEW kdah.vw_assesment_discharge_final;
+DROP VIEW kdah.vw_assesments_discharge_raw;
+
+-- View: kdah.vw_assesments_discharge_raw
+
+
+
+CREATE OR REPLACE VIEW kdah.vw_assesments_discharge_raw
+ AS
+ SELECT concat(sa_infection_sepsis.creationtime, sa_infection_sepsis.uhid) AS uniquekey,
+    sa_infection_sepsis.sasepsisid AS id,
+    sa_infection_sepsis.uhid,
+    sa_infection_sepsis.assessment_time AS creationtime,
+    sa_infection_sepsis.episodeid,
+    'Infection'::text AS category
+   FROM kdah.sa_infection_sepsis
+UNION
+ SELECT concat(sa_infection_vap.creationtime, sa_infection_vap.uhid) AS uniquekey,
+    sa_infection_vap.savapid AS id,
+    sa_infection_vap.uhid,
+    sa_infection_vap.assessment_time AS creationtime,
+    sa_infection_vap.episodeid,
+    'Infection'::text AS category
+   FROM kdah.sa_infection_vap
+UNION
+ SELECT concat(sa_infection_clabsi.creationtime, sa_infection_clabsi.uhid) AS uniquekey,
+    sa_infection_clabsi.saclabsiid AS id,
+    sa_infection_clabsi.uhid,
+    sa_infection_clabsi.assessment_date AS creationtime,
+    sa_infection_clabsi.episodeid,
+    'Infection'::text AS category
+   FROM kdah.sa_infection_clabsi
+UNION
+ SELECT concat(sa_infection_intrauterine.creationtime, sa_infection_intrauterine.uhid) AS uniquekey,
+    sa_infection_intrauterine.saintrauterineid AS id,
+    sa_infection_intrauterine.uhid,
+    sa_infection_intrauterine.creationtime,
+    sa_infection_intrauterine.episodeid,
+    'Infection'::text AS category
+   FROM kdah.sa_infection_intrauterine
+UNION
+ SELECT concat(sa_infection_nec.creationtime, sa_infection_nec.uhid) AS uniquekey,
+    sa_infection_nec.sanec_id AS id,
+    sa_infection_nec.uhid,
+    sa_infection_nec.assessment_time AS creationtime,
+    sa_infection_nec.episodeid,
+    'Infection'::text AS category
+   FROM kdah.sa_infection_nec
+UNION
+ SELECT concat(sa_resp_rds.creationtime, sa_resp_rds.uhid) AS uniquekey,
+    sa_resp_rds.resprdsid AS id,
+    sa_resp_rds.uhid,
+    sa_resp_rds.assessment_time AS creationtime,
+    sa_resp_rds.episodeid,
+    'RDS'::text AS category
+   FROM kdah.sa_resp_rds
+UNION
+ SELECT concat(sa_resp_apnea.creationtime, sa_resp_apnea.uhid) AS uniquekey,
+    sa_resp_apnea.apneaid AS id,
+    sa_resp_apnea.uhid,
+    sa_resp_apnea.assessment_time AS creationtime,
+    sa_resp_apnea.episodeid,
+    'Apnea'::text AS category
+   FROM kdah.sa_resp_apnea
+UNION
+ SELECT concat(sa_resp_pphn.creationtime, sa_resp_pphn.uhid) AS uniquekey,
+    sa_resp_pphn.resppphnid AS id,
+    sa_resp_pphn.uhid,
+    sa_resp_pphn.assessment_time AS creationtime,
+    sa_resp_pphn.episodeid,
+    'PPHN'::text AS category
+   FROM kdah.sa_resp_pphn
+UNION
+ SELECT concat(sa_resp_pneumothorax.creationtime, sa_resp_pneumothorax.uhid) AS uniquekey,
+    sa_resp_pneumothorax.resppneumothoraxid AS id,
+    sa_resp_pneumothorax.uhid,
+    sa_resp_pneumothorax.assessment_time AS creationtime,
+    sa_resp_pneumothorax.episodeid,
+    'Pneumo'::text AS category
+   FROM kdah.sa_resp_pneumothorax
+UNION
+ SELECT concat(sa_jaundice.creationtime, sa_jaundice.uhid) AS uniquekey,
+    sa_jaundice.sajaundiceid AS id,
+    sa_jaundice.uhid,
+    sa_jaundice.assessment_time AS creationtime,
+    sa_jaundice.episodeid,
+    'Jaundice'::text AS category
+   FROM kdah.sa_jaundice
+UNION
+ SELECT concat(sa_hypoglycemia.creationtime, sa_hypoglycemia.uhid) AS uniquekey,
+    sa_hypoglycemia.hypoglycemiaid AS id,
+    sa_hypoglycemia.uhid,
+    sa_hypoglycemia.assessment_time AS creationtime,
+    sa_hypoglycemia.episodeid,
+    'Hypoglycemia'::text AS category
+   FROM kdah.sa_hypoglycemia
+UNION
+ SELECT concat(sa_renalfailure.creationtime, sa_renalfailure.uhid) AS uniquekey,
+    sa_renalfailure.renalid AS id,
+    sa_renalfailure.uhid,
+    sa_renalfailure.assessment_time AS creationtime,
+    sa_renalfailure.episodeid,
+    'Renal'::text AS category
+   FROM kdah.sa_renalfailure
+UNION
+ SELECT concat(sa_cns_ivh.creationtime, sa_cns_ivh.uhid) AS uniquekey,
+    sa_cns_ivh.sacnsivhid AS id,
+    sa_cns_ivh.uhid,
+    sa_cns_ivh.assessment_date AS creationtime,
+    sa_cns_ivh.episodeid,
+    'IVH'::text AS category
+   FROM kdah.sa_cns_ivh
+UNION
+ SELECT concat(sa_cns_seizures.creationtime, sa_cns_seizures.uhid) AS uniquekey,
+    sa_cns_seizures.sacnsseizuresid AS id,
+    sa_cns_seizures.uhid,
+    sa_cns_seizures.assessment_time AS creationtime,
+    sa_cns_seizures.episodeid,
+    'Seizures'::text AS category
+   FROM kdah.sa_cns_seizures
+UNION
+ SELECT concat(sa_cns_asphyxia.creationtime, sa_cns_asphyxia.uhid) AS uniquekey,
+    sa_cns_asphyxia.sacnsasphyxiaid AS id,
+    sa_cns_asphyxia.uhid,
+    sa_cns_asphyxia.assessment_time AS creationtime,
+    sa_cns_asphyxia.episodeid,
+    'Asphyxia'::text AS category
+   FROM kdah.sa_cns_asphyxia
+UNION
+ SELECT concat(sa_cns_encephalopathy.creationtime, sa_cns_encephalopathy.uhid) AS uniquekey,
+    sa_cns_encephalopathy.saencephalopathyid AS id,
+    sa_cns_encephalopathy.uhid,
+    sa_cns_encephalopathy.assessment_date AS creationtime,
+    sa_cns_encephalopathy.episodeid,
+    'encephalopathy'::text AS category
+   FROM kdah.sa_cns_encephalopathy
+UNION
+ SELECT concat(sa_cns_neuromuscular_disorder.creationtime, sa_cns_neuromuscular_disorder.uhid) AS uniquekey,
+    sa_cns_neuromuscular_disorder.sa_neuromuscular_disorderid AS id,
+    sa_cns_neuromuscular_disorder.uhid,
+    sa_cns_neuromuscular_disorder.assessment_date AS creationtime,
+    sa_cns_neuromuscular_disorder.episodeid,
+    'neuromuscular_disorder'::text AS category
+   FROM kdah.sa_cns_neuromuscular_disorder
+UNION
+ SELECT concat(sa_cns_hydrocephalus.creationtime, sa_cns_hydrocephalus.uhid) AS uniquekey,
+    sa_cns_hydrocephalus.sacnshydrocephalusid AS id,
+    sa_cns_hydrocephalus.uhid,
+    sa_cns_hydrocephalus.assessment_date AS creationtime,
+    sa_cns_hydrocephalus.episodeid,
+    'hydrocephalus'::text AS category
+   FROM kdah.sa_cns_hydrocephalus
+UNION
+ SELECT concat(sa_miscellaneous.creationtime, sa_miscellaneous.uhid) AS uniquekey,
+    sa_miscellaneous.sa_miscellaneous_id AS id,
+    sa_miscellaneous.uhid,
+    sa_miscellaneous.assessment_time AS creationtime,
+    sa_miscellaneous.episodeid,
+    'Misc'::text AS category
+   FROM kdah.sa_miscellaneous
+UNION
+ SELECT concat(sa_miscellaneous_2.creationtime, sa_miscellaneous_2.uhid) AS uniquekey,
+    sa_miscellaneous_2.sa_miscellaneous_2_id AS id,
+    sa_miscellaneous_2.uhid,
+    sa_miscellaneous_2.assessment_time AS creationtime,
+    sa_miscellaneous_2.episodeid,
+    'Misc2'::text AS category
+   FROM kdah.sa_miscellaneous_2
+UNION
+ SELECT concat(stable_notes.creationtime, stable_notes.uhid) AS uniquekey,
+    stable_notes.id,
+    stable_notes.uhid,
+    stable_notes.entrytime AS creationtime,
+    stable_notes.episodeid,
+    'Stable Notes'::text AS category
+   FROM kdah.stable_notes
+UNION
+ SELECT concat(sa_feed_intolerance.creationtime, sa_feed_intolerance.uhid) AS uniquekey,
+    sa_feed_intolerance.feedintoleranceid AS id,
+    sa_feed_intolerance.uhid,
+    sa_feed_intolerance.assessment_time AS creationtime,
+    sa_feed_intolerance.episodeid,
+    'Feed Intolerance'::text AS category
+   FROM kdah.sa_feed_intolerance
+UNION
+ SELECT concat(nursing_intake_output.creationtime, nursing_intake_output.uhid) AS uniquekey,
+    nursing_intake_output.nursing_intakeid AS id,
+    nursing_intake_output.uhid,
+    nursing_intake_output.entry_timestamp AS creationtime,
+    nursing_intake_output.episodeid,
+    'Nursing_Intake_Output'::text AS category
+   FROM kdah.nursing_intake_output
+UNION
+ SELECT concat(nursing_medication.creationtime, nursing_medication.uhid) AS uniquekey,
+    nursing_medication.nursing_medication_id AS id,
+    nursing_medication.uhid,
+    nursing_medication.given_time AS creationtime,
+    nursing_medication.episodeid,
+    'Nursing_Medication'::text AS category
+   FROM kdah.nursing_medication
+UNION
+ SELECT concat(babyfeed_detail.creationtime, babyfeed_detail.uhid) AS uniquekey,
+    babyfeed_detail.babyfeedid AS id,
+    babyfeed_detail.uhid,
+    babyfeed_detail.entrydatetime AS creationtime,
+    babyfeed_detail.episodeid,
+    'Nutrition'::text AS category
+   FROM kdah.babyfeed_detail;
+
+ALTER TABLE kdah.vw_assesments_discharge_raw
+    OWNER TO postgres;
+
+
+CREATE OR REPLACE VIEW kdah.vw_assesment_discharge_final
+ AS
+ SELECT vw_assesments_discharge_raw.uniquekey,
+    vw_assesments_discharge_raw.id,
+    vw_assesments_discharge_raw.uhid,
+    vw_assesments_discharge_raw.creationtime,
+	vw_assesments_discharge_raw.episodeid,
+    vw_assesments_discharge_raw.category
+   FROM kdah.vw_assesments_discharge_raw
+  ORDER BY vw_assesments_discharge_raw.creationtime DESC;
+
+ALTER TABLE kdah.vw_assesment_discharge_final
+    OWNER TO postgres;
+
+

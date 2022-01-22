@@ -1,0 +1,173 @@
+<div class="background-white"
+	*ngIf="printDataObj != null && printDataObj != undefined">
+	<div class="col-md-12 no-padding center-aligned">
+		<h1 class="bold">ASSESSMENT SHEET : {{printDataObj.whichTab | uppercase}}</h1>
+	</div>
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12">
+		<div class="col-md-4 no-padding table-cell print-width-4">
+			<span class="bold">UHID :</span><span class="padding-10-x" *ngIf="childData.uhid != null">{{childData.uhid}}</span>
+		</div>
+		<div class="col-md-4 no-padding table-cell print-width-4">
+			<span class="bold">Baby Name : </span><span class="padding-10-x" *ngIf="childData.name != null">{{childData.name}} <span *ngIf="childData.babyNumber != null">{{childData.babyNumber}}</span></span>
+		</div>
+		<div class="col-md-4 no-padding table-cell print-width-4">
+			<span class="bold">Today's Weight : </span><span class="padding-10-x" *ngIf="childData.currentdateweight != null">{{childData.currentdateweight}} gm</span>
+		</div>
+	</div>
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12">
+		<div class="col-md-4 no-padding table-cell print-width-4">
+			<span class="bold">Gender : </span><span class="padding-10-x" *ngIf="childData.gender != null">{{childData.gender}}</span>
+		</div>
+		<div class="col-md-4 no-padding table-cell print-width-4">
+			<span class="bold">Gestation : </span>
+			<span *ngIf="childData.gestation != null">
+				<span class="padding-10-x"
+					*ngIf="this.gestationWeeks != null">{{this.gestationWeeks}}
+					<sup *ngIf="this.gestationDays != null">
+						+ {{this.gestationDays}}</sup>
+				</span>
+			</span>
+		</div>
+		<div class="col-md-4 no-padding table-cell print-width-4">
+			<span class="bold">DOB : </span><span class="padding-10-x" *ngIf="childData.dob != null">{{childData.dob | date:'dd-MM-yyyy'}}</span>
+		</div>
+	</div>
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12">
+		<div class="col-md-4 no-padding table-cell print-width-4">
+			<span class="bold">From : </span><span class="padding-10-x" *ngIf="printDataObj.dateFrom != null">{{printDataObj.dateFrom | date: 'dd-MM-yyyy HH:mm a'}}</span>
+		</div>
+		<div class="col-md-4 no-padding table-cell print-width-4">
+			<span class="bold">To : </span><span class="padding-10-x" *ngIf="childData.gestation != null">{{printDataObj.dateTo | date: 'dd-MM-yyyy HH:mm a'}}</span>
+		</div>
+		<div class="col-md-4 no-padding table-cell print-width-4"></div>
+	</div>
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12" *ngIf="printDataObj.whichTab == 'Respiratory Systems'">
+		<table class="table table-striped table-bordered headed-table desktop-column-20" class="border-black" *ngIf="printDataObj.printData.length != 0">
+			<tr class="border-black">
+				<td class="left-aligned border-black print-width-10">Date</td>
+				<td class="left-aligned border-black print-width-10">Time</td>
+				<td class="left-aligned border-black">Event</td>
+				<td class="left-aligned border-black">Progress Notes</td>
+			</tr>
+			<tr *ngFor="let item of printDataObj.printData.slice().reverse(); let i=index"
+				[attr.data-index]="i" class="border-black">
+				<td class="left-aligned border-black print-width-10"><div>{{item.creationtime | date:'dd-MM-yyyy'}}</div></td>
+				<td class="left-aligned border-black print-width-10"><div>{{item.creationtime | date:'hh:mm a'}}</div></td>
+				<td class="left-aligned border-black">{{item.event}}</td>
+				<td class="left-aligned border-black">{{item.progressnotes}}</td>
+			</tr>
+		</table>
+		<span class="bold" *ngIf="printDataObj.printData.length == 0">
+			<p>No Data Available</p>
+		</span>
+	</div>
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12" *ngIf="printDataObj.whichTab == 'Jaundice'">
+		<table class="table table-striped table-bordered headed-table desktop-column-20" class="border-black" *ngIf="printDataObj.printData.length != 0">
+			<tr>
+				<td class="left-aligned border-black print-width-10">Date</td>
+				<td class="left-aligned border-black print-width-10">Time</td>
+				<td class="left-aligned border-black">Progress Notes</td>
+			</tr>
+			<tr *ngFor="let item of printDataObj.printData.slice().reverse(); let i=index" [attr.data-index]="i" class="border-black">
+				<td class="left-aligned border-black print-width-10"><div>{{item.assessmentTime | date:'dd-MM-yyyy'}}</div></td>
+				<td class="left-aligned border-black print-width-10"><div>{{item.assessmentTime | date:'hh:mm a'}}</div></td>
+				<td class="left-aligned border-black">{{item.comment}}</td>
+			</tr>
+		</table>
+		<span class="bold" *ngIf="printDataObj.printData.length == 0">
+			<p>No Data Available</p>
+		</span>
+	</div>
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12" *ngIf="printDataObj.whichTab == 'Infection'">
+		<table class="table table-striped table-bordered headed-table desktop-column-20" class="border-black" *ngIf="printDataObj.printData.length != 0">
+			<tr>
+				<td class="center-aligned border-black print-width-10">Date</td>
+				<td class="center-aligned border-black print-width-10">Time</td>
+				<td class="center-aligned border-black">Event</td>
+				<td class="center-aligned border-black">Progress Notes</td>
+			</tr>
+			<tr *ngFor="let option of printDataObj.printData.slice().reverse()">
+				<td class="left-aligned border-black print-width-10">{{option[1] | date:'dd-MM-yyyy'}}</td>
+				<td class="left-aligned border-black print-width-10">{{option[1] | date:'hh:mm a'}}</td>
+				<td class="left-aligned border-black">{{option[4]}}</td>
+				<td class="left-aligned border-black">{{option[6]}}</td>
+			</tr>
+		</table>
+		<span class="bold" *ngIf="printDataObj.printData.length == 0">
+			<p>No Data Available</p>
+		</span>
+	</div>
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12" *ngIf="printDataObj.whichTab == 'CNS'">
+		<table class="table table-striped table-bordered headed-table desktop-column-20 border-black" *ngIf="printDataObj.printData.length != 0">
+			<tr>
+				<td class="center-aligned border-black print-width-10">Date</td>
+				<td class="center-aligned border-black print-width-10">Time</td>
+				<td class="center-aligned border-black">Event</td>
+				<td class="center-aligned border-black">Progress Notes</td>
+			</tr>
+			<tr *ngFor="let option of printDataObj.printData.slice().reverse()">
+				<td class="left-aligned border-black print-width-10">{{option[3] | date:'dd-MM-yyyy'}}</td>
+				<td class="left-aligned border-black print-width-10">{{option[3] | date:'hh:mm a'}}</td>
+				<td class="left-aligned border-black">{{option[6]}}</td>
+				<td class="left-aligned border-black">{{option[8]}}</td>
+			</tr>
+		</table>
+		<span class="bold" *ngIf="printDataObj.printData.length == 0">
+			<p>No Data Available</p>
+		</span>
+	</div>
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12" *ngIf="printDataObj.whichTab == 'Stable Notes'">
+		<table class="table table-striped table-bordered headed-table desktop-column-20 border-black" *ngIf="printDataObj.printData.length != 0">
+			<tr class="border-black">
+				<td class="left-aligned print-width-10 border-black ">Date</td>
+				<td class="left-aligned print-width-10 border-black ">Time</td>
+				<td class="left-aligned border-black">Progress Note</td>
+			</tr>
+			<tr *ngFor=" let item of printDataObj.printData" class="border-black">
+				<td class="left-aligned border-black print-width-10">{{item.entrytime | date : 'dd-MM-yyyy'}}</td>
+				<td class="left-aligned border-black print-width-10">{{item.entrytime | date : 'hh:mm a'}}</td>
+				<td class="left-aligned border-black">{{item.notes}}</td>
+			</tr>
+		</table>
+		<span class="bold" *ngIf="printDataObj.printData.length == 0">
+			<p>No Data Available</p>
+		</span>
+	</div>
+	<div class="col-md-12 no-padding table full margin-5-y print-width-12" *ngIf="printDataObj.whichTab == 'Miscellaneous Assessment'">
+		<table class="table table-striped table-bordered headed-table desktop-column-20 border-black" *ngIf="printDataObj.printData.length != 0">
+  			<tr>
+  				<td class="left-aligned border-black print-width-10">Date</td>
+  				<td class="left-aligned border-black print-width-10">Time</td>
+  				<td class="left-aligned border-black">Miscellaneous State</td>
+  				<td class="left-aligned border-black">Age</td>
+  				<td class="left-aligned border-black">Description</td>
+  				<td class="left-aligned border-black">Cause Of Miscellaneous</td>
+  				<td class="left-aligned border-black">Progress Notes</td>
+			</tr>
+  			<tr *ngFor="let option of printDataObj.printData.slice().reverse()">
+  				<td class="left-aligned border-black print-width-10" *ngIf="option.assessmentTime!=null"><span>{{option.assessmentTime | date:'dd-MM-yyyy'}}</span></td>
+  				<td class="left-aligned border-black print-width-10" *ngIf="option.assessmentTime!=null"><span>{{option.assessmentTime | date:'hh:mm a'}}</span></td>
+  				<td class="left-aligned border-black">
+  					<span *ngIf="option.miscellaneousstatus=='no'">Passive</span>
+  					<span *ngIf="option.miscellaneousstatus=='yes'">Active</span>
+  					<span *ngIf="option.miscellaneousstatus=='inactive'">Inactive</span>
+  				</td>
+  				<td class="left-aligned border-black">
+  					<span>{{option.ageofonset}}
+  						<div>
+  							<label *ngIf="option.isageofonsetinhours">Hours</label><label *ngIf="!option.isageofonsetinhours">Days</label>
+  						</div>
+  					</span>
+  				</td>
+  				<td class="left-aligned border-black"><span>{{option.description}}</span></td>
+				<td class="left-aligned border-black"><span>{{option.causeofmiscellaneous}}</span>
+				</td>
+  				<td class="left-aligned border-black"><span>{{option.comment}}</span>
+				</td>
+			</tr>
+  		</table>
+  		<span class="bold" *ngIf="printDataObj.printData.length == 0">
+			<p>No Data Available</p>
+		</span>
+	</div>
+</div>

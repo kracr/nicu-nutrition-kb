@@ -1,0 +1,238 @@
+alter table apollo.apnea_event add column marked character varying(10);
+alter table apollo.declined_apnea_event add column events_done text;
+alter table apollo.nursing_episode add column events_done text;
+
+ALTER TABLE apollo.dashboard_device_monitor_detail ADD column creationtime timestamp with time zone;
+ALTER TABLE apollo.dashboard_device_monitor_detail ADD column modificationtime timestamp with time zone;
+
+
+
+CREATE FUNCTION apollo.dashboard_device_monitor_detail_creationtime()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+    BEGIN
+        NEW.creationtime := current_timestamp;
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$;
+
+ALTER FUNCTION apollo.dashboard_device_monitor_detail_creationtime()
+    OWNER TO postgres;
+
+
+CREATE FUNCTION apollo.dashboard_device_monitor_detail_modificationtime()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+    BEGIN
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$;
+
+ALTER FUNCTION apollo.dashboard_device_monitor_detail_modificationtime()
+    OWNER TO postgres;
+
+
+
+CREATE TRIGGER set_creationtime
+    BEFORE INSERT
+    ON apollo.dashboard_device_monitor_detail
+    FOR EACH ROW
+    EXECUTE PROCEDURE apollo.dashboard_device_monitor_detail_creationtime();
+
+CREATE TRIGGER set_modificationtime
+    BEFORE UPDATE 
+    ON apollo.dashboard_device_monitor_detail
+    FOR EACH ROW
+    EXECUTE PROCEDURE apollo.dashboard_device_monitor_detail_modificationtime();
+	
+	
+	
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD column creationtime timestamp with time zone;
+ALTER TABLE apollo.dashboard_device_ventilator_detail ADD column modificationtime timestamp with time zone;
+
+
+
+CREATE FUNCTION apollo.dashboard_device_ventilator_detail_creationtime()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+    BEGIN
+        NEW.creationtime := current_timestamp;
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$;
+
+ALTER FUNCTION apollo.dashboard_device_ventilator_detail_creationtime()
+    OWNER TO postgres;
+
+
+CREATE FUNCTION apollo.dashboard_device_ventilator_detail_modificationtime()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+    BEGIN
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$;
+
+ALTER FUNCTION apollo.dashboard_device_ventilator_detail_modificationtime()
+    OWNER TO postgres;
+
+
+
+CREATE TRIGGER set_creationtime
+    BEFORE INSERT
+    ON apollo.dashboard_device_ventilator_detail
+    FOR EACH ROW
+    EXECUTE PROCEDURE apollo.dashboard_device_ventilator_detail_creationtime();
+
+CREATE TRIGGER set_modificationtime
+    BEFORE UPDATE 
+    ON apollo.dashboard_device_ventilator_detail
+    FOR EACH ROW
+    EXECUTE PROCEDURE apollo.dashboard_device_ventilator_detail_modificationtime();
+
+
+drop view apollo.vw_vital_detail;
+
+
+CREATE OR REPLACE VIEW apollo.vw_vital_detail
+ AS
+ SELECT bd.uhid,
+    bd.bp_type,
+    bd.admission_bp,
+    bd.branchname,
+    pd.pulserate,
+    pd.spo2,
+    pd.heartrate,
+    pd.ecg_resprate,
+    pd.co2_resprate,
+    pd.etco2,
+    pd.sys_bp,
+    pd.dia_bp,
+    pd.mean_bp,
+    pd.nbp_s,
+    pd.nbp_d,
+    pd.nbp_m,
+    pd.starttime,
+    pd.modificationtime as monitorlatesttime,
+    vt.modificationtime as ventilatorlatesttime,
+    vt.fio2,
+    vt.pip,
+    vt.peep,
+    vt.start_time,
+    nv.entrydate,
+    nv.hr_rate,
+    nv.skintemp,
+    nv.spo21,
+    nv.mean_bp1
+   FROM apollo.baby_detail bd
+     LEFT JOIN apollo.dashboard_device_monitor_detail pd ON bd.uhid::text = pd.uhid::text
+     LEFT JOIN apollo.dashboard_device_ventilator_detail vt ON bd.uhid::text = vt.uhid::text
+     LEFT JOIN apollo.dashboard_nursing_vitalparameters nv ON bd.uhid::text = nv.uhid::text
+  WHERE bd.admissionstatus = true
+  ORDER BY bd.creationtime DESC;
+
+ALTER TABLE apollo.vw_vital_detail
+    OWNER TO postgres;
+
+
+alter table apollo.antenatal_history_detail add column mgso4 character varying(20);
+	
+alter table apollo.apnea_event alter column spo2 type integer USING spo2::integer;
+alter table apollo.apnea_event alter column heart_rate type integer USING heart_rate::integer;
+alter table apollo.apnea_event alter column pulse_rate type integer USING pulse_rate::integer;
+
+CREATE SEQUENCE apollo.predict_hdp_seq
+    INCREMENT 1
+    START 48526
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE apollo.predict_hdp_seq
+    OWNER TO postgres;
+
+CREATE FUNCTION apollo.predict_hdp_creationtime()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+    BEGIN
+        NEW.creationtime := current_timestamp;
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$;
+
+ALTER FUNCTION apollo.predict_hdp_creationtime()
+    OWNER TO postgres;
+
+
+CREATE FUNCTION apollo.predict_hdp_modificationtime()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+    BEGIN
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$;
+
+ALTER FUNCTION apollo.predict_hdp_modificationtime()
+    OWNER TO postgres;
+
+
+CREATE TABLE apollo.predict_hdp
+(
+    predicthdpid bigint NOT NULL DEFAULT nextval('apollo.predict_hdp_seq'::regclass),
+    creationtime timestamp with time zone NOT NULL,
+    modificationtime timestamp with time zone NOT NULL,
+    uhid character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    hdptime timestamp with time zone NOT NULL,
+    hdpvalue real,
+    CONSTRAINT predict_hdp_pkey PRIMARY KEY (predicthdpid)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE apollo.predict_hdp
+    OWNER to postgres;
+
+-- Trigger: set_creationtime
+
+-- DROP TRIGGER set_creationtime ON apollo.predict_hdp;
+
+CREATE TRIGGER set_creationtime
+    BEFORE INSERT
+    ON apollo.predict_hdp
+    FOR EACH ROW
+    EXECUTE PROCEDURE apollo.predict_hdp_creationtime();
+
+-- Trigger: set_modificationtime
+
+-- DROP TRIGGER set_modificationtime ON apollo.predict_hdp;
+
+CREATE TRIGGER set_modificationtime
+    BEFORE UPDATE 
+    ON apollo.predict_hdp
+    FOR EACH ROW
+    EXECUTE PROCEDURE apollo.predict_hdp_modificationtime();
+

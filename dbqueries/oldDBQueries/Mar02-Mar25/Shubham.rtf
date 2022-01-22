@@ -1,0 +1,80 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red127\green0\blue85;}
+{\*\expandedcolortbl;;\csgenericrgb\c49804\c0\c33333;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs22 \cf2 CREATE SEQUENCE apollo.nurse_execution_orders_seq\
+  INCREMENT 1\
+  MINVALUE 1\
+  MAXVALUE 9223372036854775807\
+  START 1\
+  CACHE 1;\
+ALTER TABLE apollo.nurse_execution_orders_seq\
+  OWNER TO postgres;\
+\
+\
+CREATE OR REPLACE FUNCTION apollo.nurse_execution_orders_creationtime()\
+  RETURNS trigger AS\
+$BODY$\
+    BEGIN\
+        NEW.creationtime := current_timestamp;\
+        NEW.modificationtime := current_timestamp;\
+        RETURN NEW;\
+    END;\
+$BODY$\
+  LANGUAGE plpgsql VOLATILE\
+  COST 100;\
+ALTER FUNCTION apollo.nurse_execution_orders_creationtime()\
+  OWNER TO postgres;\
+\
+\
+\
+CREATE OR REPLACE FUNCTION apollo.nurse_execution_orders_modificationtime()\
+  RETURNS trigger AS\
+$BODY$\
+    BEGIN\
+        NEW.modificationtime := current_timestamp;\
+        RETURN NEW;\
+    END;\
+$BODY$\
+  LANGUAGE plpgsql VOLATILE\
+  COST 100;\
+ALTER FUNCTION apollo.nurse_execution_orders_modificationtime()\
+  OWNER TO postgres;\
+\
+\
+CREATE TABLE apollo.nurse_execution_orders\
+(\
+  nurse_execution_orders_id bigint NOT NULL DEFAULT nextval('apollo.nurse_execution_orders_seq'::regclass),\
+  loggeduser character varying(50),\
+  creationtime timestamp with time zone NOT NULL,\
+  modificationtime timestamp with time zone NOT NULL,\
+  uhid character varying(50) NOT NULL,\
+  order_text text,\
+  is_execution boolean,\
+  eventname character varying(50), \
+  assessmentdate timestamp with time zone,\
+  executiontime timestamp with time zone,\
+  CONSTRAINT nurse_execution_orders_pkey PRIMARY KEY (nurse_execution_orders_id)\
+)\
+WITH (\
+  OIDS=FALSE\
+);\
+ALTER TABLE apollo.nurse_execution_orders\
+  OWNER TO postgres;\
+\
+\
+CREATE TRIGGER set_creationtime\
+  BEFORE INSERT\
+  ON apollo.nurse_execution_orders\
+  FOR EACH ROW\
+  EXECUTE PROCEDURE apollo.nurse_execution_orders_creationtime();\
+\
+CREATE TRIGGER set_modificationtime\
+  BEFORE UPDATE\
+  ON apollo.nurse_execution_orders\
+  FOR EACH ROW\
+  EXECUTE PROCEDURE apollo.nurse_execution_orders_modificationtime();}

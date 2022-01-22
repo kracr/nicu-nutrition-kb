@@ -1,0 +1,197 @@
+<div *ngIf="deviceType =='inicu' && deviceMasterData != null && deviceMasterData != undefined" >
+	<div class="add-device-container">
+		<h1 class="blue-text light">Add device</h1>
+
+		<form>
+
+			<div class="clear overflow-auto margin-40-top">
+
+				<div
+					class="input-boxes-cont desktop-column-3 force-left padding-10-x">
+					<label class="input-label">iNICU Device Name</label>
+					<select
+						class="input input-medium desktop-column-20" name = "deviceStatusName"
+						[(ngModel)]="firstDevice"
+						[disabled]="getButtonStatus('first')">
+						<option value="" disabled>select inicu device</option>
+            <option
+              *ngFor="let item of deviceMasterData.dropDowns.deviceName"
+              [value]="item.key">{{item.value}}</option>
+					</select>
+				</div>
+				<div class="col-md-2 right-aligned padding-20-y">
+					<button class="button button-blue desktop-column-20" (click)="addDevice('first')">{{deviceButtonLabel}}</button>
+				</div>
+				<div class="col-md-2 left-aligned padding-20-y">
+					<button class="button button-blue-transparent desktop-column-20" (click)="refreshDevice()">Cancel</button>
+          <!-- data-ui-sref="dashboard.totalBeds" -->
+			  </div>
+			</div>
+
+      <div *ngIf = "isDeviceConnect == true" class="clear overflow-auto margin-40-top">
+
+				<div
+					class="input-boxes-cont desktop-column-3 force-left padding-10-x">
+					<label class="input-label">iNICU Device Name</label>
+					<select
+						class="input input-medium desktop-column-20" name = "deviceStatusNameTo"
+						[(ngModel)]="secondDevice"
+						[disabled]="getButtonStatus('second')">
+						<option value="" disabled>select inicu device</option>
+            <option
+              *ngFor="let item of deviceMasterData.dropDowns.deviceName2"
+              [value]="item.key">{{item.value}}</option>
+					</select>
+				</div>
+				<div class="col-md-2 right-aligned padding-20-y">
+					<button class="button button-blue desktop-column-20" (click)="addDevice('second')">{{deviceButtonLabel2}}</button>
+				</div>
+				<div class="col-md-2 left-aligned padding-20-y">
+					<button class="button button-blue-transparent desktop-column-20" (click)="refreshDevice()">Cancel</button>
+          <!-- data-ui-sref="dashboard.totalBeds" -->
+			  </div>
+			</div>
+
+		</form>
+		<div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="col-md-6">
+
+					</div>
+					<div class="col-md-6 right-aligned padding-top-1">
+						<button class="button button-blue-transparent desktop-column-20" *ngIf="iscorrent == true"  style="width:170px">Past Device</button>
+						<button class="button button-blue-transparent desktop-column-20" *ngIf="iscorrent == false"  style="width:170px;cursor:default;" >Past History</button>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 padding-10-x">
+					<div class="col-md-12">
+						<table
+							class="table table-striped table-bordered headed-table desktop-column-20"
+							style="padding-bottom: 1%" *ngIf="iscorrent == true">
+							<tr>
+								<td>Date</td>
+								<td>Device</td>
+								<td>Start Time</td>
+								<td>Device Status</td>
+							</tr>
+							<tr *ngFor="let item of deviceMasterData.listDevice" >
+								<td><span>{{item.date|date:'dd-MM-yyyy, hh:mm a'}}</span></td>
+								<td><span>{{item.device}}</span></td>
+								<td><span>{{item.timeFrom|date:'dd-MM-yyyy, hh:mm a'}}</span></td>
+								<td style="width:80px">
+									<button class="button button-blue-transparent desktop-column-20" (click)="changeDevStatus(item)">Disconnect</button>
+
+								</td>
+							</tr>
+						</table>
+						<table
+							class="table table-striped table-bordered headed-table desktop-column-20"
+							style="padding-bottom: 1%" *ngIf="iscorrent == false">
+							<tr>
+								<td>Date</td>
+								<td>Device</td>
+								<td>Start Time</td>
+								<td>End Time</td>
+							</tr>
+							<tr *ngFor="let item of deviceMasterData.pastDevice " >
+								<td><span>{{item.date|date:'dd-MM-yyyy, hh:mm a'}}</span></td>
+								<td><span>{{item.device}}</span></td>
+								<td><span>{{item.timeFrom|date:'dd-MM-yyyy, hh:mm a'}}</span></td>
+								<td><span>{{item.timeTo|date:'dd-MM-yyyy, hh:mm a'}}</span></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- <div data-ng-show="deviceType =='infinity'">
+	<div class="padding-20-x padding-20-y">
+		<h1 class="blue-text light">Device Integration</h1>
+	<h2 class="blue-text padding-20-y" style="padding-bottom:0px">{{deviceLabel}}</h2>
+
+		<form>
+
+			<div class="clear overflow-auto" ng-hide="isAlreadyConnected">
+				<div
+					class="input-boxes-cont desktop-column-3 force-left padding-10-x">
+					<label class="input-label"><strong>Choose ICU</strong></label>
+					<select
+						class="input input-medium desktop-column-20" [(ngModel)]="beddetails.icu" data-ng-change="filterBeds(beddetails.icu)"
+						ng-options="item.key as item.value for item in beddetails.icuDropDown" >
+						<option value="" hidden selected disabled>select</option>
+
+					</select>
+				</div>
+				<div
+					class="input-boxes-cont desktop-column-3 force-left padding-10-x">
+					<label class="input-label"><strong>HL7 Bed</strong></label>
+					<select
+						class="input input-medium desktop-column-20" [disabled]="isHL7"
+						[(ngModel)]="beddetails.hl7Bed" data-ng-options="item for item in filteredBeds" >
+						<option value="" hidden selected disabled>select</option>
+
+					</select>
+				</div>
+
+			</div>
+
+			<div class="clear overflow-auto" ng-show="isAlreadyConnected">
+				<div
+					class="input-boxes-cont desktop-column-3 force-left padding-10-x">
+					<label class="input-label"><strong>Current HL7 ICU</strong></label>
+
+					<input type="text" class="input input-medium desktop-column-20"
+						[(ngModel)]="beddetails.icu" ng-disabled="true"/>
+				</div>
+				<div
+					class="input-boxes-cont desktop-column-3 force-left padding-10-x">
+					<label class="input-label"><strong>Current HL7 Bed</strong></label>
+
+					<input type="text" class="input input-medium desktop-column-20"
+						[(ngModel)]="beddetails.hl7Bed" ng-disabled="true"/>
+
+				</div>
+			</div>
+
+
+			<div class="row" style="padding-top: 1%">
+				<div class="col-md-4"></div>
+				<div class="col-md-2 right-aligned">
+					<button class="button button-blue desktop-column-20" ng-click="connectInfinityBed()" >{{buttonLabel}}</button>
+				</div>
+				<div class="col-md-2 left-aligned">
+					<button class="button button-blue-transparent desktop-column-20"
+						data-ui-sref="dashboard.totalBeds">Cancel</button>
+				</div>
+				<div class="col-md-4"></div>
+			</div>
+		</form>
+
+		<h2 class="blue-text margin-40-top">Past Devices</h2>
+
+		<table
+			class="table table-striped table-bordered headed-table desktop-column-20"
+			style="padding-bottom: 1%">
+			<tr>
+				<td>HL7 Room.no</td>
+				<td>HL7 Bed.id</td>
+				<td>Time from</td>
+				<td>Time To</td>
+			</tr>
+			<tr data-ng-repeat="item in beddetails.previousBedList">
+				<td><span>{{item.hl7Roomid}}</span></td>
+				<td><span>{{item.hl7Bedid}}</span></td>
+				<td><span>{{item.creationtime|date:'dd-MM-yyyy, hh:mm a'}}</span></td>
+				<td><span>{{item.time_to|date:'dd-MM-yyyy, hh:mm a'}}</span></td>
+			</tr>
+		</table>
+	</div>
+</div>
+ -->

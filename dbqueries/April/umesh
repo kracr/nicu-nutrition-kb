@@ -1,0 +1,5 @@
+alter table apollo.medicine add information text default null
+update apollo.medicine set information = 'By default the inotropes e.g. Dopamin will be prepared for a delivery of 10 ug/kg/min. A fluid volume (decided by the doctor) will be prepared for 24 hours in such a fashion that a rate of 0.5 ml/hr
+shall deliver 10 ug/kg/min. An increase of rate to 0.75 ml/hr will deliver 15 ug/kg/min. If we want to incease the delivery to 15 ug/kg/min, we revise the pre existing order by increasing the rate
+Similary if we want to give dopamine by 20 ug/kg/min we increase the rate of this prepared solution to 1 ml/hr <br><br> The revised order shall say: Give the medication prepared on April 14 at 9 am at a rate of 0.75 ml/hr to give 15 ug/kg/min'
+where medname in ('Dopamine','Dobutamine','Epinephrine','Vasopressin','Sildenafil');

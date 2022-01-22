@@ -1,0 +1,301 @@
+<doctor-panel *ngIf="isDoctorLabTrue"></doctor-panel>
+<div class="clear desktop-column-20 overflow-hidden nursing-medication-background-color" style="background-color:white !important">
+	<div class="">
+		<div class="col-md-12 padding-20-y" *ngIf="isDoctorLabTrue != false">
+			<div class="col-md-2 no-padding-left center-aligned">
+				<input type="radio" name="labOrderTab" id="labOrderTabLab" value="Lab" [(ngModel)]="labOrderTab" style="display: none">
+					<label for="labOrderTabLab" class="table full assessment-treatment-tab-box" [ngClass]="{'selected-tab': labOrderTab == 'Lab'}">Lab Orders</label>
+			</div>
+			<div class="col-md-2 no-padding-left center-aligned">
+				<input type="radio" name="labOrderTab" id="labOrderTabReport" value="Report" [(ngModel)]="labOrderTab"style="display: none">
+				<label for="labOrderTabReport" class="table full assessment-treatment-tab-box" [ngClass]="{'selected-tab': labOrderTab == 'Report'}">Reports</label>
+			</div>
+		</div>
+	</div>
+	<div class="assesment-container" *ngIf="labOrderTab == 'Lab' && nursingOrder != undefined">
+		<div class="row no-padding padding-10-x padding-10-y">
+			<div class="col-md-12">
+				<h1 class="assessment-heading no-margin ">Investigation</h1>
+			</div>
+		</div>
+		<!-- Below code is for the Investigation of the Nursing Order -->
+		<div class="row no-padding padding-10-x padding-10-y no-padding-top">
+			<div class="col-md-8">
+				<table class="table table-bordered headed-table desktop-column-20">
+					<tr>
+						<td class="center-aligned">Test Name</td>
+						<td class="center-aligned">Order Time</td>
+						<td class="center-aligned">Sample Sent</td>
+						<td class="center-aligned">Sample Sent Time</td>
+					</tr>
+					<tr *ngFor="let item of nursingOrder.pastInvestigationList">
+						<td class="center-aligned"><span>{{item.testname}}</span></td>
+						<td class="center-aligned"><span>{{item.investigationorder_time |
+								date: 'dd-MM-yyyy hh:mm a'}}</span></td>
+            <td class="center-aligned"
+              *ngIf="item.issamplesent == true">Sample Sent</td>
+            <td class="center-aligned"
+              *ngIf="item.issamplesent != true"></td>
+							<!-- <div class="blue-round-tick setting-checkbox-without-margin">
+								<input type="checkbox" name="{{item.investigationorderid}}" id="{{item.investigationorderid}}"
+									[(ngModel)]="item.order_status" data-ng-true-value="'sent'"
+									data-ng-false-value="'ordered'"> <label
+									for="{{item.investigationorderid}}"></label>
+							</div> -->
+						<td class="center-aligned"><span>{{item.senttolab_time
+								| date: 'dd-MM-yyyy hh:mm a'}}</span></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- Above code is for the Investigation of the Nursing Order -->
+		<!-- <div class="row no-padding padding-10-x padding-10-y">
+			<div class="col-md-12">
+				<h1 class="assessment-heading no-margin ">Treatments</h1>
+			</div>
+		</div> -->
+		<!-- Below code is for the Treatment of the nursing order -->
+		<!-- <div class="row no-padding padding-10-x padding-10-y no-padding-top">
+			<div class="col-md-8">
+				<table class="table table-bordered headed-table desktop-column-20">
+					<tr>
+						<td class="center-aligned">Event</td>
+						<td class="center-aligned">Doctor Order Time</td>
+						<td class="center-aligned">Order</td>
+						<td class="center-aligned">Action</td>
+						<td class="center-aligned " style="width:150px">Time</td>
+					</tr>
+					<tr *ngFor="item in nursingOrder.pendingNursingOrderList">
+						<td class="center-aligned"><span>{{item.eventname}}</span></td>
+						<td class="center-aligned"><span>{{item.creationtime |
+								date: 'dd-MM-yyyy hh:mm a'}}</span></td>
+						<td class="center-aligned"><span>{{item.actiontype}}</span></td>
+						<td class="left-aligned">
+							<div class="blue-round-tick setting-checkbox-without-margin">
+								<input type="checkbox" name="{{item.nursingorderid}}+b" id="{{item.nursingorderid}}+b"
+									[(ngModel)]="item.status" (click)="orderStatusUpdate(item)"> <label
+									for="{{item.nursingorderid}}+b">{{item.actionvalue}}</label>
+							</div>
+						</td>
+						<td class="center-aligned"><span>{{item.actiontakenTime
+								| date: 'dd-MM-yyyy hh:mm a'}}</span></td>
+					</tr>
+				</table>
+			</div>
+		</div> -->
+		<!-- Above Code is for the Treatment of the Nursing order -->
+		<!-- below section is for the Comments -->
+		<!-- <div class="row padding-10-y">
+			<div class="col-md-12">
+				<span class="bold">Comments</span>
+				<div class="input-group input-group-labeled desktop-column-20 right">
+					<div class="desktop-column-20 padding-0-x force-left">
+						<textarea
+							class="desktop-column-20 max-height-36 set-font-size-default"
+							rows="4" [(ngModel)]="nursingOrder.nursingComments"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<span class="button button-blue button-large"
+				(click)="saveNursingOrder()">Submit</span>
+		</div> -->
+
+		<!-- below section displays the Past Tables -->
+		<!-- <div class="row padding-10-y">
+			<div class="col-md-12 table full">
+				<div class="table-cell left-aligned">
+					<h1 class="light margin-5-y blue-text" *ngIf="isPastTreatment">Treatment</h1>
+					<h1 class="light margin-5-y blue-text"
+						*ngIf="!(isPastTreatment)">Investigation</h1>
+				</div>
+				<div class="table-cell right-aligned">
+					<span class="button button-blue button-large"
+						*ngIf="isPastTreatment"
+						(click)="visiblePastTreatment()"> Investigation</span> <span
+						class="button button-blue button-large"
+						*ngIf="!(isPastTreatment)"
+						(click)="visiblePastTreatment()">Treatment</span>
+				</div>
+			</div>
+			<div class="row padding-10-y">
+				<div
+					class="desktop-column-20 padding-0-x force-left assesment-container padding-5-y"
+					*ngIf="isPastTreatment">
+					<table
+						class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr>
+							<td class="center-aligned">Event</td>
+							<td class="center-aligned">Doctor Order Time</td>
+							<td class="center-aligned">Order</td>
+							<td class="center-aligned">Action</td>
+							<td class="center-aligned">Action Time</td>
+							<td class="center-aligned">Comment</td>
+							<td class="center-aligned">User</td>
+						</tr>
+						<tr *ngFor="item in nursingOrder.pastNursingOrderList">
+							<td class="center-aligned"><span>{{item.eventname}}</span></td>
+							<td class="center-aligned">{{item.creationtime | date:
+								'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned"><span>{{item.actiontype}}</span></td>
+							<td class="center-aligned"><span>{{item.actionvalue}}</span></td>
+							<td class="center-aligned">{{item.actiontakenTime | date:
+								'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.nursingComments}}</td>
+							<td class="center-aligned">{{item.loggeduser}}</td>
+						</tr>
+					</table>
+				</div>
+				<div
+					class="desktop-column-20 padding-0-x force-left assesment-container padding-5-y"
+					*ngIf="!(isPastTreatment)">
+					<table
+						class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr>
+							<td class="center-aligned">Test Name</td>
+							<td class="center-aligned">Order Status</td>
+							<td class="center-aligned">Order Time</td>
+							<td class="center-aligned">Sample Sent Time</td>
+							<td class="center-aligned">Report Received Time</td>
+						</tr>
+						<tr *ngFor="item in nursingOrder.pastInvestigationList">
+							<td class="center-aligned"><span>{{item.testname}}</span></td>
+							<td class="center-aligned"><span>{{item.order_status}}</span></td>
+							<td class="center-aligned"><span>{{item.investigationorder_time
+									| date: 'dd-MM-yyyy hh:mm:ss a'}}</span></td>
+							<td class="center-aligned"><span>{{item.senttolab_time
+									| date: 'dd-MM-yyyy hh:mm:ss a'}}</span></td>
+							<td class="center-aligned"><span>{{item.reportreceived_time
+									| date: 'dd-MM-yyyy hh:mm:ss a'}}</span></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div> -->
+		<!-- Above Section displays the Past Tables -->
+	</div>
+	<!-- below is for the displaying the Test from Doctor Pannel -->
+  <div class="assesment-container" *ngIf="labOrderTab == 'Report' && testsListMapped != null && testsListMapped != undefined">
+    <div class="row padding-20-x padding-20-y">
+			<div class="col-md-12 no-padding padding-20-y no-padding-top">
+			  <div class="col-md-3">
+  				<div class="col-md-12 no-padding">
+  					<label class="input-label"><strong>Test Type</strong></label>
+  				</div>
+				  <div class="col-md-12 no-padding">
+  					<select class="input input-medium col-md-12 no-margin" name = "testIdName"
+  						[(ngModel)]="selectedTestID" (ngModelChange)="showTestResults()" >
+  						 <option value="0" >ALL</option>
+  						<option *ngFor="let item of testsListMapped | LabReportsKeysPipe" [value]="item.key">{{item.value}}</option>
+  					</select>
+				  </div>
+			  </div>
+			  <div class="col-md-2" *ngIf="selectedTestID!='0' && testMode == false">
+  				<div class="col-md-12 no-padding">
+  					<label class="input-label"><strong>Sub Test</strong></label>
+  				</div>
+				  <div class="col-md-12 no-padding">
+  					<select class="input input-medium col-md-12 no-margin" name = "fetchGraphName"
+						   [(ngModel)]="selectedSubTestID" (ngModelChange)="fetchGraphData()">
+  							<option value="" ></option>
+  							<option *ngFor="let item of testsItemsListMapped " [value]="item">{{item}}</option>
+  					</select>
+  					<label class="col-md-12 error-labels no-padding left-aligned"
+  					*ngIf="selectedSubTestID==null || selectedSubTestID=='0' || selectedSubTestID==''">
+  					Please select subtest</label>
+				  </div>
+			  </div>
+			  <div class="col-md-2" *ngIf="testMode == true">
+  				<div class="col-md-12 no-padding">
+  					<label class="input-label"><strong>From</strong></label>
+  				</div>
+  				<div class="col-md-12 no-padding">
+  					<input type="Date" class="input input-medium desktop-column-20 no-margin" name = "searchStartName"
+  						[(ngModel)]="searchedStartDate"
+  						(ngModelChange)="checkStartDate()" required />
+  				</div>
+			  </div>
+  			<div class="col-md-2" *ngIf="testMode == true">
+  				<div class="col-md-12 no-padding">
+  					<label class="input-label"><strong>To</strong></label>
+  				</div>
+  				<div class="col-md-12 no-padding">
+  					<input type="Date" class="input input-medium desktop-column-20 no-margin" name = "searchEndName"
+  						[(ngModel)]="searchedEndDate"
+  						(ngModelChange)="checkEndDate()" required />
+  				</div>
+  			</div>
+			  <div class="col-md-2 no-padding">
+  				<div class="col-md-12 no-padding">
+  					<label class="visiblity-hidden white-color"><strong>To</strong></label>
+  				</div>
+				  <div class="col-md-12 no-padding">
+				    <div class="toggle-options-radio">
+					    <input type="radio" name="testMode" [value]="true"
+						  [(ngModel)]="testMode" id="testModeList">
+              <label for="testModeList">List View</label>
+
+              <input type="radio" 
+						  name="testMode" [value]="false" [(ngModel)]="testMode"
+						  id="testModeGraph">
+              <label for="testModeGraph" class="respSub" (click)="fetchGraphData()" >Graph</label>
+					  </div>
+  					<label class="error-labels no-padding left-aligned col-md-12"
+  					*ngIf="selectedTestID=='0' && testMode==false">
+  					Please select testname</label>
+			    </div>
+			  </div>
+		  </div>
+		  <div class="row" style="padding-top: 2%" *ngIf="testMode == true">
+  			<div class="padding-20-x">
+  				<div class="scroll-x container">
+  					<div class="timeline-container">
+  						<div class="timeline-box-cont" *ngFor="let item of testResultsData">
+  							<div class="timeline-row">
+  								<div class="timeline-date">
+  									<span class="timeline-day block">{{item.creationtime | date:'dd'}}</span>
+  									<span class="timeline-month block">{{item.creationtime | date:'MMM'}}</span>
+  								</div>
+  								<span class="timeline-time">{{item.creationtime | date:'shortTime'}}</span>
+  							</div>
+
+  							<div class="timeline-test-box table" style="height: initial;">
+  								<p class="table-row" >
+  									<span class="blue-text table-cell center-aligned" >
+  										<strong>{{ testsListMapped[item.testid] }}</strong>
+  									</span>
+  								</p>
+  								<p class="table-row" *ngFor="let testitem of item.testItemObjectsList">
+  									<span class="table-cell center-aligned"
+  										*ngIf="!(testitem.itemname) && !(testitem.itemid)" >{{testitem.resultstatus}}</span>
+
+  									<span class="inline-block info-symbol padding-10-x bold" style="cursor:pointer" (click)="reportView(testitem.itemvalue)" *ngIf="!(testitem.itemname) && !(testitem.itemid)"> i</span>
+
+  									<span class="blue-text table-cell left-aligned"
+  										*ngIf="testitem.itemvalue != '*'   && testitem.itemname!=null">{{testitem.itemname}}</span>
+  									<span class="table-cell"
+  										*ngIf="testitem.itemvalue!='*' && testitem.itemname!=null" [ngClass]="{'labitem-abnormal': testitem.resultstatus=='Abnormal' && testitem.itemvalue!=''}">{{testitem.itemvalue}}<span *ngIf="testitem.itemvalue!=null">{{testitem.itemunit}}</span> </span>
+
+  								</p>
+  							</div>
+  						</div>
+  					</div>
+						<div *ngIf="testResultsData != null"><div class="timeline-box-cont" *ngIf="!testResultsData.length">
+							<div class="message-error padding-20-x">
+								<h2>Sorry No Data Exists.</h2>
+							</div>
+						</div></div>
+  				</div>
+  			</div>
+  		</div>
+			<div class="clear overflow-auto desktop-column-20" style="overflow: hidden;text-align:center" *ngIf="testMode == false && selectedTestID!='0' && selectedSubTestID!=''">
+				<div class="" style="padding-left: 2%; padding-right: 4%">
+					<div class="desktop-column-20 padding-0-x force-left" style="margin-left: 0%; padding-bottom: 2%">
+					  <div id="heightContainer" [chart]="heightChart" style="height: 400px; width: 100%;border-style:solid;border:1px;overflow: hidden"></div>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

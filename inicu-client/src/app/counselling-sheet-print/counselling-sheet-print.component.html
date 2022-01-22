@@ -1,0 +1,92 @@
+<div class="col-md-12 no-padding table full margin-10-y center-aligned">
+  <div class="col-md-12 no-padding table-cell center-aligned">
+    <span class="print-heading" *ngIf="totalBeds != null && totalBeds != undefined">COUNSELLING SHEET ( {{currentDate | date:'dd-MM-yyyy'}} )</span>
+    <span class="print-heading" *ngIf="weightTrackingList != null && weightTrackingList != undefined">WEIGHT BOOK ( {{currentDate | date:'dd-MM-yyyy'}} )</span>
+  </div>
+</div>
+<div class="col-md-12 no-padding table full margin-10-y" *ngIf="totalBeds != null && totalBeds != undefined">
+  <table class="table table-striped table-bordered headed-table desktop-column-20">
+    <tr class="border-black">
+      <!-- <td class="center-aligned table-cell border-black">UHID</td> -->
+      <td class="center-aligned table-cell border-black">Name</td>
+      <td class="center-aligned table-cell border-black">DOA</td>
+      <td class="center-aligned table-cell border-black">DOB</td>
+      <td class="center-aligned table-cell border-black">DOL</td>
+      <td class="center-aligned table-cell border-black">GA</td>
+      <td class="center-aligned table-cell border-black">CGA</td>
+      <td class="center-aligned table-cell border-black">Birth Wt.</td>
+      <td class="center-aligned table-cell border-black">Last Day Wt.</td>
+      <td class="center-aligned table-cell border-black">Today Wt.</td>
+      <td class="center-aligned table-cell border-black">Wt. Change</td>
+      <td class="center-aligned table-cell border-black">Screening</td>
+      <td class="center-aligned table-cell border-black">FU</td>
+      <!-- <td class="center-aligned table-cell border-black">Intake</td> -->
+      <!-- <td class="center-aligned table-cell border-black">Antibiotics</td>
+      <td class="center-aligned table-cell border-black">Vent. Mode</td>
+      <td class="center-aligned table-cell border-black">Diagnosis</td>
+      <td class="center-aligned table-cell border-black">Nurses</td>
+      <td class="center-aligned table-cell border-black">Comments</td> -->
+    </tr>
+    <tr *ngFor="let bed of totalBeds | CounsellingSheetFilter:searchText"
+      class="bed-row border-black" [hidden]="!(bed.isVisible)">
+      <!-- <td class="center-aligned table-cell border-black"><span
+        class="blue-text">{{bed.uhid}}</span></td> -->
+      <td class="center-aligned table-cell border-black"><span
+        class="blue-text">{{bed.name}} <span *ngIf="bed.babyNumber != null">{{bed.babyNumber}}</span></span></td>
+      <td class="center-aligned table-cell border-black">{{bed.admitDate
+        | date:'dd-MM-yyyy'}}</td>
+      <td class="center-aligned table-cell border-black">{{bed.dob
+        | date:'dd-MM-yyyy'}}</td>
+      <td class="center-aligned table-cell border-black">{{removeDays(bed.dayOfLife)}}</td>
+      <td class="center-aligned table-cell border-black" style="overflow:hidden">{{bed.gestationweekbylmp}}<sup *ngIf="bed.gestationdaysbylmp != null"> + </sup><sup>{{bed.gestationdaysbylmp}}</sup></td>
+      <td class="center-aligned table-cell border-black" style="overflow:hidden">{{bed.gestationWeeks}}<sup *ngIf="bed.gestationDays != null"> + </sup><sup>{{bed.gestationDays}}</sup></td>
+      <td class="center-aligned table-cell border-black">{{bed.birthWeight}}</td>
+      <td class="bold center-aligned table-cell border-black">{{bed.lastDayWeight}}</td>
+      <td class="bold center-aligned table-cell border-black">{{bed.currentDayWeight}}</td>
+      <td class="bold center-aligned table-cell border-black">{{bed.difference}}</td>
+      <td class="center-aligned table-cell border-black"><div class="table">{{bed.ultrasoundAlert}}</div><div class="table"> <span>{{bed.ropAlert}}</span></div></td>
+      <td class="center-aligned table-cell border-black">{{bed.neonatologist}}</td>
+      <!-- <td class="center-aligned table-cell border-black">{{bed.feedDetail}}</td>
+      <td class="center-aligned table-cell border-black">{{bed.antibioticsName}}</td>
+      <td class="center-aligned table-cell border-black">{{bed.ventMode}}</td>
+      <td class="center-aligned table-cell border-black" style="overflow: hidden">{{bed.diagnosis}}</td>
+      <td class="center-aligned table-cell border-black">{{bed.nursesName}}</td>
+      <td class="center-aligned table-cell border-black" style="overflow:hidden">{{bed.notes}}</td> -->
+    </tr>
+  </table>
+</div>
+<div class="col-md-12 no-padding table full margin-10-y" *ngIf="weightTrackingList != null && weightTrackingList != undefined">
+  <table class="table table-striped table-bordered headed-table desktop-column-20">
+    <tr class="border-black">
+      <td class="center-aligned table-cell border-black">UHID</td>
+      <td class="center-aligned table-cell border-black">Name</td>
+      <td class="center-aligned table-cell border-black">DOB</td>
+      <td class="center-aligned table-cell border-black">Bed No.</td>
+      <td class="center-aligned table-cell border-black">Age</td>
+      <td class="center-aligned table-cell border-black">Birth Weight</td>
+      <td class="center-aligned table-cell border-black">Yesterday's Weight</td>
+      <td class="center-aligned table-cell border-black">Today's Weight</td>
+      <td class="center-aligned table-cell border-black">Today's Head Circumference</td>
+      <td class="center-aligned table-cell border-black">Today's Length</td>
+      <td class="center-aligned table-cell border-black">Weight Change</td>
+    </tr>
+    <tr *ngFor="let bed of weightTrackingList" class="bed-row border-black">
+      <td class="center-aligned table-cell border-black">{{bed.uhid}}</td>
+      <td class="center-aligned table-cell border-black">{{bed.babyname}} <span class="padding-10-x">{{bed.babyNumber}}</span></td>
+      <td class="center-aligned table-cell border-black">{{bed.dateofbirth}}</td>
+      <td class="center-aligned table-cell border-black">{{bed.bedno}}</td>
+      <td class="center-aligned table-cell border-black">{{bed.age}}</td>
+      <td class="center-aligned table-cell border-black">{{bed.birthWeight}}</td>
+      <td class="center-aligned table-cell border-black">{{bed.lastWeight}}</td>
+      <td class="center-aligned table-cell border-black">{{bed.todayWeight}}</td>
+      <td class="center-aligned table-cell border-black">{{bed.currentdateheadcircum}}</td>
+      <td class="center-aligned table-cell border-black">{{bed.currentdateheight}}</td>
+      <td class="center-aligned table-cell border-black">
+        <i class="sprite sprite-increased" *ngIf="(bed.weightIncrement == true) && bed.weightChange!=null">
+        </i>
+        <i class="sprite sprite-decreased" *ngIf="(bed.weightIncrement == false) && bed.weightChange!=null"></i>
+        <span>{{bed.weightChange}}</span>
+        <span *ngIf="bed.weightChange!=null">&nbsp;gms</span></td>
+    </tr>
+  </table>
+</div>

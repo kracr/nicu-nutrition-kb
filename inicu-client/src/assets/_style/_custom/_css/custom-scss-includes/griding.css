@@ -1,0 +1,8 @@
+/* line 1, ../../_sass/custom-scss-includes/griding.scss */
+.wrapper-fluid {
+  padding-left: 30px;
+  padding-right: 30px;
+  overflow: auto;
+  clear: both;
+  min-height: 1px;
+}

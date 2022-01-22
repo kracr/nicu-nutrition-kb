@@ -1,0 +1,198 @@
+<div class="admin-panel-cont" style="margin-top:0px">
+	<div class="tab-container">
+		<div class="left-tabs">
+			<ul class=" margin-10-top">
+		        <li [ngClass]="{ 'active' : selectedUserPannelTab == 'User List'}" (click)="whichTab('User List')"><a><span class="linkText">User List</span></a></li>
+		        <li [ngClass]="{ 'active' : selectedUserPannelTab == 'Add User'}" (click)="whichTab('Add User')"><a><span class="linkText">{{isAddUser}}</span></a></li>
+		        <li [ngClass]="{ 'active' : selectedUserPannelTab == 'Manage Role'}" (click)="whichTab('Manage Role')"><a><span class="linkText">Manage Roles</span></a></li>
+			</ul>
+		</div>
+		<div class="tab-view" *ngIf="selectedUserPannelTab == 'User List'">
+			<div>
+				<div class="user-list table">
+					<div class="header table-row">
+						<div class="table-cell">
+							<span>Name</span>
+						</div>
+						<div class="table-cell">
+							<span>Username</span>
+						</div>
+						<div class="table-cell">
+							<span>Role</span>
+						</div>
+						<div class="table-cell">
+							<span>Email</span>
+						</div>
+						<div class="table-cell">
+							<span>Phone Number</span>
+						</div>
+						<div class="table-cell">
+							<span>Status</span>
+						</div>
+					</div>
+					<div class="table-row" *ngFor="let user of userList">
+						<div class="table-cell" (click)="editUser(user)">
+							<span >{{user.name}}</span>
+						</div>
+						<div class="table-cell" (click)="editUser(user)">
+							<span>{{user.userName}}</span>
+						</div>
+						<div class="table-cell" (click)="editUser(user)">
+							<span>{{user.role}}</span>
+						</div>
+						<div class="table-cell" (click)="editUser(user)">
+							<span>{{user.email}}</span>
+						</div>
+						<div class="table-cell" (click)="editUser(user)">
+							<span>{{user.phoneNumber}}</span>
+						</div>
+						<div class="table-cell">
+							<div class="toggle">
+					    		<input type="checkbox"  checked="{{user.status}}" id="{{user.userName}}" (ngModelChange)="setStatus(user)" [(ngModel)]="user.status" /><label for="{{user.userName}}"></label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-view" *ngIf="selectedUserPannelTab == 'Add User'">
+			<form id="userForm" #form="ngForm" (submit)="addUser(user)">
+				<div class="table">
+					<div class="table-cell desktop-column-10" >
+						<div class="input-boxes-cont desktop-column-12">
+							<label class="input-label required">First Name</label>
+							<input type="text" class="input input-medium desktop-column-20" [(ngModel)]="user.firstName" required="required" [ngModelOptions]="{standalone: true}"/>
+						</div>
+						<div class="input-boxes-cont desktop-column-12">
+							<label class="input-label required">Last Name</label>
+							<input type="text" class="input input-medium desktop-column-20" [(ngModel)]="user.lastName" required="required" [ngModelOptions]="{standalone: true}"/>
+						</div>
+						<div class="input-boxes-cont desktop-column-12">
+							<label class="input-label">Mobile Number</label>
+							<input type="text" class="input input-medium desktop-column-20" [(ngModel)]="user.phoneNumber" id="phoneNumber" [ngModelOptions]="{standalone: true}"/>
+						</div>
+						<div class="input-boxes-cont desktop-column-12">
+							<label class="input-label">Email ID </label>
+							<input type="email" class="input input-medium desktop-column-20" [(ngModel)]="user.email" [ngModelOptions]="{standalone: true}"/>
+						</div>
+						<div class="input-boxes-cont desktop-column-12">
+							<label class="input-label required">Username</label>
+							<input type="text" class="input input-medium desktop-column-20" [(ngModel)]="user.userName" required="required" [ngModelOptions]="{standalone: true}"/>
+						</div>
+						<div class="input-boxes-cont desktop-column-12">
+							<label class="input-label required">Password</label>
+							<input type="password" class="input input-medium desktop-column-20" id="password" [(ngModel)]="user.password" required="required" [ngModelOptions]="{standalone: true}"
+							/>
+						</div>
+						<div class="input-boxes-cont desktop-column-12 margin-20-y userpanel-margin-bottom">
+							<label class="input-label required">Repeat Password</label>
+							<input type="password" class="input input-medium desktop-column-20" required="required" id="confirm_password" [(ngModel)]="user.repeatPassword" [ngModelOptions]="{standalone: true}"
+							/>
+						</div>
+
+					</div>
+					<div class="table-cell desktop-column-10">
+
+						<div class="input-boxes-cont desktop-column-16">
+							<label class="input-label required">Status</label>
+							<div>
+								<select class="input desktop-column-7" [(ngModel)]="user.status" required="required" [ngModelOptions]="{standalone: true}">
+						            <option selected disabled value> Select</option>
+									<option value="true">Active</option>
+						            <option value="false">Inactive</option>
+						        </select>
+								<label class="desktop-column-6 required">Roles</label>
+								<select class="input desktop-column-7" [(ngModel)]="user.role" required="required" (Change)="roleChange()"
+								[ngModelOptions]="{standalone: true}">
+									<option selected disabled value>Select</option>
+							            <option value="SuperUser">Super User</option>
+							            <option value="Sr. Doctor">Sr. Doctor</option>
+							            <option value="Jr. Doctor" >Jr. Doctor</option>
+							            <option value="Nurse">Nurse</option>
+							            <option value="Frontdesk">Front Desk</option>
+							        </select>
+								</div>
+							</div>
+							<div class="input-boxes-cont desktop-column-12">
+								<label class="input-label required">Branch Name</label>
+								<div>
+									<select class="input desktop-column-12" [(ngModel)]="user.branchName" id="repBranch" [ngModelOptions]="{standalone: true}">
+										<option selected disabled value>Select</option>
+										<option *ngFor="let obj of branchNameList" [ngValue]="obj">{{obj}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="input-boxes-cont desktop-column-12">
+								<label class="input-label block ">Reporting Doctor</label>
+								<select class="input desktop-column-12" [(ngModel)]="user.repDoctor" id="repDoc" data-ng-options="doctors for doctors in " data-ng-disabled="user.role !== 'Jr. Doctor'" [ngModelOptions]="{standalone: true}">
+									<option selected disabled value>Select</option>
+									<option *ngFor="let obj of reportingDoctor" [ngValue]="obj">{{obj}}</option>
+				            	</select>
+							</div>
+							<!-- <div class="input-boxes-cont desktop-column-16">
+								<label class="input-label">Profile Picture</label>
+								<div class="upload">
+									<img id="profilePic" data-ng-src="{{profilePath}}" alt="Profile picture" src="_images/upload-icon.png" />
+									<div class="upload-button">
+										<span>Upload Profile Picture</span>
+										<input type="file" (change)="readURL(this,profilePic);" [(ngModel)]="user.profilePic" />
+									</div>
+								</div>
+							</div> -->
+						<!-- <div class="input-boxes-cont desktop-column-16">
+							<label class="input-label">Digital Signature</label>
+							<div class="upload">
+								<img id="digitalSignature" alt="Digital signature" [src]="{{signPath}}" src="_images/upload-icon.png" />
+								<div class="upload-button">
+									<span>Upload Digital Signature</span>
+									<input type="file" (change)="readURL(this,digitalSignature);" [(ngModel)]="user.signature" />
+								</div>
+							</div>
+						</div> -->
+					</div>
+				</div>
+				<div id="footer">
+					<button class="button button-blue padding-40-x" type="submit">{{isAddUser}}</button>
+				</div>
+			</form>
+		</div>
+		<div class="tab-view" *ngIf="selectedUserPannelTab == 'Manage Role'">
+			<div class="role-management table">
+			    <div class="table-row header">
+			        <div class="table-cell desktop-column-3"></div>
+			        <div class="table-cell" *ngFor="let role of roles">
+			            {{role}}
+			        </div>
+			    </div>
+			    <div class="table-row" *ngFor="let value of valueList">
+			        <div class="table-cell">
+			            <span>
+			                {{value.moduleName}}
+			            </span>
+			        </div>
+			        <div class="table-cell" *ngFor="let listOfRole of value.listOfRoleObj">
+			            <!-- <div class="inline-block middle-aligned">
+			                <input type="checkbox" value="read" class="default-blue inline-block" data-ng-change="statusChange(value)"  data-ng-model="listOfRole.status.read" id="{{value.moduleName.replace(' ', '')+'_'+listOfRole.roleName.replace(' ', '')+'_read'}}" />
+			                <label class="inline-block read" for="{{value.moduleName.replace(' ', '')+'_'+listOfRole.roleName.replace(' ', '')+'_read'}}"></label>
+			            </div>
+			            <div class="inline-block middle-aligned">
+			                <input type="checkbox" value="write" class="default-blue inline-block" data-ng-change="statusChange(value)" data-ng-model="listOfRole.status.write" id="{{value.moduleName.replace(' ', '')+'_'+listOfRole.roleName.replace(' ', '')+'_write'}} "/>
+			                <label class="inline-block write" for="{{value.moduleName.replace(' ', '')+'_'+listOfRole.roleName.replace(' ', '')+'_write'}}"></label> -->
+			          <div class="inline-block middle-aligned">
+			                <input type="checkbox" value="read" class="default-blue inline-block" (change)="statusChange(value)" [(ngModel)]="listOfRole.status.read" id="{{value.moduleName.replace(' ', '')+'_'+listOfRole.roleName.replace(' ', '')+'_read'}}" />
+			                <label class="inline-block read" for="{{value.moduleName.replace(' ', '')+'_'+listOfRole.roleName.replace(' ', '')+'_read'}}"></label>
+			            </div>
+			           <div class="inline-block middle-aligned">
+			                <input type="checkbox" value="write" class="default-blue inline-block" (change)="statusChange(value)" [(ngModel)]="listOfRole.status.write" id="{{value.moduleName.replace(' ', '')+'_'+listOfRole.roleName.replace(' ', '')+'_write'}}" />
+			                <label class="inline-block write" for="{{value.moduleName.replace(' ', '')+'_'+listOfRole.roleName.replace(' ', '')+'_write'}}"></label>
+			            </div>
+			            <!-- <div class="inline-block middle-aligned">
+			                <input type="checkbox" value="read" class="default-blue inline-block" (change)="statusChange(value)" data-ng-model="listOfRole.status.read" id="{{value.moduleName.replace(' ', '')+'_'+listOfRole.roleName.replace(' ', '')+'_write'}} "/>
+			                <label class="inline-block read" for="{{value.moduleName.replace(' ', '')+'_'+listOfRole.roleName.replace(' ', '')+'read'}}"></label>
+			            </div> -->
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</div>
+</div>

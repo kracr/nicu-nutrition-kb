@@ -1,0 +1,1112 @@
+<doctor-panel></doctor-panel>
+<div class="col-md-12">
+	<div class="col-md-12 no-padding set-AssessmentSystemtEvent-background">
+		<div class="col-md-3 no-padding">
+			<div class="col-md-12 no-padding padding-10-y" style="padding-top: 12px">
+				<div class="col-md-4 text-center padding-top-0 no-padding-right">
+					<div class="center-aligned">
+						<input type="radio" name="isBloodProduct" id="Active" class="display-none" value="Active"
+						[(ngModel)]="masterJSON.currentObj.status" [ngModelOptions]="{standalone: true}"
+						(ngModelChange)="populateProgressNotes()">
+						<label for="Active" class="sprite assessment-sheet-inactive"
+						[ngClass]="{ 'yes-jaundice' : masterJSON.currentObj.status =='Active'}">Active</label>
+					</div>
+				</div>
+				<div class="col-md-4 text-center padding-top-0 no-padding-right">
+					<div class="center-aligned">
+						<input type="radio" name="isBloodProduct" id="inactive" class="display-none" value="Inactive"
+						[(ngModel)]="masterJSON.currentObj.status" [ngModelOptions]="{standalone: true}"
+						(ngModelChange)="populateProgressNotes()">
+						<label for="inactive" class="sprite assessment-sheet-inactive"
+						[ngClass]="{ 'inactive-jaundice' : masterJSON.currentObj.status =='Inactive'}">Inactive</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12 background-color-white" *ngIf="masterJSON.currentObj.status == 'Active'">
+		<div class="col-md-12 no-padding padding-10-y center-aligned">
+			<span class="light blue-text system-main-heading">Blood Products</span>
+		</div>
+		<div class="col-md-12 no-padding">
+			<div class="col-md-2 padding-10-y no-padding-left">
+				<div class="toggle-options-radio">
+					<input type="radio" name="isBloodProductAssessment" [value]="true" id="isBloodProductAssessment" [(ngModel)]="bloodProductTempObj.isBloodProductAssessment">
+					<label for="isBloodProductAssessment">Assessment</label>
+					<input type="radio" name="isBloodProductAssessment" [value]="false" id="isBloodProductAssessmentReaction" [(ngModel)]="bloodProductTempObj.isBloodProductAssessment">
+					<label for="isBloodProductAssessmentReaction">Reaction</label>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding padding-10-y" *ngIf="bloodProductTempObj.isBloodProductAssessment == true">
+			<div class="col-md-12 no-padding padding-10-y">
+				<div class="col-md-3 col-lg-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Date and Time of Order</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<owl-date-time class="owl-dateTime" [min]="minDate" [max]="maxDate" dateFormat='DD-MM-YYYY hh:mm A'
+						[(ngModel)]="masterJSON.currentObj.assessment_time"></owl-date-time>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding padding-10-y">
+				<div class="col-md-2 bloodProduct no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Blood Product<span style="color: red;">&nbsp;*</span></span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<select required type="text" class="input input-medium col-md-12" [(ngModel)]="masterJSON.currentObj.blood_product"
+						(ngModelChange)="populateProgressNotes()">
+								<option value="" selected> -- Selected -- </option>
+								<option value="Packed cell">Packed Cell</option>
+								<option value="FFP">FFP</option>
+								<option value="Platelet Concentration">Platelet Concentrate</option>
+								<option value="PRP">PRP</option>
+								<option value="Aphereis Platelet">Aphereis Platelet</option>
+								<option value="Whole Blood">Whole Blood</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding padding-10-y">
+				<div class="col-md-12 no-padding padding-5-y">
+					<span class="blue-text bold">Indication</span>
+				</div>
+				<div class="col-md-12 no-padding padding-5-y" *ngIf="masterJSON.currentObj.blood_product == 'Packed cell'
+				|| masterJSON.currentObj.blood_product == 'Whole Blood'">
+					<div class="col-md-1 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">HCT</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-12" type="number"
+								[(ngModel)]="masterJSON.currentObj.hematocrit" (ngModelChange)="populateProgressNotes()">
+								<span class="input-group-icon center-aligned desktop-column-8">
+									%
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Hemoglobin</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="masterJSON.currentObj.indication_hb" (ngModelChange)="populateProgressNotes()">
+								<span class="input-group-icon center-aligned desktop-column-12">
+									g/dl
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 symptomatic no-padding">
+						<div class="col-md-12 no-padding">
+							<span class="visiblity-hidden">dummy</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input type="radio" name="bloodProductType" [value]="''" id="bloodProductTypeNone"
+								[(ngModel)]="masterJSON.currentObj.bloodProductType" (ngModelChange)="populateProgressNotes()">
+								<label for="bloodProductTypeNone">None</label>
+								<input type="radio" name="bloodProductType" [value]="'symptomatic'" id="bloodProductTypeSymptomatic"
+								[(ngModel)]="masterJSON.currentObj.bloodProductType" (ngModelChange)="populateProgressNotes()">
+								<label for="bloodProductTypeSymptomatic">Symptomatic</label>
+								<input type="radio" name="bloodProductType" [value]="'asymptomatic'" id="bloodProductTypeAsymptomatic"
+								[(ngModel)]="masterJSON.currentObj.bloodProductType" (ngModelChange)="populateProgressNotes()">
+								<label for="bloodProductTypeAsymptomatic">Asymptomatic</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 ventilated no-padding-left" *ngIf="masterJSON.currentObj.bloodProductType == 'symptomatic'">
+						<div class="col-md-12 no-padding">
+							<span class="visiblity-hidden">dummy</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="col-md-8 no-padding">
+								<div class="toggle-options-radio">
+									<input type="radio" name="Indication" [value]="''" id="IndicationNone"
+									[(ngModel)]="masterJSON.currentObj.indication_resp" (ngModelChange)="populateProgressNotes()">
+									<label for="IndicationNone">None</label>
+									<input type="radio" name="Indication" [value]="'ventilated'" id="IndicationVentilated"
+									[(ngModel)]="masterJSON.currentObj.indication_resp" (ngModelChange)="populateProgressNotes()">
+									<label for="IndicationVentilated">Ventilated</label>
+									<input type="radio" name="Indication" [value]="'FiO2'" id="IndicationOxygen"
+									[(ngModel)]="masterJSON.currentObj.indication_resp" (ngModelChange)="populateProgressNotes()">
+									<label for="IndicationOxygen">Incresed FiO<sub>2</sub></label>
+									<input type="radio" name="Indication" [value]="'CPAP/NIPPV'" id="IndicationCPAP/NIPPV"
+									[(ngModel)]="masterJSON.currentObj.indication_resp" (ngModelChange)="populateProgressNotes()">
+									<label for="IndicationCPAP/NIPPV">CPAP/NIPPV</label>
+								</div>
+							</div>
+							<div class="col-md-2 no-padding line-height-standard">
+								<div class="blue-round-tick setting-checkbox">
+									<input id="CCFChecked" name="CCFChecked" type="checkbox" [(ngModel)]="masterJSON.currentObj.ccfchecked">
+									<label for="CCFChecked">CCF</label>
+								</div>
+							</div>
+							<div class="col-md-2 no-padding line-height-standard">
+								<div class="blue-round-tick setting-checkbox">
+									<input id="ShockChecked" name="ShockChecked" type="checkbox" [(ngModel)]="masterJSON.currentObj.shockChecked">
+									<label for="ShockChecked">Shock</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 apneicspell no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Apneic Spells</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="col-md-4 no-padding-left">
+								<div class="toggle-options-radio">
+									<input type="radio" name="ApneicSpells" [value]="true" id="ApneicSpellsYes"
+									[(ngModel)]="masterJSON.currentObj.apneic_spell" (ngModelChange)="populateProgressNotes()">
+									<label for="ApneicSpellsYes">Yes</label>
+									<input type="radio" name="ApneicSpells" [value]="false" id="ApneicSpellsNo"
+									[(ngModel)]="masterJSON.currentObj.apneic_spell" (ngModelChange)="populateProgressNotes()">
+									<label for="ApneicSpellsNo">No</label>
+								</div>
+							</div>
+							<div class="col-md-8 no-padding-left" *ngIf="masterJSON.currentObj.apneic_spell">
+								<div class="relative-input-group block desktop-column-20">
+									<input class="input input-medium desktop-column-20" type="number"
+									[(ngModel)]="masterJSON.currentObj.apnea_count" (ngModelChange)="populateProgressNotes()">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding padding-10-y" *ngIf="masterJSON.currentObj.blood_product == 'Aphereis Platelet'
+			|| masterJSON.currentObj.blood_product == 'Platelet Concentration' ||  masterJSON.currentObj.blood_product == 'PRP'">
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Platelet Count</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="masterJSON.currentObj.platelet_count" (ngModelChange)="populateProgressNotes()">
+								<span class="input-group-icon center-aligned desktop-column-12">
+									L / μL
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="Bold">Bleeding</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input type="radio" name="Bleeding" [value]="''" id="BleedingNone"
+								[(ngModel)]="masterJSON.currentObj.bleeding" (ngModelChange)="populateProgressNotes()">
+								<label for="BleedingNone">None</label>
+								<input type="radio" name="Bleeding" [value]="'Yes'" id="BleedingYes"
+								[(ngModel)]="masterJSON.currentObj.bleeding" (ngModelChange)="populateProgressNotes()">
+								<label for="BleedingYes">Yes</label>
+								<input type="radio" name="Bleeding" [value]="'No'" id="BleedingNo"
+								[(ngModel)]="masterJSON.currentObj.bleeding" (ngModelChange)="populateProgressNotes()">
+								<label for="BleedingNo">No</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1 procedure no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="Bold">Procedure</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input type="radio" name="ProcedureNeeded" [value]="true" id="ProcedureNeededYes"
+								[(ngModel)]="masterJSON.currentObj.procedure" (ngModelChange)="populateProgressNotes()">
+								<label for="ProcedureNeededYes">Yes</label>
+								<input type="radio" name="ProcedureNeeded" [value]="false" id="ProcedureNeededNo"
+								[(ngModel)]="masterJSON.currentObj.procedure" (ngModelChange)="populateProgressNotes()">
+								<label for="ProcedureNeededNo">No</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 surgery no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="Bold">Surgeory Needed</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input type="radio" name="SurgeoryNeeded" [value]="true" id="SurgeoryNeededYes"
+								[(ngModel)]="masterJSON.currentObj.surgery" (ngModelChange)="populateProgressNotes()">
+								<label for="SurgeoryNeededYes">Yes</label>
+								<input type="radio" name="SurgeoryNeeded" [value]="false" id="SurgeoryNeededNo"
+								[(ngModel)]="masterJSON.currentObj.surgery" (ngModelChange)="populateProgressNotes()">
+								<label for="SurgeoryNeededNo">No</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1 hspda no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="Bold">HSPDA</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input type="radio" name="HSPDANeeded" [value]="true" id="HSPDANeededYes"
+								[(ngModel)]="masterJSON.currentObj.hspda" (ngModelChange)="populateProgressNotes()">
+								<label for="HSPDANeededYes">Yes</label>
+								<input type="radio" name="HSPDANeeded" [value]="false" id="HSPDANeededNo"
+								[(ngModel)]="masterJSON.currentObj.hspda" (ngModelChange)="populateProgressNotes()">
+								<label for="HSPDANeededNo">No</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 immune no-padding">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Immune Thrombocytopenia</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select type="text" class="input input-medium col-md-12" [(ngModel)]="masterJSON.currentObj.immuneThrombocytopenia"
+							(ngModelChange)="populateProgressNotes()">
+									<option value="" selected> -- Selected -- </option>
+									<option value="NAIT">NAIT</option>
+									<option value="NIIT">NIIT</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding" *ngIf="masterJSON.currentObj.blood_product == 'FFP'">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">PT</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="masterJSON.currentObj.ptt_value" (ngModelChange)="populateProgressNotes()">
+								<span class="input-group-icon center-aligned desktop-column-12">
+									Sec
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">APTT</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="masterJSON.currentObj.aptt_value" (ngModelChange)="populateProgressNotes()">
+								<span class="input-group-icon center-aligned desktop-column-12">
+									Sec
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">PTI</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="masterJSON.currentObj.pti_value" (ngModelChange)="populateProgressNotes()">
+								<span class="input-group-icon center-aligned desktop-column-12">
+									Sec
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 international no-padding">
+						<div class="col-md-12 no-padding">
+							<span class="bold">International Normalized Ratio</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-20" type="number"
+								[(ngModel)]="masterJSON.currentObj.inr_value" (ngModelChange)="populateProgressNotes()">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="Bold">Bleeding</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input type="radio" name="Bleeding2" [value]="''" id="BleedingNone2"
+								[(ngModel)]="masterJSON.currentObj.bleeding" (ngModelChange)="populateProgressNotes()">
+								<label for="BleedingNone2">None</label>
+								<input type="radio" name="Bleeding2" [value]="'Minor'" id="BleedingMinor2"
+								[(ngModel)]="masterJSON.currentObj.bleeding" (ngModelChange)="populateProgressNotes()">
+								<label for="BleedingMinor2">Minor</label>
+								<input type="radio" name="Bleeding2" [value]="'Major'" id="BleedingMajor2"
+								[(ngModel)]="masterJSON.currentObj.bleeding" (ngModelChange)="populateProgressNotes()">
+								<label for="BleedingMajor2">Major</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding" (click)="actionSectionAssessmentVisible()">
+				<div class="table-cell middle-aligned">
+					<div class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-action"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 6%">
+					<h1 class="no-margin system-main-heading action-assessment-color">Action</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned" style="width: 100%">
+					<hr class="action-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-action middle-aligned" *ngIf="isActionAssessmentVisible"></a>
+					<a class="sprite  sprite-plus-action middle-aligned" *ngIf="!(isActionAssessmentVisible)"></a>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding" *ngIf="isActionAssessmentVisible">
+				<div class="col-md-12 no-padding padding-5-y">
+					<span class="blue-text bold">Verification</span>
+				</div>
+				<div class="col-md-12 no-padding padding-10-y">
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Date of collection</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime no-margin" [max]="maxDate" dateFormat='DD-MM-YYYY'
+							[(ngModel)]="masterJSON.currentObj.collection_date" (ngModelChange)="populateProgressNotes()"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Date of expiry</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime no-margin" [min]="masterJSON.currentObj.assessment_time" dateFormat='DD-MM-YYYY'
+							[(ngModel)]="masterJSON.currentObj.expiry_date" (ngModelChange)="populateProgressNotes()"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Blood Bag Number</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-20" type="text"
+								[(ngModel)]="masterJSON.currentObj.bag_number" (ngModelChange)="populateProgressNotes()">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Blood Group</span>
+						</div>
+						<div class="col-md-12 no-padding no-margin">
+							<select type="text" class="input input-medium col-md-12"
+							[(ngModel)]="masterJSON.currentObj.blood_group" (ngModelChange)="populateProgressNotes()">
+								<option value="" hidden> -- Selected -- </option>
+								<option value="A +ve">A +ve</option>
+								<option value="A -ve">A -ve</option>
+								<option value="B +ve">B +ve</option>
+								<option value="B -ve">B -ve</option>
+								<option value="AB +ve">AB +ve</option>
+								<option value="AB -ve">AB -ve</option>
+								<option value="O +ve">O +ve</option>
+								<option value="O -ve">O -ve</option>
+								<option value="Unknown">Unknown</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Total Volume</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input  class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="masterJSON.currentObj.bag_volume" (ngModelChange)="populateProgressNotes()"required>
+								<span class="input-group-icon center-aligned desktop-column-12">
+									ml
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Cross Checked By</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select type="text" class="input input-medium col-md-12 no-margin"
+							[(ngModel)]="masterJSON.currentObj.checked_by" (ngModelChange)="populateProgressNotes()">
+								<option value="" selected hidden>--Select--</option>
+								<option *ngFor="let item of masterJSON.userList" value="{{item.key}}">{{item.value}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding padding-5-y">
+					<span class="blue-text bold">Order : {{masterJSON.currentObj.blood_product}}</span>
+				</div>
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Volume</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="masterJSON.currentObj.blood_volume_kg" (ngModelChange)="calculateTotalBloodVolume()">
+								<span class="input-group-icon center-aligned desktop-column-12">
+									ml/kg
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold required">Total Volume</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="masterJSON.currentObj.total_volume" disabled>
+								<span class="input-group-icon center-aligned desktop-column-12">
+									ml
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold required">Infusion Time</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="masterJSON.currentObj.infusion_time" (ngModelChange)="calculateInfusionRate()">
+								<span class="input-group-icon center-aligned desktop-column-12">
+									Hrs
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Infusion Rate</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="masterJSON.currentObj.infusion_rate" disabled>
+								<span class="input-group-icon center-aligned desktop-column-12">
+									ml/hr
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Venous Access</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input type="radio" name="venusAccess" [value]="'umbilical'" id="venusAccessUmbilical"
+								[(ngModel)]="masterJSON.currentObj.venous_access" (ngModelChange)="populateProgressNotes()">
+								<label for="venusAccessUmbilical">Umbilical</label>
+								<input type="radio" name="venusAccess" [value]="'peripheral'" id="venusAccessPeripheral"
+								[(ngModel)]="masterJSON.currentObj.venous_access" (ngModelChange)="populateProgressNotes()">
+								<label for="venusAccessPeripheral">Peripheral</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding" (click)="planAssessmentSectionVisible()">
+				<div class="table-cell middle-aligned">
+					<div class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-plan"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 5%">
+					<h1 class="no-margin system-main-heading plan-assessment-color">Plan</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned" style="width: 100%">
+					<hr class="plan-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-plan middle-aligned" *ngIf="isPlanAssessmentVisible"></a>
+					<a class="sprite sprite-plus-plan middle-aligned" *ngIf="!(isPlanAssessmentVisible)"></a>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding" *ngIf="isPlanAssessmentVisible">
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Reassess Tests</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select type="text" class="input input-medium col-md-12 no-margin"
+							[(ngModel)]="masterJSON.currentObj.plan_test" (ngModelChange)="populateProgressNotes()">
+								<option value="" selected> -- Selected -- </option>
+								<option value="Hb">Hb</option>
+								<option value="Platelet Count">Platelet Count</option>
+								<option value="PT">PT</option>
+								<option value="APTT">APTT</option>
+								<option value="PT & APTT">PT & APTT</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2 vitals no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="visiblity-hidden">dummy</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="col-md-6 no-padding-left">
+								<input class="input input-medium desktop-column-20 no-margin" type="number"
+								[(ngModel)]="masterJSON.currentObj.test_time" (ngModelChange)="populateProgressNotes()">
+							</div>
+							<div class="col-md-6 no-padding-left">
+								<div class="toggle-options-radio">
+									<input type="radio" name="reassessTest" [value]="'hour'" id="reassessTestHr"
+									[(ngModel)]="masterJSON.currentObj.test_time_type" (ngModelChange)="populateProgressNotes()">
+									<label for="reassessTestHr">Hour</label>
+									<input type="radio" name="reassessTest" [value]="'min'" id="reassessTestMin"
+									[(ngModel)]="masterJSON.currentObj.test_time_type" (ngModelChange)="populateProgressNotes()">
+									<label for="reassessTestMin">Min</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Vitals</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="col-md-6 no-padding-left">
+								<input class="input input-medium desktop-column-20 no-margin" type="number"
+								[(ngModel)]="masterJSON.currentObj.vital_time" (ngModelChange)="populateProgressNotes()">
+							</div>
+							<div class="col-md-6 no-padding-left">
+								<div class="toggle-options-radio">
+									<input type="radio" name="Vitals" [value]="'hour'" id="VitalsHr"
+									[(ngModel)]="masterJSON.currentObj.vital_time_type" (ngModelChange)="populateProgressNotes()">
+									<label for="VitalsHr">Hour</label>
+									<input type="radio" name="Vitals" [value]="'min'" id="VitalsMin"
+									[(ngModel)]="masterJSON.currentObj.vital_time_type" (ngModelChange)="populateProgressNotes()">
+									<label for="VitalsMin">Min</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding" (click)="causeAssessmentSectionVisible()">
+				<div class="table-cell middle-aligned">
+					<div class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-cause"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 5%">
+					<h1 class="no-margin system-main-heading cause-assessment-color">Causes</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned" style="width: 100%">
+					<hr class="cause-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-cause middle-aligned" *ngIf="isCauseAssessmentVisible"></a> <a class="sprite sprite-plus-cause middle-aligned" *ngIf="!(isCauseAssessmentVisible)"></a>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding padding-10-y" *ngIf="isCauseAssessmentVisible">
+				    <div class="col-md-3 causesslect">
+				          <div class="multiselect desktop-column-15">
+								<div class="selectBox"
+									(click)="showCheckboxes('multiple-selectbox-4')"
+									id="multiple-selectbox-4">
+									<select>
+										<option>-- Select --</option>
+									</select>
+									<div class="overSelect"></div>
+								</div>
+								<ul id="checkboxes-4" class="multiple-select">
+								    <li><input type="checkbox" name="ServeAnemiaChecked" [(ngModel)]="causeList.serveAnemiaChecked" (ngModelChange)="populateCauseStr()" id="ServeAnemiaChecked"><label for="ServeAnemiaChecked">severe Anemia of Antenatal Onset</label></li>
+								    <li><input type="checkbox" name="HemorrhageChecked" [(ngModel)]="causeList.hemorrhageChecked" (ngModelChange)="populateCauseStr()" id="HemorrhageChecked"><label for="HemorrhageChecked">Haemorrhage</label></li>
+								    <li><input type="checkbox" name="HemolysisChecked" [(ngModel)]="causeList.hemolysisChecked" (ngModelChange)="populateCauseStr()" id="HemolysisChecked"><label for="HemolysisChecked">Hemolysis</label></li>
+							        <li><input type="checkbox" name="rbcLossChecked" [(ngModel)]="causeList.rbcLossChecked" (ngModelChange)="populateCauseStr()" id="rbcLossChecked"><label for="rbcLossChecked">RBC Loss By Phlebotomy</label></li>
+									<li><input type="checkbox" name="SepsisChecked" [(ngModel)]="causeList.sepsisChecked" (ngModelChange)="populateCauseStr()" id="SepsisChecked"><label for="SepsisChecked">Sepsis</label></li>
+                                    <li><input type="checkbox" name="PrematurityChecked" [(ngModel)]="causeList.prematurityChecked" (ngModelChange)="populateCauseStr()" id="PrematurityChecked"><label for="PrematurityChecked">Anemia of Prematurity</label></li>
+									<li><input type="checkbox" name="other" id="other" [(ngModel)]="causeList.other" /><label for="other">others</label></li>
+								</ul>
+							</div>
+					</div>
+					 <div class="col-md-3 no-padding-right" *ngIf="causeList.other">
+							<span class="bold">Other </span>&nbsp;
+							<span>
+								<input type="text" [(ngModel)]="causeList.othercause" (ngModelChange)="populateCauseStr()" />
+							</span>
+					</div>
+
+			</div>
+			<div class="col-md-12 no-padding" (click)="progressNotesAssessmentSectionVisible()">
+				<div class="table-cell middle-aligned">
+					<div class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-progress"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 14%">
+					<h1 class="no-margin system-main-heading progress-assessment-color">Progress Notes</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned" style="width: 100%">
+					<hr class="progress-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-progress middle-aligned" *ngIf="isProgressNotesAssessmentVisible"></a>
+					<a class="sprite sprite-plus-progress middle-aligned" *ngIf="!(isProgressNotesAssessmentVisible)"></a>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding margin-bottom-100" *ngIf="isProgressNotesAssessmentVisible">
+				<div class="col-md-12 no-padding-left">
+					<textarea class="desktop-column-20 max-height-36 set-font-size-default" rows="4"
+					[(ngModel)]="masterJSON.currentObj.progress_notes"></textarea>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div id="footer">
+					<button class="button button-blue button-large" (click)="showmodal()"
+					[disabled]="masterJSON.currentObj.progress_notes == null || masterJSON.currentObj.progress_notes == ''|| masterJSON.currentObj.total_volume == null || masterJSON.currentObj.total_volume == '' || masterJSON.currentObj.infusion_time == null || masterJSON.currentObj.infusion_time == ''">
+						SUBMIT</button>
+					<span class="button button-blue-transparent button-large" (click)="getDoctorBloodProducts()">
+						<i class="refresh"></i> REFRESH
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding padding-10-y" *ngIf="!(bloodProductTempObj.isBloodProductAssessment == true)">
+			<div class="col-md-12 no-padding padding-10-y">
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Date and Time of Onset</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<owl-date-time class="owl-dateTime" [min]="minDate" [max]="maxDate" dateFormat='DD-MM-YYYY hh:mm A'></owl-date-time>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding padding-10-y">
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="TachycardiaChecked" [(ngModel)]="TachycardiaChecked" id="TachycardiaChecked">
+						<label for="TachycardiaChecked">Tachycardia</label>
+					</div>
+				</div>
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="HypotensionChecked" [(ngModel)]="HypotensionChecked" id="HypotensionChecked">
+						<label for="HypotensionChecked">Hypotension</label>
+					</div>
+				</div>
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="ProlongedCRTChecked" [(ngModel)]="ProlongedCRTChecked" id="ProlongedCRTChecked">
+						<label for="ProlongedCRTChecked">Prolonged CRT</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding padding-10-y">
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="DesaturationsChecked" [(ngModel)]="DesaturationsChecked" id="DesaturationsChecked">
+						<label for="DesaturationsChecked">Desaturations with min SpO<sub>2</sub> and need for oxygen</label>
+					</div>
+				</div>
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="RashesChecked" [(ngModel)]="RashesChecked" id="RashesChecked">
+						<label for="RashesChecked">Rashes</label>
+					</div>
+				</div>
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="AcuteChecked" [(ngModel)]="AcuteChecked" id="AcuteChecked">
+						<label for="AcuteChecked">Acute Haemolytic Transfusion reaction</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding padding-10-y">
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="AllergicReactionChecked" [(ngModel)]="AllergicReactionChecked" id="AllergicReactionChecked">
+						<label for="AllergicReactionChecked">Allergic Reaction</label>
+					</div>
+				</div>
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="volumeOverloadChecked" [(ngModel)]="volumeOverloadChecked" id="volumeOverloadChecked">
+						<label for="volumeOverloadChecked">Volume Overload</label>
+					</div>
+				</div>
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="HyperkalemiaChecked" [(ngModel)]="HyperkalemiaChecked" id="HyperkalemiaChecked">
+						<label for="HyperkalemiaChecked">Hyperkalemia</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding padding-10-y">
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="HypocalcemiaChecked" [(ngModel)]="HypocalcemiaChecked" id="HypocalcemiaChecked">
+						<label for="HypocalcemiaChecked">Hypocalcemia</label>
+					</div>
+				</div>
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="HypothermiaChecked" [(ngModel)]="HypothermiaChecked" id="HypothermiaChecked">
+						<label for="HypothermiaChecked">Hypothermia</label>
+					</div>
+				</div>
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="TRALIChecked" [(ngModel)]="TRALIChecked" id="TRALIChecked">
+						<label for="TRALIChecked">TRALI</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding padding-10-y">
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="TRAGIChecked" [(ngModel)]="TRAGIChecked" id="TRAGIChecked">
+						<label for="TRAGIChecked">TRAGI</label>
+					</div>
+				</div>
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="GraftChecked" [(ngModel)]="GraftChecked" id="GraftChecked">
+						<label for="GraftChecked">Graft versus host disease</label>
+					</div>
+				</div>
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="FebrileChecked" [(ngModel)]="FebrileChecked" id="FebrileChecked">
+						<label for="FebrileChecked">Febrile non-hemolytic transfuion reaction</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding padding-10-y">
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="InfectiousChecked" [(ngModel)]="InfectiousChecked" id="InfectiousChecked">
+						<label for="InfectiousChecked">Infectious Complication</label>
+					</div>
+				</div>
+				<div class="col-md-4 no-padding-left">
+					<div class="blue-round-tick setting-checkbox">
+						<input type="checkbox" name="IronChecked" [(ngModel)]="IronChecked" id="IronChecked">
+						<label for="IronChecked">Iron overload</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding" (click)="actionSectionReactionVisible()">
+				<div class="table-cell middle-aligned">
+					<div class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-action"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 6%">
+					<h1 class="no-margin system-main-heading action-assessment-color">Action</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned" style="width: 100%">
+					<hr class="action-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-action middle-aligned" *ngIf="isActionReactionVisible"></a>
+					<a class="sprite  sprite-plus-action middle-aligned" *ngIf="!(isActionReactionVisible)"></a>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding" *ngIf="isActionReactionVisible">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-2 no-padding-left center-aligned">
+						<input type="radio" name="ReactionTreatment" id="reactionMedications" [(ngModel)]="ReactionTreatment" value="medications" style="display: none">
+						<label for="reactionMedications" class="table full assessment-treatment-tab-box" [ngClass]="{'resp-event-box-selected': ReactionTreatment =='medications'}">Medications</label>
+					</div>
+					<div class="col-md-2 no-padding-left center-aligned">
+						<input type="radio" name="ReactionTreatment" id="reactionOthers" [(ngModel)]="ReactionTreatment" value="others" style="display: none">
+						<label for="reactionOthers" class="table full assessment-treatment-tab-box" [ngClass]="{'resp-event-box-selected': ReactionTreatment =='others'}">Other</label>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding padding-10-y" *ngIf="ReactionTreatment =='medications'">
+					<div class="col-md-10 no-padding-left">
+						<span class="bold required">Medications</span>
+						<div class="input-group input-group-labeled desktop-column-20">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<div class="input-cont block">
+									<input type="text" class="desktop-column-20 input-coloured-gray input-medium assesment-select" disabled>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding">
+						<span class="visiblity-hidden">dummy</span>
+						<div class="padding-top-1">
+							<span class="button button-blue">Configure Medications</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding padding-10-y" *ngIf="ReactionTreatment =='others'">
+					<div class="col-md-12 no-padding-left">
+						<span class="bold required">Other</span>
+						<div class="input-group input-group-labeled desktop-column-20">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<div class="input-cont block">
+									<input type="text" class="desktop-column-20 input-coloured-gray input-medium assesment-select">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding" (click)="planReactionSectionVisible()">
+				<div class="table-cell middle-aligned">
+					<div class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-plan"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 5%">
+					<h1 class="no-margin system-main-heading plan-assessment-color">Plan</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned" style="width: 100%">
+					<hr class="plan-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-plan middle-aligned" *ngIf="isPlanReactionVisible"></a>
+					<a class="sprite sprite-plus-plan middle-aligned" *ngIf="!(isPlanReactionVisible)"></a>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding" *ngIf="isPlanReactionVisible">
+				<div class="col-md-12 no-padding padding-5-y">
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Reassess Tests</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select type="text" class="input input-medium col-md-12 no-margin">
+								<option value="" selected> -- Selected -- </option>
+								<option value="Hb">Hb</option>
+								<option value="Platelet Count">Platelet Count</option>
+								<option value="PT">PT</option>
+								<option value="APTT">APTT</option>
+								<option value="PT & APTT">PT & APTT</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="visiblity-hidden">dummy</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="col-md-6 no-padding-left">
+								<input class="input input-medium desktop-column-20 no-margin" type="number">
+							</div>
+							<div class="col-md-6 no-padding-left">
+								<div class="toggle-options-radio">
+									<input type="radio" name="reassessReactionTest" [value]="'hour'" id="reassessReactionTestHr"
+									[(ngModel)]="reassessReactionTest">
+									<label for="reassessReactionTestHr">Hour</label>
+									<input type="radio" name="reassessReactionTest" [value]="'min'" id="reassessReactionTestMin"
+									[(ngModel)]="reassessReactionTest">
+									<label for="reassessReactionTestMin">Min</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Vitals</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="col-md-6 no-padding-left">
+								<input class="input input-medium desktop-column-20 no-margin" type="number">
+							</div>
+							<div class="col-md-6 no-padding-left">
+								<div class="toggle-options-radio">
+									<input type="radio" name="VitalsReassessTime" [value]="hour" id="VitalsReassessTimeHr"
+									[(ngModel)]="VitalsReassessTime">
+									<label for="VitalsReassessTimeHr">Hour</label>
+									<input type="radio" name="VitalsReassessTime" [value]="min" id="VitalsReassessTimeMin"
+									[(ngModel)]="VitalsReassessTime">
+									<label for="VitalsReassessTimeMin">Min</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding" (click)="progressNotesReactionSectionVisible()">
+				<div class="table-cell middle-aligned">
+					<div class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-progress"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 14%">
+					<h1 class="no-margin system-main-heading progress-assessment-color">Progress Notes</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned" style="width: 100%">
+					<hr class="progress-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-progress middle-aligned" *ngIf="isProgressNotesReactionVisible"></a>
+					<a class="sprite sprite-plus-progress middle-aligned" *ngIf="!(isProgressNotesReactionVisible)"></a>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding" *ngIf="isProgressNotesReactionVisible">
+				<div class="col-md-12 no-padding-left">
+					<textarea class="desktop-column-20 max-height-36 set-font-size-default" rows="4"></textarea>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div id="footer">
+					<button class="button button-blue button-large"
+					[disabled]="masterJSON.currentObj.progress_notes == null || masterJSON.currentObj.progress_notes == ''">
+						SUBMIT</button>
+					<span class="button button-blue-transparent button-large">
+						<i class="refresh"></i> REFRESH
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12 background-color-white" *ngIf="masterJSON.currentObj.status =='Inactive'">
+		<div class="col-md-12 no-padding padding-10-y">
+			<div class="col-md-3 col-lg-2 no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Date</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" [min]="minDate" [max]="maxDate" dateFormat='DD-MM-YYYY hh:mm A'
+					[(ngModel)]="masterJSON.currentObj.assessment_time" (ngModelChange)="populateProgressNotes()"></owl-date-time>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding" (click)="progressNotesInactiveSectionVisible()">
+			<div class="table-cell middle-aligned">
+				<div class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+					<span class="sprite sprite-progress"></span>
+				</div>
+			</div>
+			<div class="table-cell middle-aligned" style="width: 14%">
+				<h1 class="no-margin system-main-heading progress-assessment-color">Progress Notes</h1>
+			</div>
+			<div class="table-cell padding-10-x no-padding-right middle-aligned" style="width: 100%">
+				<hr class="progress-assessment-line">
+			</div>
+			<div class="table-cell middle-aligned">
+				<a class="sprite sprite-minus-progress middle-aligned" *ngIf="isProgressNotesInactiveVisible"></a>
+				<a class="sprite sprite-plus-progress middle-aligned" *ngIf="!(isProgressNotesInactiveVisible)"></a>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding" *ngIf="isProgressNotesInactiveVisible" style="margin-bottom:200px !important">
+			<div class="col-md-12 no-padding-left">
+				<textarea class="desktop-column-20 max-height-36 set-font-size-default" rows="4"
+				[(ngModel)]="masterJSON.currentObj.progress_notes"></textarea>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding">
+			<div id="footer">
+				<button class="button button-blue button-large" (click)="setDoctorBloodProducts(masterJSON.currentObj)"
+				[disabled]="masterJSON.currentObj.progress_notes == null || masterJSON.currentObj.progress_notes == ''">
+					SUBMIT</button>
+				<span class="button button-blue-transparent button-large" (click)="getDoctorBloodProducts()">
+					<i class="refresh"></i> REFRESH
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12 no-padding background-color-white">
+		<div class="col-md-12 bloodproductsummary margin-10-y">
+			<div class="col-md-4 col-lg-3 summaryblood no-padding-left">
+				<h1 class="light margin-5-y blue-text">Blood Product Summary</h1>
+			</div>
+			<div class="col-md-0 col-lg-1"></div>
+			<div class="col-md-3 col-lg-2 no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="bold">From</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" type="both" autoClose=true
+						[(ngModel)]="printBloodProductFromDate" [min]="minDate" [max]="maxDate"></owl-date-time>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-2 no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="bold">To</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" type="both" autoClose=true
+						[(ngModel)]="printBloodProductToDate" [min]="minDate" [max]="maxDate"></owl-date-time>
+				</div>
+			</div>
+			<div class="col-md-4 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">To</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<button class="button button-blue margin-5-x" type="button"
+						(click)="showBloodProductDetail()">SHOW</button>
+					<button class="button button-blue margin-5-x" type="button"
+						(click)="printBloodProductDetail()">PRINT</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12 no-padding margin-bottom-100">
+		<div class="col-md-12" *ngIf="bloodProductDetailList != null && bloodProductDetailList.length > 0">
+			<table class="table table-striped table-bordered headed-table desktop-column-20">
+				<tr>
+					<td class="center-aligned">Date</td>
+					<td class="center-aligned">Status</td>
+					<td class="center-aligned">Type</td>
+					<td class="center-aligned">Progress Notes</td>
+				</tr>
+				<tr *ngFor="let item of bloodProductDetailList">
+					<td class="center-aligned">{{item.assessment_time | date : 'dd-MM-yyyy hh:mm a'}}</td>
+					<td class="center-aligned">{{item.status}}</td>
+					<td class="center-aligned">Assessment</td>
+					<td class="center-aligned">{{item.progress_notes}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<!--Modal for PN rate-->
+<div class="overlay" id="ballardOverlay">
+<div class="modal-box-lg ballard-popup" id="Pngmodal" style="width: 500px!important;">
+	<button class="modal-popup-close-btn"
+		(click)="closeModal()"></button>
+
+	<div class="inicu-tab-container">
+		<div class="tab-content-cont full" style="height: 200px!important;">
+				<div class="col-md-12 no-padding border-right-2" style="margin-bottom: 60px;">
+					<div class="table full">
+						<div class="padding-20-y">
+							<span class="bold" style="font-size: 22px;">Do you want to reduce the PN rate ?</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-6">
+						<span class="button button-blue" (click)="setDoctorBloodProducts(masterJSON.currentObj,true);closeModal()">Yes</span>
+				  </div>
+				  <div class="col-md-6">
+						<span  class="button button-blue" (click)="setDoctorBloodProducts(masterJSON.currentObj,false);closeModal()">No</span>
+				  </div>
+				</div>
+		</div>
+	</div>
+	<!-- end of the above Investigation's Order -->
+</div>
+</div>
+<!--end modal here-->
+</div>

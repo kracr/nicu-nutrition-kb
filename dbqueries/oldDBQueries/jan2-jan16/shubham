@@ -1,0 +1,603 @@
+Alter table kdah.respsupport add column reason text;
+
+Alter table kdah.sa_jaundice add column reason text;
+
+ALTER TABLE kdah.doctor_blood_products ADD COLUMN ageatassesment real;
+
+ALTER TABLE kdah.doctor_blood_products ADD COLUMN isageofassesmentinhours boolean;
+
+ALTER TABLE kdah.doctor_blood_products ADD COLUMN episode_number integer;
+
+ALTER TABLE kdah.doctor_blood_products ADD COLUMN order_date timestamp with time zone;
+
+ALTER TABLE kdah.nursing_blood_product ADD COLUMN hr integer;
+ALTER TABLE kdah.nursing_blood_product ADD COLUMN spo2 integer;
+ALTER TABLE kdah.nursing_blood_product ADD COLUMN bp integer;
+ALTER TABLE kdah.nursing_blood_product ADD COLUMN respiratory_rate integer;
+ALTER TABLE kdah.nursing_blood_product ADD COLUMN temp real;
+ALTER TABLE kdah.nursing_blood_product ADD COLUMN adverse_reactions text;
+ALTER TABLE kdah.nursing_blood_product ADD COLUMN adverse_reactions_other text;
+
+
+-- SEQUENCE: kdah.pain_seq
+
+-- DROP SEQUENCE kdah.pain_seq;
+
+CREATE SEQUENCE kdah.pain_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE kdah.pain_seq
+    OWNER TO postgres;
+
+-- FUNCTION: kdah.pain_creationtime()
+
+-- DROP FUNCTION kdah.pain_creationtime();
+
+CREATE FUNCTION kdah.pain_creationtime()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+    BEGIN
+        NEW.creationtime := current_timestamp;
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$;
+
+ALTER FUNCTION kdah.pain_creationtime()
+    OWNER TO postgres;
+
+
+-- FUNCTION: kdah.pain_modificationtime()
+
+-- DROP FUNCTION kdah.pain_modificationtime();
+
+CREATE FUNCTION kdah.pain_modificationtime()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+    BEGIN
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$;
+
+ALTER FUNCTION kdah.pain_modificationtime()
+    OWNER TO postgres;
+
+
+
+
+
+
+-- Table: kdah.sa_pain
+
+-- DROP TABLE kdah.sa_pain
+
+
+CREATE TABLE kdah.sa_pain
+(
+  painid bigint NOT NULL DEFAULT nextval('kdah.pain_seq'::regclass),
+  creationtime timestamp without time zone NOT NULL,
+  modificationtime timestamp without time zone NOT NULL,
+  uhid character varying(50) NOT NULL,
+  assessment_time timestamp with time zone,
+  age_at_assessment integer,
+  ageatassessment_inhours boolean,
+  loggeduser character varying(100),
+  painentrytype boolean,
+  perioperative_pain boolean,
+  inflammatory_lesion boolean,
+  trauma boolean,
+  procedure_pain boolean,
+  other boolean,
+  other_pain text,
+  indications text,
+  episode_number integer,
+  nips_score integer,
+  pips_score integer,
+  investigation_ordered_boolean boolean,
+  order_investigation text,
+  medication_text character varying(100),
+  other_measures boolean,
+  measure_name character varying(100),
+  pain_status character varying(10),
+  actionduration integer,
+  isactiondurationinhours character varying(10),
+  planother text,
+  frequency_of_scoring integer,
+  isfreuencyinhours character varying(20),
+  progress_notes text,
+  comments_plan text,
+  episodeid character varying(50),
+  assessment_hour character varying,
+  assessment_min character varying,
+  assessment_meridiem boolean,
+  comment text,
+  others_indication_type text,
+  procedure_pain_type text,
+  trauma_type text,
+  inflammatory_lesion_type text,
+  perioperative_pain_type text,
+  perioperativ_pain_typ_others text,
+  procedure_pain_type_others text,
+  action_string text,
+  nipsscoreid text,
+  pippscoreid text,
+  nipsscore integer,
+  pippscore integer,
+  CONSTRAINT painid_pkey PRIMARY KEY (painid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE kdah.sa_pain
+  OWNER TO postgres;
+
+-- Trigger: set_creationtime
+
+
+CREATE TRIGGER set_creationtime
+    BEFORE INSERT
+    ON kdah.sa_pain
+    FOR EACH ROW
+    EXECUTE PROCEDURE kdah.pain_creationtime();
+
+-- Trigger: set_modificationtime
+
+CREATE TRIGGER set_modificationtime
+    BEFORE UPDATE
+    ON kdah.sa_pain
+    FOR EACH ROW
+    EXECUTE PROCEDURE kdah.pain_modificationtime();
+
+
+CREATE TABLE kdah.ref_pain_procedures_list
+(
+  pain_procedures_id character varying(10) NOT NULL,
+  procedure_name character varying(50) NOT NULL,
+  CONSTRAINT ref_pain_procedures_pkey PRIMARY KEY (pain_procedures_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE kdah.ref_pain_procedures_list
+  OWNER TO postgres;
+
+
+
+    CREATE TABLE kdah.ref_pain_nonpharmacological_list
+    	(
+    			pain_nonpharmacological_id character varying(10) NOT NULL,
+    			measure_name character varying(50) NOT NULL,
+    	  CONSTRAINT ref_pain_nonpharmacological_pkey PRIMARY KEY (pain_nonpharmacological_id)
+    	)
+    	WITH (
+    	  OIDS=FALSE
+    	);
+    	ALTER TABLE kdah.ref_pain_nonpharmacological_list
+    	  OWNER TO postgres;
+
+        INSERT INTO kdah.ref_pain_nonpharmacological_list (pain_nonpharmacological_id,measure_name) VALUES ('PPHARM01','Breastfeeding');
+      INSERT INTO kdah.ref_pain_nonpharmacological_list (pain_nonpharmacological_id,measure_name) VALUES ('PPHARM02','Non-nutritive sucking');
+      INSERT INTO kdah.ref_pain_nonpharmacological_list (pain_nonpharmacological_id,measure_name) VALUES ('PPHARM03','Swaddling or facilitated tucking');
+      INSERT INTO kdah.ref_pain_nonpharmacological_list (pain_nonpharmacological_id,measure_name) VALUES ('PPHARM04','Kangaroo care');
+      INSERT INTO kdah.ref_pain_nonpharmacological_list (pain_nonpharmacological_id,measure_name) VALUES ('PPHARM05','Sensorial saturation');
+      INSERT INTO kdah.ref_pain_nonpharmacological_list (pain_nonpharmacological_id,measure_name) VALUES ('PPHARM06','Warming');
+      INSERT INTO kdah.ref_pain_nonpharmacological_list (pain_nonpharmacological_id,measure_name) VALUES ('PPHARM07','Others');
+
+
+
+
+
+
+
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC01','IV cannula insertion');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC02','IV cannula removal');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC03','Nasogastric tube insertion');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC04','Nasogastric tube removal');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC05','Nasopharyngeal suctioning');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC06','Intubation');
+
+
+
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC08','Endotracheal suctioning');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC09','CPAP Insertion/reinsertion');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC10','CPAP removal');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC11','Chest tube placement');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC12','Chest tube removal');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC13','Umbilical line insertion');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC14','Umbilical line removal');
+
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC15','PICC insertion');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC16','PICC removal');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC17','Urinary catheterization');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC18','Bladder puncture');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC19','Peritoneal dialysis');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC20','Lumbar puncture');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC21','V-TAP');
+
+
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC22','SC / IM / Intradermal injection');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC23','Adhesive tape removal');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC24','Stoma opening');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC25','Stoma cleaning');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC26','Stoma closure');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC27','Circumcision');
+
+
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC28','ROP screening / laser treatment');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC29','Eye control');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC30','X-ray');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC31','Ultrasound');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC32','Diaper change');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC33','Heel prick');
+      INSERT INTO kdah.ref_pain_procedures_list (pain_procedures_id,procedure_name) VALUES ('PPROC34','Others');
+
+      -- Table: kdah.score_nips
+
+-- DROP TABLE kdah.score_nips;
+
+CREATE SEQUENCE kdah.score_nips_NIPSscoreid_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE kdah.score_nips_NIPSscoreid_seq
+  OWNER TO postgres;
+
+
+  CREATE OR REPLACE FUNCTION kdah.nipsscore_creationtime()
+    RETURNS trigger AS
+  $BODY$
+      BEGIN
+          NEW.creationtime := current_timestamp;
+          NEW.modificationtime := current_timestamp;
+          RETURN NEW;
+      END;
+  $BODY$
+    LANGUAGE plpgsql VOLATILE
+    COST 100;
+  ALTER FUNCTION kdah.nipsscore_creationtime()
+    OWNER TO postgres;
+
+
+    CREATE OR REPLACE FUNCTION kdah.nipsscore_modificationtime()
+  RETURNS trigger AS
+$BODY$
+    BEGIN
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION kdah.nipsscore_modificationtime()
+  OWNER TO postgres;
+
+
+CREATE TABLE kdah.score_nips
+(
+  NIPSscoreid bigserial NOT NULL,
+  creationtime timestamp with time zone,
+  modificationtime timestamp with time zone,
+  uhid character varying(50),
+  facial integer,
+  cry integer,
+  breathing integer,
+  arms integer,
+  legs integer,
+  arousal integer,
+  NIPSscore integer,
+  admission_entry boolean,
+  entrydate timestamp with time zone,
+  CONSTRAINT NIPSscore_pk PRIMARY KEY (NIPSscoreid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE kdah.score_nips
+  OWNER TO postgres;
+
+-- Trigger: set_creationtime on kdah.score_nips
+
+-- DROP TRIGGER set_creationtime ON kdah.score_nips;
+
+CREATE TRIGGER set_creationtime
+  BEFORE INSERT
+  ON kdah.score_nips
+  FOR EACH ROW
+  EXECUTE PROCEDURE kdah.nipsscore_creationtime();
+
+-- Trigger: set_modificationtime on kdah.score_nips
+
+-- DROP TRIGGER set_modificationtime ON kdah.score_nips;
+
+CREATE TRIGGER set_modificationtime
+  BEFORE UPDATE
+  ON kdah.score_nips
+  FOR EACH ROW
+  EXECUTE PROCEDURE kdah.nipsscore_modificationtime();
+
+-- Table: kdah.score_pipp
+
+-- DROP TABLE kdah.score_pipp;
+
+CREATE SEQUENCE kdah.score_pipp_PIPPscoreid_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE kdah.score_pipp_PIPPscoreid_seq
+  OWNER TO postgres;
+
+
+  CREATE OR REPLACE FUNCTION kdah.pippscore_creationtime()
+    RETURNS trigger AS
+  $BODY$
+      BEGIN
+          NEW.creationtime := current_timestamp;
+          NEW.modificationtime := current_timestamp;
+          RETURN NEW;
+      END;
+  $BODY$
+    LANGUAGE plpgsql VOLATILE
+    COST 100;
+  ALTER FUNCTION kdah.pippscore_creationtime()
+    OWNER TO postgres;
+
+
+    CREATE OR REPLACE FUNCTION kdah.pippscore_modificationtime()
+  RETURNS trigger AS
+$BODY$
+    BEGIN
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION kdah.pippscore_modificationtime()
+  OWNER TO postgres;
+
+
+CREATE TABLE kdah.score_pipp
+(
+  PIPPscoreid bigserial NOT NULL,
+  creationtime timestamp with time zone,
+  modificationtime timestamp with time zone,
+  uhid character varying(50),
+  gestational integer,
+  behavioural integer,
+  heartRate integer,
+  saturation integer,
+  brow integer,
+  eye integer,
+  nasal integer,
+  PIPPscore integer,
+  admission_entry boolean,
+  entrydate timestamp with time zone,
+  CONSTRAINT PIPPscore_pk PRIMARY KEY (PIPPscoreid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE kdah.score_pipp
+  OWNER TO postgres;
+
+-- Trigger: set_creationtime on kdah.score_pipp
+
+-- DROP TRIGGER set_creationtime ON kdah.score_pipp;
+
+CREATE TRIGGER set_creationtime
+  BEFORE INSERT
+  ON kdah.score_pipp
+  FOR EACH ROW
+  EXECUTE PROCEDURE kdah.pippscore_creationtime();
+
+-- Trigger: set_modificationtime on kdah.score_pipp
+
+-- DROP TRIGGER set_modificationtime ON kdah.score_pipp;
+
+CREATE TRIGGER set_modificationtime
+  BEFORE UPDATE
+  ON kdah.score_pipp
+  FOR EACH ROW
+  EXECUTE PROCEDURE kdah.pippscore_modificationtime();
+
+
+  alter table apollo.sa_pain alter column other_measures type text
+
+
+  ALTER TABLE apollo.nursing_blood_product ADD COLUMN consent_form_by text;
+ALTER TABLE apollo.doctor_blood_products ADD COLUMN invasiveProcedures boolean;
+ALTER TABLE apollo.doctor_blood_products ADD COLUMN ongoingBleeding boolean;
+
+
+
+alter table apollo.stable_notes add column provisionalTemplate text;
+update apollo.stable_notes set provisionalTemplate = notes where notes is not null;
+-- View: apollo.vw_doctornotes_list_raw
+
+-- DROP VIEW apollo.vw_doctornotes_list_raw;
+
+CREATE OR REPLACE VIEW apollo.vw_doctornotes_list_raw AS
+ SELECT j.sajaundiceid AS assesmentid,
+    j.uhid,
+    j.assessment_time AS creationtime,
+    j.modificationtime,
+    'Jaundice'::text AS sa_event,
+    j.actiontype AS treatment,
+    ((('Plan is to reasses after'::text || ' '::text) || j.actionduration) || ' '::text) || j.isactiondurationinhours::text AS plan,
+    i.testname,
+    j.comment AS progressnotes
+   FROM apollo.sa_jaundice j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.sajaundiceid::text AND lower(i.assesment_type::text) = 'jaundice'::text
+UNION
+ SELECT j.resprdsid AS assesmentid,
+    j.uhid,
+    j.assessment_time AS creationtime,
+    j.modificationtime,
+    'RDS'::text AS sa_event,
+    j.treatmentaction AS treatment,
+    ((('Plan is to reasses after'::text || ' '::text) || j.reassestime::text) || ' '::text) || j.reasseshoursdays::text AS plan,
+    i.testname,
+    j.progressnotes
+   FROM apollo.sa_resp_rds j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.resprdsid::text AND lower(i.assesment_type::text) = 'respiratory'::text
+UNION
+ SELECT j.resppphnid AS assesmentid,
+    j.uhid,
+    j.assessment_time AS creationtime,
+    j.modificationtime,
+    'PPHN'::text AS sa_event,
+    j.treatmentaction AS treatment,
+    ((('Plan is to reasses after'::text || ' '::text) || j.reassestime::text) || ' '::text) || j.reassestime_type::text AS plan,
+    i.testname,
+    j.progressnotes
+   FROM apollo.sa_resp_pphn j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.resppphnid::text AND lower(i.assesment_type::text) = 'pphn'::text
+UNION
+ SELECT j.resppneumothoraxid AS assesmentid,
+    j.uhid,
+    j.assessment_time AS creationtime,
+    j.modificationtime,
+    'Pneumothorax'::text AS sa_event,
+    j.treatmentaction AS treatment,
+    ((('Plan is to reasses after'::text || ' '::text) || j.reassestime::text) || ' '::text) || j.reassestime_type::text AS plan,
+    i.testname,
+    j.progressnotes
+   FROM apollo.sa_resp_pneumothorax j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.resppneumothoraxid::text AND lower(i.assesment_type::text) = 'pneumothorax'::text
+UNION
+ SELECT j.apneaid AS assesmentid,
+    j.uhid,
+    j.assessment_time AS creationtime,
+    j.modificationtime,
+    'Apnea'::text AS sa_event,
+    j.actiontype AS treatment,
+    ((('Plan is to reasses after'::text || ' '::text) || j.action_plan_time::text) || ' '::text) || j.action_plan_timetype::text AS plan,
+    i.testname,
+    j.apnea_comment AS progressnotes
+   FROM apollo.sa_resp_apnea j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.apneaid::text AND lower(i.assesment_type::text) = 'apnea'::text
+UNION
+ SELECT j.sacnsasphyxiaid AS assesmentid,
+    j.uhid,
+    j.assessment_time AS creationtime,
+    j.modificationtime,
+    'Asphyxia'::text AS sa_event,
+    j.treatmentaction AS treatment,
+    ((('Plan is to reasses after'::text || ' '::text) || j.reassestime::text) || ' '::text) || j.reassestime_type::text AS plan,
+    i.testname,
+    j.progressnotes
+   FROM apollo.sa_cns_asphyxia j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.sacnsasphyxiaid::text AND lower(i.assesment_type::text) = 'asphyxia'::text
+UNION
+ SELECT j.sacnsseizuresid AS assesmentid,
+    j.uhid,
+    j.assessment_time AS creationtime,
+    j.modificationtime,
+    'Seizures'::text AS sa_event,
+    j.treatmentaction AS treatment,
+    ((('Plan is to reasses after'::text || ' '::text) || j.reassestime::text) || ' '::text) || j.reassestime_type::text AS plan,
+    i.testname,
+    j.progressnotes
+   FROM apollo.sa_cns_seizures j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.sacnsseizuresid::text AND lower(i.assesment_type::text) = 'seizures'::text
+UNION
+ SELECT j.sacnsivhid AS assesmentid,
+    j.uhid,
+    j.creationtime,
+    j.modificationtime,
+    'IVH'::text AS sa_event,
+    j.treatmentaction AS treatment,
+    ((('Plan is to reasses after'::text || ' '::text) || j.reassestime::text) || ' '::text) || j.reassestime_type::text AS plan,
+    i.testname,
+    j.progressnotes
+   FROM apollo.sa_cns_ivh j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.sacnsivhid::text AND lower(i.assesment_type::text) = 'ivh'::text
+UNION
+ SELECT j.sasepsisid AS assesmentid,
+    j.uhid,
+    j.assessment_time AS creationtime,
+    j.modificationtime,
+    'Sepsis'::text AS sa_event,
+    j.treatmentaction AS treatment,
+    ((('Plan is to reasses after'::text || ' '::text) || j.reassestime::text) || ' '::text) || j.reassestime_type::text AS plan,
+    i.testname,
+    j.progressnotes
+   FROM apollo.sa_infection_sepsis j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.sasepsisid::text AND lower(i.assesment_type::text) = 'sepsis'::text
+UNION
+ SELECT sn.id AS assesmentid,
+    sn.uhid,
+    sn.entrytime AS creationtime,
+    sn.modificationtime,
+    'Stable Notes'::text AS sa_event,
+    'NA'::text AS treatment,
+    'NA'::text AS plan,
+    'NA'::text AS testname,
+    sn.provisionalTemplate AS progressnotes
+   FROM apollo.stable_notes sn
+UNION
+ SELECT j.sa_miscellaneous_id AS assesmentid,
+    j.uhid,
+    j.assessment_time AS creationtime,
+    j.modificationtime,
+    'Misc'::text AS sa_event,
+    j.treatment,
+    ((('Plan is to reasses after'::text || ' '::text) || j.actionduration::text) || ' '::text) || j.isactiondurationinhours::text AS plan,
+    i.testname,
+    j.comment AS progressnotes
+   FROM apollo.sa_miscellaneous j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.sa_miscellaneous_id::text AND lower(i.assesment_type::text) = 'miscellaneous'::text
+UNION
+ SELECT j.renalid AS assesmentid,
+    j.uhid,
+    j.assessment_time AS creationtime,
+    j.modificationtime,
+    'Renal'::text AS sa_event,
+    j.action_type AS treatment,
+    ((('Plan is to reasses after'::text || ' '::text) || j.actionduration::text) || ' '::text) || j.isactiondurationinhours::text AS plan,
+    i.testname,
+    j.comment AS progressnotes
+   FROM apollo.sa_renalfailure j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.renalid::text AND lower(i.assesment_type::text) = 'renal'::text
+UNION
+ SELECT j.feedintoleranceid AS assesmentid,
+    j.uhid,
+    j.assessment_time AS creationtime,
+    j.modificationtime,
+    'Feed Intolerance'::text AS sa_event,
+    j.action_type AS treatment,
+    ' '::text AS plan,
+    i.testname,
+    j.comment AS progressnotes
+   FROM apollo.sa_feed_intolerance j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.feedintoleranceid::text AND lower(i.assesment_type::text) = 'feedintolerance'::text
+UNION
+ SELECT j.sanec_id AS assesmentid,
+    j.uhid,
+    j.assessment_time AS creationtime,
+    j.modificationtime,
+    'NEC'::text AS sa_event,
+    j.treatmentaction AS treatment,
+    ' '::text AS plan,
+    i.testname,
+    j.progressnotes
+   FROM apollo.sa_infection_nec j
+     LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.sanec_id::text AND lower(i.assesment_type::text) = 'NEC'::text;
+
+ALTER TABLE apollo.vw_doctornotes_list_raw
+  OWNER TO postgres;

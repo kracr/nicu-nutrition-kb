@@ -1,0 +1,49 @@
+.sprite{background-image: url(../../../_images/sprite.png); background-repeat: no-repeat; display: inline-block;}
+
+.sprite-login-user{width:50px; background-position: -6px 1px;}
+.sprite-login-password{width:50px; background-position: -58px 1px;} 
+
+.sprite-menu-icon-dashboard{width:50px; height:50px; background-position: -132px 1px;} 
+.sprite-menu-discharged-patients{width:50px; height:50px; background-position:-261px 2px;} 
+.sprite-menu-analytics{width:50px; height:50px; background-position: -372px 1px;}
+.sprite-menu-admin{width:50px; height:50px; background-position: -838px -120px;}
+.sprite-caret-down{display:inline-block; width:18px; height:18px; background-position: -498px -19px; top:4px; position: relative;}
+
+.sprite-messages-icon{display: inline-block; width:30px; height: 30px; background-position:-537px -12px;}
+
+.sprite-bed-box-red{background-position: -25px -83px;}
+.sprite-bed-box-yellow{background-position:-25px -173px;}
+.sprite-bed-box-green{background-position: -25px -267px;}
+.sprite-bed-box-gray{background-position: -25px -355px;}
+
+
+.sprite-uhid-icon{display: inline-block; width: 32px; height: 34px; background-position: -582px -10px;}
+
+.sprite-blue-ecg{width:45px; height: 45px; display: inline-block; background-position: -633px -6px;}
+.sprite-blue-gas-cylinders{width:45px; height: 45px; display: inline-block; background-position: -703px -6px;}
+.sprite-blue-drop{width:45px; height: 45px; display: inline-block; background-position: -764px -6px;}
+.sprite-gray-drop{width:45px; height: 45px; display: inline-block; background-position: -814px -6px;}
+
+.sprite-calendar-gray{width:34px; height: 32px; background-position:-873px -14px; background-color:$white;}
+.sprite-calendar-gray-small{width:34px; height: 22px; background-position:-872px -49px; background-color:$white;}
+
+.sprite-calendar-dark-gray{width:40px; height: 40px; background-position:-935px -12px; background-color:$white;}
+
+.sprite-white-cross{display: inline-block; width:40px; height: 40px; background-position: -1187px -13px; cursor: pointer;}
+.sprite-blue-plus{display: inline-block;width: 40px; height: 40px; background-position: -1311px -12px; cursor: pointer;}
+.sprite-blue-minus{display: inline-block;width: 40px; height: 40px; background-position: -1246px -12px; cursor: pointer;}
+
+.sprite-i-black{width:25px; height: 25px; background-position: -1373px -21px; top:6px; position: relative;}
+
+.sprite-circle-left{display:inline-block; width:40px; height:40px; background-position: -1411px -14px; cursor:pointer;}
+.sprite-circle-right{display:inline-block; width:40px; height:40px; background-position: -1467px -11px; cursor:pointer;}
+
+
+.sprite-doctor-white{background-position:-298px -116px;}
+.sprite-nurse-white{background-position:-365px -118px;}
+.sprite-flask-white{background-position:-428px -118px;}
+.sprite-monitor-white{background-position:-494px -114px;}
+.sprite-nutrition-white{background-position:-561px -121px;}
+.sprite-analytics-white{background-position:-620px -126px;}
+.sprite-summary-white{background-position:-674px -128px;}
+.sprite-sms-white{background-position:-730px -130px;}

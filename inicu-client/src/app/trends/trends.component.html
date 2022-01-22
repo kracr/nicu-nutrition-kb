@@ -1,0 +1,341 @@
+<doctor-panel></doctor-panel>
+<div>
+	<div class="col-md-12" style="background-color: white">
+		<div class="row no-margin padding-20-y continous-monitoring" style="height: 1500px;">
+			<h2>Trends</h2>
+			<div class="col-md-12 no-padding-left no-padding-right" style="margin-top:-20px;">
+				<div class="col-md-3 no-padding-left">
+					<div class="col-md-12 no-padding-left visiblity-hidden">From</div>
+					<div class="col-md-12 no-padding no-margin">
+						<div class="toggle-options-radio">
+							<input type="radio" id="1" [(ngModel)]="selector" value="daily" (ngModelChange)="getMonitoringData(cmDate,false)"><label for="1">Daily</label>
+							<input type="radio" id="2" [(ngModel)]="selector" value="hourly" (ngModelChange)="getMonitoringData(cmDate,false)"><label for="2">Hourly</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="input-cont">
+						<div class="col-md-12 no-padding-left">From</div>
+						<div class="col-md-12 no-padding no-margin">
+							<owl-date-time class="owl-dateTime" name="trendFrom" autoClose=true
+											[(ngModel)]="trendFromDate" [ngModelOptions]="{standalone: true}" (ngModelChange)="getMonitoringData(cmDate, false)"
+											dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="input-cont">
+						<div class="col-md-12 no-padding-left">To</div>
+						<div class="col-md-12 no-padding no-margin">
+							<owl-date-time class="owl-dateTime" name="trendTo"  autoClose=true
+											[(ngModel)]="trendToDate" [ngModelOptions]="{standalone: true}" (ngModelChange)="getMonitoringData(cmDate, false)"
+											dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="clear desktop-column-20">
+				<div class="table full">
+					<div class="col-md-3">
+					</div>
+					<div class="col-md-3" *ngIf="initialDataPoint == null">
+					</div>
+					<div class="col-md-3" *ngIf="initialDataPoint == null">
+					</div>
+					<div class="col-md-3" *ngIf="initialDataPoint != null">
+						<span>{{initialDataPoint | date:'dd-MM-yyyy hh:mm a'}}</span>
+					</div>
+					<div class="col-md-3" *ngIf="finalDataPoint != null">
+						<span>{{finalDataPoint | date:'dd-MM-yyyy hh:mm a'}}</span>
+					</div>
+					<div class="col-md-3" style="padding-left: 70px;">
+						<span class="button button-blue" (click)="progressiveDate(false)">Refresh</span>
+					</div>
+				</div>
+				<div style="display: inline">
+
+					<div class="block margin-auto-aligned">
+
+						<div class="col-md-12 no-padding-left no-padding-right" style="margin-top: 30px;">
+							<div class="col-md-2 active-assessment" *ngIf="assessmentTabVisible != undefined && assessmentTabVisible != null">
+								<div class="col-md-12 inner-active-assessment" style="border: 1px solid #eeeeee;">
+									<span>Active Assessments</span>
+								</div>
+								<div class="col-md-12 no-padding-left" style="overflow-y:auto;height: 180px;">
+									<div class="col-md-12 no-padding-left no-padding-right margin-top  padding-20-x table-cell">
+										<input type="checkbox" id="assessmentAll"
+										[(ngModel)]="allAssessments"
+										(ngModelChange)="activeAssessments()" style="margin-left:9px;"> <label
+										for="assessmentAll"> All</label>
+									</div>
+									<div *ngIf = "cmData.jaundice != null && cmData.jaundice.length > 0" class=" col-md-12 no-padding-left margin-top padding-20-x table-cell" style="margin-top:12px;">
+										<input type="checkbox" class="checkbox" id="jaundice" [(ngModel)]="assessmentTabVisible.jaundice"
+											(ngModelChange)="assessmentChartVisible('jaundice',assessmentTabVisible.jaundice)">
+										<label for="jaundice" style="margin-left: 1px"> Jaundice</label>
+									</div>
+									<div *ngIf = "cmData.rds != null && cmData.rds.length > 0" class="col-md-12 no-padding-left margin-top padding-20-x table-cell" style="margin-top:12px;">
+										<input type="checkbox" class="checkbox" id="rds"
+										[(ngModel)]="assessmentTabVisible.rds"
+										(ngModelChange)="assessmentChartVisible('rds',assessmentTabVisible.rds)">
+										<label for="rds" style="margin-left: 1px"> RDS</label>
+									</div>
+									<div *ngIf = "cmData.sepsis != null && cmData.sepsis.length > 0" class=" col-md-12 no-padding-left margin-top padding-20-x table-cell" style="margin-top:12px;">
+										<input type="checkbox" class="checkbox" id="sepsis"
+										[(ngModel)]="assessmentTabVisible.sepsis"
+										(ngModelChange)="assessmentChartVisible('sepsis',assessmentTabVisible.sepsis)">
+										<label for="sepsis" style="margin-left: 1px"> Sepsis</label>
+									</div>
+									<div *ngIf = "cmData.pphn != null && cmData.pphn.length > 0" class=" col-md-12 no-padding-left margin-top padding-20-x table-cell" style="margin-top:12px;" >
+										<input type="checkbox" class="checkbox" id="pphn"
+										[(ngModel)]="assessmentTabVisible.pphn"
+										(ngModelChange)="assessmentChartVisible('pphn',assessmentTabVisible.pphn)">
+										<label for="pphn" style="margin-left: 1px"> PPHN</label>
+									</div>
+									<div *ngIf = "cmData.apnea != null && cmData.apnea.length > 0" class=" col-md-12 no-padding-left margin-top padding-20-x table-cell" style="margin-top:12px;">
+										<input type="checkbox" class="checkbox" id="apnea"
+										[(ngModel)]="assessmentTabVisible.apnea"
+										(ngModelChange)="assessmentChartVisible('apnea',assessmentTabVisible.apnea)">
+										<label for="apnea" style="margin-left: 1px"> Apnea</label>
+									</div>
+									<div *ngIf = "cmData.pneumothorax != null && cmData.pneumothorax.length > 0" class=" col-md-12 no-padding-left margin-top padding-20-x table-cell" style="margin-top:12px;" >
+										<input type="checkbox" id="pneumothorax"
+										[(ngModel)]="assessmentTabVisible.pneumothorax"
+										(ngModelChange)="assessmentChartVisible('pneumothorax',assessmentTabVisible.pneumothorax)">
+										<label for="pneumothorax" style="margin-left: 1px"> Pneumothorax</label>
+									</div>
+									<div *ngIf = "cmData.asphyxia != null && cmData.asphyxia.length > 0" class=" col-md-12 no-padding-left margin-top padding-20-x table-cell" style="margin-top:12px;" >
+										<input type="checkbox" class="checkbox" id="asphyxia"
+										[(ngModel)]="assessmentTabVisible.asphyxia"
+										(ngModelChange)="assessmentChartVisible('asphyxia',assessmentTabVisible.asphyxia)">
+										<label for="asphyxia" style="margin-left: 1px"> Asphyxia</label>
+									</div>
+									<div *ngIf = "cmData.seizures != null && cmData.seizures.length > 0" class=" col-md-12 no-padding-left margin-top padding-20-x table-cell" style="margin-top:12px;">
+										<input type="checkbox" class="checkbox" id="seizures"
+										[(ngModel)]="assessmentTabVisible.seizures"
+										(ngModelChange)="assessmentChartVisible('seizures',assessmentTabVisible.seizures)">
+										<label for="seizures" style="margin-left: 1px"> Seizures</label>
+									</div>
+								</div>
+								<div class="col-md-12 active-assessment"style="margin-top: 65px;">
+									<div class="col-md-12 inner-active-assessment" style="border: 1px solid #eeeeee;">
+										<span>HM/LM</span>
+									</div>
+									<div class="col-md-12 no-padding-left" style="overflow-y:auto;height: 154px;">
+										<div class=" col-md-12 no-padding-left margin-top padding-20-x table-cell" style="margin-top:12px;">
+											<input type="checkbox" class="checkbox" id="physiscoreobject" [(ngModel)]="allHmLmData"
+												(ngModelChange)="enableOutputParameterCheckboxes()">
+											<label for="physiscoreobject" style="margin-left: 1px"> HM/LM</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-7">
+								<div *ngIf="continousTabVisible != undefined && continousTabVisible != null">
+									<div [chart]="chartOne" id="chartCont" style="height: auto; width: 100%;"></div>
+									<div class="tab-header toggle"></div>
+								</div>
+							</div>
+							<div class="col-md-3 active-assessment" style="float:right;width:20%">
+								<div class="col-md-12 inner-active-assessment" style="background-color: #ffb6b3;">
+									<img src="assets/_images/heart.png" style="position:absolute;left:12px">
+									<span class="graph-item" style="position: relative;left: 70px;">Phsyological</span>
+								</div>
+								<div class="col-md-12" style="padding-left:0px;padding-right:0px;">
+									<div class="col-md-12" style="
+										border: 1px solid lightgray;">
+										<div class="col-md-6" style="margin-top:6px;padding:8px">
+											<span>Monitor</span>
+										</div>
+										<div class="col-md-6" style="margin-top:6px;padding:8px;">
+											<span>Ventilator</span>
+										</div>
+									</div>
+
+									<div class="col-md-12" style="overflow-y: scroll;height: 133px;" *ngIf="continousTabVisible != undefined && continousTabVisible != null">
+										<div class="col-md-6 no-padding-left">
+											<div class="col-md-12 no-padding-left no-padding-right margin-top  padding-20-x table-cell">
+												<input type="checkbox" id="monitor"
+												[(ngModel)]="staticAllChart.monitor"
+												(ngModelChange)="enableAllPhsyologicalCheckboxes('monitor')" style="margin-left:-4px;"> <label
+												for="monitor"> All</label>
+											</div>
+											<div class="col-md-12 no-padding-left no-padding-right margin-top  padding-20-x table-cell" *ngFor="let item of staticMonitorData">
+												<input type="checkbox" id="{{item.key}}"
+												[(ngModel)]="item.value"
+												(ngModelChange)="continousChartVisible()" style="margin-left:-4px;"> <label
+												for="{{item.key}}">{{item.key}}</label>
+											</div>
+										</div>
+										<div class="col-md-6 ventilatior" style="padding-left:8px;">
+												<div class="col-md-12 no-padding-left no-padding-right margin-top  padding-20-x table-cell">
+													<input type="checkbox" id="ventilator"
+													[(ngModel)]="staticAllChart.ventilator"
+													(ngModelChange)="enableAllPhsyologicalCheckboxes('ventilator')" style="margin-left:-4px;"> <label
+													for="ventilator"> All</label>
+												</div>
+												<div class="col-md-12 no-padding-left no-padding-right margin-top padding-20-x table-cell" *ngFor="let item of staticVentilatorData" >
+													<input type="checkbox" id="all"
+													[(ngModel)]="item.value"
+													(ngModelChange)="continousChartVisible('all',continousTabVisible.all)" style="margin-left:-4px;"> <label
+													for="all"> {{item.key}}</label>
+												</div>
+										</div>
+									</div>
+								</div>
+								<div class="vertical-line"></div>
+								<!--derived parameters chart-->
+								<div class="col-md-12 no-padding-left" style="padding-right:0px;">
+									<div class="active-assessment" style="float:right;margin-top: 50px;width:100%">
+										<div class="col-md-12 inner-active-assessment" style="background-color: LightSkyBlue;">
+											<span class="graph-item" style="position:relative;left:70px">Derived Parameters</span>
+											<!-- <img src="assets/_images/medication-img.png" style="position:absolute;left:12px;height: 20px;width: 25px;"> -->
+										</div>
+										<div class="col-md-12" style="overflow-y:auto;height: 181px;">
+											<div class="col-md-12 no-padding-left" style="margin-top: 12px;">
+												<input type="checkbox" id="derivedData"
+												[(ngModel)]="derivedAllData"
+												(ngModelChange)="enableAllDerivedDataCheckboxes()" style="margin-left:-4px;"> <label
+												for="derivedData"> All</label>
+											</div>
+											<div class="col-md-12 no-padding-left" *ngFor="let item of staticDerivedData" style="margin-top: 12px;" >
+												<input id="{{item.key}}" type="checkbox" [(ngModel)]="item.value" (change)="derivedChartVisible()">
+												<label for="{{item.key}}"> {{item.key}}</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--medication chart-->
+								<div class="col-md-12 no-padding-left" style="padding-right:0px;">
+									<div class="active-assessment" style="float:right;margin-top: 50px;width:100%">
+										<div class="col-md-12 inner-active-assessment" style="background-color: #ffd09f;">
+											<span class="graph-item" style="position:relative;left:70px">Medication</span>
+											<img src="assets/_images/medication-img.png" style="position:absolute;left:12px;height: 20px;width: 25px;">
+										</div>
+										<div class="col-md-12" style="overflow-y:auto;height: 181px;">
+											<div class="col-md-12 no-padding-left no-padding-right margin-top  padding-20-x table-cell">
+												<input type="checkbox" id="medication"
+												[(ngModel)]="allMedicationData"
+												(ngModelChange)="enableAllMedicationCheckboxes()" style="margin-left:-4px;"> <label
+												for="medication">All</label>
+											</div>
+											<div class="col-md-12 no-padding-left" *ngFor="let item of medicationTypeState" style="margin-top: 12px;" >
+												<input id="{{item.key}}" type="checkbox" [(ngModel)]="item.value" (change)="medicationChartVisible()">
+												<label for="{{item.key}}"> {{item.key}}</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--Blood Gas Chart-->
+								<div class="col-md-12 no-padding-left" style="padding-right:0px;">
+									<div class="active-assessment" style="float:right;margin-top: 50px;width:100%">
+										<div class="col-md-12 inner-active-assessment" style="background-color: #c9b0ff">
+											<span class="graph-item" style="position:relative;left:70px">Blood Gas</span>
+											<!-- <img src="assets/_images/bloodGas.png" style="position:absolute;left:12px;height: 20px;width: 25px;"> -->
+										</div>
+										<div class="col-md-12" style="overflow-y:auto;height: 181px;">
+											<div class="col-md-12 no-padding-left no-padding-right margin-top  padding-20-x table-cell">
+												<input type="checkbox" id="bloodGas"
+												[(ngModel)]="allBloodGasData"
+												(ngModelChange)="enableAllBloodGasCheckboxes()" style="margin-left:-4px;"> <label
+												for="bloodGas">All</label>
+											</div>
+											<div class="col-md-12 no-padding-left" *ngFor="let item of staticBloodGasData" style="margin-top: 12px;" >
+												<input id="{{item.key}}" type="checkbox" [(ngModel)]="item.value" (change)="bloodGasChartVisible()">
+												<label for="{{item.key}}"> {{item.key}}</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--procedures-->
+								<div class="col-md-12 no-padding-left" style="padding-right:0px;">
+									<div class="active-assessment" style="float:right;margin-top: 50px;width:100%">
+										<div class="col-md-12 inner-active-assessment" style="background-color: #7ee5c8;">
+											<span class="graph-item" style="position:relative;left:70px">Procedure</span>
+											<!-- <img src="assets/_images/medication-img.png" style="position:absolute;left:12px;height: 20px;width: 25px;"> -->
+										</div>
+										<div class="col-md-12"  style="overflow-y:auto;height: 181px;">
+											<div class="col-md-12 no-padding-left no-padding-right margin-top  padding-20-x table-cell">
+												<input type="checkbox" id="procedure"
+												[(ngModel)]="allProcedureData"
+												(ngModelChange)="enableAllProcedureCheckboxes()" style="margin-left:-4px;"> <label
+												for="procedure">All</label>
+											</div>
+											<div class="col-md-12 no-padding-left" *ngFor="let item of procedureTypeState" style="margin-top: 12px;" >
+												<input id="{{item.key}}" type="checkbox" [(ngModel)]="item.value" (change)="procedureChartVisible()">
+												<label for="{{item.key}}"> {{item.key}}</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--render phsyological chart-->
+				<div style="padding-left: 2%; padding-right: 4%;width:80%;" [hidden]="!continousTabVisible">
+					<div class="padding-0-x force-left" style="margin-left: 22%; padding-bottom: 2%;width:80%;margin-top: -220px">
+						<div style="margin-left:80%">Machine Data</div>
+						<div #chartFive></div>
+						<div class="tab-header toggle"></div>
+					</div>
+				</div>
+				<!--render derived data  chart-->
+				<div style="padding-left: 2%; padding-right: 4%;width:80%;" [hidden]="!derivedDataTabVisible">
+					<div class="padding-0-x force-left" style="margin-left: 22%; padding-bottom: 2%;width:80%;">
+						<div style="margin-left:80%">Derived Data</div>
+						<div #chartSix></div>
+						<div class="tab-header toggle"></div>
+					</div>
+				</div>
+				<!--render output derived data  chart-->
+				<div style="padding-left: 2%; padding-right: 4%;width:80%;" [hidden]="!outputDerivedDataTabVisible">
+					<div class="padding-0-x force-left" style="margin-left: 22%; padding-bottom: 2%;width:80%;">
+						<div style="margin-left:80%">Manual Data</div>
+						<div #chartEight></div>
+						<div class="tab-header toggle"></div>
+					</div>
+				</div>
+				<!--render assessments chart-->
+				<div style="padding-left: 2%; padding-right: 4%;width:80%;" [hidden]="!assessmentsChartVisible">
+					<div class="padding-0-x force-left" style="margin-left: 18%; padding-bottom: 2%;width:80%;">
+						<div style="margin-left:80%">Manual Data</div>
+						<div #chartTwo></div>
+						<div class="tab-header toggle"></div>
+					</div>
+				</div>
+				<!--render medication chart-->
+				<div style="padding-left: 2%; padding-right: 4%;width:80%" [hidden]="!medicationTabVisible">
+					<div class="padding-0-x force-left" style="margin-left: 15%; padding-bottom: 2%;width:80%">
+						<div style="margin-left:80%">Manual Data</div>
+						<div #chartThree></div>
+						<div class="tab-header toggle"></div>
+					</div>
+				</div>
+				<!--render procedure chart-->
+				<div style="padding-left: 2%; padding-right: 4%;width:80%" [hidden]="!procedureTabVisible">
+					<div class="padding-0-x force-left" style="margin-left: 15%; padding-bottom: 2%;width:80%">
+						<div style="margin-left:80%">Manual Data</div>
+						<div #chartFour></div>
+						<div class="tab-header toggle"></div>
+					</div>
+				</div>
+				<div style="padding-left: 2%; padding-right: 4%;width:80%;" [hidden]="!bloodgasTabVisible">
+					<div class="padding-0-x force-left" style="margin-left: 22%; padding-bottom: 2%;width:80%;">
+						<div style="margin-left:80%">Manual Data</div>
+						<div #chartSeven></div>
+						<div class="tab-header toggle"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+	<span class="inicu-loader-content">
+		<span class="inicu-adding-image"></span>
+		<span class="inicu-loading-content">{{loaderContent}}.</span>
+	</span>
+</span>

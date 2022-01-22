@@ -1,0 +1,175 @@
+
+Alter table kdah.nursing_ventilaor add column volume_guarantee character varying(30);
+
+
+Alter table kdah.nursing_ventilaor add column pressure_support_type character varying(30);
+
+
+Alter table kdah.nursing_ventilaor add column control_type character varying(30);
+
+
+Alter table kdah.nursing_ventilaor add column cpap_type character varying(30);
+
+
+Alter table kdah.nursing_ventilaor add column delivery_type character varying(30);
+
+
+Alter table kdah.nursing_ventilaor add column vent_desc character varying(100);
+
+
+-- View: kdah.nursing_blood_gas_ventilator_final
+
+ DROP VIEW kdah.nursing_blood_gas_ventilator_final;
+
+ DROP VIEW kdah.nursing_blood_gas_ventilator_raw;
+
+
+-- View: kdah.nursing_blood_gas_ventilator_raw
+
+-- DROP VIEW kdah.nursing_blood_gas_ventilator_raw;
+
+CREATE OR REPLACE VIEW kdah.nursing_blood_gas_ventilator_raw AS 
+ SELECT q.ventmode,
+    q.pip,
+    q.peep_cpap,
+    q.pressure_supply,
+    q.map,
+    q.freq_rate,
+    q.tidal_volume,
+    q.minute_volume,
+    q.ti,
+    q.fio2,
+    q.flow_per_min,
+    q.no_ppm,
+    q.comments,
+    q.amplitude,
+    q.frequency,
+    q.dco2,
+    q.volume_guarantee,
+    q.pressure_support_type,
+    q.control_type,
+    q.cpap_type,
+    q.delivery_type,
+    q.vent_desc,
+    p.ph,
+    p.pco2,
+    p.hco2,
+    p.po2,
+    p.be,
+    p.lactate,
+    p.spo2,
+    p.na,
+    p.k,
+    p.cl,
+    p.glucose,
+    p.ionized_calcium,
+    p.regular_hco3,
+    p.be_ecf,
+    p.hct,
+    p.sample_type,
+    p.thbc,
+    p.osmolarity,
+    p.anion_gap,
+    p.sample_method,
+        CASE
+            WHEN p.uhid::text = q.uhid::text THEN p.uhid
+            WHEN p.uhid IS NULL THEN q.uhid
+            WHEN q.uhid IS NULL THEN p.uhid
+            ELSE NULL::character varying
+        END AS uhid,
+        CASE
+            WHEN p.entrydate = q.entrydate THEN p.entrydate
+            WHEN p.entrydate IS NULL THEN q.entrydate
+            WHEN q.entrydate IS NULL THEN p.entrydate
+            ELSE NULL::timestamp without time zone
+        END AS entrydate
+   FROM kdah.nursing_bloodgas p
+     FULL JOIN kdah.nursing_ventilaor q ON p.entrydate = q.entrydate
+  ORDER BY (
+        CASE
+            WHEN p.entrydate = q.entrydate THEN p.entrydate
+            WHEN p.entrydate IS NULL THEN q.entrydate
+            WHEN q.entrydate IS NULL THEN p.entrydate
+            ELSE NULL::timestamp without time zone
+        END);
+
+ALTER TABLE kdah.nursing_blood_gas_ventilator_raw
+  OWNER TO postgres;
+
+
+CREATE OR REPLACE VIEW kdah.nursing_blood_gas_ventilator_final AS 
+ SELECT concat(r.uhid, r.entrydate) AS uniquekey,
+    r.ventmode,
+    r.pip,
+    r.peep_cpap,
+    r.pressure_supply,
+    r.map,
+    r.freq_rate,
+    r.tidal_volume,
+    r.minute_volume,
+    r.ti,
+    r.fio2,
+    r.flow_per_min,
+    r.no_ppm,
+    r.comments,
+    r.amplitude,
+    r.frequency,
+    r.ph,
+    r.pco2,
+    r.hco2,
+    r.po2,
+    r.be,
+    r.lactate,
+    r.spo2,
+    r.na,
+    r.k,
+    r.cl,
+    r.glucose,
+    r.ionized_calcium,
+    r.regular_hco3,
+    r.be_ecf,
+    r.hct,
+    r.sample_type,
+    r.thbc,
+    r.osmolarity,
+    r.anion_gap,
+    r.sample_method,
+    r.dco2,
+    r.uhid,
+    r.entrydate,
+    r.volume_guarantee,
+    r.pressure_support_type,
+    r.control_type,
+    r.cpap_type,
+    r.delivery_type,
+    r.vent_desc
+   FROM kdah.nursing_blood_gas_ventilator_raw r
+  ORDER BY r.entrydate;
+
+ALTER TABLE kdah.nursing_blood_gas_ventilator_final
+  OWNER TO postgres;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

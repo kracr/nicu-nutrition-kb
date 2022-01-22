@@ -1,0 +1,80 @@
+--   Updated Queries
+drop table apollo.nurse_shift_mapping;
+
+create table apollo.user_shift_mapping
+(
+    shift_mapping_id bigint default nextval('apollo.nurse_shift_mapping_seq'::regclass) not null
+        constraint user_shift_mapping_pkey
+            primary key,
+    user_id               bigint,
+    user_type              integer,
+    name                   varchar(30),
+    username               varchar(30),
+    shift1                 boolean,
+    shift2                 boolean,
+    shift3                 boolean,
+    shift4                 boolean,
+    date_of_shift          timestamp,
+    branchname            varchar(30),
+    creationtime           timestamp                                                          not null,
+    modificationtime       timestamp                                                          not null
+);
+
+alter table apollo.user_shift_mapping
+    owner to postgres;
+
+create trigger set_creationtime
+    before insert
+    on apollo.user_shift_mapping
+    for each row
+execute procedure apollo.nurse_shift_mapping_creationtime();
+
+create trigger set_modificationtime
+    before update
+    on apollo.user_shift_mapping
+    for each row
+execute procedure apollo.nurse_shift_mapping_modificationtime();
+--
+drop table apollo.nurse_shift_settings;
+
+create table apollo.nurse_shift_settings
+(
+    nurse_shift_settings_id bigint default nextval('apollo.nurse_shift_settings_seq'::regclass) not null
+        constraint nurse_shift_settings_pkey
+            primary key,
+    creationtime            timestamp                                                           not null,
+    modificationtime        timestamp                                                           not null,
+    shift_type              smallint,
+    shift1_from_timings     varchar(10),
+    shift1_to_timings       varchar(10),
+    shift2_from_timings     varchar(10),
+    shift2_to_timings       varchar(10),
+    shift3_from_timings     varchar(10),
+    shift3_to_timings       varchar(10),
+    shift4_from_timings     varchar(10),
+    shift4_to_timings       varchar(10),
+    branchname              varchar(30)
+);
+
+alter table apollo.nurse_shift_settings
+    owner to postgres;
+
+create trigger set_creationtime
+    before insert
+    on apollo.nurse_shift_settings
+    for each row
+execute procedure apollo.nurse_shift_settings_creationtime();
+
+create trigger set_modificationtime
+    before update
+    on apollo.nurse_shift_settings
+    for each row
+execute procedure apollo.nurse_shift_settings_modificationtime();
+
+
+alter table apollo.logindetails add branchname varchar(30);
+
+
+alter table apollo.baby_view_timings add column nurse_confirmation varchar(10) default null,
+                                     add column evening_enabled boolean default  true,
+                                     add column morning_enabled boolean default  true;

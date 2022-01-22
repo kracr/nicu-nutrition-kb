@@ -1,0 +1,491 @@
+
+
+DROP VIEW kdah.vw_assesment_respsystem_final;
+
+
+DROP VIEW kdah.vw_assesment_respsystem_raw;
+
+
+
+
+CREATE VIEW kdah.vw_assesment_respsystem_raw
+ AS
+ SELECT concat(sa_resp_rds.creationtime, sa_resp_rds.uhid) AS uniquekey,
+    sa_resp_rds.resprdsid AS id,
+    sa_resp_rds.uhid,
+    sa_resp_rds.assessment_time AS creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_rds.resp_system_status,
+        CASE
+            WHEN sa_resp_rds.eventstatus::text = 'Yes'::text THEN 'Active'::text
+            WHEN sa_resp_rds.eventstatus::text = 'No'::text THEN 'Passive'::text
+            WHEN sa_resp_rds.eventstatus::text = 'Inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'Respiratory Distress'::text AS event,
+    (sa_resp_rds.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_resp_rds.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_resp_rds.causeofrds AS cause,
+    sa_resp_rds.progressnotes,
+    sa_resp_rds.ageatassesment,
+    sa_resp_rds.treatmentaction AS treatment,
+    sa_resp_rds.loggeduser
+   FROM kdah.sa_resp_rds
+UNION
+ SELECT concat(sa_resp_apnea.creationtime, sa_resp_apnea.uhid) AS uniquekey,
+    sa_resp_apnea.apneaid AS id,
+    sa_resp_apnea.uhid,
+    sa_resp_apnea.assessment_time AS creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_apnea.resp_system_status,
+        CASE
+            WHEN sa_resp_apnea.eventstatus::text = 'Yes'::text THEN 'Active'::text
+            WHEN sa_resp_apnea.eventstatus::text = 'No'::text THEN 'Passive'::text
+            WHEN sa_resp_apnea.eventstatus::text = 'Inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'Apnea'::text AS event,
+    (sa_resp_apnea.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_resp_apnea.ageinhours IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_resp_apnea.apnea_cause AS cause,
+    sa_resp_apnea.apnea_comment AS progressnotes,
+    sa_resp_apnea.ageatassesment,
+    sa_resp_apnea.actiontype AS treatment,
+    sa_resp_apnea.loggeduser
+   FROM kdah.sa_resp_apnea
+UNION
+ SELECT concat(sa_resp_pphn.creationtime, sa_resp_pphn.uhid) AS uniquekey,
+    sa_resp_pphn.resppphnid AS id,
+    sa_resp_pphn.uhid,
+    sa_resp_pphn.assessment_time AS creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_pphn.resp_system_status,
+        CASE
+            WHEN sa_resp_pphn.eventstatus::text = 'Yes'::text THEN 'Active'::text
+            WHEN sa_resp_pphn.eventstatus::text = 'No'::text THEN 'Passive'::text
+            WHEN sa_resp_pphn.eventstatus::text = 'Inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'PPHN'::text AS event,
+    (sa_resp_pphn.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_resp_pphn.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_resp_pphn.causeofpphn AS cause,
+    sa_resp_pphn.progressnotes,
+    sa_resp_pphn.ageatassesment,
+    sa_resp_pphn.treatmentaction AS treatment,
+    sa_resp_pphn.loggeduser
+   FROM kdah.sa_resp_pphn
+UNION
+ SELECT concat(sa_resp_pneumothorax.creationtime, sa_resp_pneumothorax.uhid) AS uniquekey,
+    sa_resp_pneumothorax.resppneumothoraxid AS id,
+    sa_resp_pneumothorax.uhid,
+    sa_resp_pneumothorax.assessment_time AS creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_pneumothorax.resp_system_status,
+        CASE
+            WHEN sa_resp_pneumothorax.eventstatus::text = 'Yes'::text THEN 'Active'::text
+            WHEN sa_resp_pneumothorax.eventstatus::text = 'No'::text THEN 'Passive'::text
+            WHEN sa_resp_pneumothorax.eventstatus::text = 'Inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'Pneumothorax'::text AS event,
+    (sa_resp_pneumothorax.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_resp_pneumothorax.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_resp_pneumothorax.causeofpneumothorax AS cause,
+    sa_resp_pneumothorax.progressnotes,
+    sa_resp_pneumothorax.ageatassesment,
+    sa_resp_pneumothorax.treatmentaction AS treatment,
+    sa_resp_pneumothorax.loggeduser
+   FROM kdah.sa_resp_pneumothorax
+UNION
+ SELECT concat(sa_resp_others.creationtime, sa_resp_others.uhid) AS uniquekey,
+    sa_resp_others.respotherid AS id,
+    sa_resp_others.uhid,
+    sa_resp_others.creationtime,
+    'Respiratory System'::text AS category,
+    sa_resp_others.resp_system_status,
+        CASE
+            WHEN sa_resp_others.eventstatus::text = 'Yes'::text THEN 'Active'::text
+            WHEN sa_resp_others.eventstatus::text = 'No'::text THEN 'Passive'::text
+            WHEN sa_resp_others.eventstatus::text = 'Inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'Others'::text AS event,
+    (sa_resp_others.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_resp_others.ageinhours IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_resp_others.causeofdisease AS cause,
+    sa_resp_others.progressnotes,
+    sa_resp_others.ageatassesment,
+    sa_resp_others.treatmentaction AS treatment,
+    sa_resp_others.loggeduser
+   FROM kdah.sa_resp_others;
+
+ALTER TABLE kdah.vw_assesment_respsystem_raw
+    OWNER TO postgres;
+
+
+
+CREATE VIEW kdah.vw_assesment_respsystem_final
+ AS
+ SELECT vw_assesment_respsystem_raw.uniquekey,
+    vw_assesment_respsystem_raw.id,
+    vw_assesment_respsystem_raw.uhid,
+    vw_assesment_respsystem_raw.creationtime,
+    vw_assesment_respsystem_raw.category,
+    vw_assesment_respsystem_raw.resp_system_status,
+    vw_assesment_respsystem_raw.event,
+    vw_assesment_respsystem_raw.eventstatus,
+    vw_assesment_respsystem_raw.duration,
+    vw_assesment_respsystem_raw.cause,
+    vw_assesment_respsystem_raw.progressnotes,
+    vw_assesment_respsystem_raw.progressnotes AS comment,
+    vw_assesment_respsystem_raw.ageatassesment,
+    vw_assesment_respsystem_raw.loggeduser,
+    vw_assesment_respsystem_raw.treatment
+   FROM kdah.vw_assesment_respsystem_raw
+  ORDER BY vw_assesment_respsystem_raw.creationtime DESC;
+
+ALTER TABLE kdah.vw_assesment_respsystem_final
+    OWNER TO postgres;
+
+
+// query 5
+DROP VIEW kdah.vw_assesment_infection_final;
+// query 6
+DROP VIEW kdah.vw_assesment_infection_raw;
+// query 7
+
+// query 8
+alter table kdah.sa_infection_vap add column causeofvap text;
+// query 9
+alter table kdah.sa_infection_clabsi add column causeofclabsi text;
+//query 10
+alter table kdah.sa_infection_clabsi add column causeofclabsi text;
+// query 11
+CREATE VIEW kdah.vw_assesment_infection_raw
+ AS
+ SELECT concat(sa_infection_sepsis.creationtime, sa_infection_sepsis.uhid) AS uniquekey,
+    sa_infection_sepsis.sasepsisid AS id,
+    sa_infection_sepsis.uhid,
+    sa_infection_sepsis.assessment_time AS creationtime,
+    'Infection'::text AS category,
+    sa_infection_sepsis.infection_system_status,
+        CASE
+            WHEN sa_infection_sepsis.eventstatus::text = 'yes'::text THEN 'Active'::text
+            WHEN sa_infection_sepsis.eventstatus::text = 'no'::text THEN 'Passive'::text
+            WHEN sa_infection_sepsis.eventstatus::text = 'inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'Sepsis'::text AS event,
+    (sa_infection_sepsis.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_infection_sepsis.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_infection_sepsis.progressnotes,
+    sa_infection_sepsis.ageatassesment,
+    sa_infection_sepsis.treatmentaction,
+    sa_infection_sepsis.loggeduser,
+	sa_infection_sepsis.causeofsepsis AS cause
+   FROM kdah.sa_infection_sepsis
+UNION
+ SELECT concat(sa_infection_vap.creationtime, sa_infection_vap.uhid) AS uniquekey,
+    sa_infection_vap.savapid AS id,
+    sa_infection_vap.uhid,
+    sa_infection_vap.assessment_time AS creationtime,
+    'Infection'::text AS category,
+    sa_infection_vap.infection_system_status,
+        CASE
+            WHEN sa_infection_vap.eventstatus::text = 'yes'::text THEN 'Active'::text
+            WHEN sa_infection_vap.eventstatus::text = 'no'::text THEN 'Passive'::text
+            WHEN sa_infection_vap.eventstatus::text = 'inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'Vap'::text AS event,
+    (sa_infection_vap.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_infection_vap.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_infection_vap.progressnotes,
+    sa_infection_vap.ageatassesment,
+    sa_infection_vap.treatmentaction,
+    sa_infection_vap.loggeduser,
+	sa_infection_vap.causeofvap AS cause
+   FROM kdah.sa_infection_vap
+UNION
+ SELECT concat(sa_infection_clabsi.creationtime, sa_infection_clabsi.uhid) AS uniquekey,
+    sa_infection_clabsi.saclabsiid AS id,
+    sa_infection_clabsi.uhid,
+    sa_infection_clabsi.assessment_date AS creationtime,
+    'Infection'::text AS category,
+    sa_infection_clabsi.infection_system_status,
+        CASE
+            WHEN sa_infection_clabsi.eventstatus::text = 'yes'::text THEN 'Active'::text
+            WHEN sa_infection_clabsi.eventstatus::text = 'no'::text THEN 'Passive'::text
+            WHEN sa_infection_clabsi.eventstatus::text = 'inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'Clabsi'::text AS event,
+    (sa_infection_clabsi.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_infection_clabsi.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_infection_clabsi.progressnotes,
+    sa_infection_clabsi.ageatassesment,
+    sa_infection_clabsi.treatmentaction,
+    sa_infection_clabsi.loggeduser,
+	sa_infection_clabsi.causeofclabsi
+   FROM kdah.sa_infection_clabsi
+UNION
+ SELECT concat(sa_infection_intrauterine.creationtime, sa_infection_intrauterine.uhid) AS uniquekey,
+    sa_infection_intrauterine.saintrauterineid AS id,
+    sa_infection_intrauterine.uhid,
+    sa_infection_intrauterine.assessment_date AS creationtime,
+    'Infection'::text AS category,
+    sa_infection_intrauterine.infection_system_status,
+        CASE
+            WHEN sa_infection_intrauterine.eventstatus::text = 'yes'::text THEN 'Active'::text
+            WHEN sa_infection_intrauterine.eventstatus::text = 'no'::text THEN 'Passive'::text
+            WHEN sa_infection_intrauterine.eventstatus::text = 'inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'Intrauterine Infection'::text AS event,
+    (sa_infection_intrauterine.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_infection_intrauterine.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_infection_intrauterine.progressnotes,
+    sa_infection_intrauterine.ageatassesment,
+    sa_infection_intrauterine.treatmentaction,
+    sa_infection_intrauterine.loggeduser,
+	sa_infection_intrauterine.cause_of_intrauterine
+   FROM kdah.sa_infection_intrauterine
+UNION
+ SELECT concat(sa_infection_nec.creationtime, sa_infection_nec.uhid) AS uniquekey,
+    sa_infection_nec.sanec_id AS id,
+    sa_infection_nec.uhid,
+    sa_infection_nec.assessment_time AS creationtime,
+    'Infection'::text AS category,
+    sa_infection_nec.infection_system_status,
+        CASE
+            WHEN sa_infection_nec.eventstatus::text = 'yes'::text THEN 'Active'::text
+            WHEN sa_infection_nec.eventstatus::text = 'no'::text THEN 'Passive'::text
+            WHEN sa_infection_nec.eventstatus::text = 'inactive'::text THEN 'Inactive'::text
+            ELSE NULL::text
+        END AS eventstatus,
+    'NEC'::text AS event,
+    (sa_infection_nec.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_infection_nec.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_infection_nec.progressnotes,
+    sa_infection_nec.ageatassesment,
+    sa_infection_nec.treatmentaction,
+    sa_infection_nec.loggeduser,
+	sa_infection_nec.causeofnec
+   FROM kdah.sa_infection_nec;
+
+ALTER TABLE kdah.vw_assesment_infection_raw
+    OWNER TO postgres;
+
+
+CREATE VIEW kdah.vw_assesment_infection_final
+ AS
+ SELECT vw_assesment_infection_raw.uniquekey,
+    vw_assesment_infection_raw.id,
+    vw_assesment_infection_raw.uhid,
+    vw_assesment_infection_raw.creationtime,
+    vw_assesment_infection_raw.category,
+    vw_assesment_infection_raw.infection_system_status,
+    vw_assesment_infection_raw.event,
+    vw_assesment_infection_raw.eventstatus,
+    vw_assesment_infection_raw.duration,
+    vw_assesment_infection_raw.progressnotes,
+    vw_assesment_infection_raw.progressnotes AS comment,
+    vw_assesment_infection_raw.ageatassesment,
+    vw_assesment_infection_raw.treatmentaction,
+    vw_assesment_infection_raw.loggeduser,
+    vw_assesment_infection_raw.cause
+   FROM kdah.vw_assesment_infection_raw
+  ORDER BY vw_assesment_infection_raw.creationtime DESC;
+
+ALTER TABLE kdah.vw_assesment_infection_final
+    OWNER TO postgres;
+
+DROP VIEW kdah.vw_assesment_cns_final;
+
+DROP VIEW kdah.vw_assesment_cns_raw;
+
+CREATE VIEW kdah.vw_assesment_cns_raw
+ AS
+ SELECT concat(sa_cns_ivh.creationtime, sa_cns_ivh.uhid) AS uniquekey,
+    sa_cns_ivh.sacnsivhid AS id,
+    sa_cns_ivh.uhid,
+    sa_cns_ivh.assessment_date AS creationtime,
+    'CNS'::text AS category,
+    sa_cns_ivh.cns_system_status,
+    'IVH'::text AS event,
+    (sa_cns_ivh.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_cns_ivh.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_cns_ivh.progressnotes,
+    sa_cns_ivh.eventstatus,
+    sa_cns_ivh.ageatassesment,
+    sa_cns_ivh.treatmentaction,
+	sa_cns_ivh.causeof_ivh AS cause,
+    sa_cns_ivh.loggeduser
+   FROM kdah.sa_cns_ivh
+UNION
+ SELECT concat(sa_cns_seizures.creationtime, sa_cns_seizures.uhid) AS uniquekey,
+    sa_cns_seizures.sacnsseizuresid AS id,
+    sa_cns_seizures.uhid,
+    sa_cns_seizures.assessment_time AS creationtime,
+    'CNS'::text AS category,
+    sa_cns_seizures.cns_system_status,
+    'Seizures'::text AS event,
+    (sa_cns_seizures.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_cns_seizures.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_cns_seizures.progressnotes,
+    sa_cns_seizures.eventstatus,
+    sa_cns_seizures.ageatassesment,
+    sa_cns_seizures.treatmentaction,
+	sa_cns_seizures.causeof_seizures AS cause,
+    sa_cns_seizures.loggeduser
+   FROM kdah.sa_cns_seizures
+UNION
+ SELECT concat(sa_cns_asphyxia.creationtime, sa_cns_asphyxia.uhid) AS uniquekey,
+    sa_cns_asphyxia.sacnsasphyxiaid AS id,
+    sa_cns_asphyxia.uhid,
+    sa_cns_asphyxia.assessment_time AS creationtime,
+    'CNS'::text AS category,
+    sa_cns_asphyxia.cns_system_status,
+    'Asphyxia'::text AS event,
+    (sa_cns_asphyxia.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_cns_asphyxia.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_cns_asphyxia.progressnotes,
+    sa_cns_asphyxia.eventstatus,
+    sa_cns_asphyxia.ageatassesment,
+    sa_cns_asphyxia.treatmentaction,
+	sa_cns_asphyxia.causeof_asphyxia AS cause,
+    sa_cns_asphyxia.loggeduser
+   FROM kdah.sa_cns_asphyxia
+UNION
+ SELECT concat(sa_cns_encephalopathy.creationtime, sa_cns_encephalopathy.uhid) AS uniquekey,
+    sa_cns_encephalopathy.saencephalopathyid AS id,
+    sa_cns_encephalopathy.uhid,
+    sa_cns_encephalopathy.assessment_date AS creationtime,
+    'CNS'::text AS category,
+    sa_cns_encephalopathy.cns_system_status,
+    'Encephalopathy'::text AS event,
+    (sa_cns_encephalopathy.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_cns_encephalopathy.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_cns_encephalopathy.progressnotes,
+    sa_cns_encephalopathy.eventstatus,
+    sa_cns_encephalopathy.ageatassesment,
+    sa_cns_encephalopathy.treatmentaction,
+	sa_cns_encephalopathy.causeof_encephalopathy AS cause,
+    sa_cns_encephalopathy.loggeduser
+   FROM kdah.sa_cns_encephalopathy
+UNION
+ SELECT concat(sa_cns_neuromuscular_disorder.creationtime, sa_cns_neuromuscular_disorder.uhid) AS uniquekey,
+    sa_cns_neuromuscular_disorder.sa_neuromuscular_disorderid AS id,
+    sa_cns_neuromuscular_disorder.uhid,
+    sa_cns_neuromuscular_disorder.assessment_date AS creationtime,
+    'CNS'::text AS category,
+    sa_cns_neuromuscular_disorder.cns_system_status,
+    'Neuromuscular Disorder'::text AS event,
+    (sa_cns_neuromuscular_disorder.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_cns_neuromuscular_disorder.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_cns_neuromuscular_disorder.progressnotes,
+    sa_cns_neuromuscular_disorder.eventstatus,
+    sa_cns_neuromuscular_disorder.ageatassesment,
+    sa_cns_neuromuscular_disorder.treatmentaction,
+	sa_cns_neuromuscular_disorder.causeof_neuromusculardisorder AS cause,
+    sa_cns_neuromuscular_disorder.loggeduser
+   FROM kdah.sa_cns_neuromuscular_disorder
+UNION
+ SELECT concat(sa_cns_hydrocephalus.creationtime, sa_cns_hydrocephalus.uhid) AS uniquekey,
+    sa_cns_hydrocephalus.sacnshydrocephalusid AS id,
+    sa_cns_hydrocephalus.uhid,
+    sa_cns_hydrocephalus.assessment_date AS creationtime,
+    'CNS'::text AS category,
+    sa_cns_hydrocephalus.cns_system_status,
+    'Hydrocephalus'::text AS event,
+    (sa_cns_hydrocephalus.ageatonset::text || ' '::text) ||
+        CASE
+            WHEN sa_cns_hydrocephalus.ageinhoursdays IS TRUE THEN 'hrs'::text
+            ELSE 'days'::text
+        END AS duration,
+    sa_cns_hydrocephalus.progressnotes,
+    sa_cns_hydrocephalus.eventstatus,
+    sa_cns_hydrocephalus.ageatassesment,
+    sa_cns_hydrocephalus.treatmentaction,
+	sa_cns_hydrocephalus.causeof_hydrocephalus AS cause,
+    sa_cns_hydrocephalus.loggeduser
+   FROM kdah.sa_cns_hydrocephalus;
+
+ALTER TABLE kdah.vw_assesment_cns_raw
+    OWNER TO postgres;
+
+
+CREATE VIEW kdah.vw_assesment_cns_final
+ AS
+ SELECT v.uniquekey,
+    v.id,
+    v.uhid,
+    v.creationtime,
+    v.category,
+    v.cns_system_status,
+    v.event,
+    v.duration,
+    v.progressnotes,
+    v.eventstatus,
+    v.ageatassesment,
+    v.loggeduser,
+    v.treatmentaction,
+    v.cause
+   FROM kdah.vw_assesment_cns_raw v
+  ORDER BY v.creationtime DESC;
+
+ALTER TABLE kdah.vw_assesment_cns_final
+    OWNER TO postgres;
+
+
+
+
+
+
+

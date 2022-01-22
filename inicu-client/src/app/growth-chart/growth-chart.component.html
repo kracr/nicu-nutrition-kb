@@ -1,0 +1,93 @@
+<doctor-panel></doctor-panel>
+<div style="background-color: white">
+<div class="container">
+	<div class="clear overflow-auto row no-padding padding-20-y">
+			<div class="col-md-4 padding-0-x force-left" *ngIf="growthChartToggle==true">
+				<button class="button-small-transparent" (click)="weightVisible()">Weight</button>
+				<button class="button-small-transparent" (click)="heightVisible()">Height</button>
+				<button class="button-small-transparent" (click)="headCircumferenceVisible()">Head Circumference</button>
+				<button class="button-small-transparent" (click)="combinedVisible()">All</button>
+			</div>
+			<div class="col-md-4 padding-0-x force-left" *ngIf="growthChartToggle == false">
+				<button class="button-small-transparent" (click)="interWeightVisible()">Weight</button>
+				<button class="button-small-transparent" (click)="interHeightVisible()">Height</button>
+				<button class="button-small-transparent" (click)="interHeadCircumferenceVisible()">Head Circumference</button>
+				<button class="button-small-transparent" (click)="interCombinedVisible()">All</button>
+			</div>
+			<div class="col-md-8 padding-0-x right-aligned">
+					<div class="col-md-5"></div>
+					<div class="col-md-7 no-padding">
+					<div class="toggle-options-radio">
+						<input type="radio" name="growth" id="growthChart" [value]="true" selected [(ngModel)]="growthChartToggle" (ngModelChange)="getGrowthChartDataToggle('Growth Chart')">
+						<label for="growthChart">Growth Chart</label>
+						<input type="radio" name="growth" id="intergrowthChart" [value]="false" [(ngModel)]="growthChartToggle" (ngModelChange)="getGrowthChartDataToggle('Intergrowth Chart')">
+						 <label for="intergrowthChart">Intergrowth Chart</label>&nbsp;
+                        <span class="button button-blue" (click)="redirectToPrint()">Print</span>
+				
+					</div>
+				</div>
+			</div>
+	</div>
+	<div *ngIf="!growthChartToggle">
+		<div class="clear overflow-auto desktop-column-20" style="overflow: hidden;text-align:center" *ngIf="interCombinedTrue == true" >
+			<div style="padding-left: 2%; padding-right: 4%">
+				<div class="desktop-column-20 padding-0-x force-left" style="margin-left: 0%; padding-bottom: 2%">
+					<div [chart]="chartOne" id="interCombinedContainer" style="height: 1380px; width: 100%;border-style:solid;border:1px;overflow: hidden"></div>
+				</div>
+			</div>
+		</div>
+		<div class="clear overflow-auto desktop-column-20" style="overflow: hidden;text-align:center" *ngIf="interWeightTrue == true"  style="text-align:center">
+			<div style="padding-left: 2%; padding-right: 4%">
+				<div class="desktop-column-20 padding-0-x force-left" style="margin-left:0%; padding-bottom: 2%">
+					<div [chart]="chartTwo" id="interWeightContainer" style="height: 600px; width: 100%;border-style:solid;border:1px;overflow: hidden;text-align:center"></div>
+				</div>
+			</div>
+		</div>
+		<div class="clear overflow-auto desktop-column-20" style="overflow: hidden" *ngIf ="interHeadCircumference == true">
+			<div style="padding-left: 2%; padding-right: 4%">
+				<div class="desktop-column-20 padding-0-x force-left" style="margin-left: 0%; padding-bottom: 2%">
+					<div [chart]="chartThree" id="interHeadContainer" style="height: 600px; width: 100%;border-style:solid;border:1px;overflow: hidden"></div>
+				</div>
+			</div>
+		</div>
+		<div class="clear overflow-auto desktop-column-20" style="overflow: hidden" *ngIf="interHeightTrue == true">
+			<div class="" style="padding-left: 2%; padding-right: 4%">
+				<div class="desktop-column-20 padding-0-x force-left" style="margin-left: 0%; padding-bottom: 2%">
+					<div [chart]="chartFour" id="interHeightContainer" style="height: 600px; width: 100%;border-style:solid;border:1px;overflow: hidden"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="growthChartToggle == true">
+		<div class="clear overflow-auto desktop-column-20" style="overflow: hidden;text-align:center" *ngIf="combinedTrue == true" >
+			<div style="padding-left: 2%; padding-right: 4%">
+				<div class="desktop-column-20 padding-0-x force-left" style="margin-left: 0%; padding-bottom: 2%">
+					<div [chart]="chartGrowthOne" id="combinedContainer" style="height: 1380px; width: 100%;border-style:solid;border:1px;overflow: hidden"></div>
+				</div>
+			</div>
+		</div>
+		<div class="clear overflow-auto desktop-column-20" style="overflow: hidden;text-align:center" *ngIf="weightTrue == true"  style="text-align:center">
+			<div style="padding-left: 2%; padding-right: 4%">
+				<div class="desktop-column-20 padding-0-x force-left" style="margin-left:0%; padding-bottom: 2%">
+					<div [chart]="chartGrowthTwo" id="weightContainer" style="height: 600px; width: 100%;border-style:solid;border:1px;overflow: hidden;text-align:center"></div>
+				</div>
+			</div>
+		</div>
+		<div class="clear overflow-auto desktop-column-20" style="overflow: hidden" *ngIf ="headCircumference == true">
+			<div style="padding-left: 2%; padding-right: 4%">
+				<div class="desktop-column-20 padding-0-x force-left" style="margin-left: 0%; padding-bottom: 2%">
+					<div [chart]="chartGrowthThree" id="headContainer" style="height: 600px; width: 100%;border-style:solid;border:1px;overflow: hidden"></div>
+				</div>
+			</div>
+		</div>
+		<div class="clear overflow-auto desktop-column-20" style="overflow: hidden" *ngIf="heightTrue ==  true">
+			<div style="padding-left: 2%; padding-right: 4%">
+				<div class="desktop-column-20 padding-0-x force-left" style="margin-left: 0%; padding-bottom: 2%">
+					<div [chart]="chartGrowthFour" id="heightContainer" style="height: 600px; width: 100%;border-style:solid;border:1px;overflow: hidden"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

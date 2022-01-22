@@ -1,0 +1,2 @@
+alter table apollo.device_monitor_detail add temperature varchar(10);
+alter table apollo.dashboard_device_monitor_detail add temperature varchar(50);

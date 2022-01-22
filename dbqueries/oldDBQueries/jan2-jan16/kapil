@@ -1,0 +1,14 @@
+Alter table kdah.nursing_intake_output add column stoma character varying(50);
+Alter table kdah.nursing_intake_output add column stoma_color character varying(100);
+
+alter table kdah.device_detail add column tinydeviceserialno character varying(50);
+alter table kdah.ref_inicu_bbox add column tinyboxname character varying(50);
+insert into kdah.ref_device_type  (devicetypeid, device_type, description) values(5, 'Camera', 'Camera');
+insert into kdah.ref_inicu_devices (deviceid, devicename, brandname, devicetypeid, communicationtype) values (20, 'camera1','sony',5,'');
+
+alter table kdah.ref_hospitalbranchname add column tempuhidtoggle character varying(30) default 'No';
+alter table kdah.baby_detail add column receivingdate date;
+alter table kdah.baby_detail add column receivingtime character varying(50);
+
+
+alter table kdah.admission_notes add column course_before_admission text;

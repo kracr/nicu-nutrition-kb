@@ -1,0 +1,80 @@
+CREATE SEQUENCE apollo.nutritional_compliance_seq
+    INCREMENT 1
+    START 48526
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE apollo.nutritional_compliance_seq
+    OWNER TO postgres;
+
+CREATE FUNCTION apollo.nutritional_compliance_creationtime()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+    BEGIN
+        NEW.creationtime := current_timestamp;
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$;
+
+ALTER FUNCTION apollo.nutritional_compliance_creationtime()
+    OWNER TO postgres;
+	
+CREATE FUNCTION apollo.nutritional_compliance_modificationtime()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+    BEGIN
+        NEW.modificationtime := current_timestamp;
+        RETURN NEW;
+    END;
+$BODY$;
+
+ALTER FUNCTION apollo.nutritional_compliance_modificationtime()
+    OWNER TO postgres;
+	
+	
+CREATE TABLE apollo.nutritional_compliance
+(
+    nutritionalcompianceid bigint NOT NULL DEFAULT nextval('apollo.nutritional_compliance_seq'::regclass),
+    creationtime timestamp with time zone NOT NULL,
+    modificationtime timestamp with time zone NOT NULL,
+    uhid character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    dol integer,
+    feed_volume real,
+    feed_advancement real,
+    CONSTRAINT nutrional_compliance_pkey PRIMARY KEY (nutritionalcompianceid)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE apollo.nutritional_compliance
+    OWNER to postgres;
+
+-- Trigger: set_creationtime
+
+-- DROP TRIGGER set_creationtime ON apollo.nutrional_compliance;
+
+CREATE TRIGGER set_creationtime
+    BEFORE INSERT
+    ON apollo.nutritional_compliance
+    FOR EACH ROW
+    EXECUTE PROCEDURE apollo.nutritional_compliance_creationtime();
+
+-- Trigger: set_modificationtime
+
+-- DROP TRIGGER set_modificationtime ON apollo.nutrional_compliance;
+
+CREATE TRIGGER set_modificationtime
+    BEFORE UPDATE 
+    ON apollo.nutritional_compliance
+    FOR EACH ROW
+    EXECUTE PROCEDURE apollo.nutritional_compliance_modificationtime();
+
+

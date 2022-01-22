@@ -1,0 +1,26 @@
+[
+    {
+        "date": "10 August 2014",
+        "deviceType": "Monitor",
+        "timeFrom": "10",
+        "timeTo": "50"
+    },
+    {
+        "date": "10 Feb 2016",
+        "deviceType": "Monitor",
+        "timeFrom": "10",
+        "timeTo": "20"
+    },
+    {
+        "date": "10 July 2011",
+        "deviceType": "Monitor",
+        "timeFrom": "10",
+        "timeTo": "30"
+    },
+    {
+        "date": "10 September 2012",
+        "deviceType": "Monitor",
+        "timeFrom": "10",
+        "timeTo": "40"
+    }
+]

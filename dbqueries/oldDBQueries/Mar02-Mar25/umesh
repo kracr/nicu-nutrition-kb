@@ -1,0 +1,118 @@
+drop table apollo.local_configurations;
+
+CREATE TABLE apollo.local_configurations
+(
+    configurationsid character varying(10) NOT NULL,
+    country character varying(10) NOT NULL,
+    local_date character varying(20) NOT NULL,
+    local_datetime character varying(20) NOT NULL,
+    local_date_medium character varying(20) NOT NULL,
+    local_datetime_medium character varying(20) NOT NULL,
+    local_datepicker text NOT NULL,
+    local_datepicker_withouttime text NOT NULL,
+    addLangs text NOT NULL,
+    useLang character varying(20) NOT NULL,
+    CONSTRAINT configurationsid_pkey PRIMARY KEY (configurationsid)
+)
+WITH (
+    OIDS = FALSE
+);
+
+alter table apollo.local_configurations
+    owner to postgres;
+
+
+
+-- Please check your database first if these entries are already present them don't run it.
+
+INSERT INTO rainbow.ref_testslist (testid, testcode, testname, assesment_category, isactive) VALUES
+(1158,'IB104', 'Serum Lactate', 'Others', true),
+(1159,'IB105', 'Serum Ammonia', 'Others', true),
+(1160,'IB106', 'Amylase', 'Others', true);
+
+-- Please check your database first if these entries are already present them don't run it.
+
+insert into rainbow.ref_enaddtivesbrand (enaddtivesbrandid,addtivename,brandname,strength,unit) values
+    ('EN009','Iron','Orofer XT',10,'mg/ml'),
+    ('EN013','VitaminD','Cholecalciferol',800,'IU/ml'),
+    ('EN014','Iron','Feronia XT',10,'mg/ml');
+
+update rainbow.ref_enaddtivesbrand set brandname='Feronia XT(6 mg/ml)' where enaddtivesbrandid='EN008';
+
+
+CREATE SEQUENCE rainbow.clinical_alert_settings_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE rainbow.clinical_alert_settings_seq
+  OWNER TO postgres;
+
+create table rainbow.clinical_alert_settings(
+    alert_id bigint default nextval('rainbow.clinical_alert_settings_seq'::regclass) not null
+        constraint clinical_alert_settings_pkey
+            primary key,
+	parameter_name varchar,
+	min_value varchar(10),
+	max_value varchar(10),
+	dependency_list text,
+	branchname varchar(200)
+);
+
+
+CREATE SEQUENCE rainbow.clinical_alert_item_dropdown_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE rainbow.clinical_alert_item_dropdown_seq
+  OWNER TO postgres;
+
+
+create table rainbow.clinical_alert_item_dropdown(
+    clinical_item_id bigint default nextval('rainbow.clinical_alert_item_dropdown_seq'::regclass) not null
+        constraint clinical_alert_item_dropdown_pkey
+            primary key,
+	clinical_item_name varchar(200),
+	clinical_item_code varchar(255),
+	clinical_item_description varchar(255)
+);
+
+-- Please check your database first if these entries are already present them don't run it.
+
+insert into rainbow.clinical_alert_item_dropdown (clinical_item_name, clinical_item_description,clinical_item_code) values
+    ('HR','Heart Rate','CLI001'),
+    ('PR','Pulse Rate','CLI002'),
+    ('RR','Respiratory Rate','CLI003'),
+    ('SpO2','oxygen saturation','CLI004'),
+    ('CFT','CFT','CLI005'),
+    ('ETCO2','ETCO2','CLI006'),
+    ('CVP','CVP','CLI007'),
+    ('NIBP','NIBP','CLI008'),
+    ('IBP','IBP','CLI009'),
+    ('C-Temp','Central Temperature','CLI010'),
+    ('P-Temp','Peripheral Temperature','CLI011');
+
+INSERT INTO rainbow.ref_fluidtype (fluidid, fluidvalue) VALUES ('FL015', 'ISO P(10%)');
+
+update rainbow.ref_ventilationmode set ventmodeid='VM0020' where ventilationmode='CPAP';
+
+-- Please check your database first if these entries are already present them don't run it.
+
+insert into rainbow.ref_misc_dropdowns (misc_id, assessment_name, description) values(37,'PDA','pda');
+
+-- Please check your database first if these entries are already present them don't run it.
+
+insert into rainbow.ref_testslist values('2359','Ascites Fluid Culture','Ascites Fluid Culture','Infection',true);
+insert into rainbow.ref_testslist values('2360','Ascites Fluid Analysis','Ascites Fluid Analysis','Infection',true);
+
+INSERT INTO rainbow.local_configurations (configurationsid, country, local_date, local_datetime, local_date_medium, local_datetime_medium, local_datepicker, addlangs, uselang, local_datepicker_withouttime)
+Values ('1', 'en-US', 'dd-MM-yyyy', 'dd-MM-yyyy hh:mm a', 'dd MMM yyyy', 'dd MMM yyyy hh:mm a','{"firstDayOfWeek":0,"monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dateFormat":"DD-MM-YYYY hh:mm A","dateFns":null}',
+        '"[''en'',''test'']"', 'en','{"firstDayOfWeek":0,"monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dateFormat":"DD-MM-YYYY","dateFns":null}');
+
+
+----------------------------------------------------
+alter table rainbow.nursing_ventilaor
+	add intubated_humidification_temp varchar(30);

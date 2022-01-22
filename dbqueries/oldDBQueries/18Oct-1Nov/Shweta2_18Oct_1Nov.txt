@@ -1,0 +1,117 @@
+-- Table: kdah.ref_ventilationmode
+
+ DROP VIEW kdah.vw_sa_respsystem;
+DROP TABLE kdah.ref_ventilationmode;
+
+CREATE TABLE kdah.ref_ventilationmode
+(
+    ventmodeid character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    ventilationmode character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    ventilation_type character varying(50) COLLATE pg_catalog."default",
+    status character varying(50) COLLATE pg_catalog."default",
+    CONSTRAINT ref_ventmode_pkey PRIMARY KEY (ventmodeid)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE kdah.ref_ventilationmode
+    OWNER to postgres;
+	
+
+
+-- View: kdah.vw_sa_respsystem
+
+
+
+CREATE OR REPLACE VIEW kdah.vw_sa_respsystem AS 
+ SELECT r.respid,
+    r.creationtime,
+    r.uhid,
+    rd.rdscauseid,
+    rd.rdscause,
+    r.lowestspo2,
+    r.spo2,
+    r.maxrr,
+    r.apnea,
+    r.maxfio2,
+    r.maxbili,
+    r.mechvent,
+    rv.ventmodeid,
+    r.ageatvent,
+    r.ventduration,
+    r.surfactant,
+    r.noofdoses,
+    r.ageatsurfactant,
+    r.cld,
+    rc.cldstageid,
+    rc.cldstage,
+    r.pphn,
+    r.pulmhaem,
+    rr.mvreasonid,
+    rr.reasonofmv,
+    r.cpap,
+    r.daysofcpap,
+    r.airvo,
+    r.niv,
+    r.ventilationmode,
+    r.caffeine_startage,
+    r.caffeine_stopage,
+    r.ventilation_type,
+    r.comment
+   FROM kdah.sa_respsystem r
+     LEFT JOIN kdah.ref_rdscause rd ON r.rdscause::text = rd.rdscauseid::text
+     LEFT JOIN kdah.ref_ventilationmode rv ON r.ventilationmode::text = rv.ventmodeid::text
+     LEFT JOIN kdah.ref_reasonofmv rr ON r.reasonofmv::text = rr.mvreasonid::text
+     LEFT JOIN kdah.ref_cldstage rc ON r.cldstage::text = rc.cldstageid::text
+  ORDER BY r.creationtime DESC;
+
+ALTER TABLE kdah.vw_sa_respsystem
+  OWNER TO postgres;
+
+
+
+
+
+
+	
+	
+insert into kdah.ref_ventilationmode values('VM0006','SIMV','SIMV','MechVent','active');
+
+	
+insert into kdah.ref_ventilationmode values('VM0005','PSV','PSV','MechVent','active');
+	
+	
+insert into kdah.ref_ventilationmode values('VM0004','HFO','HFO','MechVent','active');
+
+	
+	
+insert into kdah.ref_ventilationmode values('VM0003','HFNC','HFNC','NIV','inactive');
+
+	
+	
+insert into kdah.ref_ventilationmode values('VM0002','NasalIMV','NasalIMV','NIV','inactive');
+insert into kdah.ref_ventilationmode values('VM0007','Oxygen by cannula','Oxygen by cannula','MechVent','inactive');
+insert into kdah.ref_ventilationmode values('VM0008','Oxygen by hood','Oxygen by hood','MechVent','inactive');
+
+insert into kdah.ref_ventilationmode values('VM0009','High flow oxygen','High flow oxygen','MechVent','inactive');
+insert into kdah.ref_ventilationmode values('VM0011','NIPPV','NIPPV','MechVent','inactive');
+insert into kdah.ref_ventilationmode values('VM0012','Conv MV','Conv MV','MechVent','inactive');
+insert into kdah.ref_ventilationmode values('VM0013','Inflant Flow Driver','Inflant Flow Driver','MechVent','inactive');
+insert into kdah.ref_ventilationmode values('VM0001','Bubble CPAP','Bubble CPAP','NIV','inactive');
+insert into kdah.ref_ventilationmode values('VM0010','Ventilator CPAP','Ventilator CPAP','MechVent','inactive');
+insert into kdah.ref_ventilationmode values('VM0018','Air Flow','Air Flow','NIV','inactive');
+
+insert into kdah.ref_ventilationmode values('VM0014','Low Flow O2','Low Flow O2','NIV','active');
+
+insert into kdah.ref_ventilationmode values('VM0015','High Flow O2','High Flow O2','NIV','active');
+
+insert into kdah.ref_ventilationmode values('VM0016','IMV','IMV','MechVent','active');
+
+insert into kdah.ref_ventilationmode values('VM0017','NIMV','NIMV','NIV','active');
+
+insert into kdah.ref_ventilationmode values('VM0019','SIPPV','SIPPV','MechVent','active');
+
+insert into kdah.ref_ventilationmode values('VM0020','CPAP','CPAP','NIV','active');

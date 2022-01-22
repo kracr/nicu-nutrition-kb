@@ -1,0 +1,32 @@
+<h1 style="text-align: center; font-size: 30px;">Parenteral Fluid</h1>
+
+<div *ngIf="printDataObj" class="col-md-12 no-padding margin-10-y" style="font-size: 20px;">
+<div class="col-md-9" *ngIf="printDataObj == null || printDataObj.isparentalgiven != true">No Parenteral Order.</div>
+<div class="col-md-9" *ngIf="printDataObj != null && printDataObj.isparentalgiven == true">
+    <div style="margin-bottom: 20px;" *ngIf="(printDataObj.bolus_executed == null || printDataObj.bolus_executed == false) && printDataObj.isBolusGiven && printDataObj.bolusType != null">
+    Bolus {{printDataObj.bolusType}}	: {{printDataObj.bolusTotalFeed}} ml @ {{printDataObj.bolus_rate | number:'1.0-1'}} ml/hr over {{printDataObj.bolus_infusiontime}} min.<br></div>
+        <div style="margin-bottom: 20px;" *ngIf="printDataObj.lipidTotal != null"><span class="bold">Fluid Type</span> : Lipid Solution<br>
+            <span class="bold">Lipids (20%)</span> : {{printDataObj.lipidTotal}} ml @ {{printDataObj.lipidTotal/24 | number:'1.0-1'}} ml/hr<br>
+        </div>
+        <div><span class="bold">Fluid Type</span> : Dextrose, Amino Acid & others<br>
+            <span *ngIf="printDataObj.aminoacidTotal != null"><span class="bold">Amino Acid</span> = {{printDataObj.aminoacidTotal}} ml<br></span>
+            <span *ngIf="printDataObj.girvalue != null"><span class="bold">GIR</span> : {{printDataObj.girvalue | number:'1.0-2'}} mg/kg/min<br></span>
+            <span *ngIf="printDataObj.currentDextroseConcentration != null && printDataObj.dextroseVolumemlperday != null">Dextrose {{printDataObj.currentDextroseConcentration | number:'1.0-2'}} %: {{printDataObj.dextroseVolumemlperday | number:'1.0-2'}} ml<br></span>
+            <span *ngIf="printDataObj.dextroseConcLow != null && printDataObj.dextroseConcLowvolume != null">Low Concentration {{printDataObj.dextroseConcLow | number:'1.0-1'}} %: {{printDataObj.dextroseConcLowvolume | number:'1.0-2'}} ml<br></span>
+            <span *ngIf="printDataObj.dextroseConcHigh != null && printDataObj.dextroseConcHighvolume != null">High Concentration {{printDataObj.dextroseConcHigh | number:'1.0-1'}} %: {{printDataObj.dextroseConcHighvolume | number:'1.0-2'}} ml<br></span>
+        </div>
+        <div *ngIf="additives" style="margin-bottom: 20px;"><span class="bold">Additive</span><br>
+            <span *ngIf="printDataObj.sodiumTotal != null && printDataObj.sodiumTotal != ''">NaCl = {{printDataObj.sodiumTotal}} ml <br></span>
+            <span *ngIf="printDataObj.potassiumTotal != null && printDataObj.potassiumTotal != ''">KCl = {{printDataObj.potassiumTotal}} ml<br></span>
+            <span *ngIf="printDataObj.calciumTotal != null && printDataObj.calciumTotal != ''">Calcium = {{printDataObj.calciumTotal}} ml<br></span>
+            <span *ngIf="printDataObj.phosphorousTotal != null && printDataObj.phosphorousTotal != ''">Phosphorus = {{printDataObj.phosphorousTotal}} ml<br></span>
+            <span *ngIf="printDataObj.mviTotal != null && printDataObj.mviTotal != ''"> Multi Vitamin Infusion = {{printDataObj.mviTotal}} ml<br></span>
+            <span *ngIf="printDataObj.hco3Total != null && printDataObj.hco3Total != ''">NaHCO3 = {{printDataObj.hco3Total}} ml<br></span>
+            <span *ngIf="printDataObj.magnesiumTotal != null && printDataObj.magnesiumTotal != ''">Magnesium = {{printDataObj.magnesiumTotal}} ml<br></span>
+        </div>
+        <span><span class="bold">Total Fluid Mix</span><br>
+            Total {{(printDataObj.totalparenteralAdditivevolume + printDataObj.aminoacidTotal + printDataObj.dextroseVolumemlperday) | number:'1.0-2'}} (ml/day), give @ {{(printDataObj.totalparenteralAdditivevolume + printDataObj.aminoacidTotal + printDataObj.dextroseVolumemlperday)/24 | number:'1.0-2'}} ml/hr.
+            <span *ngIf="printDataObj.osmolarity != null">Osmolarity: {{printDataObj.osmolarity | number:'1.0-2'}} mosmol/L</span>
+        </span>
+</div>
+</div>

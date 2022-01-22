@@ -1,0 +1,32 @@
+.monitor-type-heading{margin:5px 0px;}
+
+.full-monitor-row{
+    display: block; margin:10px 0px;
+    &.purple-coloured{color:$purple;}
+    &.dark-green-coloured{color:$darkGreen;}
+    &.red-coloured{color:$red;}
+    &.blue-coloured{color:#4a4ab6;}
+}
+
+.monitor-box{
+    display:table;
+    .graph-box{
+        display:table-cell; vertical-align:middle;
+        .graph{display:block; min-height: 98px; border:solid 2px; width:440px;}
+    }
+    
+    .timestamps{
+        font-size:12px; color:inherit; margin:6px 0px; position:relative;
+        .time-start{}
+        .current-time{position: absolute; top:0px; right:0px; bottom:0px; left:0px; text-align:center;}
+        .time-end{float:right;}
+    }
+    
+    .values-box{
+        display: table-cell; vertical-align:middle; padding:10px 30px; text-align:center;
+        .title{font-size:18px; margin:2px 0px; line-height:1; color:inherit;}
+        .value{font-size:41px; margin:2px 0px; line-height:1; color:inherit;}
+        
+        .orange-text{color:$orange;}
+    }
+}

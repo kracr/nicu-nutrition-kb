@@ -1,0 +1,1 @@
+Alter table kdah.respsupport add column counterBpdRds integer;

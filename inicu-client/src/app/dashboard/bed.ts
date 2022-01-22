@@ -1,0 +1,42 @@
+import { BabyImage } from './babyimage';
+
+export class Bed{
+  name : string;
+  level: string;
+  condition: string;
+  babyRoom : string;
+  babyImage : BabyImage;
+  uniqueNumber : string;
+  deviceTime : string;
+  ventilatorTime : any;
+  isvacant : boolean;
+  babyType : string;
+  babyNumber : string;
+  uhid : string;
+  room : any;
+  bedNo : string;
+  admitDate : string;
+  bed : Bed;
+  notificationObject : any;
+  whichDeviceDataVisble : string;
+  isVisible: boolean;
+  SPO2 : any;
+  spo2 : any;
+  HR : any;
+  hr : any;
+  PR : any;
+  pr : any;
+  RR : any;
+  rr : any;
+  fio2 : any;
+  pip : any;
+  peep : any;
+  temp : any;
+  sys_bp : any;
+  dia_bp : any;
+  mean_bp : any;
+  ropAlert : string;
+	ultrasoundAlert : string;
+  ventilatorException : any;
+  monitorException : any;
+}

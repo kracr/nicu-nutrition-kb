@@ -1,0 +1,222 @@
+alter table kdah.baby_detail add column lengthOfStay character varying(100);
+
+
+DROP VIEW kdah.vw_discharged_patients_final;
+
+DROP VIEW kdah.vw_discharged_patients_raw;
+
+
+
+-- View: kdah.vw_discharged_patients_raw
+
+-- DROP VIEW kdah.vw_discharged_patients_raw;
+
+CREATE OR REPLACE VIEW kdah.vw_discharged_patients_raw AS 
+ SELECT b1.babydetailid,
+    b1.creationtime,
+    b1.modificationtime,
+    b1.uhid,
+    b1.babyname,
+    b1.gender,
+    b1.dateofbirth,
+    b1.timeofbirth,
+    b1.dateofadmission,
+    b1.timeofadmission,
+    b1.birthweight,
+    b1.birthlength,
+    b1.birthheadcircumference,
+    b1.obstetrician,
+    b1.admittingdoctor,
+    b1.iptagno,
+    b1.typeofadmission,
+    b1.inout_patient_status,
+    b1.gestationweekbylmp,
+    b1.gestationdaysbylmp,
+    b1.actualgestationweek,
+    b1.actualgestationdays,
+    b1.bloodgroup,
+    b1.nicubedno,
+    b1.nicuroomno,
+    b1.niculevelno,
+    b1.criticalitylevel,
+    b1.significantmaterialid,
+    b1.historyid,
+    b1.headtotoeid,
+    b1.examinationid,
+    b1.comments,
+    b1.activestatus,
+    b1.babyshiftedto,
+    b1.admissionstatus,
+    b1.timeofcry,
+    b1.cry,
+    b1.loggeduser,
+    b1.dischargestatus,
+    b1.dischargeddate,
+    b1.dayoflife,
+    b1.admission_spo2,
+    b1.admission_rr,
+    b1.admission_pulserate,
+    b1.admission_bp,
+    b1.admission_temp,
+    b1.birthmarks,
+    b1.birthmarks_comments,
+    b1.birthinjuries,
+    b1.birthinjuries_comments,
+    b1.refferedfrom,
+    b1.courseinrefferinghospital,
+    b1.modeoftransportation,
+    b1.transportationalongwith,
+    b1.reasonofreference,
+    b1.refferedby,
+    b1.reffered_number,
+    b1.sourceoftransportation,
+    b1.weight_centile,
+    b1.length_centile,
+    b1.hc_centile,
+    b1.bp_type,
+    b1.bp_lll,
+    b1.bp_rll,
+    b1.bp_lul,
+    b1.bp_rul,
+    b1.spo2,
+    b1.episodeid,
+    b1.consciousness,
+    b1.weight_galevel,
+    b1.length_galevel,
+    b1.hc_galevel,
+    b1.ponderal_index,
+    b1.hr,
+    b1.rr,
+    b1.bp_systolic,
+    b1.bp_diastolic,
+    b1.bp_mean,
+    b1.crt,
+    b1.downesscoreid,
+    b1.central_temp,
+    b1.peripheral_temp,
+    b1.isassessmentsubmit,
+    b1.baby_type,
+    b1.baby_number,
+    b1.admissionweight,
+    b1.assessmentname,
+    b1.respsupportdays,
+    b1.lengthofstay
+   FROM kdah.baby_detail b1
+     JOIN kdah.baby_detail b2 ON b1.babydetailid <> b2.babydetailid AND b1.uhid::text = b2.uhid::text AND b1.admissionstatus = true;
+
+ALTER TABLE kdah.vw_discharged_patients_raw
+  OWNER TO postgres;
+
+
+
+
+
+-- View: kdah.vw_discharged_patients_final
+
+-- DROP VIEW kdah.vw_discharged_patients_final;
+
+CREATE OR REPLACE VIEW kdah.vw_discharged_patients_final AS 
+ SELECT b.babydetailid,
+    b.creationtime,
+    b.modificationtime,
+    b.uhid,
+    b.babyname,
+    b.gender,
+    b.dateofbirth,
+    b.timeofbirth,
+    b.dateofadmission,
+    b.timeofadmission,
+    b.birthweight,
+    b.birthlength,
+    b.birthheadcircumference,
+    b.obstetrician,
+    b.admittingdoctor,
+    b.iptagno,
+    b.typeofadmission,
+    b.inout_patient_status,
+    b.gestationweekbylmp,
+    b.gestationdaysbylmp,
+    b.actualgestationweek,
+    b.actualgestationdays,
+    b.bloodgroup,
+    b.nicubedno,
+    b.nicuroomno,
+    b.niculevelno,
+    b.criticalitylevel,
+    b.significantmaterialid,
+    b.historyid,
+    b.headtotoeid,
+    b.examinationid,
+    b.comments,
+    b.activestatus,
+    b.babyshiftedto,
+    b.admissionstatus,
+    b.timeofcry,
+    b.cry,
+    b.loggeduser,
+    b.dischargestatus,
+    b.dischargeddate,
+    b.dayoflife,
+    b.admission_spo2,
+    b.admission_rr,
+    b.admission_pulserate,
+    b.admission_bp,
+    b.admission_temp,
+    b.birthmarks,
+    b.birthmarks_comments,
+    b.birthinjuries,
+    b.birthinjuries_comments,
+    b.refferedfrom,
+    b.courseinrefferinghospital,
+    b.modeoftransportation,
+    b.transportationalongwith,
+    b.reasonofreference,
+    b.refferedby,
+    b.reffered_number,
+    b.sourceoftransportation,
+    b.weight_centile,
+    b.length_centile,
+    b.hc_centile,
+    b.bp_type,
+    b.bp_lll,
+    b.bp_rll,
+    b.bp_lul,
+    b.bp_rul,
+    b.spo2,
+    b.episodeid,
+    b.consciousness,
+    b.weight_galevel,
+    b.length_galevel,
+    b.hc_galevel,
+    b.ponderal_index,
+    b.hr,
+    b.rr,
+    b.bp_systolic,
+    b.bp_diastolic,
+    b.bp_mean,
+    b.crt,
+    b.downesscoreid,
+    b.central_temp,
+    b.peripheral_temp,
+    b.isassessmentsubmit,
+    b.baby_type,
+    b.baby_number,
+    b.branchname,
+    b.assessmentname,
+    b.respsupportdays,
+    b.lengthofstay,
+    b.admissionweight,
+        CASE
+            WHEN (b.uhid::text IN ( SELECT vw_discharged_patients_raw.uhid
+               FROM kdah.vw_discharged_patients_raw)) THEN true
+            ELSE false
+        END AS isbabyininicu
+   FROM kdah.baby_detail b
+  WHERE b.admissionstatus = false;
+
+ALTER TABLE kdah.vw_discharged_patients_final
+  OWNER TO postgres;
+
+
+
+

@@ -1,0 +1,776 @@
+<doctor-panel></doctor-panel>
+<assessment-sheet></assessment-sheet>
+<div class="col-md-12">
+	<div class="col-md-12 no-padding background-white" *ngIf="stableNoteData != null && stableNoteTempObj != null && stableTempObj != null">
+		<div class="col-md-12 set-AssessmentSystemtEvent-background">
+			<div class="col-md-3 no-padding"></div>
+			<div class="col-md-1 col-lg-2 no-padding"></div>
+			<div class="col-md-8 col-lg-7 no-padding table full">
+				<div class="col-md-12 no-padding padding-10-y">
+					<div class="col-md-4 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">From</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime" [(ngModel)]="stableNoteTempObj.printFrom" [min]="minDate" [max]="maxDate" dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-4 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">To</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime" [(ngModel)]="stableNoteTempObj.printTo" [min]="minDate" [max]="maxDate" dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-4 no-padding-right right-aligned">
+						<div class="col-md-12 no-padding">
+							<label class="white-color visiblity-hidden"><strong>To Time</strong></label>
+						</div>
+						<div class="col-md-12 no-padding">
+							<span class="button button-blue" (click)="printStableNoteData(stableNoteTempObj.printFrom,stableNoteTempObj.printTo)">Print Progress Notes</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding"></div>
+		</div>
+		<div class="col-md-12 no-padding">
+			<div
+				class="col-md-3 left-aligned padding-10-y center-aligned">
+				<div class="col-md-12 no-padding center-aligned">
+					<label class="bold required"><strong>Date And Time
+					</strong></label>
+				</div>
+				<owl-date-time class="owl-dateTime" [(ngModel)]="stableNoteData.note.entrytime" (ngModelChange)="populateVitalInfoByDate()" dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}" [min]="minDate" [max]="maxDate"></owl-date-time>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding padding-10-y">
+			<div class="col-md-3 no-padding-right">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Resp. System</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned">
+					<div class="toggle-options-radio">
+						<input type="radio" name="respNormalAbnormal"
+							[value]="true" id="respNormal"
+							[(ngModel)]="stableNoteData.note.respNormal"
+							(ngModelChange)="populateStableNotesStr()"
+							> <label for="respNormal">Normal</label>
+						<input type="radio" name="respNormalAbnormal"
+							[value]="false" id="respAbnormal"
+							[(ngModel)]="stableNoteData.note.respNormal"
+							(ngModelChange)="populateStableNotesStr()"
+							> <label for="respAbnormal">To
+							be Assessed</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Jaundice</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned">
+					<div class="toggle-options-radio">
+						<input type="radio" name="jaundiceNormalAbnormal"
+							[value]="true" id="jaundiceNormal"
+							[(ngModel)]="stableNoteData.note.jaundiceNormal"
+							(ngModelChange)="populateStableNotesStr()"> <label
+							for="jaundiceNormal">No</label> <input type="radio"
+							id="jaundiceAbnormal" [value]="false"
+							name="jaundiceNormalAbnormal"
+							[(ngModel)]="stableNoteData.note.jaundiceNormal"
+							(ngModelChange)="populateStableNotesStr()"> <label
+							for="jaundiceAbnormal">To be Assessed</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Infection</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned">
+					<div class="toggle-options-radio">
+						<input type="radio" name="infectionNormalAbnormal"
+							[value]="true" id="infectionNormal"
+							[(ngModel)]="stableNoteData.note.infectionNormal"
+							(ngModelChange)="populateStableNotesStr()"> <label
+							for="infectionNormal">Nil</label> <input type="radio"
+							name="infectionNormalAbnormal"
+							id="infectionAbnormal" [value]="false"
+							[(ngModel)]="stableNoteData.note.infectionNormal"
+							(ngModelChange)="populateStableNotesStr()"> <label
+							for="infectionAbnormal">To be Assessed</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="bold">CNS</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned">
+					<div class="toggle-options-radio">
+						<input type="radio" name="cnsNormalAbnormal"
+							[value]="true"
+							[(ngModel)]="stableNoteData.note.cnsNormal" id="cnsNormal"
+							(ngModelChange)="populateStableNotesStr()"> <label for="cnsNormal">Normal</label>
+						<input type="radio" name="cnsNormalAbnormal"
+							[value]="false" [(ngModel)]="stableNoteData.note.cnsNormal" id="cnsAbnormal"
+							(ngModelChange)="populateStableNotesStr()"> <label for="cnsAbnormal">To
+							be Assessed</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="row padding-10-y">
+			<div class="col-md-12 no-padding">
+				<span class="bold">{{stableNoteData}}</span>
+			</div>
+		</div> -->
+		<div class="col-md-12 no-padding padding-10-y">
+			<div class="col-md-1 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned">
+					<span
+						class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">Vitals</span>
+				</div>
+			</div>
+			<div class="col-md-2 col-lg-1 no-padding-left">
+				<span class="bold">HR</span>
+				<div class="relative-input-group block desktop-column-20">
+					<input type="number" class="input input-medium desktop-column-8"
+						[(ngModel)]="stableNoteData.note.hr"
+						(keyup)="populateStableNotesStr()"> <span
+						class="input-group-icon center-aligned desktop-column-12">bpm</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<span class="error-labels">{{hrMessage}}</span>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding-left">
+				<div class="col-md-6 no-padding-left">
+					<span class="bold">BP (systolic)</span>
+					<div class="relative-input-group block desktop-column-20">
+						<input type="number" class="input input-medium desktop-column-8"
+							[(ngModel)]="stableNoteData.note.systolicBp"
+							(keyup)="populateStableNotesStr()"> <span
+							class="input-group-icon center-aligned desktop-column-12">mmHg</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<span class="error-labels">{{diaBpMessage}}</span>
+					</div>
+				</div>
+				<div class="col-md-6 no-padding-left">
+					<span class="bold">BP (diastolic)</span>
+					<div class="relative-input-group block desktop-column-20">
+						<input type="number" class="input input-medium desktop-column-8"
+							[(ngModel)]="stableNoteData.note.diaStolicBp"
+							(keyup)="populateStableNotesStr()"> <span
+							class="input-group-icon center-aligned desktop-column-12">mmHg</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<span class="error-labels">{{sysBpMessage}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2 col-lg-1 no-padding-left">
+				<span class="bold">Temp</span>
+				<div class="relative-input-group block desktop-column-20">
+					<input type="number" class="input input-medium desktop-column-8"
+						[(ngModel)]="stableNoteData.note.temp"
+						(keyup)="populateStableNotesStr()"> <span
+						class="input-group-icon center-aligned desktop-column-12"><sup>o</sup>C</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<span class="error-labels">{{tempMessage}}</span>
+				</div>
+			</div>
+			<div class="col-md-2 col-lg-1 no-padding-left">
+				<span class="bold">RR</span>
+				<div class="relative-input-group block desktop-column-20">
+					<input type="number" class="input input-medium desktop-column-8"
+						[(ngModel)]="stableNoteData.note.rr"
+						(keyup)="populateStableNotesStr()"> <span
+						class="input-group-icon center-aligned desktop-column-12">bpm</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<span class="error-labels">{{rrMessage}}</span>
+				</div>
+			</div>
+			<div class="col-md-2 col-lg-1 no-padding-left">
+				<span class="bold">SpO<sub>2</sub></span>
+				<div class="relative-input-group block desktop-column-20">
+					<input type="number" class="input input-medium desktop-column-8"
+						[(ngModel)]="stableNoteData.note.spo2"
+						(keyup)="populateStableNotesStr()"> <span
+						class="input-group-icon center-aligned desktop-column-12">%</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<span class="error-labels">{{spoMessage}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding padding-10-y">
+			<div class="col-md-1 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned">
+					<span
+						class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">Activity</span>
+				</div>
+			</div>
+			<div class="col-md-4 no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<div class="toggle-options-radio">
+						<input type="radio" name="stableNoteActivity" value="ACTIVE" [(ngModel)]="stableNoteData.note.activity" (ngModelChange)="populateStableNotesStr()" id="ActivityACTIVE">
+						<label for="ActivityACTIVE">ACTIVE</label>
+						<input type="radio" name="stableNoteActivity" value="SLUGGISH" [(ngModel)]="stableNoteData.note.activity" (ngModelChange)="populateStableNotesStr()" id="ActivitySLUGGISH">
+						<label for="ActivitySLUGGISH">SLUGGISH</label>
+						<input type="radio" name="stableNoteActivity" value="STUPOROSE" [(ngModel)]="stableNoteData.note.activity" (ngModelChange)="populateStableNotesStr()" id="ActivitySTUPOROSE">
+						<label for="ActivitySTUPOROSE">STUPOROSE</label>
+						<input type="radio" name="stableNoteActivity" value="COMATOSE" [(ngModel)]="stableNoteData.note.activity" (ngModelChange)="populateStableNotesStr()" id="ActivityCOMATOSE">
+						<label for="ActivityCOMATOSE">COMATOSE</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned">
+					<span
+						class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">Feeds</span>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left">
+				<span class="bold">Method</span>
+				<div class="relative-input-group block desktop-column-20">
+					<label class="input input-medium desktop-column-20">
+						{{stableTempObj.feedMethod}} </label>
+				</div>
+			</div>
+			<div class="col-md-1 no-padding-left"
+				*ngIf="stableNoteData.note.babyFeed.isAdLibGiven!=null && stableNoteData.note.babyFeed.isAdLibGiven==true">
+				<span class="bold"></span>
+				<div class="relative-input-group block desktop-column-20">
+					<span class="bold" class="input input-medium desktop-column-20">Baby is on AD-LIB</span>
+				</div>
+			</div>
+			<div
+				*ngIf="stableNoteData.note.babyFeed.isAdLibGiven==null || stableNoteData.note.babyFeed.isAdLibGiven== false">
+				<div class="col-md-1 no-padding-left">
+					<span class="bold">Volume</span>
+					<div class="relative-input-group block desktop-column-20">
+						<input type="text" class="input input-medium desktop-column-20"
+							[(ngModel)]="stableNoteData.note.babyFeed.feedvolume"
+							(ngModelChange)="populateStableNotesStr()" disabled>
+					</div>
+				</div>
+				<div class="col-md-1 no-padding-left">
+					<span class="bold">Frequency</span>
+					<div class="relative-input-group block desktop-column-20">
+						<input type="text" class="input input-medium desktop-column-20"
+							[(ngModel)]="stableNoteData.note.babyFeed.feedduration"
+							(ngModelChange)="populateStableNotesStr()" disabled>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding padding-10-y">
+			<div class="col-md-1 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned">
+					<span
+						class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">Stool</span>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left stool">
+				<span class="visiblity-hidden">dummy</span>
+				<div class="toggle-options-radio">
+					<input type="radio" name="Stool" [value]="true"
+						[(ngModel)]="stableNoteData.note.stoolStatus" id="StoolPassed"
+						(ngModelChange)="populateStableNotesStr()"> <label
+						for="StoolPassed">Passed</label> <input type="radio" name="Stool"
+						[(ngModel)]="stableNoteData.note.stoolStatus"
+						(ngModelChange)="populateStableNotesStr()" [value]="false"
+						id="StoolNotPassed"> <label for="StoolNotPassed"
+						(click)="stoolNotPassed()">Not Passed</label>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left"
+				*ngIf="stableNoteData.note.stoolStatus == true && stableNoteData.note.stoolStatus != null">
+				<span class="bold">Type</span> <select
+					class="input input-medium col-md-12 no-margin"
+					[(ngModel)]="stableNoteData.note.stoolType"
+					(ngModelChange)="populateStableNotesStr()">
+					<option value="" selected>--Select--</option>
+					<option value="Small">Small</option>
+					<option value="Medium">Medium</option>
+					<option value="Large">Large</option>
+					<option value="Blood">Blood</option>
+				</select>
+			</div>
+			<div class="col-md-2 no-padding-left"
+				*ngIf="stableNoteData.note.stoolStatus == true && stableNoteData.note.stoolStatus != null">
+				<span class="bold">Frequency</span> <input type="number"
+					class="input input-medium col-md-10 col-lg-12 no-margin"
+					[(ngModel)]="stableNoteData.note.stoolTimes"
+					(ngModelChange)="populateStableNotesStr()">
+
+			</div>
+			<div class="col-md-1 no-padding urine">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned">
+					<span
+						class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">Urine</span>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left stool">
+				<span class="visiblity-hidden">dummy</span>
+				<div class="toggle-options-radio">
+					<input type="radio" name="Urine" [value]="true"
+						[(ngModel)]="stableNoteData.note.urineStatus" id="UrinePassed"
+						(ngModelChange)="populateStableNotesStr()"> <label
+						for="UrinePassed">Passed</label> <input type="radio" name="Urine"
+						[(ngModel)]="stableNoteData.note.urineStatus"
+						(ngModelChange)="populateStableNotesStr()" [value]="false"
+						id="UrineNotPassed"> <label for="UrineNotPassed"
+						(click)="urineNotPassed()">Not Passed</label>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left volume"
+				*ngIf="stableNoteData.note.urineStatus == true && stableNoteData.note.urineStatus != null">
+				<span class="bold">Volume</span>
+				<div class="relative-input-group block desktop-column-20">
+					<input type="text" class="input input-medium desktop-column-8"
+						[(ngModel)]="stableNoteData.note.urineVolume"
+						(keyup)="populateStableNotesStr()"> <span
+						class="input-group-icon center-aligned desktop-column-12">ml/kg/hr</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-12 no-padding padding-10-y">
+			<div class="col-md-2 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned">
+					<span
+						class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">Abdominal Girth (cm)</span>
+				</div>
+			</div>
+
+			<div class="col-md-1 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<div class="relative-input-group block desktop-column-20">
+						<input type="number" class="input input-medium desktop-column-20" [(ngModel)]="stableNoteData.note.abdominalGirth">
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-1 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned">
+					<span
+						class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">Vomit</span>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left">
+				<span class="visiblity-hidden">dummy</span>
+				<div class="toggle-options-radio">
+					<input type="radio" name="Vomit" [value]="true"
+						[(ngModel)]="stableNoteData.note.vomitStatus" id="VomitPassed"
+						(ngModelChange)="populateStableNotesStr()"> <label
+						for="VomitPassed">Yes</label> <input type="radio" name="Vomit"
+						[(ngModel)]="stableNoteData.note.vomitStatus"
+						(ngModelChange)="populateStableNotesStr()" [value]="false"
+						id="VomitNotPassed"> <label for="VomitNotPassed"
+						(click)="VomitNotPassed()">No</label>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left"
+				*ngIf="stableNoteData.note.vomitStatus == true && stableNoteData.note.vomitStatus != null">
+				<span class="bold">Type</span> <select
+					class="input input-medium col-md-12 no-margin"
+					[(ngModel)]="stableNoteData.note.vomitType"
+					(ngModelChange)="populateStableNotesStr()">
+					<option value="" selected>--Select--</option>
+					<option value="Small">Small</option>
+					<option value="Medium">Medium</option>
+					<option value="Large">Large</option>
+				</select>
+			</div>
+			<div class="col-md-2 no-padding-left"
+				*ngIf="stableNoteData.note.vomitStatus == true && stableNoteData.note.vomitStatus != null">
+				<span class="bold">Vomit Color</span> <select
+					class="input input-medium col-md-12 no-margin"
+					[(ngModel)]="stableNoteData.note.vomitColor"
+					(ngModelChange)="populateStableNotesStr()">
+					<option value="Clear">Clear</option>
+					<option value="Yellow">Yellow</option>
+					<option value="Green">Green</option>
+					<option value="Milky">Milky</option>
+					<option value="Blood Stained">Blood Stained</option>
+					<option value="Bloody">Bloody</option>
+					<option value="Other">Other</option>
+				</select>
+			</div>
+		</div>
+
+	 	<div class="col-md-12 no-padding padding-10-y">
+	    <div class="col-md-4 col-lg-3 no-padding-left">
+	    	<div class="col-md-7 no-padding">
+	  			<div class="col-md-12 no-padding">
+	  				<span class="visiblity-hidden">dummy</span>
+	  			</div>
+	  			<div class="col-md-12 no-padding center-aligned">
+	  				<span
+	  					class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">High HR Alarm Set</span>
+	  			</div>
+	  		</div>
+		    <div class="col-md-5 no-padding">
+	  			<div class="col-md-12 no-padding">
+        		<span class="visiblity-hidden">dummy</span>
+	        </div>
+        	<div class="col-md-12 no-padding">
+	        	<div class="relative-input-group block desktop-column-20">
+	            <input type="number" class="input input-medium desktop-column-20" [(ngModel)]="stableNoteData.note.hrAlarmHi">
+	          </div>
+	    	  </div>
+		    </div>
+			</div>
+			<div class="col-md-4 col-lg-3 no-padding-left">
+				<div class="col-md-7 no-padding">
+        	<div class="col-md-12 no-padding">
+        		<span class="visiblity-hidden">dummy</span>
+        	</div>
+        	<div class="col-md-12 no-padding center-aligned">
+          		<span class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">Low HR Alarm Set</span>
+        	</div>
+		    </div>
+	    	<div class="col-md-5 no-padding">
+	      	<div class="col-md-12 no-padding">
+	        		<span class="visiblity-hidden">dummy</span>
+	      	</div>
+        	<div class="col-md-12 no-padding">
+          	<div class="relative-input-group block desktop-column-20">
+          		<input type="number" class="input input-medium desktop-column-20" [(ngModel)]="stableNoteData.note.hrAlarmLo">
+        		</div>
+	    		</div>
+	    	</div>
+		  </div>
+			<div class="col-md-4 col-lg-3 no-padding-left">
+	    	<div class="col-md-7 no-padding">
+        	<div class="col-md-12 no-padding">
+  					<span class="visiblity-hidden">dummy</span>
+	  			</div>
+		  		<div class="col-md-12 no-padding center-aligned">
+		  			<span class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">Incubator humidity set</span>
+		  		</div>
+	      </div>
+      	<div class="col-md-5 no-padding">
+        	<div class="col-md-12 no-padding">
+        		<span class="visiblity-hidden">dummy</span>
+        	</div>
+        	<div class="col-md-12 no-padding">
+        		<div class="relative-input-group block desktop-column-20">
+            		<input type="number" class="input input-medium desktop-column-20" [(ngModel)]="stableNoteData.note.incubatorHumidity">
+          	</div>
+    			</div>
+	      </div>
+		  </div>
+	  </div>
+		<div class="col-md-12 no-padding padding-10-y">
+			<div class="col-md-4 col-lg-3 no-padding-left">
+    		<div class="col-md-7 no-padding">
+      		<div class="col-md-12 no-padding">
+        			<span class="visiblity-hidden">dummy</span>
+      		</div>
+      		<div class="col-md-12 no-padding center-aligned">
+        			<span class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">High SpO2 Alarm Set</span>
+      		</div>
+    		</div>
+	    	<div class="col-md-5 no-padding">
+	    		<div class="col-md-12 no-padding">
+	    			<span class="visiblity-hidden">dummy</span>
+	        </div>
+	        <div class="col-md-12 no-padding">
+	          <div class="relative-input-group block desktop-column-20">
+	            <input type="number" class="input input-medium desktop-column-20" [(ngModel)]="stableNoteData.note.spo2AlarmHi">
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+    	<div class="col-md-4 col-lg-3 no-padding-left">
+    		<div class="col-md-7 no-padding">
+    			<div class="col-md-12 no-padding">
+    				<span class="visiblity-hidden">dummy</span>
+        	</div>
+        	<div class="col-md-12 no-padding center-aligned">
+          	<span class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">Low SpO2 Alarm Set</span>
+        	</div>
+      	</div>
+    		<div class="col-md-5 no-padding">
+        	<div class="col-md-12 no-padding">
+          	<span class="visiblity-hidden">dummy</span>
+        	</div>
+        	<div class="col-md-12 no-padding">
+        		<div class="relative-input-group block desktop-column-20">
+        			<input type="number" class="input input-medium desktop-column-20" [(ngModel)]="stableNoteData.note.spo2AlarmLo">
+          	</div>
+        	</div>
+        </div>
+    	</div>
+    	<div class="col-md-4 col-lg-3 no-padding-left">
+    		<div class="col-md-7 no-padding">
+    			<div class="col-md-12 no-padding">
+    				<span class="visiblity-hidden">dummy</span>
+        	</div>
+        	<div class="col-md-12 no-padding center-aligned">
+          	<span class="light margin-5-y blue-text bold font-16 line-height-standard middle-aligned">Air/skin Mode temp(C)</span>
+        	</div>
+    		</div>
+    		<div class="col-md-5 no-padding">
+    			<div class="col-md-12 no-padding">
+    				<span class="visiblity-hidden">dummy</span>
+    			</div>
+    			<div class="col-md-12 no-padding">
+    				<div class="relative-input-group block desktop-column-20">
+    					<input type="number" class="input input-medium desktop-column-20" [(ngModel)]="stableNoteData.note.airSkinModeTemp">
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+	  </div>
+
+		<div class="col-md-12 no-padding padding-10-y">
+			<div class="col-md-3 table full">
+				<div class="table-cell">
+					<h1 class="no-margin system-sub-heading">Investigation</h1>
+				</div>
+				<div class="table-cell">
+					<span class="button order-button  middle-aligned"
+						(click)="showOrderInvestigation()">Order</span>
+				</div>
+			</div>
+			<div class="col-md-9 table-cell">
+				<div class="col-md-12 no-padding">
+					<span class="bold selected-text"
+						*ngIf="stableNoteData.note.orderSelectedText!=null && stableNoteData.note.orderSelectedText!=''">Selected:
+						<label class="normal-font-weight">{{stableNoteData.note.orderSelectedText}}</label>
+					</span>
+				</div>
+			</div>
+		</div>
+
+  	<div class="col-md-12 no-padding padding-10-y">
+			<div *ngIf="pastPrescriptionList != null && pastPrescriptionList.length > 0"class="col-md-12">
+				<div class="col-md-9 col-lg-19 no-padding-left">
+					<span class="bold required">Current Medications</span>
+					<div class="input-group input-group-labeled desktop-column-20">
+						<div class="desktop-column-20 padding-0-x force-left">
+							<div class="input-cont block">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-9 no-padding">
+					<table
+						class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr>
+							<td class="center-aligned">Medicine Name</td>
+							<td class="center-aligned">Start Date</td>
+							<td class="center-aligned">Dose</td>
+							<td class="center-aligned">Medicine Day</td>
+						</tr>
+						<tr *ngFor="let medicine of pastPrescriptionList">
+							<td class="center-aligned"
+								*ngIf="medicine.eventname == 'Stable Notes'"><span><span *ngIf="medicine.route == 'IV' || medicine.route == 'IM'">Inj. </span> <span *ngIf="medicine.route == 'PO'">Syrup </span> <span *ngIf="medicine.medicationtype == 'TYPE0032'">Eye Drops </span>{{medicine.medicinename}}</span></td>
+							<td class="center-aligned"
+								*ngIf="medicine.eventname == 'Stable Notes'"><span>{{medicine.medicineOrderDate | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+							<td class="center-aligned"
+								*ngIf="medicine.eventname == 'Stable Notes' && medicine.cal_dose_volume != null && medicine.dose_unit != null"><span>{{medicine.cal_dose_volume}} {{medicine.dose_unit.substring(0,2)}}</span></td>
+							<td class="center-aligned"
+								*ngIf="medicine.eventname == 'Stable Notes' && medicine.cal_dose_volume == null && medicine.topical_drops != null"><span>{{medicine.topical_drops}} drops</span></td>
+							<td class="center-aligned"
+								*ngIf="medicine.eventname == 'Stable Notes' && medicine.cal_dose_volume == null && medicine.volume != null"><span>{{medicine.volume}} ml</span></td>
+							<td class="center-aligned"
+								*ngIf="medicine.eventname == 'Stable Notes' && medicine.cal_dose_volume == null && medicine.quantity != null"><span>{{medicine.quantity}}</span></td>
+							<td class="center-aligned"
+								*ngIf="medicine.eventname == 'Stable Notes' && medicine.cal_dose_volume == null && medicine.sachets != null"><span>{{medicine.sachets}} sachets</span></td>
+							<td class="center-aligned"
+								*ngIf="medicine.eventname == 'Stable Notes' && medicine.cal_dose_volume == null && medicine.sachets == null && medicine.quantity == null && medicine.volume == null && medicine.topical_drops == null"><span></span></td>
+							<td class="center-aligned"
+								*ngIf="medicine.eventname == 'Stable Notes'"><span>{{medicine.medicineDay}}</span></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-9 col-lg-10 no-padding-left">
+					<span class="bold required">Medications</span>
+					<div class="input-group input-group-labeled desktop-column-20">
+						<div class="desktop-column-20 padding-0-x force-left">
+							<div class="input-cont block">
+								<input type="text" [(ngModel)]="stableNoteData.note.medicationStr" class="desktop-column-20 input-coloured-gray input-medium assesment-select" disabled>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-lg-2 no-padding">
+					<span class="visiblity-hidden">Other</span>
+					<div class="padding-top-1">
+						<span class="button button-blue" (click)="redirectToPrescription('Stable Notes')">Prescribe Medications</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-6 no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="bold">General Note</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<div
+						class="input-group input-group-labeled col-md-12 no-padding no-margin right">
+						<div class="desktop-column-20 padding-0-x force-left no-margin">
+							<textarea (keyup)="populateStableNotesStr()"
+								class="desktop-column-20 max-height-36 set-font-size-default no-margin"
+								rows="4" [(ngModel)]="stableNoteData.note.generalnote"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Plan</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<div
+						class="input-group input-group-labeled col-md-12 no-padding no-margin right">
+						<div class="desktop-column-20 padding-0-x force-left no-margin">
+							<textarea (keyup)="populateStableNotesStr()"
+								class="desktop-column-20 max-height-36 set-font-size-default no-margin"
+								rows="4" [(ngModel)]="stableNoteData.note.plan"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-12 no-padding">
+				<span class="bold">Progress Notes</span>
+			</div>
+			<div
+				class="input-group input-group-labeled col-md-12 no-padding-left no-margin right">
+				<div class="desktop-column-20 padding-0-x force-left no-margin">
+					<textarea
+						class="desktop-column-20 max-height-36 set-font-size-default no-margin"
+						rows="4" [(ngModel)]="stableNoteData.note.notes"></textarea>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<button class="button button-blue button-large"
+				(click)="saveStableNotes()">SUBMIT</button>
+			<button type="button"
+				class="button button-blue-transparent button-large" (click)="refreshStableNotes()">
+				<i class="refresh"></i> REFRESH
+			</button>
+		</div>
+		<div class="col-md-12 no-padding padding-10-y no-padding-top">
+			<div class="col-md-12">
+				<h1 class="light margin-5-y blue-text">Past History</h1>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding padding-10-y no-padding-top">
+			<div class="desktop-column-20 padding-10-x force-left padding-5-y margin-bottom-70">
+				<table
+					class="table table-striped table-bordered headed-table desktop-column-20">
+					<tr>
+						<td class="left-aligned width-15">Date</td>
+						<td class="left-aligned">Progress Note</td>
+					</tr>
+					<tr *ngFor=" let item of stableNoteData.notesList">
+						<td class="left-aligned">{{item.entrytime | date : 'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="left-aligned">{{item.notes}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="overlay" id="ballardOverlay"></div>
+<div *ngIf="stableNoteData != null" class="modal-box-lg ballard-popup" id="OrderInvestigationPopup">
+	<button class="modal-popup-close-btn"
+		(click)="closeModalOrderInvestigation()"></button>
+
+	<div class="inicu-tab-container">
+		<div class="tab-header">
+			<div class="padding-20-x table full">
+				<div class="table-cell pull-left">
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Tests</h1>
+				</div>
+				<div class="table-cell pull-right padding-5-y"
+					(click)="orderSelected()">
+					<span class="button button-green  middle-aligned pull-right">Order</span>
+				</div>
+			</div>
+		</div>
+		<hr class="no-margin">
+		<div class="tab-content-cont full">
+			<div class="col-md-12 no-padding border-bottom-2">
+				<div class="col-md-3 no-padding border-right-2">
+					<div class="table full"
+						*ngFor="let item  of stableNoteData.orders | StableKeysPipe"
+						style="border-bottom: 2px solid #eeeeee">
+						<div class=" padding-20-y"
+							[ngClass]="{'highlighttab' : selectedDecease == item.key}"
+							(click)="populateTestsListByCategory(item.key)">
+							<span class="bold">{{item.key}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="table full padding-10-y left-aligned"
+						*ngFor="let testsList of listTestsByCategory">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" name="{{'testid' +testsList.testid}}"
+								id="{{'testid' + testsList.testid}}"
+								[(ngModel)]="testsList.isSelected"> <label
+								for="{{'testid' + testsList.testid}}">{{testsList.testname}}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- end of the above Investigation's Order -->
+</div>
+
+<!-- end for the code callingRequiredFieldPopup -->
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+    <span class="inicu-loader-content">
+    	<span class="inicu-adding-image"></span>
+        <span class="inicu-loading-content">{{loaderContent}}</span>
+	</span>
+</span>

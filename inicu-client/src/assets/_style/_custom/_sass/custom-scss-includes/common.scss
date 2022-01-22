@@ -1,0 +1,35 @@
+
+
+body{margin:0; padding:0; font-size: 14px; background-color: $dashboardBG;}
+
+.font-regular{font-family:$font;}
+.font-light{font-family: $fontLight;}
+
+a , .no-underline{text-decoration: none;}
+
+.table-padding-5{
+    .td, .table-cell, td{padding:5px;}
+}
+
+.toggle-grey{
+    height: 20px;
+    background-color: #eee;
+    input[type="radio"]{
+        display: none;
+        &~label{
+            display: block;
+            font-size: 18px;
+            color:red;
+        }
+    }
+    input[type="radio"]:checked~ label{
+        color:green;
+    }
+}
+.required{
+    &:after{
+        content: '*';
+        color: red;
+        display: inline-block;
+    }
+}

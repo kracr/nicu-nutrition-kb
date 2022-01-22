@@ -1,0 +1,425 @@
+drop view apollo.vw_assesment_discharge_final;
+drop view apollo.vw_assesments_discharge_raw;
+
+create or replace view apollo.vw_assesments_discharge_raw(uniquekey, id, uhid, creationtime, episodeid, category) as
+    SELECT concat(sa_infection_sepsis.creationtime, sa_infection_sepsis.uhid) AS uniquekey,
+           sa_infection_sepsis.sasepsisid                                     AS id,
+           sa_infection_sepsis.uhid,
+           sa_infection_sepsis.assessment_time                                AS creationtime,
+           sa_infection_sepsis.episodeid,
+           'Sepsis'::text                                                  AS category
+    FROM apollo.sa_infection_sepsis
+    UNION
+    SELECT concat(sa_infection_vap.creationtime, sa_infection_vap.uhid) AS uniquekey,
+           sa_infection_vap.savapid                                     AS id,
+           sa_infection_vap.uhid,
+           sa_infection_vap.assessment_time                             AS creationtime,
+           sa_infection_vap.episodeid,
+           'Vap'::text                                            AS category
+    FROM apollo.sa_infection_vap
+    UNION
+    SELECT concat(sa_infection_clabsi.creationtime, sa_infection_clabsi.uhid) AS uniquekey,
+           sa_infection_clabsi.saclabsiid                                     AS id,
+           sa_infection_clabsi.uhid,
+           sa_infection_clabsi.assessment_date                                AS creationtime,
+           sa_infection_clabsi.episodeid,
+           'Clabsi'::text                                                  AS category
+    FROM apollo.sa_infection_clabsi
+    UNION
+    SELECT concat(sa_infection_intrauterine.creationtime, sa_infection_intrauterine.uhid) AS uniquekey,
+           sa_infection_intrauterine.saintrauterineid                                     AS id,
+           sa_infection_intrauterine.uhid,
+           sa_infection_intrauterine.timeofassessment,
+           sa_infection_intrauterine.episodeid,
+           'Intrauterine'::text                                                              AS category
+    FROM apollo.sa_infection_intrauterine
+    UNION
+    SELECT concat(sa_infection_nec.creationtime, sa_infection_nec.uhid) AS uniquekey,
+           sa_infection_nec.sanec_id                                    AS id,
+           sa_infection_nec.uhid,
+           sa_infection_nec.assessment_time                             AS creationtime,
+           sa_infection_nec.episodeid,
+           'NEC'::text                                            AS category
+    FROM apollo.sa_infection_nec
+    UNION
+    SELECT concat(sa_resp_rds.creationtime, sa_resp_rds.uhid) AS uniquekey,
+           sa_resp_rds.resprdsid                              AS id,
+           sa_resp_rds.uhid,
+           sa_resp_rds.assessment_time                        AS creationtime,
+           sa_resp_rds.episodeid,
+           'RDS'::text                                        AS category
+    FROM apollo.sa_resp_rds
+    UNION
+    SELECT concat(sa_resp_apnea.creationtime, sa_resp_apnea.uhid) AS uniquekey,
+           sa_resp_apnea.apneaid                                  AS id,
+           sa_resp_apnea.uhid,
+           sa_resp_apnea.assessment_time                          AS creationtime,
+           sa_resp_apnea.episodeid,
+           'Apnea'::text                                          AS category
+    FROM apollo.sa_resp_apnea
+    UNION
+    SELECT concat(sa_resp_pphn.creationtime, sa_resp_pphn.uhid) AS uniquekey,
+           sa_resp_pphn.resppphnid                              AS id,
+           sa_resp_pphn.uhid,
+           sa_resp_pphn.assessment_time                         AS creationtime,
+           sa_resp_pphn.episodeid,
+           'PPHN'::text                                         AS category
+    FROM apollo.sa_resp_pphn
+    UNION
+    SELECT concat(sa_resp_pneumothorax.creationtime, sa_resp_pneumothorax.uhid) AS uniquekey,
+           sa_resp_pneumothorax.resppneumothoraxid                              AS id,
+           sa_resp_pneumothorax.uhid,
+           sa_resp_pneumothorax.assessment_time                                 AS creationtime,
+           sa_resp_pneumothorax.episodeid,
+           'Pneumo'::text                                                       AS category
+    FROM apollo.sa_resp_pneumothorax
+    UNION
+    SELECT concat(sa_jaundice.creationtime, sa_jaundice.uhid) AS uniquekey,
+           sa_jaundice.sajaundiceid                           AS id,
+           sa_jaundice.uhid,
+           sa_jaundice.assessment_time                        AS creationtime,
+           sa_jaundice.episodeid,
+           'Jaundice'::text                                   AS category
+    FROM apollo.sa_jaundice
+    UNION
+    SELECT concat(sa_hypoglycemia.creationtime, sa_hypoglycemia.uhid) AS uniquekey,
+           sa_hypoglycemia.hypoglycemiaid                             AS id,
+           sa_hypoglycemia.uhid,
+           sa_hypoglycemia.assessment_time                            AS creationtime,
+           sa_hypoglycemia.episodeid,
+           'Hypoglycemia'::text                                       AS category
+    FROM apollo.sa_hypoglycemia
+    UNION
+    SELECT concat(sa_renalfailure.creationtime, sa_renalfailure.uhid) AS uniquekey,
+           sa_renalfailure.renalid                                    AS id,
+           sa_renalfailure.uhid,
+           sa_renalfailure.assessment_time                            AS creationtime,
+           sa_renalfailure.episodeid,
+           'Renal'::text                                              AS category
+    FROM apollo.sa_renalfailure
+    UNION
+    SELECT concat(sa_cns_ivh.creationtime, sa_cns_ivh.uhid) AS uniquekey,
+           sa_cns_ivh.sacnsivhid                            AS id,
+           sa_cns_ivh.uhid,
+           sa_cns_ivh.assessment_date                       AS creationtime,
+           sa_cns_ivh.episodeid,
+           'IVH'::text                                      AS category
+    FROM apollo.sa_cns_ivh
+    UNION
+    SELECT concat(sa_cns_seizures.creationtime, sa_cns_seizures.uhid) AS uniquekey,
+           sa_cns_seizures.sacnsseizuresid                            AS id,
+           sa_cns_seizures.uhid,
+           sa_cns_seizures.assessment_time                            AS creationtime,
+           sa_cns_seizures.episodeid,
+           'Seizures'::text                                           AS category
+    FROM apollo.sa_cns_seizures
+    UNION
+    SELECT concat(sa_cns_asphyxia.creationtime, sa_cns_asphyxia.uhid) AS uniquekey,
+           sa_cns_asphyxia.sacnsasphyxiaid                            AS id,
+           sa_cns_asphyxia.uhid,
+           sa_cns_asphyxia.assessment_time                            AS creationtime,
+           sa_cns_asphyxia.episodeid,
+           'Asphyxia'::text                                           AS category
+    FROM apollo.sa_cns_asphyxia
+    UNION
+    SELECT concat(sa_cns_encephalopathy.creationtime, sa_cns_encephalopathy.uhid) AS uniquekey,
+           sa_cns_encephalopathy.saencephalopathyid                               AS id,
+           sa_cns_encephalopathy.uhid,
+           sa_cns_encephalopathy.assessment_date                                  AS creationtime,
+           sa_cns_encephalopathy.episodeid,
+           'Encephalopathy'::text                                                 AS category
+    FROM apollo.sa_cns_encephalopathy
+    UNION
+    SELECT concat(sa_cns_neuromuscular_disorder.creationtime, sa_cns_neuromuscular_disorder.uhid) AS uniquekey,
+           sa_cns_neuromuscular_disorder.sa_neuromuscular_disorderid                              AS id,
+           sa_cns_neuromuscular_disorder.uhid,
+           sa_cns_neuromuscular_disorder.assessment_date                                          AS creationtime,
+           sa_cns_neuromuscular_disorder.episodeid,
+           'Neuromuscular_Disorder'::text                                                         AS category
+    FROM apollo.sa_cns_neuromuscular_disorder
+    UNION
+    SELECT concat(sa_cns_hydrocephalus.creationtime, sa_cns_hydrocephalus.uhid) AS uniquekey,
+           sa_cns_hydrocephalus.sacnshydrocephalusid                            AS id,
+           sa_cns_hydrocephalus.uhid,
+           sa_cns_hydrocephalus.assessment_date                                 AS creationtime,
+           sa_cns_hydrocephalus.episodeid,
+           'Hydrocephalus'::text                                                AS category
+    FROM apollo.sa_cns_hydrocephalus
+    UNION
+    SELECT concat(sa_miscellaneous.creationtime, sa_miscellaneous.uhid) AS uniquekey,
+           sa_miscellaneous.sa_miscellaneous_id                         AS id,
+           sa_miscellaneous.uhid,
+           sa_miscellaneous.assessment_time                             AS creationtime,
+           sa_miscellaneous.episodeid,
+           'Misc'::text                                                 AS category
+    FROM apollo.sa_miscellaneous
+    UNION
+    SELECT concat(sa_miscellaneous_2.creationtime, sa_miscellaneous_2.uhid) AS uniquekey,
+           sa_miscellaneous_2.sa_miscellaneous_2_id                         AS id,
+           sa_miscellaneous_2.uhid,
+           sa_miscellaneous_2.assessment_time                               AS creationtime,
+           sa_miscellaneous_2.episodeid,
+           'Misc2'::text                                                    AS category
+    FROM apollo.sa_miscellaneous_2
+    UNION
+    SELECT concat(stable_notes.creationtime, stable_notes.uhid) AS uniquekey,
+           stable_notes.id,
+           stable_notes.uhid,
+           stable_notes.entrytime                               AS creationtime,
+           stable_notes.episodeid,
+           'Stable Notes'::text                                 AS category
+    FROM apollo.stable_notes
+    UNION
+    SELECT concat(sa_shock.creationtime, sa_shock.uhid) AS uniquekey,
+           sa_shock.sashockid                              AS id,
+           sa_shock.uhid,
+           sa_shock.assessment_time                                AS creationtime,
+           sa_shock.episodeid,
+           'Shock'::text                                           AS category
+    FROM apollo.sa_shock
+    UNION
+    SELECT concat(sa_feed_intolerance.creationtime, sa_feed_intolerance.uhid) AS uniquekey,
+           sa_feed_intolerance.feedintoleranceid                              AS id,
+           sa_feed_intolerance.uhid,
+           sa_feed_intolerance.assessment_time                                AS creationtime,
+           sa_feed_intolerance.episodeid,
+           'Feed Intolerance'::text                                           AS category
+    FROM apollo.sa_feed_intolerance
+    UNION
+    SELECT concat(nursing_medication.creationtime, nursing_medication.uhid) AS uniquekey,
+           nursing_medication.nursing_medication_id                         AS id,
+           nursing_medication.uhid,
+           nursing_medication.given_time                                    AS creationtime,
+           nursing_medication.episodeid,
+           'Nursing Medication'::text                                       AS category
+    FROM apollo.nursing_medication
+    UNION
+    SELECT concat(babyfeed_detail.creationtime, babyfeed_detail.uhid) AS uniquekey,
+           babyfeed_detail.babyfeedid                                 AS id,
+           babyfeed_detail.uhid,
+           babyfeed_detail.entrydatetime                              AS creationtime,
+           babyfeed_detail.episodeid,
+           'Nutrition'::text                                          AS category
+    FROM apollo.babyfeed_detail
+    UNION
+    SELECT concat(nursing_blood_product.creationtime, nursing_blood_product.uhid) AS uniquekey,
+           nursing_blood_product.nursing_blood_product_id                                 AS id,
+           nursing_blood_product.uhid,
+           nursing_blood_product.execution_time                       AS creationtime,
+           'Empty'::text as episodeid,
+           'Nursing Blood Product'::text                                          AS category
+    FROM apollo.nursing_blood_product
+    UNION
+    SELECT concat(nursing_heplock.creationtime, nursing_heplock.uhid) AS uniquekey,
+           nursing_heplock.nursing_heplock_id                                 AS id,
+           nursing_heplock.uhid,
+           nursing_heplock.execution_time                              AS creationtime,
+           ' Empty':: text as episodeid,
+           'Heplock'::text                                          AS category
+    FROM apollo.nursing_heplock
+    UNION
+    SELECT concat(investigation_ordered.creationtime, investigation_ordered.uhid) AS uniquekey,
+           investigation_ordered.investigationorderid                                 AS id,
+           investigation_ordered.uhid,
+           investigation_ordered.senttolab_time                              AS creationtime,
+           'Empty':: text as episodeid,
+           'Lab Orders & Reports'::text                                          AS category
+    FROM apollo.investigation_ordered
+    UNION
+    SELECT concat(nursing_notes.creationtime, nursing_notes.uhid) AS uniquekey,
+           nursing_notes.nursing_notes_id                                 AS id,
+           nursing_notes.uhid,
+           nursing_notes.creationtime                              AS creationtime,
+           'Empty':: text as episodeid,
+           'Nursing Notes'::text                                          AS category
+    FROM apollo.nursing_notes;
+
+alter table apollo.vw_assesment_discharge_final
+    owner to postgres;
+
+create view apollo.vw_assesment_discharge_final(uniquekey, id, uhid, creationtime, episodeid, category) as
+SELECT vw_assesments_discharge_raw.uniquekey,
+       vw_assesments_discharge_raw.id,
+       vw_assesments_discharge_raw.uhid,
+       vw_assesments_discharge_raw.creationtime,
+       vw_assesments_discharge_raw.episodeid,
+       vw_assesments_discharge_raw.category
+FROM apollo.vw_assesments_discharge_raw;
+
+alter table apollo.vw_assesment_discharge_final
+    owner to postgres;
+
+
+create or replace view apollo.vw_procedures_usage(procedure_type, uhid, starttime, endtime, progressnotes) as
+    SELECT 'Peripheral Cannula'::text             AS procedure_type,
+           peripheral_cannula.uhid,
+           peripheral_cannula.insertion_timestamp AS starttime,
+           peripheral_cannula.removal_timestamp   AS endtime,
+           peripheral_cannula.progressnotes
+    FROM apollo.peripheral_cannula
+    UNION
+    SELECT 'Central Line'::text             AS procedure_type,
+           central_line.uhid,
+           central_line.insertion_timestamp AS starttime,
+           central_line.removal_timestamp   AS endtime,
+           central_line.progressnotes
+    FROM apollo.central_line
+    UNION
+    SELECT 'Lumbar Puncture'::text          AS procedure_type,
+           lumbar_puncture.uhid,
+           lumbar_puncture.lumbar_timestamp AS starttime,
+           lumbar_puncture.lumbar_timestamp AS endtime,
+           lumbar_puncture.progressnotes
+    FROM apollo.lumbar_puncture
+    UNION
+    SELECT 'VTap'::text        AS procedure_type,
+           vtap.uhid,
+           vtap.vtap_timestamp AS starttime,
+           vtap.vtap_timestamp AS endtime,
+           vtap.progressnotes
+    FROM apollo.vtap
+    UNION
+    SELECT 'Chest Tube'::text               AS procedure_type,
+           procedure_chesttube.uhid,
+           procedure_chesttube.inserteddate AS starttime,
+           procedure_chesttube.removaldate  AS endtime,
+           procedure_chesttube.progressnotes
+    FROM apollo.procedure_chesttube
+    UNION
+    SELECT 'ET Intubation'::text             AS procedure_type,
+           et_intubation.uhid,
+           et_intubation.insertion_timestamp AS starttime,
+           et_intubation.removal_timestamp   AS endtime,
+           et_intubation.progressnotes
+    FROM apollo.et_intubation
+    UNION
+    SELECT 'ET Suction'::text    AS procedure_type,
+           et_suction.uhid,
+           et_suction.order_time AS starttime,
+           et_suction.order_time AS endtime,
+           et_suction.progressnotes
+    FROM apollo.et_suction
+    UNION
+    SELECT 'Therapeutic Hypothermia'::text                AS procedure_type,
+           therapeutic_hypothermia.uhid,
+           therapeutic_hypothermia.entry_time             AS starttime,
+           therapeutic_hypothermia.device_start_stop_time AS endtime,
+           'NA'::text                                     AS progressnotes
+    FROM apollo.therapeutic_hypothermia
+    UNION
+    SELECT 'Other Procedure'::text                AS procedure_type,
+           procedure_other.uhid,
+           procedure_other.entrytime AS starttime,
+           procedure_other.entrytime AS endtime,
+           procedure_other.progressnotes
+    FROM apollo.procedure_other;
+
+alter table apollo.vw_procedures_usage
+    owner to postgres;
+
+
+create or replace view apollo.vw_screening_usage(screen_type, uhid, screening_time) as
+    SELECT 'Hearing'::text AS screen_type,
+           screen_hearing.uhid,
+           screen_hearing.screening_time
+    FROM apollo.screen_hearing
+    UNION
+    SELECT 'Metabolic'::text AS screen_type,
+           screen_metabolic.uhid,
+           screen_metabolic.screening_time
+    FROM apollo.screen_metabolic
+    UNION
+    SELECT 'Neurological Screening'::text AS screen_type,
+           screen_neurological.uhid,
+           screen_neurological.screening_time
+    FROM apollo.screen_neurological
+    UNION
+    SELECT 'ROP'::text AS screen_type,
+           screen_rop.uhid,
+           screen_rop.screening_time
+    FROM apollo.screen_rop
+    UNION
+    SELECT 'Cranial USG'::text AS screen_type,
+           screen_usg.uhid,
+           screen_usg.screening_time
+    FROM apollo.screen_usg
+    UNION
+    SELECT 'Miscellaneous Screening'::text AS screen_type,
+           screen_miscellaneous.uhid,
+           screen_miscellaneous.screening_time
+    FROM apollo.screen_miscellaneous;
+
+alter table apollo.vw_screening_usage
+    owner to postgres;
+
+
+
+create or replace view apollo.vw_nursing_charts_usage(uniquekey, id, uhid, creationtime, episodeid, category) as
+    SELECT concat(baby_visit.creationtime, baby_visit.uhid) AS uniquekey,
+           baby_visit.visitid AS id,
+           baby_visit.uhid :: text,
+           concat(baby_visit.visitdate,' ',baby_visit.visittime) :: timestamp                         AS creationtime,
+            'Empty':: text as episodeid,
+           'Anthropometry'::text                                          AS category
+    FROM apollo.baby_visit
+    UNION
+    SELECT concat(nursing_vitalparameters.creationtime, nursing_vitalparameters.uhid) AS uniquekey,
+           nursing_vitalparameters.nn_vitalparameterid                                 AS id,
+           nursing_vitalparameters.uhid :: text,
+           nursing_vitalparameters.entrydate                              AS creationtime,
+           'Empty':: text as episodeid,
+           'Vitals'::text                                          AS category
+    FROM apollo.nursing_vitalparameters
+    UNION
+    SELECT concat(nursing_episode.creationtime, nursing_episode.uhid) AS uniquekey,
+           nursing_episode.episodeid                                 AS id,
+           nursing_episode.uhid :: text,
+           nursing_episode.creationtime                              AS creationtime,
+           'Empty'::text as episodeid,
+           'Events'::text                                          AS category
+    FROM apollo.nursing_episode
+
+    UNION
+    SELECT concat(nursing_bloodgas.creationtime, nursing_bloodgas.uhid) AS uniquekey,
+           nursing_bloodgas.nn_bloodgasid                                 AS id,
+           nursing_bloodgas.uhid :: text,
+           nursing_bloodgas.entrydate                              AS creationtime,
+           'Empty':: text as episodeid,
+           'Blood Gas'::text                                          AS category
+    FROM apollo.nursing_bloodgas
+    UNION
+    SELECT concat(nursing_ventilaor.creationtime, nursing_ventilaor.uhid) AS uniquekey,
+           nursing_ventilaor.nn_ventilaorid                                 AS id,
+           nursing_ventilaor.uhid :: text,
+           nursing_ventilaor.entrydate                              AS creationtime,
+           'Empty':: text as episodeid,
+           'Ventilator'::text                                          AS category
+    FROM apollo.nursing_ventilaor;
+
+alter table apollo.nursing_intake_output
+    owner to postgres;
+
+
+create or replace view apollo.vw_assessment_without_plus_offset_usage(uniquekey, id, uhid, creationtime, episodeid, category) as
+    SELECT concat(doctor_blood_products.creationtime, doctor_blood_products.uhid) AS uniquekey,
+           doctor_blood_products.doctor_blood_products_id                                 AS id,
+           doctor_blood_products.uhid,
+           doctor_blood_products.assessment_time                             AS creationtime,
+           'Empty'::text as episodeid,
+           'Doctor Blood Product'::text                                          AS category
+    FROM apollo.doctor_blood_products
+    UNION
+    SELECT concat(nursing_intake_output.creationtime, nursing_intake_output.uhid) AS uniquekey,
+           nursing_intake_output.nursing_intakeid                                 AS id,
+           nursing_intake_output.uhid :: text,
+           nursing_intake_output.entry_timestamp                            AS creationtime,
+           nursing_intake_output.episodeid,
+           'Nursing Intake Output'::text                                          AS category
+    FROM apollo.nursing_intake_output;
+
+
+alter table apollo.vw_assessment_without_offset_usage
+    owner to postgres;
+
+
+alter table apollo.sa_infection_nec alter column current_adb type varchar(10) using current_adb::varchar(10);

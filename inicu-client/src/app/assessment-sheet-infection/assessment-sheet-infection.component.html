@@ -1,0 +1,2901 @@
+<doctor-panel></doctor-panel>
+<assessment-sheet></assessment-sheet>
+<div
+	*ngIf="infectSystemObj != undefined && infectSystemObj !=null && infectSystemObj.infectionEventObject != undefined">
+	<div class="clear desktop-column-20">
+		<div class="">
+			<div class="col-md-12 set-AssessmentSystemtEvent-background">
+				<div class="col-md-3 no-padding">
+					<div class="col-md-12 no-padding padding-10-y"
+						style="padding-top: 12px">
+						<div class="col-md-4 text-center padding-top-0 no-padding">
+							<div class="center-aligned" (click)="scrollingMainSepsis()">
+								<input type="radio" name="isCNS" id="yes" class="display-none"
+									[(ngModel)]="infectSystemObj.systemStatus" value="yes">
+								<label for="yes" class="sprite assessment-sheet-inactive"
+									[ngClass]="{ 'yes-jaundice' : infectSystemObj.systemStatus =='yes'}">Active</label>
+							</div>
+						</div>
+						<div class="col-md-4  text-center padding-top-0 no-padding">
+							<div class="center-aligned">
+								<input type="radio" name="isCNS" id="no" class="display-none"
+									[(ngModel)]="infectSystemObj.systemStatus" value="no">
+								<label for="no" class="sprite assessment-sheet-inactive"
+									[ngClass]="{ 'no-jaundice' : infectSystemObj.systemStatus =='no'}">Passive</label>
+							</div>
+						</div>
+						<div class="col-md-4  text-center padding-top-0 no-padding">
+							<div class="center-aligned">
+								<input type="radio" name="isCNS" id="inactive"
+									class="display-none" [(ngModel)]="infectSystemObj.systemStatus"
+									value="inactive"> <label for="inactive"
+									class="sprite assessment-sheet-inactive"
+									[ngClass]="{ 'inactive-jaundice' : infectSystemObj.systemStatus =='inactive'}">Inactive</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1 col-lg-2 no-padding"></div>
+				<div class="col-md-8 col-lg-7 no-padding table full">
+					<div class="col-md-12 no-padding padding-10-y">
+						<div class="col-md-4 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">From</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="infectionTempObj.printFrom" [min]="minDate" [max]="maxDate"
+									dateFormat='DD-MM-YYYY hh:mm A'></owl-date-time>
+							</div>
+						</div>
+						<div class="col-md-4 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">To</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="infectionTempObj.printTo" [min]="minDate" [max]="maxDate"
+									dateFormat='DD-MM-YYYY hh:mm A'></owl-date-time>
+							</div>
+						</div>
+						<div class="col-md-4 no-padding-right right-aligned">
+							<div class="col-md-12 no-padding">
+								<label class="white-color visiblity-hidden"><strong>To
+										Time</strong></label>
+							</div>
+							<div class="col-md-12 no-padding">
+								<span class="button button-blue"
+									(click)="printData(infectionTempObj.printFrom,infectionTempObj.printTo)">Print
+									Progress Notes</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding"></div>
+			</div>
+		</div>
+		<div class="assesment-container sepsis-Screen "
+			[hidden]="!(infectSystemObj.systemStatus == 'yes')"
+			style="background-color: white">
+			<div class="row table full padding-10-x padding-10-y">
+				<div class="col-md-2 extrawidth no-padding-right">
+					<div
+						[ngClass]="{'event-background-yes': infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.eventstatus == 'yes',
+									'event-background-no': infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.eventstatus == 'no',
+									'event-background-inactive' : infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.eventstatus == 'inactive'}">
+						<div class="resp-event-box"
+							[ngClass]="{'resp-event-box-selected':  infectionWhichTab == 'sepsis'}"
+							(click)="infectionTabVisible('sepsis')">
+							<div class="table full">
+								<span class="bold">Sepsis</span>
+							</div>
+							<div class="table full padding-10-y">
+								<div class="table-cell border-right-2" (click)="scrollSepsis()">
+									<input type="radio" name="sepsis" value="yes"
+										[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.eventstatus"
+										id="distressYes" /> <label for="distressYes"
+										class="resp-event-icons"
+										[ngClass]="{'resp-event-yes' : infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.eventstatus == 'yes'}">Active</label>
+								</div>
+								<div class="table-cell border-right-2">
+									<input type="radio" name="sepsis" value="no"
+										[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.eventstatus"
+										id="distressNo" /> <label for="distressNo"
+										class="resp-event-icons"
+										[ngClass]="{'resp-event-no' : infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.eventstatus == 'no'}">Passive</label>
+								</div>
+								<div class="table-cell">
+									<input type="radio" name="sepsis" value="inactive"
+										[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.eventstatus"
+										id="distressInactive" /> <label for="distressInactive"
+										class="resp-event-icons"
+										[ngClass]="{'resp-event-inactive' : infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.eventstatus == 'inactive'}">Inactive</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 extrawidth no-padding-right">
+					<div
+						[ngClass]="{'event-background-yes': infectSystemObj.infectionEventObject.vapEvent.currentEvent.eventstatus == 'yes',
+									'event-background-no': infectSystemObj.infectionEventObject.vapEvent.currentEvent.eventstatus == 'no',
+									'event-background-inactive' : infectSystemObj.infectionEventObject.vapEvent.currentEvent.eventstatus == 'inactive'}">
+						<div class="resp-event-box"
+							[ngClass]="{'resp-event-box-selected':  infectionWhichTab == 'vap'}"
+							(click)="infectionTabVisible('vap')">
+							<div class="table full">
+								<span class="bold">VAP</span>
+							</div>
+							<div class="table full padding-10-y">
+								<div class="table-cell border-right-2">
+									<input type="radio" name="VAP" value="yes"
+										[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.eventstatus"
+										id="VAPYes" /> <label for="VAPYes" class="resp-event-icons"
+										[ngClass]="{'resp-event-yes' : infectSystemObj.infectionEventObject.vapEvent.currentEvent.eventstatus == 'yes'}">Active</label>
+								</div>
+								<div class="table-cell border-right-2">
+									<input type="radio" name="VAP" value="no"
+										[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.eventstatus"
+										id="VAPNo" /> <label for="VAPNo" class="resp-event-icons"
+										[ngClass]="{'resp-event-no' : infectSystemObj.infectionEventObject.vapEvent.currentEvent.eventstatus == 'no'}">Passive</label>
+								</div>
+								<div class="table-cell">
+									<input type="radio" name="VAP" value="inactive"
+										[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.eventstatus"
+										id="VAPInactive"
+										(click)="showOkPopUp('vap','Are you sure you want to Inactivate VAP Assessment')" />
+									<label for="VAPInactive" class="resp-event-icons"
+										[ngClass]="{'resp-event-inactive' : infectSystemObj.infectionEventObject.vapEvent.currentEvent.eventstatus == 'inactive'}">Inactive</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 extrawidth no-padding-right">
+					<div
+						[ngClass]="{'event-background-yes': infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.eventstatus == 'yes',
+									'event-background-no': infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.eventstatus == 'no',
+									'event-background-inactive' : infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.eventstatus == 'inactive'}">
+						<div class="resp-event-box"
+							[ngClass]="{'resp-event-box-selected':  infectionWhichTab == 'clabsi'}"
+							(click)="infectionTabVisible('clabsi')">
+							<div class="table full">
+								<span class="bold">CLABSI</span>
+							</div>
+							<div class="table full padding-10-y">
+								<div class="table-cell border-right-2">
+									<input type="radio" name="CLABSI" value="yes"
+										[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.eventstatus"
+										id="CLABSIYes" /> <label for="CLABSIYes"
+										class="resp-event-icons"
+										[ngClass]="{'resp-event-yes' : infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.eventstatus == 'yes'}">Active</label>
+								</div>
+								<div class="table-cell border-right-2">
+									<input type="radio" name="CLABSI" value="no"
+										[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.eventstatus"
+										id="CLABSINo" /> <label for="CLABSINo"
+										class="resp-event-icons"
+										[ngClass]="{'resp-event-no' : infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.eventstatus == 'no'}">Passive</label>
+								</div>
+								<div class="table-cell">
+									<input type="radio" name="CLABSI" value="inactive"
+										(click)="showOkPopUp('vap','Are you sure you want to Inactivate CLABSI Assessment')"
+										[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.eventstatus"
+										id="CLABSIInactive" /> <label for="CLABSIInactive"
+										class="resp-event-icons"
+										[ngClass]="{'resp-event-inactive' : infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.eventstatus == 'inactive'}">Inactive</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 extrawidth no-padding-right">
+					<div
+						[ngClass]="{'event-background-yes': Uterine == 'yes',
+									'event-background-no': Uterine == 'no',
+									'event-background-inactive' : Uterine == 'inactive'}">
+						<div class="resp-event-box background-color-grey"
+							[ngClass]="{'resp-event-box-selected': infectionWhichTab == 'intrauterine'}">
+							<div class="table full">
+								<span class="bold">Intrauterine Infection</span>
+							</div>
+							<div class="table full padding-10-y">
+								<div class="table-cell border-right-2">
+									<input type="radio" name="Uterine" value="Yes" disabled
+										[(ngModel)]="Uterine" id="UterineYes" /> <label
+										for="UterineYes" class="resp-event-icons"
+										[ngClass]="{'resp-event-yes' : Uterine == 'Yes'}">Active</label>
+								</div>
+								<div class="table-cell border-right-2">
+									<input type="radio" name="Uterine" value="No" disabled
+										[(ngModel)]="Uterine" id="UterineNo"
+										(click)="refreshRdsAllObj('pneunothorax')" /> <label
+										for="UterineNo" class="resp-event-icons"
+										[ngClass]="{'resp-event-no' : Uterine == 'No'}">Passive</label>
+								</div>
+								<div class="table-cell">
+									<input type="radio" name="Uterine" value="Inactive" disabled
+										[(ngModel)]="Uterine" id="UterineInactive" /> <label
+										for="UterineInactive" class="resp-event-icons"
+										[ngClass]="{'resp-event-inactive' : Uterine == 'Inactive'}">Inactive</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-right"></div>
+			</div>
+			<div class="Sepsis-section">
+				<div *ngIf="infectionWhichTab == 'sepsis'">
+					<div>
+						<form name="sepsisForm">
+
+							<div
+								*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.eventstatus == 'inactive'">
+								<div class="col-md-3 left-aligned no-padding-left">
+									<label class="bold required"><strong>Date and
+											Time of assessment</strong></label>
+									<div class="col-md-12 no-padding">
+
+										<div class="col-md-12 no-padding-left">
+											<owl-date-time class="owl-dateTime"
+												[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.assessmentTime"
+												(ngModelChange)="calculateAgeAtAssessmentNewSepsis()"
+												dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"
+												[ngModelOptions]="{standalone: true}"></owl-date-time>
+											<!-- <input type="date" [(ngModel)]="RDSTempObj.assessmentDate" name = "calAgeAtAssessName"
+                      class="input input-medium desktop-column-20 datepicker max-height-36 no-margin"
+                      (ngModelChange)="calculateAgeAtAssessmentNewRDS()" /> -->
+										</div>
+
+
+									</div>
+									<div class="col-md-12 no-padding">
+										<label id="invalidTime" style="display: none;"
+											class="col-md-12 error-labels no-padding right-aligned">Please
+											enter proper time format (HH:MM)</label>
+									</div>
+								</div>
+								<div class="col-md-3 col-lg-2 left-aligned ">
+									<div class="col-md-12 no-padding">
+										<label class="bold required"><strong>Sepsis
+												Entry Type</strong></label>
+									</div>
+									<div class="col-md-12 no-padding-left">
+										<div class="no-padding-left toggle-options-radio">
+											<input type="radio" name="SepsisPasiveEntryType"
+												[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.isNewEntry"
+												id="SepsisPasiveEntryNew" [value]="true"> <label
+												for="SepsisPasiveEntryNew">New</label> <input type="radio"
+												name="SepsisPasiveEntryType"
+												[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.isNewEntry"
+												id="SepsisPasiveEntryOld" [value]="false"> <label
+												for="SepsisPasiveEntryOld">Update Old</label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div
+								*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.eventstatus == 'no'">
+								<div class="assesment-container">
+									<div class="row">
+										<div class="col-md-3 left-aligned no-padding-left">
+											<label class="bold required"><strong>Date and
+													Time of assessment</strong></label>
+											<div class="col-md-12 no-padding">
+
+												<div class="col-md-12 no-padding-left">
+													<owl-date-time class="owl-dateTime"
+														[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.assessmentTime"
+														(ngModelChange)="calculateAgeAtAssessmentNewSepsis()"
+														dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"
+														[ngModelOptions]="{standalone: true}"></owl-date-time>
+													<!-- <input type="date" [(ngModel)]="RDSTempObj.assessmentDate" name = "calAgeAtAssessName"
+		                      class="input input-medium desktop-column-20 datepicker max-height-36 no-margin"
+		                      (ngModelChange)="calculateAgeAtAssessmentNewRDS()" /> -->
+												</div>
+
+
+											</div>
+											<div class="col-md-12 no-padding">
+												<label id="invalidTime" style="display: none;"
+													class="col-md-12 error-labels no-padding right-aligned">Please
+													enter proper time format (HH:MM)</label>
+											</div>
+										</div>
+										<div class="col-md-3 col-lg-2 left-aligned ">
+											<div class="col-md-12 no-padding">
+												<label class="bold required"><strong>Sepsis
+														Entry Type</strong></label>
+											</div>
+											<div class="col-md-12 no-padding-left">
+												<div class="no-padding-left toggle-options-radio">
+													<input type="radio" name="SepsisPasiveEntryType"
+														[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.isNewEntry"
+														id="SepsisPasiveEntryNew" [value]="true"> <label
+														for="SepsisPasiveEntryNew">New</label> <input type="radio"
+														name="SepsisPasiveEntryType"
+														[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.isNewEntry"
+														id="SepsisPasiveEntryOld" [value]="false"> <label
+														for="SepsisPasiveEntryOld">Update Old</label>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<br>
+									<div class="row"></div>
+
+									<div class="row">
+										<div class="col-md-3 table full">
+											<div class="table-cell">
+												<h1 class="no-margin system-sub-heading">Investigation</h1>
+											</div>
+											<div class="table-cell">
+												<span class="button order-button  middle-aligned"
+													(click)="showOrderInvestigation()">Order</span>
+											</div>
+										</div>
+										<div class="col-md-9 table-cell">
+											<div class="col-md-12 no-padding">
+												<span class="bold"
+													*ngIf="sepsisTempObj.pastSelectedOrderInvestigationStr!=null && sepsisTempObj.pastSelectedOrderInvestigationStr!=''">Past
+													Selected: <label class="normal-font-weight">{{sepsisTempObj.pastSelectedOrderInvestigationStr}}</label>
+												</span>
+											</div>
+											<div class="col-md-12 no-padding">
+												<span class="bold selected-text"
+													*ngIf="sepsisTempObj.orderSelectedText!=null && sepsisTempObj.orderSelectedText!=''">Selected:
+													<label class="normal-font-weight">{{sepsisTempObj.orderSelectedText}}</label>
+												</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="padding-10-y">
+										<div *ngIf="pastPrescriptionList != null && pastPrescriptionList.length > 0"class="col-md-12">
+											<div class="col-md-9 col-lg-19 no-padding-left">
+												<span class="bold required">Current Medications</span>
+												<div class="input-group input-group-labeled desktop-column-20">
+													<div class="desktop-column-20 padding-0-x force-left">
+														<div class="input-cont block">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-9 no-padding">
+												<table
+													class="table table-striped table-bordered headed-table desktop-column-20">
+													<tr>
+														<td class="center-aligned">Medicine Name</td>
+														<td class="center-aligned">Start Date</td>
+														<td class="center-aligned">Dose</td>
+														<td class="center-aligned">Medicine Day</td>
+													</tr>
+													<tr *ngFor="let medicine of pastPrescriptionList">
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis'"><span><span *ngIf="medicine.route == 'IV' || medicine.route == 'IM'">Inj. </span> <span *ngIf="medicine.route == 'PO'">Syrup </span><span *ngIf="medicine.medicationtype == 'TYPE0032'">Eye Drops </span>{{medicine.medicinename}}</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis'"><span>{{medicine.medicineOrderDate | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis' && medicine.cal_dose_volume != null"><span>{{medicine.cal_dose_volume}} {{medicine.dose_unit.substring(0,2)}}</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis' && medicine.cal_dose_volume == null && medicine.topical_drops != null"><span>{{medicine.topical_drops}} drops</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis' && medicine.cal_dose_volume == null && medicine.volume != null"><span>{{medicine.volume}} ml</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis' && medicine.cal_dose_volume == null && medicine.quantity != null"><span>{{medicine.quantity}}</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis' && medicine.cal_dose_volume == null && medicine.sachets != null"><span>{{medicine.sachets}} sachets</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis' && medicine.cal_dose_volume == null && medicine.sachets == null && medicine.quantity == null && medicine.volume == null && medicine.topical_drops == null"><span></span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis'"><span>{{medicine.medicineDay}}</span></td>
+													</tr>
+												</table>
+											</div>
+										</div>
+										<div class="row padding-10-y">
+											<div class="col-md-12">
+												<div class="col-md-9 col-lg-10 no-padding-left">
+													<span class="bold">Medications</span>
+													<div
+														class="input-group input-group-labeled desktop-column-20">
+														<div class="desktop-column-20 padding-0-x force-left">
+															<div class="input-cont block">
+																<input type="text"
+																	[ngModelOptions]="{standalone: true}"
+																	[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.medicationStr"
+																	class="desktop-column-20 input-coloured-gray input-medium assesment-select" disabled>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 no-padding">
+													<span class="visiblity-hidden">dummy</span>
+													<div class="padding-top-1">
+														<span class="button button-blue"
+															(click)="redirectToPrescription('Sepsis')">Prescribe Medications</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div
+								*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.eventstatus =='yes'">
+								<div class="row table full padding-10-x no-padding-right"
+									(click)="clinicalSectionSepsisVisible()">
+									<div class="table-cell middle-aligned">
+										<div
+											class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+											<span class="sprite sprite-clinical-assessment"></span>
+										</div>
+									</div>
+									<div class="table-cell middle-aligned" style="width: 18%">
+										<h1
+											class="no-margin system-main-heading clinical-assessment-color">Clinical
+											Assessment</h1>
+									</div>
+									<div
+										class="table-cell padding-10-x no-padding-right middle-aligned"
+										style="width: 100%">
+										<hr class="clinical-assessment-line ">
+									</div>
+									<div class="table-cell middle-aligned">
+										<a class="sprite sprite-minus-clinical middle-aligned"
+											*ngIf="isclinicalSectionSepsisVisible"></a> <a
+											class="sprite  sprite-plus-clinical middle-aligned"
+											*ngIf="!(isclinicalSectionSepsisVisible)"></a>
+									</div>
+								</div>
+								<div [hidden]="!(isclinicalSectionSepsisVisible)">
+									<div class="row padding-10-x">
+										<div class="col-md-3 col-lg-2 no-padding-left">
+											<div class="table full center-aligned">
+												<span class="bold">Age at onset</span>
+											</div>
+											<div class="table full  no-padding">
+												<div class="table-cell">
+													<div
+														class="input-group input-group-labeled desktop-column-20 no-margin">
+														<div class="desktop-column-20 padding-0-x force-left">
+															<div class="input-cont block">
+																<input type="text" name="ageAtAssessmentName"
+																	[disabled]="pastAgeInactiveSepsis"
+																	[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.ageatonset"
+																	(keyup)="progressNotesSepsis()"
+																	class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+																	[ngModelOptions]="{standalone: true}">
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="table-cell padding-10-x middle-aligned">
+													<div class="toggle-options-radio">
+														<input type="radio" name="sepsisAgeAge" [value]="true"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.ageinhoursdays"
+															(ngModelChange)="calAgeOnsetSepsis()" id="sepsisAgeHours">
+														<label
+															[ngClass]="{'display-disabled-radio-color': pastAgeInactiveSepsis }"
+															for="sepsisAgeHours">Hours</label> <input type="radio"
+															name="sepsisAgeAge" [value]="false"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.ageinhoursdays"
+															(ngModelChange)="calAgeOnsetSepsis()" id="sepsisAgeDays">
+														<label
+															[ngClass]="{'display-disabled-radio-color': pastAgeInactiveSepsis }"
+															for="sepsisAgeDays">Days</label>
+													</div>
+													<label
+														class="col-md-12 error-labels no-padding left-aligned"
+														*ngIf="ageOnsetPreviousExceed"> Can't be &lt;
+														Previous episode</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 left-aligned no-padding-left">
+											<label class="bold required"><strong>Date
+													and Time of assessment</strong></label>
+											<div class="col-md-12 no-padding">
+												<owl-date-time class="owl-dateTime"
+													[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.assessmentTime"
+													(ngModelChange)="calculateAgeAtAssessmentNewSepsis()"
+													dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"
+													[ngModelOptions]="{standalone: true}"></owl-date-time>
+											</div>
+											<div class="col-md-12 no-padding">
+												<label id="ageatassessmentvalidinputSepsis"
+													style="display: none;"
+													class="col-md-12 error-labels no-padding left-aligned">Age
+													At Assessment should not be less than Age At Onset</label>
+											</div>
+										</div>
+										<div class="col-md-2 ageatassessment no-padding-left">
+											<div class="table full no-padding center-aligned">
+												<span class="bold">Age at assessment</span>
+											</div>
+											<div class="table full no-padding">
+												<div class="table-cell">
+													<input type="text" name="ageOfAssessmentSepsis"
+														value="{{infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.ageatassesment}}"
+														class="col-md-12 input-coloured-gray input-medium assesment-select"
+														disabled>
+												</div>
+												<div class="table-cell padding-10-x top-aligned">
+													<div class="toggle-options-radio">
+														<input type="radio" name="sepsisAgeAssessment"
+															[value]="true"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.isageofassesmentinhours"
+															id="ageHoursAssessmentSepsis"
+															(ngModelChange)="ageOnAssessmentCalculationSepsis()">
+														<label for="ageHoursAssessmentSepsis">Hours</label> <input
+															type="radio" name="sepsisAgeAssessment" [value]="false"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.isageofassesmentinhours"
+															id="ageDaysAssessmentSepsis"
+															(ngModelChange)="ageOnAssessmentCalculationSepsis()">
+														<label for="ageDaysAssessmentSepsis">Days</label>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 sepsisentrytype left-aligned ">
+											<div class="col-md-12 no-padding">
+												<label class="bold required"><strong>Sepsis
+														Entry Type</strong></label>
+											</div>
+											<div class="col-md-12 no-padding-left">
+												<div class="no-padding-left toggle-options-radio">
+													<input type="radio" name="SepsisEntryType" [value]="true"
+														[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.isNewEntry"
+														id="SepsisEntryNew"> <label for="SepsisEntryNew">New</label>
+													<input type="radio" name="SepsisEntryType"
+														[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.isNewEntry"
+														id="SepsisEntryOld" [value]="false"> <label
+														for="SepsisEntryOld">Update Old</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 no-padding pull-right episode">
+											<div class="padding-10-y center-aligned"
+												style="background-color: #FDF8EA">
+												<span
+													class="bold clinical-assessment-color system-main-heading"
+													style="line-height: 36px; font-size: 18px !important">{{earlyLateOnset}}</span>
+												<span
+													class="bold clinical-assessment-color system-main-heading"
+													style="line-height: 36px">
+													&nbsp;{{infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber}}</span><sup
+													class="clinical-assessment-color"
+													*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber == '1' || infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber == 1">st</sup><sup
+													class="clinical-assessment-color"
+													*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber == '2' || infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber == 2">nd</sup><sup
+													class="clinical-assessment-color"
+													*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber == '3' || infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber == 3">rd</sup><sup
+													class="clinical-assessment-color"
+													*ngIf="(infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber != '1' && infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber != 1) && (infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber != '2' && infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber != 2) && (infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber != '3' && infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.episodeNumber != 3)">th</sup>
+												<span
+													class="bold clinical-assessment-color system-main-heading"
+													style="font-size: 18px !important"> Episode</span>
+											</div>
+										</div>
+									</div>
+									<hr class="line-2">
+									<div
+										class="row table full padding-10-x no-padding-left no-padding-bottom">
+										<div class="col-md-12 no-padding padding-10-y no-padding-top">
+											<div class="col-md-3 no-padding-right">
+												<div class="toggle-options-radio padding-top-1">
+													<input type="radio" name="SepsisSymp" [value]="true"
+														[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.symptomaticStatus"
+														id="sympSepsisSymp"
+														(ngModelChange)="createSymptomaticTextSepsis()"> <label
+														for="sympSepsisSymp">Symptomatic</label> <input
+														type="radio" [value]="false" name="SepsisSymp"
+														[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.symptomaticStatus"
+														id="asympSepsisSymp"
+														(ngModelChange)="createSymptomaticTextSepsis()">
+													<label for="asympSepsisSymp">Asymptomatic</label>
+												</div>
+											</div>
+											<div class="col-md-9 no-padding">
+												<div class="col-md-12 no-padding">
+													<span class="bold"
+														*ngIf="sepsisTempObj.pastSelectedSymptomaticStr != null  && sepsisTempObj.pastSelectedSymptomaticStr != ''">
+														Past Selected: <span style="font-weight: normal">{{sepsisTempObj.pastSelectedSymptomaticStr}}</span>
+													</span>
+												</div>
+												<div class="col-md-12 no-padding"
+													*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.symptomaticStatus">
+													<span class="bold selected-text"
+														*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.symptomaticValue !=null && infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.symptomaticValue !=''">
+														Selected: <span style="font-weight: normal">{{infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.symptomaticValue}}</span>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div
+										class="row table full padding-10-x padding-10-y no-padding-left no-padding-top"
+										*ngIf="(infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.symptomaticStatus==false)">
+										<div class="col-md-12 setting-checkbox no-padding no-margin">
+											<div class="col-md-3 force-left table-cell no-padding-right">
+												<!-- col-md-3  -->
+												<span class="bold">Risk Factors</span>
+												<div class="desktop-column-20 no-padding">
+													<div class="multiselect  desktop-column-15 no-padding">
+														<!--  desktop-column-15 -->
+														<div class="selectBox"
+															(click)="populateMultiCheckBox('multiple-selectbox-risk2')"
+															id="multiple-selectbox-risk2">
+															<select class="no-margin">
+																<option>-- Select --</option>
+															</select>
+															<div class="overSelect"></div>
+														</div>
+														<ul id="checkboxes-risk2" class="multiple-select">
+															<li
+																*ngFor="let item of infectSystemObj.dropDowns.riskFactorSepsis"><input
+																type="checkbox" id="{{item.key}}"
+																[(ngModel)]="item.flag" [value]="true"
+																(click)="onCheckMultiCheckBoxValueSepsis(item.key,'riskFactor', item.flag)"
+																[ngModelOptions]="{standalone: true}" /><label
+																for="{{item.key}}">{{item.value}}</label></li>
+														</ul>
+													</div>
+												</div>
+												<div class="col-md-9 no-padding">
+													<div class="col-md-12 no-padding">
+														<span class="bold"
+															*ngIf="sepsisTempObj.pastSelectedRiskStr != null  && sepsisTempObj.pastSelectedRiskStr != ''">
+															Past Selected: <span style="font-weight: normal">{{sepsisTempObj.pastSelectedRiskStr}}</span>
+														</span>
+													</div>
+													<div class="col-md-12 no-padding"
+														*ngIf="sepsisTempObj.selectedRiskStr != null && sepsisTempObj.selectedRiskStr!=''">
+														<span class="bold selected-text"> Selected: <span
+															style="font-weight: normal">{{sepsisTempObj.selectedRiskStr}}</span>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-2 force-left table-cell no-padding-right"
+												*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.riskfactorList != null && infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.riskfactorList.includes('other')">
+												<span class="visiblity-hidden">dummy</span> <input
+													type="text" name="riskOtherName"
+													[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.riskfactorOther"
+													(keyup)="sepsisOtherRiskfactor()"
+													class="col-md-12 input-coloured-gray input-medium assesment-select"
+													[ngModelOptions]="{standalone: true}">
+											</div>
+										</div>
+									</div>
+									<div
+										class="row table full padding-10-x padding-10-y no-padding-left no-padding-top"
+										*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.symptomaticStatus">
+										<div
+											class="col-md-12 blue-round-tick setting-checkbox no-padding no-margin">
+											<div class="col-md-12 no-padding">
+												<div class="col-md-8 no-padding-left padding-top-1">
+													<input type="checkbox" name="lethargyName"
+														id="SympLethargy"
+														[(ngModel)]="sepsisTempObj.symptomatic.Lethargy"
+														(ngModelChange)="createSymptomaticTextSepsis()"
+														[ngModelOptions]="{standalone: true}"> <label
+														for="SympLethargy">Lethargy</label> <input
+														name="refusalFeedsName" type="checkbox"
+														[(ngModel)]="sepsisTempObj.symptomatic.RefusaltoFeeds"
+														(ngModelChange)="createSymptomaticTextSepsis()"
+														id="SympRefusal" [ngModelOptions]="{standalone: true}">
+													<label for="SympRefusal">Refusal to Feeds</label> <input
+														type="checkbox" id="SympMotions"
+														[(ngModel)]="sepsisTempObj.symptomatic.LooseMotions"
+														(ngModelChange)="createSymptomaticTextSepsis()"
+														[ngModelOptions]="{standalone: true}"> <label
+														for="SympMotions">Loose Motions</label> <input
+														type="checkbox" id="SympApnea"
+														[(ngModel)]="sepsisTempObj.symptomatic.Apnea"
+														(ngModelChange)="okCancelPopupSymptomaticSepsis('apneaSymptomaticSepsisEvent','Do you want to take Apnea assessment')"
+														[ngModelOptions]="{standalone: true}"> <label
+														for="SympApnea">Apnea</label> <input type="checkbox"
+														name="dowsinessName" id="SympDrowsiness"
+														[(ngModel)]="sepsisTempObj.symptomatic.Drowsiness"
+														(ngModelChange)="createSymptomaticTextSepsis()"
+														[ngModelOptions]="{standalone: true}"> <label
+														for="SympDrowsiness">Drowsiness</label> <input
+														type="checkbox" name="othersSepsisName"
+														[(ngModel)]="sepsisTempObj.symptomatic.Others"
+														[ngModelOptions]="{standalone: true}"
+														(ngModelChange)="createSymptomaticTextSepsis()"
+														id="SympOthers"> <label for="SympOthers">Others</label>
+												</div>
+												<div class="col-md-2 no-padding padding-top-1"
+													*ngIf="sepsisTempObj.symptomatic.Others">
+													<input type="text" name="othersSepsName"
+														[(ngModel)]="sepsisTempObj.symptomatic.OthersValue"
+														class="input input-medium"
+														(keyup)="createSymptomaticTextSepsis()"
+														[ngModelOptions]="{standalone: true}"
+														[ngModelOptions]="{standalone: true}">
+												</div>
+
+											</div>
+											<div class="col-md-12 no-padding padding-top-1">
+												<div class="col-md-2 no-padding padding-top-1">
+													<input type="checkbox" name="respName" id="SympResp"
+														[(ngModel)]="sepsisTempObj.symptomatic.RespiratoryDistress"
+														(ngModelChange)="createSymptomaticTextSepsis()"
+														[ngModelOptions]="{standalone: true}"> <label
+														for="SympResp">Respiratory Distress</label>
+												</div>
+												<div class="col-md-3 no-padding-right"
+													*ngIf="sepsisTempObj.symptomatic.RespiratoryDistress">
+													<input type="text" name="DownesName"
+														*ngIf="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.downesscore!=null && infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.downesscore!=''"
+														[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.downesscore"
+														class="input input-medium desktop-column-4" disabled
+														[ngModelOptions]="{standalone: true}"> <span
+														class="button button-green  middle-aligned"
+														(click)="downesScore()">DOWNES' SCORE</span>
+												</div>
+
+											</div>
+										</div>
+									</div>
+									<hr class="no-margin line-2">
+									<div *ngIf="!sepsisTempObj.earlyOnset">
+										<div
+											class="row table full padding-10-x padding-10-y no-padding-left no-padding-top">
+											<div class="col-md-12 no-padding-right padding-top-1">
+												<div class="col-md-2 no-padding-left">
+													<span class="input-label bold">Temperature</span>
+													<div class="relative-input-group block desktop-column-20">
+														<input name="temperature" type="text"
+															class="input input-medium desktop-column-8"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.temperatureCelsius"
+															pattern="/^[0-9]*[.]?[0-9]+$/"
+															[ngModelOptions]="{standalone: true}"> <span
+															class="input-group-icon center-aligned desktop-column-12"><sup>o</sup>C</span>
+													</div>
+													<!-- <label class="col-md-12 no-padding right-aligned ng-hide"
+														style="color: red; font-size: 10px"
+														*ngIf="sepsisForm.temperature.$dirty && sepsisForm.temperature.$invalid">
+														Not a valid Value</label> -->
+												</div>
+												<div class="col-md-2 sepsisentrytype no-padding-left">
+													<span class="input-label bold visiblity-hidden">Temperature</span>
+													<div class="toggle-options-radio">
+														<input type="radio" name="feverHypo"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.isfeverhypo"
+															(ngModelChange)="createSymptomaticTextSepsis()"
+															id="fever" [value]="true"> <label
+															class="display-disabled-radio-color" for="fever">Fever</label>
+														<input type="radio" name="feverHypo"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.isfeverhypo"
+															(ngModelChange)="createSymptomaticTextSepsis()"
+															id="hypothermia" [value]="false"> <label
+															class="display-disabled-radio-color" for="hypothermia">Hypothermia</label>
+													</div>
+												</div>
+												<div class="col-md-3 peripheraltemp no-padding-left">
+													<span class="input-label bold">Central to peripheral
+														temperature</span>
+													<div class="relative-input-group block desktop-column-15">
+														<input name="Peripheral" type="text"
+															class="input input-medium desktop-column-8"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.centralPeripheralValue"
+															[ngModelOptions]="{standalone: true}"> <span
+															class="input-group-icon center-aligned desktop-column-12"><sup>o</sup>C</span>
+													</div>
+													<!-- <label class="col-md-12 no-padding right-aligned ng-hide"
+														style="color: red; font-size: 10px"
+														*ngIf="sepsisForm.Peripheral.$dirty && sepsisForm.Peripheral.$invalid">
+														Not a valid Value</label> -->
+												</div>
+
+												<div class="col-md-2 sepsisentrytype no-padding-left">
+													<span class="bold">Blood Culture Status</span>
+													<div class="toggle-options-radio">
+
+														<input type="radio" name="BloodCultureStatus"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.bloodCultureStatus" (ngModelChange)="progressNotesSepsis()"
+															id="bloodCultureStatusPositive" value="Positive"> <label for="bloodCultureStatusPositive">Positive</label>
+														<input type="radio" name="BloodCultureStatus"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.bloodCultureStatus" (ngModelChange)="progressNotesSepsis()"
+															id="bloodCultureStatusNegative" value="Negative"> <label for="bloodCultureStatusNegative">Negative</label>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr class="no-margin line-2">
+										<div
+											class="row table full padding-10-x padding-10-y no-padding-left no-padding-top">
+											<div class="col-md-12 no-padding-right padding-top-1">
+												<div class="col-md-1 no-padding">
+													<span class="bold">Shock</span>
+													<div class="toggle-options-radio">
+														<input type="radio" name="SepsisShock"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.shock"
+															(ngModelChange)="progressNotesSepsis()"
+															id="SepsisShockYes" [value]="true"> <label
+															for="SepsisShockYes">Yes</label> <input type="radio"
+															name="sepsisShock"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.shock"
+															(ngModelChange)="progressNotesSepsis()"
+															id="SepsisShockNo" [value]="false"> <label
+															for="SepsisShockNo">No</label>
+													</div>
+												</div>
+												<div
+													data-ng-if="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.shock">
+													<div class="col-md-4 col-lg-3 cft no-padding-left">
+														<div class="col-md-6 no-padding-left">
+															<label>CFT</label>
+															<div class="relative-input-group block no-padding-left">
+																<input type="text" name="secSepsisName"
+ 																	[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.shockCft"
+																	class="input input-medium desktop-column-12" name="cft" [ngModelOptions]="{standalone: true}" (ngModelChange)="progressNotesSepsis()"/>
+																<span
+																	class="input-group-icon desktop-column-8 center-aligned"
+																	style="top: 0px; left: 1px">Sec</span>
+															</div>
+														</div>
+														<div class="col-md-6 no-padding-left">
+															<label>Syst BP</label>
+															<div class="relative-input-group block no-padding-left">
+																<input type="text" name="minSepsisName"
+																	class="input input-medium desktop-column-10 mmhg"
+																	[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.shockSystbp"
+																	name="systBp" [ngModelOptions]="{standalone: true}" (ngModelChange)="progressNotesSepsis()"/> <span
+																	class="input-group-icon desktop-column-10 center-aligned"
+																	style="top: 0px; left: 1px;">mmHg</span>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-5 diast no-padding-left">
+														<div class="col-md-4 no-padding-left">
+															<label>Diast BP</label>
+															<div class="relative-input-group block no-padding-left">
+																<input type="text" name="mmHgSepsisName"
+																	class="input input-medium desktop-column-12"
+																	[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.shockDiastbp"
+																	name="diastBp" [ngModelOptions]="{standalone: true}" (ngModelChange)="progressNotesSepsis()"/> <span
+																	class="input-group-icon desktop-column-8 center-aligned"
+																	style="top: 0px; left: 1px">mmHg</span>
+															</div>
+														</div>
+														<div class="col-md-4 no-padding-left">
+															<label>Mean BP</label>
+															<div class="relative-input-group block no-padding-left">
+																<input type="text" name="meanBpSepsisName"
+																	class="input input-medium desktop-column-12"
+																	[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.shockBp"
+																	name="meanBp" [ngModelOptions]="{standalone: true}" (ngModelChange)="progressNotesSepsis()"/> <span
+																	class="input-group-icon desktop-column-8 center-aligned"
+																	style="top: 0px; left: 1px">mmHg</span>
+															</div>
+														</div>
+														<div class="col-md-4 no-padding">
+															<span>Heart Rate <span class="selected-text"
+																*ngIf="sepsisTempObj.Tachycardia != null">{{sepsisTempObj.Tachycardia}}</span>
+															</span>
+															<div class="relative-input-group block no-padding-right">
+																<input type="text" name="hrRateName"
+																	class="input input-medium desktop-column-10 no-padding"
+																	[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.heartrate"
+																	name="hRate" [ngModelOptions]="{standalone: true}" (ngModelChange)="progressNotesSepsis()"/> <span
+																	class="input-group-icon desktop-column-10 center-aligned"
+																	style="top: 0px; left: 1px">per min</span>
+															</div>
+														</div>
+													</div>
+													<div
+														class="col-md-4 col-lg-3 pulses no-padding-left padding-top-2 blue-round-tick">
+														<input type="checkbox" name="poorPulsesName" id="SympPoor"
+															(click)="progressNotesSepsis()"
+															value="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.poorpulses">
+														<label for="SympPoor">Poor Pulses</label> <input
+															type="checkbox" name="secsSepsisName" id="SympCold"
+															(click)="progressNotesSepsis()"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.coldExtremities"
+															[ngModelOptions]="{standalone: true}"> <label
+															for="SympCold">Cold Extremities</label>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div
+											class="row table full padding-10-x padding-10-y no-padding-left no-padding-top">
+											<div class="col-md-12 no-padding-right padding-top-1">
+												<div class="col-md-7 no-padding-left">
+													<table
+														*ngIf="!(TableSepsisFlag) && infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.nursingVitalsList != null && infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.nursingVitalsList.length > 0"
+														class="table table-striped table-bordered headed-table desktop-column-20">
+														<tr>
+															<td class="center-aligned">Date</td>
+															<td class="center-aligned">CFT</td>
+															<td class="center-aligned">Syst BP</td>
+															<td class="center-aligned">Diast BP</td>
+															<td class="center-aligned">Mean BP</td>
+															<td class="center-aligned">Heart rate</td>
+														</tr>
+														<tr>
+															<td class="center-aligned"><span>{{infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.nursingVitalsList[0].creationtime
+																	| date:'dd-MM-yyyy hh:mm a'}}</span></td>
+															<td class="center-aligned"><span>{{infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.nursingVitalsList[0].cft}}</span></td>
+															<td class="center-aligned"><span>{{infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.nursingVitalsList[0].systBp}}</span></td>
+															<td class="center-aligned"><span>{{infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.nursingVitalsList[0].diastBp}}</span></td>
+															<td class="center-aligned"><span>{{infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.nursingVitalsList[0].meanBp}}</span></td>
+															<td class="center-aligned"><span>{{infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.nursingVitalsList[0].hrRate}}</span></td>
+														</tr>
+													</table>
+													<div *ngIf="TableSepsisFlag" class="col-md-12 no-padding"
+														[ngClass]="{'apnea-table-scroll': infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.nursingVitalsList.length > 4}">
+														<table
+															class="table table-striped table-bordered headed-table desktop-column-20">
+															<tr>
+																<td class="center-aligned">Date</td>
+																<td class="center-aligned">CFT</td>
+																<td class="center-aligned">Syst BP</td>
+																<td class="center-aligned">Diast BP</td>
+																<td class="center-aligned">Mean BP</td>
+																<td class="center-aligned">Heart rate</td>
+															</tr>
+															<tr
+																*ngFor="let item of infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.nursingVitalsList">
+																<td class="center-aligned"><span>{{item.creationtime
+																		| date:'dd-MM-yyyy hh:mm a'}}</span></td>
+																<td class="center-aligned"><span>{{item.cft}}</span></td>
+																<td class="center-aligned"><span>{{item.systBp}}</span></td>
+																<td class="center-aligned"><span>{{item.diastBp}}</span></td>
+																<td class="center-aligned"><span>{{item.meanBp}}</span></td>
+																<td class="center-aligned"><span>{{item.hrRate}}</span></td>
+															</tr>
+														</table>
+													</div>
+												</div>
+												<div class="col-md-3 no-paddinf-left"
+													*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.nursingVitalsList!=null && infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.nursingVitalsList.length > 0">
+													<div class="right-aligned table-cell">
+														<a class="sprite sprite-blue-minus middle-aligned"
+															(click)="switchEventSepsis()" [hidden]="TableSepsisFlag"></a>
+														<a class="sprite sprite-blue-plus middle-aligned"
+															(click)="switchEventSepsis()" *ngIf="!(TableSepsisFlag)"></a>
+													</div>
+												</div>
+
+											</div>
+										</div>
+										<div class="row padding-10-x padding-10-y no-padding-top">
+											<hr class="no-margin line-2">
+										</div>
+										<div
+											class="row table full padding-10-x padding-10-y no-padding-left no-padding-top">
+											<div class="col-md-12 no-padding-right">
+												<div class="col-md-2 no-padding">
+													<span class="bold">Abdominal Distension</span>
+													<div class="toggle-options-radio padding-top-1">
+														<input type="radio" name="AbdominalDistension"
+															[value]="true"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.abdominalStatus"
+															id="AbdominalDistensionYes"
+															(ngModelChange)="changeAbdStatus()"
+															[ngModelOptions]="{standalone: true}"> <label
+															for="AbdominalDistensionYes">Yes</label> <input
+															type="radio" name="AbdominalDistension" [value]="false"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.abdominalStatus"
+															(ngModelChange)="changeAbdStatus()"
+															id="AbdominalDistensionNo"> <label
+															for="AbdominalDistensionNo">No</label>
+													</div>
+												</div>
+												<div class="col-md-2 no-padding"
+													*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.abdominalStatus">
+													<span class="bold">NEC</span>
+													<div class="toggle-options-radio padding-top-1">
+														<input type="radio" name="NEC" [value]="true"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.necStatus"
+															(ngModelChange)="changeNecStatus()" id="NECYes">
+														<label for="NECYes">Yes</label> <input type="radio"
+															name="NEC" [value]="false"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.necStatus"
+															(ngModelChange)="changeNecStatus()" id="NECNo">
+														<label for="NECNo">No</label>
+													</div>
+												</div>
+												<div class="col-md-2 no-padding"
+													*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.necStatus">
+													<div class="table full">
+														<span class="bold visiblity-hidden">NEC Stage</span>
+													</div>
+													<div class="table full">
+														<div
+															class="table-cell no-padding-right padding-left-one padding-top-1">
+															<span class="button button-green  middle-aligned"
+																(click)="showBell()">Bell Staging</span>
+														</div>
+														<div
+															class="table-cell no-padding relative-input-group padding-top-1 middle-aligned">
+															<input type="text" id="displayBell" name="bellsName"
+																*ngIf="sepsisTempObj.bellStageObj.scoreTempTotal!=null && sepsisTempObj.bellStageObj.scoreTempTotal!=''"
+																[(ngModel)]="sepsisTempObj.bellStageObj.scoreTempTotal"
+																class="input input-medium desktop-column-15" disabled
+																[ngModelOptions]="{standalone: true}" />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row padding-10-x padding-10-y no-padding-top">
+											<hr class="no-margin line-2">
+										</div>
+									</div>
+								</div>
+								<div class="row table full padding-10-x no-padding-right"
+									(click)="actionSepsisVisible()">
+									<div class="table-cell middle-aligned">
+										<div
+											class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+											<span class="sprite sprite-action"></span>
+										</div>
+									</div>
+									<div class="table-cell middle-aligned" style="width: 6%">
+										<h1
+											class="no-margin system-main-heading action-assessment-color">Action</h1>
+									</div>
+									<div
+										class="table-cell padding-10-x no-padding-right middle-aligned"
+										style="width: 100%">
+										<hr class="action-assessment-line">
+									</div>
+									<div class="table-cell middle-aligned">
+										<a class="sprite sprite-minus-action middle-aligned"
+											*ngIf="isActionSepsisVisible"></a> <a
+											class="sprite  sprite-plus-action middle-aligned"
+											*ngIf="!(isActionSepsisVisible)"></a>
+									</div>
+								</div>
+								<div *ngIf="isActionSepsisVisible">
+									<div class="row">
+										<div class="col-md-3 table full">
+											<div class="table-cell">
+												<h1 class="no-margin system-sub-heading">Investigation</h1>
+											</div>
+											<div class="table-cell">
+												<span class="button order-button  middle-aligned"
+													(click)="showOrderInvestigation()">Order</span>
+											</div>
+										</div>
+										<div class="col-md-9 table-cell">
+											<div class="col-md-12 no-padding">
+												<span class="bold"
+													*ngIf="sepsisTempObj.pastSelectedOrderInvestigationStr!=null && sepsisTempObj.pastSelectedOrderInvestigationStr!=''">Past
+													Selected: <label class="normal-font-weight">{{sepsisTempObj.pastSelectedOrderInvestigationStr}}</label>
+												</span>
+											</div>
+											<div class="col-md-12 no-padding">
+												<span class="bold selected-text"
+													*ngIf="sepsisTempObj.orderSelectedText!=null && sepsisTempObj.orderSelectedText!=''">Selected:
+													<label class="normal-font-weight">{{sepsisTempObj.orderSelectedText}}</label>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row padding-top-1 padding-10-y">
+										<div class="col-md-3 table full">
+											<div class="table-cell middle-aligned">
+												<h1 class="no-margin system-sub-heading">Treatment</h1>
+											</div>
+											<div class="table-cell">
+												<div class="toggle-options-radio"
+													*ngIf="treatmentVisiblePastSepsis">
+													<input type="radio" name="sepsisTreatmentStatus"
+														id="sepsisTreatmentStatusContinue" value="Continue"
+														[(ngModel)]="sepsisTreatmentStatus.value"
+														(ngModelChange)="continueTreatmentSepsis()"> <label
+														for="sepsisTreatmentStatusContinue">Continue</label> <input
+														type="radio" name="sepsisTreatmentStatus"
+														id="sepsisTreatmentStatusChange" value="Change"
+														[(ngModel)]="sepsisTreatmentStatus.value"
+														(ngModelChange)="changeTreatmentSepsis()"> <label
+														for="sepsisTreatmentStatusChange">Change</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-9">
+											<!-- <div class="col-md-12 no-padding">
+												<span class="bold selected-text"
+													data-ng-if="jundiceTempObject.treatmentActionSelected != null && jundiceTempObject.treatmentActionSelected!='' ">Selected:
+													<span style="font-weight: normal; color: black !important">{{jundiceTempObject.treatmentActionSelected}}</span>
+												</span>
+											</div> -->
+											<div class="col-md-12 no-padding">
+												<div
+													*ngIf="sepsisTempObj.pastSelectedTreatmentStr!=null && sepsisTempObj.pastSelectedTreatmentStr!=''">
+													<span class="bold">Past Selected: </span>
+													<span>{{sepsisTempObj.pastSelectedTreatmentStr}}</span>
+												</div>
+												<div>
+													<span class="bold selected-text"
+														*ngIf="sepsisTempObj.selectedTreatmentStr !=null && sepsisTempObj.selectedTreatmentStr !=''">Selected:
+													</span> <span class="selected-text">{{sepsisTempObj.selectedTreatmentStr}}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row padding-10-y padding-10-x"
+										*ngIf="treatmentTabsVisible==true">
+<!--
+										<div class="col-md-2 no-padding-left center-aligned"
+											style="margin: 10px 0;">
+											<div class="table full assessment-treatment-tab-box"
+												[ngClass]="{'resp-event-box-selected': isAntibioticsSelect==true, 'resp-event-box-saved': isAntibioticsSaved ==true}"
+												(click)="antibioticsSelect()">
+												<span class="bold">Antibiotics</span>
+											</div>
+										</div>
+-->
+                    <div class="col-md-2 medication no-padding-left center-aligned">
+											<div class="table full assessment-treatment-tab-box"
+												[ngClass]="{'resp-event-box-selected': isAntibioticsSelect==true, 'resp-event-box-saved': infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.medicationStr != undefined && infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.medicationStr != null && infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.medicationStr != ''}"
+												(click)="medicationsSelect()">
+												<span class="bold">Medications</span>
+											</div>
+										</div>
+										<div class="col-md-2 manageseizure no-padding-left center-aligned">
+											<div class="table full assessment-treatment-tab-box"
+												[ngClass]="{'resp-event-box-selected': isManageSeizuresSelect ==true, 'resp-event-box-saved': isManageSeizuresSaved ==true}"
+												(click)="manageSeizuresSelect()">
+												<span class="bold">Manage Seizures</span>
+											</div>
+										</div>
+										<div class="col-md-2 manageshock no-padding-left center-aligned">
+											<div
+												class="table full  assessment-treatment-tab-box background-color-grey"
+												[ngClass]="{'resp-event-box-selected': isManageShockSelect ==true, 'resp-event-box-saved': isManageShockSaved ==true}">
+												<span class="bold">Manage Shock</span>
+											</div>
+										</div>
+										<div class="col-md-2 managehypoglycemia no-padding-left center-aligned">
+											<div
+												class="table full assessment-treatment-tab-box background-color-grey"
+												[ngClass]="{'resp-event-box-selected': isManageHypoglycemiaSelect ==true, 'resp-event-box-saved': isManageHypoglycemiaSaved ==true}">
+												<span class="bold">Manage Hypoglycemia</span>
+											</div>
+										</div>
+										<div class="col-md-2 managerds no-padding-left center-aligned">
+											<div
+												class="table full assessment-treatment-tab-box no-padding"
+												style="padding-left: 0px; padding-right: 0px;"
+												[ngClass]="{'resp-event-box-selected': isRdsSelect ==true, 'resp-event-box-saved': isRdsSaved ==true}"
+												(click)="rdsSelect()">
+												<span class="bold">Manage Respiratory Distress</span>
+											</div>
+										</div>
+										<!-- <div class="col-md-2 no-padding-left center-aligned"
+											style="margin: 10px 0;">
+											<div class="table full assessment-treatment-tab-box  no-padding"
+												[ngClass]="{'resp-event-box-selected': isTempSelect ==true, 'resp-event-box-saved': isTempSaved ==true}"
+												(click)="tempSelect()">
+												<span class="bold">Mantain Temperature</span>
+											</div>
+										</div> -->
+										<div class="col-md-1 col-lg-2 no-padding-left center-aligned">
+											<div
+												class="table full assessment-treatment-tab-box no-padding"
+												[ngClass]="{'resp-event-box-selected': isOtherSelect ==true, 'resp-event-box-saved': isOtherSaved ==true}"
+												(click)="otherSelect()">
+												<span class="bold">Others</span>
+											</div>
+										</div>
+									</div>
+									<div class="row padding-10-x no-padding-left">
+										<div *ngIf="pastPrescriptionList != null && pastPrescriptionList.length > 0"class="col-md-12">
+											<div class="col-md-9 col-lg-19 no-padding-left">
+												<span class="bold required">Current Medications</span>
+												<div class="input-group input-group-labeled desktop-column-20">
+													<div class="desktop-column-20 padding-0-x force-left">
+														<div class="input-cont block">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-9 no-padding">
+												<table
+													class="table table-striped table-bordered headed-table desktop-column-20">
+													<tr>
+														<td class="center-aligned">Medicine Name</td>
+														<td class="center-aligned">Start Date</td>
+														<td class="center-aligned">Dose</td>
+														<td class="center-aligned">Medicine Day</td>
+													</tr>
+													<tr *ngFor="let medicine of pastPrescriptionList">
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis'"><span><span *ngIf="medicine.route == 'IV' || medicine.route == 'IM'">Inj. </span> <span *ngIf="medicine.route == 'PO'">Syrup </span><span *ngIf="medicine.medicationtype == 'TYPE0032'">Eye Drops </span>{{medicine.medicinename}}</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis'"><span>{{medicine.medicineOrderDate | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis' && medicine.cal_dose_volume != null"><span>{{medicine.cal_dose_volume}} {{medicine.dose_unit.substring(0,2)}}</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis' && medicine.cal_dose_volume == null && medicine.topical_drops != null"><span>{{medicine.topical_drops}} drops</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis' && medicine.cal_dose_volume == null && medicine.volume != null"><span>{{medicine.volume}} ml</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis' && medicine.cal_dose_volume == null && medicine.quantity != null"><span>{{medicine.quantity}}</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis' && medicine.cal_dose_volume == null && medicine.sachets != null"><span>{{medicine.sachets}} sachets</span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis' && medicine.cal_dose_volume == null && medicine.sachets == null && medicine.quantity == null && medicine.volume == null && medicine.topical_drops == null"><span></span></td>
+														<td class="center-aligned"
+															*ngIf="medicine.eventname == 'Sepsis'"><span>{{medicine.medicineDay}}</span></td>
+													</tr>
+												</table>
+											</div>
+										</div>
+										<div class="col-md-12" *ngIf="isMedicationsSelect">
+											<div class="col-md-9 col-lg-10 no-padding-left">
+												<span class="bold">Medications</span>
+												<div
+													class="input-group input-group-labeled desktop-column-20">
+													<div class="desktop-column-20 padding-0-x force-left">
+														<div class="input-cont block">
+															<input type="text"
+																[ngModelOptions]="{standalone: true}"
+																[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.medicationStr"
+																class="desktop-column-20 input-coloured-gray input-medium assesment-select" disabled>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-2 no-padding">
+												<span class="visiblity-hidden">dummy</span>
+												<div class="padding-top-1">
+													<span class="button button-blue"
+														(click)="redirectToPrescription('Sepsis')">Prescribe Medications</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12" *ngIf="isOtherSelect">
+											<div class="col-md-12 no-padding">
+												<span class="bold">Others</span>
+												<div
+													class="input-group input-group-labeled desktop-column-20">
+													<div class="desktop-column-20 padding-0-x force-left">
+														<div class="input-cont block">
+															<input type="text"
+																(keyup)="saveTreatmentSepsis('others')"
+																[ngModelOptions]="{standalone: true}"
+																[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.treatmentOther"
+																class="desktop-column-20 input-coloured-gray input-medium assesment-select">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row table full padding-10-x no-padding-right"
+									(click)="planSepsisVisible()">
+									<div class="table-cell middle-aligned">
+										<div
+											class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+											<span class="sprite sprite-plan"></span>
+										</div>
+									</div>
+									<div class="table-cell middle-aligned" style="width: 5%">
+										<h1
+											class="no-margin system-main-heading plan-assessment-color">Plan</h1>
+									</div>
+									<div
+										class="table-cell padding-10-x no-padding-right middle-aligned"
+										style="width: 100%">
+										<hr class="plan-assessment-line">
+									</div>
+									<div class="table-cell middle-aligned">
+										<a class="sprite sprite-minus-plan middle-aligned"
+											*ngIf="isPlanSepsisVisible"></a> <a
+											class="sprite sprite-plus-plan middle-aligned"
+											*ngIf="!(isPlanSepsisVisible)"></a>
+									</div>
+								</div>
+								<div *ngIf="isPlanSepsisVisible">
+									<div class="row">
+										<div
+											class="col-md-1 no-padding-right center-aligned padding-top-2">
+											<h1 class="no-margin system-sub-heading"
+												style="line-height: 35px">Plan</h1>
+										</div>
+										<div class="col-md-4 col-lg-3">
+											<label><strong>Reassess Time</strong></label>
+											<div class="desktop-column-20  table full">
+												<div class="table-cell top-aligned">
+													<input type="text" name="reassestime"
+														[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.reassestime"
+														(keyup)="progressNotesSepsis()"
+														class="input input-medium desktop-column-20">
+												</div>
+												<div class="table-cell padding-5-x">
+													<div class="toggle-options-radio"
+														[ngClass]="{'required': infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.reassestime!=null && infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.reassestime!=''}">
+														<input type="radio" name="reassessTimeToggle" value="mins"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.reassestimeType"
+															(ngModelChange)="progressNotesSepsis()"
+															id="reassessMinsIvh"> <label
+															for="reassessMinsIvh">Mins</label> <input type="radio"
+															name="reassessTimeToggle" value="hours"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.reassestimeType"
+															(ngModelChange)="progressNotesSepsis()"
+															id="reassessHrsIvh"> <label for="reassessHrsIvh">Hours</label>
+														<input type="radio" name="reassessTimeToggle" value="days"
+															[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.reassestimeType"
+															(ngModelChange)="progressNotesSepsis()"
+															id="reassessDaysIvh"> <label
+															for="reassessDaysIvh">Days</label>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-5 col-lg-6">
+											<div class="col-md-12 no-padding">
+												<span class="bold">Others</span>
+												<div
+													class="input-group input-group-labeled desktop-column-19">
+													<div class="desktop-column-20 padding-0-x force-left">
+														<div class="input-cont block">
+															<input type="text" name="otherText"
+																[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.otherplanComments"
+																(keyup)="progressNotesSepsis()"
+																class="desktop-column-20 input-coloured-gray input-medium assesment-select">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row table full padding-10-x no-padding-right"
+									(click)="causeSepsisSectionVisible()">
+									<div class="table-cell middle-aligned">
+										<div
+											class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+											<span class="sprite sprite-cause"></span>
+										</div>
+									</div>
+									<div class="table-cell middle-aligned" style="width: 5%">
+										<h1
+											class="no-margin system-main-heading cause-assessment-color">Cause</h1>
+									</div>
+									<div
+										class="table-cell padding-10-x no-padding-right middle-aligned"
+										style="width: 100%">
+										<hr class="cause-assessment-line">
+									</div>
+									<div class="table-cell middle-aligned">
+										<a class="sprite  sprite-minus-cause middle-aligned"
+											*ngIf="isCauseSepsisVisible"></a> <a
+											class="sprite sprite-plus-cause middle-aligned"
+											*ngIf="!(isCauseSepsisVisible)"></a>
+									</div>
+								</div>
+								<div *ngIf="isCauseSepsisVisible">
+									<div class="row padding-10-y padding-10-x no-padding-left">
+										<div class="col-md-3 force-left">
+											<label><strong>Causes</strong></label>
+											<div class="multiselect desktop-column-20">
+												<div class="selectBox"
+													(click)="populateMultiCheckBox('multiple-selectbox-causeSepsis')"
+													id="multiple-selectbox-causeSepsis">
+													<select>
+														<option>-- Select --</option>
+													</select>
+													<div class="overSelect"></div>
+												</div>
+												<ul id="checkboxes-causeSepsis" class="multiple-select">
+													<li
+														*ngFor="let item of infectSystemObj.dropDowns.causeOfSepsis"><input
+														type="checkbox" id="{{item.key}}+SepsisCause"
+														(click)="onCheckMultiCheckBoxValueSepsis(item.key,'causeOfSepsis',item.flag)"
+														[(ngModel)]="item.flag" value=true
+														[ngModelOptions]="{standalone: true}" /><label
+														for="{{item.key}}+SepsisCause">{{item.value}}</label></li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-4 table full no-padding padding-top-2">
+											<div class="col-md-12">
+												<span class="bold"
+													*ngIf="sepsisTempObj.pastSelectedCauseStr!=null && sepsisTempObj.pastSelectedCauseStr!=''">Past
+													Selected: <span class="normal-font-weight">{{sepsisTempObj.pastSelectedCauseStr}}</span>
+												</span>
+											</div>
+											<div class="col-md-12">
+												<span class="bold selected-text"
+													*ngIf="sepsisTempObj.selectedCauseStr !=null && sepsisTempObj.selectedCauseStr !=''">Selected:
+													<span class="normal-font-weight">{{sepsisTempObj.selectedCauseStr}}</span>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div
+										class="row table full padding-10-x no-padding-left padding-10-y"
+										*ngIf="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.causeofsepsisList != null && infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.causeofsepsisList.includes('other')">
+										<div class="col-md-2 no-padding-left">
+											<span class="bold required">Others </span>
+											<div class="relative-input-group block padding-top-1">
+												<input type="text" name="causeOtherSepsisName" required="required"
+													[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.causeofsepsisOther"
+													(ngModelChange)="progressNotesSepsis()" class="col-md-12 input input-medium" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row table full padding-10-x no-padding-right"
+									(click)="progressSepsisVisible()">
+									<div class="table-cell middle-aligned">
+										<div class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+											<span class="sprite sprite-progress"></span>
+										</div>
+									</div>
+									<div class="table-cell middle-aligned" style="width: 14%">
+										<h1
+											class="no-margin system-main-heading progress-assessment-color">Progress
+											Notes</h1>
+									</div>
+									<div
+										class="table-cell padding-10-x no-padding-right middle-aligned"
+										style="width: 100%">
+										<hr class="progress-assessment-line">
+									</div>
+									<div class="table-cell middle-aligned">
+										<a class="sprite sprite-minus-progress middle-aligned"
+											*ngIf="isProgressSepsisVisible"></a> <a
+											class="sprite sprite-plus-progress middle-aligned"
+											*ngIf="!(isProgressSepsisVisible)"></a>
+									</div>
+								</div>
+								<div *ngIf="isProgressSepsisVisible">
+									<div class="row padding-10-y padding-10-x no-padding-left">
+										<div class="col-md-2 table full no-padding-right">
+											<span class="bold">Associated Event</span> <select
+												name="AssociatedSelect"
+												[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.associatedevent"
+												class="input input-medium desktop-column-20 max-height-36"
+												[ngModelOptions]="{standalone: true}" required>
+												<option value="" disabled selected>-Select-</option>
+												<option
+													*ngFor="let item of infectSystemObj.dropDowns.associatedEvents"
+													value="item[1]">{{item[1]}}</option>
+											</select>
+
+										</div>
+									</div>
+									<div class="row padding-10-y no-padding-top padding-10-x">
+										<div
+											class="input-group input-group-labeled col-md-12 no-padding-left right">
+											<div
+												class="desktop-column-20 padding-0-x force-left no-margin">
+												<textarea
+													[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.progressnotes"
+													[ngModelOptions]="{standalone: true}"
+													class="desktop-column-20 max-height-36 set-font-size-default no-margin"
+													rows="4"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="assesment-container">
+								<div class="col-md-12 no-padding">
+									<div class="col-md-4 no-padding"></div>
+									<div class="col-md-4 no-padding border-radius-5">
+										<span class="alert alert-small margin-10-x border-radius-5 "
+											[ngClass]="{'alert-red' : responseType !='success','alert-green' : responseType =='success'}"
+											*ngIf="vanishSubmitResponseVariable">{{responseMessage}}</span>
+									</div>
+									<div class="col-md-4 no-padding"></div>
+								</div>
+							</div>
+							<div id="footer">
+								<button class="button button-blue button-large respSub"
+									(click)="saveBellStageScore()">SUBMIT</button>
+								<span class="tooltiptext">Some fields are not filled</span>
+								<button class="button button-blue-transparent button-large"
+									(click)="refreshInfection()">
+									<i class="refresh"></i> REFRESH
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="infectionWhichTab == 'vap'">
+				<div
+					*ngIf="infectSystemObj.infectionEventObject.vapEvent.currentEvent.eventstatus =='yes'">
+					<div
+						class="row table full padding-10-x no-padding-right no-padding-left"
+						(click)="clinicalSectionVapVisible()">
+						<div class="table-cell middle-aligned">
+							<div
+								class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+								<span class="sprite sprite-clinical-assessment"></span>
+							</div>
+						</div>
+						<div class="table-cell middle-aligned" style="width: 18%">
+							<h1
+								class="no-margin system-main-heading clinical-assessment-color">Clinical
+								Assessment</h1>
+						</div>
+						<div
+							class="table-cell padding-10-x no-padding-right middle-aligned"
+							style="width: 100%">
+							<hr class="clinical-assessment-line ">
+						</div>
+						<div class="table-cell middle-aligned">
+							<a class="sprite sprite-minus-clinical middle-aligned"
+								*ngIf="isclinicalSectionVapVisible"></a> <a
+								class="sprite  sprite-plus-clinical middle-aligned"
+								*ngIf="!(isclinicalSectionVapVisible)"></a>
+						</div>
+					</div>
+
+					<div *ngIf="isclinicalSectionVapVisible">
+						<div class="row padding-10-x no-padding-right no-padding-left">
+							<div class="col-md-2 ageAtOnset no-padding-left">
+								<div class="table full center-aligned">
+									<span class="bold">Age at onset</span>
+								</div>
+								<div class="table full  no-padding">
+									<div class="table-cell">
+										<div
+											class="input-group input-group-labeled desktop-column-20 no-margin">
+											<div class="desktop-column-20 padding-0-x force-left">
+												<div class="input-cont block">
+													<input type="text" [disabled]="pastAgeInactiveVap"
+														(keyup)="progressNotesVap()"
+														class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+														[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.ageatonset"
+														[ngModelOptions]="{standalone: true}">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="table-cell padding-10-x middle-aligned">
+										<div class="toggle-options-radio">
+											<input type="radio" name="VapAgeAtOnset" [value]="true"
+												[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.ageinhoursdays"
+												id="ageHoursVap" (ngModelChange)="calAgeOnsetVap()">
+											<label
+												[ngClass]="{'display-disabled-radio-color': pastAgeInactiveVap}"
+												for="ageHoursVap">Hours</label> <input type="radio"
+												name="VapAgeAtOnset" [value]="false"
+												[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.ageinhoursdays"
+												id="ageDaysVap" (ngModelChange)="calAgeOnsetVap()">
+											<label
+												[ngClass]="{'display-disabled-radio-color': pastAgeInactiveVap}"
+												for="ageDaysVap">Days</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 dateandtime left-aligned no-padding">
+								<label class="bold required"><strong>Date and
+										Time of assessment</strong></label>
+								<div class="col-md-12 no-padding">
+									<div class="col-md-12 no-padding-left">
+										<owl-date-time class="owl-dateTime"
+											[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.assessmentTime"
+											dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"
+											(ngModelChange)="calculateAgeAtAssessmentNewVap()"
+											[ngModelOptions]="{standalone: true}"></owl-date-time>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 ageatassessment no-padding-left">
+								<div class="table full no-padding center-aligned">
+									<span class="bold">Age at assessment</span>
+								</div>
+								<div class="table full no-padding">
+									<div class="table-cell">
+										<input type="text" name="ageOfAssessmentVap"
+											[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.ageatassesment"
+											class="col-md-12 input-coloured-gray input-medium assesment-select"
+											disabled>
+									</div>
+									<div class="table-cell padding-10-x top-aligned">
+										<div class="toggle-options-radio">
+											<input type="radio" name="vapAgeAssessment" [value]="true"
+												[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.isageofassesmentinhours"
+												id="ageHoursAssessmentVap"
+												(ngModelChange)="calculateAgeAtAssessmentVap('meridian')"
+												[ngModelOptions]="{standalone: true}"> <label
+												for="ageHoursAssessmentVap">Hours</label> <input
+												type="radio" name="vapAgeAssessment" [value]="false"
+												[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.isageofassesmentinhours"
+												id="ageDaysAssessmentVap"
+												(ngModelChange)="calculateAgeAtAssessmentVap('meridian')"
+												[ngModelOptions]="{standalone: true}"> <label
+												for="ageDaysAssessmentVap">Days</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 left-aligned vapentrytype">
+								<div class="col-md-12 no-padding">
+									<label class="bold required"><strong>VAP Entry
+											Type</strong></label>
+								</div>
+								<div class="col-md-12 no-padding-left">
+									<div class="no-padding-left toggle-options-radio">
+										<input type="radio" name="VAPEntryType"
+											[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.isNewEntry"
+											id="VAPNew" [value]="true"
+											[ngModelOptions]="{standalone: true}"> <label
+											for="VAPNew">New</label> <input type="radio"
+											name="VAPEntryType"
+											[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.isNewEntry"
+											id="VAPOld" [value]="false"
+											[ngModelOptions]="{standalone: true}"> <label
+											for="VAPOld">Update Old</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 vapepisode no-padding-left pull-right"
+								style="padding-right: 20px">
+								<div class="padding-10-y center-aligned"
+									style="background-color: #FDF8EA">
+									<span
+										class="bold clinical-assessment-color system-main-heading"
+										style="line-height: 36px">{{assessmentTempObj.vapEpisodeNumber}}</span><sup
+										class="clinical-assessment-color"
+										*ngIf="assessmentTempObj.vapEpisodeNumber == '1' || assessmentTempObj.vapEpisodeNumber == 1">st</sup><sup
+										class="clinical-assessment-color"
+										*ngIf="assessmentTempObj.vapEpisodeNumber == '2' || assessmentTempObj.vapEpisodeNumber == 2">nd</sup><sup
+										class="clinical-assessment-color"
+										*ngIf="assessmentTempObj.vapEpisodeNumber == '3' || assessmentTempObj.vapEpisodeNumber == 3">rd</sup><sup
+										class="clinical-assessment-color"
+										*ngIf="(assessmentTempObj.vapEpisodeNumber != '1' && assessmentTempObj.vapEpisodeNumber != 1) && (assessmentTempObj.vapEpisodeNumber != '2' && assessmentTempObj.vapEpisodeNumber != 2) && (assessmentTempObj.vapEpisodeNumber != '3' && assessmentTempObj.vapEpisodeNumber != 3)">th</sup>
+									<span
+										class="bold clinical-assessment-color system-main-heading">
+										Episode</span>
+								</div>
+							</div>
+						</div>
+						<div
+							class="row table full padding-10-x padding-10-y no-padding-left no-padding-bottom">
+							<div class="col-md-12 no-padding padding-10-y">
+								<div class="col-md-3 no-padding">
+									<label><span class="table-cell">VAP ( CDC
+											Guidelines )</span><span (click)="openGuideline('VAP')"
+										class="table-cell inline-block info-symbol padding-10-x">i</span></label>
+									<div class="toggle-options-radio padding-top-1 required">
+										<input type="radio" name="vapInfo" [value]="true"
+											[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.isvapavailable"
+											disabled (ngModelChange)="progressNotesVap()"
+											required="required" id="vapPresent"> <label
+											class="display-disabled-radio-color" for="vapPresent">Present</label>
+										<input type="radio" required="required" disabled
+											name="vapInfo" [value]="false"
+											[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.isvapavailable"
+											(ngModelChange)="progressNotesVap()" id="vapAbsent">
+										<label class="display-disabled-radio-color" for="vapAbsent">Absent</label>
+									</div>
+								</div>
+								<div class="col-md-9 no-padding"></div>
+							</div>
+						</div>
+					</div>
+					<div
+						class="row table full padding-10-x no-padding-right no-padding-left"
+						(click)="actionVapVisible()">
+						<div class="table-cell middle-aligned">
+							<div
+								class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+								<span class="sprite sprite-action"></span>
+							</div>
+						</div>
+						<div class="table-cell middle-aligned" style="width: 6%">
+							<h1 class="no-margin system-main-heading action-assessment-color">Action</h1>
+						</div>
+						<div
+							class="table-cell padding-10-x no-padding-right middle-aligned"
+							style="width: 100%">
+							<hr class="action-assessment-line">
+						</div>
+						<div class="table-cell middle-aligned">
+							<a class="sprite sprite-minus-action middle-aligned"
+								*ngIf="isActionVapVisible"></a> <a
+								class="sprite sprite-plus-action middle-aligned"
+								*ngIf="!(isActionVapVisible)"></a>
+						</div>
+					</div>
+					<div *ngIf="isActionVapVisible">
+						<div class="row">
+							<div class="col-md-3 table full no-padding">
+								<div class="table-cell">
+									<h1 class="no-margin system-sub-heading">Investigation</h1>
+								</div>
+								<div class="table-cell">
+									<span class="button order-button  middle-aligned"
+										(click)="showOrderInvestigation()">Order</span>
+								</div>
+							</div>
+							<div class="col-md-9 table-cell">
+								<div class="col-md-12 no-padding">
+									<span class="bold"
+										*ngIf="vapTempObj.pastSelectedOrderInvestigationStr!=null && vapTempObj.pastSelectedOrderInvestigationStr!=''">Past
+										Selected: <label class="normal-font-weight">{{vapTempObj.pastSelectedOrderInvestigationStr}}</label>
+									</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<span class="bold selected-text"
+										*ngIf="sepsisTempObj.orderSelectedText!=null && sepsisTempObj.orderSelectedText!=''">Selected:
+										<label class="normal-font-weight">{{sepsisTempObj.orderSelectedText}}</label>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						class="row table full padding-10-x no-padding-right no-padding-left"
+						(click)="progressVapVisible()">
+						<div class="table-cell middle-aligned">
+							<div
+								class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+								<span class="sprite sprite-progress"></span>
+							</div>
+						</div>
+						<div class="table-cell middle-aligned" style="width: 14%">
+							<h1
+								class="no-margin system-main-heading progress-assessment-color">Progress
+								Notes</h1>
+						</div>
+						<div
+							class="table-cell padding-10-x no-padding-right middle-aligned"
+							style="width: 100%">
+							<hr class="progress-assessment-line">
+						</div>
+						<div class="table-cell middle-aligned">
+							<a class="sprite sprite-minus-progress middle-aligned"
+								*ngIf="isProgressVapVisible"></a> <a
+								class="sprite sprite-plus-progress middle-aligned"
+								*ngIf="!(isProgressVapVisible)"></a>
+						</div>
+					</div>
+					<div *ngIf="isProgressVapVisible">
+						<div
+							class="row padding-10-y no-padding-top padding-10-x no-padding-left">
+							<div
+								class="input-group input-group-labeled col-md-12 no-padding-left right">
+								<div class="desktop-column-20 padding-0-x force-left no-margin">
+									<textarea
+										[(ngModel)]="infectSystemObj.infectionEventObject.vapEvent.currentEvent.progressnotes"
+										class="desktop-column-20 max-height-36 set-font-size-default no-margin"
+										[ngModelOptions]="{standalone: true}" rows="4"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="assesment-container">
+					<div class="col-md-12 no-padding">
+						<div class="col-md-4 no-padding"></div>
+						<div class="col-md-4 no-padding border-radius-5">
+							<span class="alert alert-small margin-10-x border-radius-5 " [ngClass]="{ 'alert-red' : responseType !='success','alert-green' : responseType =='success',  }" *ngIf="vanishSubmitResponseVariable">{{responseMessage}}</span>
+						</div>
+						<div class="col-md-4 no-padding"></div>
+					</div>
+				</div> -->
+				<div id="footer">
+					<button class="button button-blue button-large respSub"
+						(click)="submitInfection()">SUBMIT</button>
+					<span class="tooltiptext">Some fields are not filled</span>
+					<button class="button button-blue-transparent button-large"
+						(click)="refreshInfection()">
+						<i class="refresh"></i> REFRESH
+					</button>
+				</div>
+			</div>
+			<div *ngIf="infectionWhichTab == 'clabsi'">
+				<div>
+					<form name="clabsiForm">
+						<div
+							data-ng-if="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.eventstatus =='yes'">
+							<div>
+								<div
+									class="row table full padding-10-x no-padding-right no-padding-left"
+									(click)="clinicalSectionClabsiVisible()">
+									<div class="table-cell middle-aligned">
+										<div
+											class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+											<span class="sprite sprite-clinical-assessment"></span>
+										</div>
+									</div>
+									<div class="table-cell middle-aligned" style="width: 18%">
+										<h1
+											class="no-margin system-main-heading clinical-assessment-color">Clinical
+											Assessment</h1>
+									</div>
+									<div
+										class="table-cell padding-10-x no-padding-right middle-aligned"
+										style="width: 100%">
+										<hr class="clinical-assessment-line ">
+									</div>
+									<div class="table-cell middle-aligned">
+										<a class="sprite sprite-minus-clinical middle-aligned"
+											*ngIf="isclinicalSectionClabsiVisible"></a> <a
+											class="sprite  sprite-plus-clinical middle-aligned"
+											*ngIf="!(isclinicalSectionClabsiVisible)"></a>
+									</div>
+								</div>
+								<div *ngIf="isclinicalSectionClabsiVisible">
+									<div class="row padding-10-x no-padding-left">
+										<div class="col-md-2 clabsiAgeatonset no-padding-left">
+											<div class="table full center-aligned">
+												<span class="bold">Age at onset</span>
+											</div>
+											<div class="table full  no-padding">
+												<div class="table-cell">
+													<div
+														class="input-group input-group-labeled desktop-column-20 no-margin">
+														<div class="desktop-column-20 padding-0-x force-left">
+															<div class="input-cont block">
+																<input type="text"
+																	class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+																	[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.ageatonset"
+																	[disabled]="pastAgeInactiveClabsi"
+																	(keyup)="progressNotesClabsi()"
+																	[ngModelOptions]="{standalone: true}">
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="table-cell padding-10-x middle-aligned">
+													<div class="toggle-options-radio">
+														<input type="radio" name="ClabsiDaysHours" [value]="true"
+															[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.ageinhoursdays"
+															id="ClabsiHours" (ngModelChange)="calAgeOnsetClabsi()">
+														<label
+															[ngClass]="{'display-disabled-radio-color': pastAgeInactiveClabsi }"
+															for="ClabsiHours">Hours</label> <input type="radio"
+															[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.ageinhoursdays"
+															[value]="false" name="ClabsiDaysHours"
+															(ngModelChange)="calAgeOnsetClabsi()" id="ClabsiDays">
+														<label
+															[ngClass]="{'display-disabled-radio-color': pastAgeInactiveClabsi }"
+															for="ClabsiDays">Days</label>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 col-lg-4 left-aligned no-padding">
+											<label class="bold required"><strong>Date
+													and Time of assessment</strong></label>
+											<div class="col-md-12 no-padding">
+												<div class="col-md-12 no-padding-left">
+													<owl-date-time class="owl-dateTime"
+														[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.assessmentDate"
+														(ngModelChange)="calculateAgeAtAssessmentNewClabsi()"
+														dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"
+														[ngModelOptions]="{standalone: true}"></owl-date-time>
+												</div>
+
+											</div>
+
+										</div>
+										<div class="col-md-2 clabsiAgeAssessment no-padding-left">
+											<div class="table full no-padding center-aligned">
+												<span class="bold">Age at assessment</span>
+											</div>
+
+											<div class="table full no-padding">
+												<div class="table-cell">
+													<input type="text" name="ageOfAssessmentClabsi"
+														[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.ageatassesment"
+														class="col-md-12 input-coloured-gray input-medium assesment-select"
+														disabled>
+												</div>
+												<div class="table-cell padding-10-x top-aligned">
+													<div class="toggle-options-radio">
+														<input type="radio" name="clabsiAgeAssessment"
+															[value]="true"
+															[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.isageofassesmentinhours"
+															id="ageHoursAssessmentClabsi"
+															(ngModelChange)="ageOnAssessmentCalculationClabsi()">
+														<label for="ageHoursAssessmentClabsi">Hours</label> <input
+															type="radio" name="clabsiAgeAssessment" [value]="false"
+															[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.isageofassesmentinhours"
+															id="ageDaysAssessmentClabsi"
+															(ngModelChange)="ageOnAssessmentCalculationClabsi()">
+														<label for="ageDaysAssessmentClabsi">Days</label>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 clabsientrytype left-aligned ">
+											<div class="col-md-12 no-padding">
+												<label class="bold required"><strong>CLABSI
+														Entry Type</strong></label>
+											</div>
+											<div class="col-md-12 no-padding-left">
+												<div class="no-padding-left toggle-options-radio">
+													<input type="radio" name="CLABSIEntryType" [value]="true"
+														[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.isNewEntry"
+														id="CLABSINew"> <label for="CLABSINew">New</label>
+													<input type="radio" name="CLABSIEntryType" [value]="false"
+														[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.isNewEntry"
+														id="CLABSIOld"> <label for="CLABSIOld">Update
+														Old</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 clabsiepisode no-padding-left pull-right"
+											style="padding-right: 20px">
+											<div class="padding-10-y center-aligned"
+												style="background-color: #FDF8EA">
+												<span
+													class="bold clinical-assessment-color system-main-heading"
+													style="line-height: 36px">{{assessmentTempObj.clabsiEpisodeNumber}}</span><sup
+													class="clinical-assessment-color"
+													*ngIf="assessmentTempObj.clabsiEpisodeNumber == '1' || assessmentTempObj.clabsiEpisodeNumber == 1">st</sup><sup
+													class="clinical-assessment-color"
+													*ngIf="assessmentTempObj.clabsiEpisodeNumber == '2' || assessmentTempObj.clabsiEpisodeNumber == 2">nd</sup><sup
+													class="clinical-assessment-color"
+													*ngIf="assessmentTempObj.clabsiEpisodeNumber == '3' || assessmentTempObj.clabsiEpisodeNumber == 3">rd</sup><sup
+													class="clinical-assessment-color"
+													*ngIf="(assessmentTempObj.clabsiEpisodeNumber != '1' && assessmentTempObj.clabsiEpisodeNumber != 1) && (assessmentTempObj.clabsiEpisodeNumber != '2' && assessmentTempObj.clabsiEpisodeNumber != 2) && (assessmentTempObj.clabsiEpisodeNumber != '3' && assessmentTempObj.clabsiEpisodeNumber != 3)">th</sup>
+												<span
+													class="bold clinical-assessment-color system-main-heading">
+													Episode</span>
+											</div>
+										</div>
+									</div>
+									<div
+										class="row table full padding-10-x padding-10-y no-padding-left no-padding-bottom">
+										<div class="col-md-12 no-padding padding-10-y">
+											<div class="col-md-3 no-padding">
+												<label><span class="table-cell">CLABSI ( CDC
+														Guidelines )</span><span
+													class="table-cell inline-block info-symbol padding-10-x"
+													(click)="openGuideline('CLABSI')">i</span></label>
+												<div class="toggle-options-radio padding-top-1 required">
+													<input type="radio" name="CLABSIInfo" disabled
+														[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.isclabsiavailable"
+														id="CLABSIPresent" [value]="true"> <label
+														class="display-disabled-radio-color" for="CLABSIPresent">Present</label>
+													<input type="radio" disabled name="CLABSIInfo"
+														[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.isclabsiavailable"
+														id="CLABSIAbsent" [value]="false"> <label
+														class="display-disabled-radio-color" for="CLABSIAbsent">Absent</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div>
+									<div class="row table full" (click)="actionClabsiVisible()">
+										<div class="table-cell middle-aligned">
+											<div
+												class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+												<span class="sprite sprite-action"></span>
+											</div>
+										</div>
+										<div class="table-cell middle-aligned" style="width: 6%">
+											<h1
+												class="no-margin system-main-heading action-assessment-color">Action</h1>
+										</div>
+										<div
+											class="table-cell padding-10-x no-padding-right middle-aligned"
+											style="width: 100%">
+											<hr class="action-assessment-line">
+										</div>
+										<div class="table-cell middle-aligned">
+											<a class="sprite sprite-minus-action middle-aligned"
+												*ngIf="isActionClabsiVisible"></a> <a
+												class="sprite sprite-plus-action middle-aligned"
+												*ngIf="!(isActionClabsiVisible)"></a>
+										</div>
+									</div>
+								</div>
+								<div *ngIf="isActionClabsiVisible">
+									<div class="row">
+										<div class="col-md-3 table full no-padding">
+											<div class="table-cell">
+												<h1 class="no-margin system-sub-heading">Investigation</h1>
+											</div>
+											<div class="table-cell">
+												<span class="button order-button  middle-aligned"
+													(click)="showOrderInvestigation()">Order</span>
+											</div>
+										</div>
+										<div class="col-md-9 table-cell">
+											<div class="col-md-12 no-padding">
+												<span class="bold"
+													*ngIf="clabsiTempObj.pastSelectedOrderInvestigationStr!=null && clabsiTempObj.pastSelectedOrderInvestigationStr!=''">Past
+													Selected: <label class="normal-font-weight">{{clabsiTempObj.pastSelectedOrderInvestigationStr}}</label>
+												</span>
+											</div>
+											<div class="col-md-12 no-padding">
+												<span class="bold selected-text"
+													*ngIf="sepsisTempObj.orderSelectedText!=null && sepsisTempObj.orderSelectedText!=''">Selected:
+													<label class="normal-font-weight">{{sepsisTempObj.orderSelectedText}}</label>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div>
+									<div
+										class="row table full padding-10-x no-padding-right no-padding-left"
+										(click)="progressClabsiVisible()">
+										<div class="table-cell middle-aligned">
+											<div
+												class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+												<span class="sprite sprite-progress"></span>
+											</div>
+										</div>
+										<div class="table-cell middle-aligned" style="width: 14%">
+											<h1
+												class="no-margin system-main-heading progress-assessment-color">Progress
+												Notes</h1>
+										</div>
+										<div
+											class="table-cell padding-10-x no-padding-right middle-aligned"
+											style="width: 100%">
+											<hr class="progress-assessment-line">
+										</div>
+										<div class="table-cell middle-aligned">
+											<a class="sprite sprite-minus-progress middle-aligned"
+												*ngIf="isProgressClabsiVisible"></a> <a
+												class="sprite sprite-plus-progress middle-aligned"
+												*ngIf="!(isProgressClabsiVisible)"></a>
+										</div>
+									</div>
+								</div>
+								<div *ngIf="isProgressClabsiVisible">
+									<div
+										class="row padding-10-y no-padding-top padding-10-x no-padding-left">
+										<div
+											class="input-group input-group-labeled col-md-12 no-padding-left right">
+											<div
+												class="desktop-column-20 padding-0-x force-left no-margin">
+												<textarea
+													[(ngModel)]="infectSystemObj.infectionEventObject.clabsiEvent.currentEvent.progressnotes"
+													class="desktop-column-20 max-height-36 set-font-size-default no-margin"
+													[ngModelOptions]="{standalone: true}" rows="4"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="assesment-container">
+							<div class="col-md-12 no-padding">
+								<div class="col-md-4 no-padding"></div>
+								<div class="col-md-4 no-padding border-radius-5">
+									<span class="alert alert-small margin-10-x border-radius-5 "
+										data-ng-class="{ 'alert-red' : responseType !='success','alert-green' : responseType =='success',  }"
+										data-ng-if="vanishSubmitResponseVariable">{{responseMessage}}</span>
+								</div>
+								<div class="col-md-4 no-padding"></div>
+							</div>
+						</div> -->
+						<div id="footer">
+							<button class="button button-blue button-large respSub"
+								(click)="submitInfection()">SUBMIT</button>
+							<span class="tooltiptext">Some fields are not filled</span>
+							<button class="button button-blue-transparent button-large"
+								(click)="refreshInfection()">
+								<i class="refresh"></i> REFRESH
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div *ngIf="infectionWhichTab == 'intrauterine'">
+				<span class="bold">We are working on IVH. Will Update Soon.</span>
+			</div>
+		</div>
+		<div class="assesment-container">
+			<div class="row padding-20-y no-padding-top padding-10-x"
+				[hidden]="!(infectSystemObj.systemStatus == 'no' || infectSystemObj.systemStatus == 'inactive')">
+				<div class="col-md-3 left-aligned no-padding">
+					<label class="bold required"><strong>Date and Time
+							of assessment</strong></label>
+					<div class="col-md-12 no-padding">
+						<owl-date-time class="owl-dateTime"
+							[(ngModel)]="infectSystemObj.infectionEventObject.sepsisEvent.currentEvent.assessmentTime"
+							dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"
+							(ngModelChange)="calculateAgeAtAssessmentNewSepsis()"></owl-date-time>
+					</div>
+				</div>
+				<div id="footer">
+					<button class="button button-blue button-large respSub"
+						(click)="submitPassiveInactive()">SUBMIT</button>
+					<span class="tooltiptext">Some fields are not filled</span> <span
+						class="button button-blue-transparent button-large"> <i
+						class="refresh"></i> REFRESH
+					</span>
+				</div>
+			</div>
+		</div>
+		<div
+			class="desktop-column-20 padding-0-x force-left padding-10-y assesment-container">
+			<h1 class="light margin-5-y blue-text">Progress Notes</h1>
+		</div>
+		<div
+			class="desktop-column-20 padding-0-x force-left assesment-container padding-5-y margin-bottom-100">
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20">
+				<tr>
+					<td class="center-aligned">Date</td>
+					<td class="center-aligned">Event</td>
+					<td class="center-aligned">Age At Onset</td>
+					<!-- <td class="center-aligned">Orders</td>
+					<td class="center-aligned">Causes</td> -->
+					<td class="center-aligned">Progress Notes</td>
+				</tr>
+				<!-- cnsWhichTab == 'asphyxia'
+				'seizures''encephalopathy''neuromuscular disorders''intracranial hemorrhage''hydrocephalus''neurological screening' -->
+				<tr
+					*ngFor="let option of infectSystemObj.infectionEventObject.commonEventsInfo.pastInfectionHistory">
+					<td class="left-aligned">{{option[1] | date:'dd-MM-yyyy hh:mm a'}}</td>
+					<td class="left-aligned">{{option[4]}}</td>
+					<td class="left-aligned">{{option[5]}}</td>
+					<!-- <td class="left-aligned">Blood Gas Analysis, Ecg</td>
+					<td class="left-aligned">Hypoglycemia</td> -->
+					<td class="left-aligned">{{option[6]}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- <div class="overlay" id="guidelineOverlay"></div>
+<div class="modal-box-lg ballard-popup" id="guideline"
+	style="width: 800px; height: 550px">
+	<button class="modal-popup-close-btn" (click)="closeGuideline()"></button>
+	<div class="inicu-tab-container ivh-container" style=" height: 550px">
+		<div class="tab-header"
+			data-ng-init="tabContentGuideline = 'guideline'">
+			<div class="tab-header-menu">
+				<input type="radio" id="guideline" name="guideline"
+					[(ngModel)]="tabContentGuideline" value="guideline"><label
+					for="guideline">CDC  Guidelines for {{whichGuidelineVisible}}</label>
+				<div class="toggle-options-radio tab-header-cont right-aligned pull-right padding-5-y padding-10-x"
+					data-ng-if="whichGuidelineVisible == 'VAP'">
+					<input type="radio" name="vapInfoMain" (ngModelChange)="progressNotesVap()"
+						[(ngModel)]="vapTempObj.isvapavailable"
+						id="vapPresentMain" data-ng-value=true> <label for="vapPresentMain">Present</label> <input type="radio" name="vapInfoMain"
+						[(ngModel)]="vapTempObj.isvapavailable" (ngModelChange)="progressNotesVap()"
+						id="vapAbsentMain" data-ng-value=false> <label for="vapAbsentMain">Absent</label>
+				</div>
+				<div class="toggle-options-radio tab-header-cont right-aligned pull-right padding-5-y padding-10-x"
+					data-ng-if="whichGuidelineVisible == 'CLABSI'">
+					<input type="radio" name="CLABSIInfoMain"
+						[(ngModel)]="clabsiTempObj.isclabsiavailable"
+						id="CLABSIPresentMain" data-ng-value=true (ngModelChange)="progressNotesClabsi()"> <label for="CLABSIPresentMain">Present</label> <input type="radio" name="CLABSIInfoMain"
+						[(ngModel)]="clabsiTempObj.isclabsiavailable"
+						id="CLABSIAbsentMain" data-ng-value=false (ngModelChange)="progressNotesClabsi()"> <label for="CLABSIAbsentMain">Absent</label>
+				</div>
+			</div>
+		</div>
+		<div class="tab-content-cont full" data-ng-if="whichGuidelineVisible == 'VAP'">
+			<div class="tab-content full ivh-tab" id="heal_tab">
+				<ul>
+					<li class="left-aligned">A pneumonia where the patient is on mechanical ventilation for
+					 &gt; 2 calendar days on the date of event, with day of ventilator placement being Day 1. </li>
+					<li class="left-aligned">The ventilator was in place on the date of event or the day before.</li>
+					<li class="left-aligned">Definition of Pneumonia - Patient with or without underlying diseases has 2 or more imaging test results with one of the following: </li>
+					<ul>
+						<li class="left-aligned">New & persistent</li>
+						<ul>
+							<li class="left-aligned">Infiltrate</li>
+							<li class="left-aligned">Consolidation</li>
+							<li class="left-aligned">Cavitation</li>
+							<li class="left-aligned">Pneumatoceles, in &le; 1 y.o</li>
+						</ul>
+						<li class="left-aligned">Progressive & persistent</li>
+						<ul>
+							<li class="left-aligned">Infiltrate</li>
+							<li class="left-aligned">Consolidation</li>
+							<li class="left-aligned">Cavitation</li>
+							<li class="left-aligned">Pneumatoceles, in &le; 1 y.o</li>
+						</ul>
+
+					</ul>
+					<li class="left-aligned">ALTERNATE CRITERIA for Infants &lt; 1 year old</li>
+						<ul>
+							<li class="left-aligned">Worsening gas exchange
+							(e.g., O2 desaturations [e.g., pulse oximetry &lt; 94%], increased oxygen requirements, or increased ventilator demand)
+							</li>
+							<li class="left-aligned">THREE of the following:</li>
+								<ul>
+									<li class="left-aligned">Temperature instability</li>
+									<li class="left-aligned">Leukopenia ( &le; 4000 WBC/mm3)</li>
+									<li class="left-aligned">leukocytosis ( &gt; 15,000 WBC/mm3)</li>
+									<li class="left-aligned">left shift ( &gt; 10% band forms)</li>
+									<li class="left-aligned">New onset of purulent sputum or change in character of sputum,
+									or increasd respiratory secretions or increased suctioning requirements. </li>
+									<li class="left-aligned">Apnea, tachypnea, nasal flaring with retraction of chest wall or grunting </li>
+									<li class="left-aligned">Wheezing, rales  or rhonchi </li>
+									<li class="left-aligned">Cough </li>
+ 									<li class="left-aligned">Bradycardia ( &lt; 100 beats/min) or tachycardia ( &gt; 170 beats/min)</li>
+								</ul>
+						</ul>
+				</ul>
+			</div>
+		</div>
+		<div class="tab-content-cont full" data-ng-if="whichGuidelineVisible == 'CLABSI'">
+			<div class="tab-content full ivh-tab" id="heal_tab">
+				<ul>
+					<li class="left-aligned font-size-16">A laboratory-confirmed bloodstream infection
+						(LCBI) where central line (CL) or umbilical catheter (UC) was in place for >2 calendar days on the date of event,
+						with day of device placement being Day 1. </li>
+					<li class="left-aligned font-size-16">The line was also in place on the date of event or the day before. If a CL (central line) or UC
+						 (umbilical catheter) was in place for &gt; 2 calendar
+						days and then removed, the date of event of the LCBI must be the day of discontinuation or the next day to be a CLABSI.   </li>
+					<li class="left-aligned font-size-16">Laboratory-Confirmed Bloodstream Infection (LCBI) : </li>
+					<ul>
+						<li class="left-aligned font-size-16">Patient of any age has a recognized pathogen identified
+							(i.e., an organism which is not on the NHSN common commensal list) from one or more blood specimens by a culture or non-culture
+							based microbiologic testing method AND Organism(s)
+							 identified in blood is not related to an infection at another site</li>
+					</ul>
+					<li class="left-aligned font-size-16">Patient &le; 1 year of age has at least oneof the following signs or symptoms:</li>
+						<ul>
+							<li class="left-aligned font-size-16">fever (>38.0oC), hypothermia ( &lt; 36.0oC), apnea, or bradycardia AND Organism(s)
+							identified from blood is not related to an infection at another site</li>
+						</ul>
+					<li class="left-aligned font-size-16">The same NHSN common commensal is identified from two or more blood specimens drawn on separate occasions</li>
+					<li class="left-aligned font-size-16">Common Commensal organisms include, but not are not limited to, diphtheroids (Corynebacterium spp. not C. diphtheria), Bacillusspp.
+					 (not B. anthracis), Propionibacterium spp., coagulase-negative staphylococci (including S. epidermidis), viridans group streptococci, Aerococcus spp.
+						 Micrococcus spp, and Rhodococcusspp.</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div> -->
+<div
+	*ngIf="infectSystemObj != undefined && infectSystemObj !=null && infectSystemObj.infectionEventObject != undefined">
+	<!-- order Infection popup -->
+	<div class="overlay" id="ballardOverlay"></div>
+	<div class="modal-box-lg ballard-popup" id="OrderInvestigationPopup">
+		<button class="modal-popup-close-btn"
+			(click)="closeModalOrderInvestigation()"></button>
+
+		<div class="inicu-tab-container">
+			<div class="tab-header">
+				<div class="padding-20-x table full">
+					<div class="table-cell pull-left">
+						<h1
+							class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Tests</h1>
+					</div>
+					<div class="table-cell pull-right padding-5-y"
+						(click)="orderSelected()">
+						<span class="button button-green  middle-aligned pull-right">Order</span>
+					</div>
+				</div>
+			</div>
+			<hr class="no-margin">
+			<div class="tab-content-cont full">
+				<div class="col-md-12 no-padding border-bottom-2">
+					<div class="col-md-3 no-padding border-right-2">
+						<div class="table full"
+							*ngFor="let item  of infectSystemObj.dropDowns.orders | InfectionKeysPipe"
+							style="border-bottom: 2px solid #eeeeee">
+							<div class=" padding-20-y"
+								[ngClass]="{'highlighttab' : selectedDecease == item.key}"
+								(click)="populateTestsListByCategory(item.key)">
+								<span class="bold">{{item.key}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<div class="table full padding-10-y left-aligned"
+							*ngFor="let testsList of listTestsByCategory">
+							<div class="blue-round-tick setting-checkbox-without-margin">
+								<input type="checkbox" name="{{'testid' +testsList.testid}}"
+									id="{{'testid' + testsList.testid}}"
+									[(ngModel)]="testsList.isSelected"> <label
+									for="{{'testid' + testsList.testid}}">{{testsList.testname}}</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- end of the above Downe's Scrore -->
+	</div>
+	<!-- end of order CNS popup -->
+	<div class="overlay" id="scoresOverlay"></div>
+	<div class="modal-box-lg bind-popup" id="OkCancelPopUp"
+		style="width: 400px; top: 50px;">
+		<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+		<button class="modal-popup-close-btn" (click)="closeOkPopUp()"></button>
+		<div class="inicu-tab-container">
+			<div class="tab-content-cont full padding-10-y">
+				<div class="table full center-aligned">
+					<span style="color: red; font-size: 80px">?</span>
+				</div>
+				<span class="bold" style="font-size: 17px">{{inactiveMessageText}}?</span>
+				<div class="col-md-12 padding-20-y">
+					<div class="col-md-6 center-aligned">
+						<span *ngIf="inactiveMessageText != undefined"> <span
+							class="center-aligned button button-blue"
+							(click)="submitInactive()">{{inactiveMessageText.includes('Inactivate')
+								? 'Submit' : 'Yes'}}</span>
+						</span>
+					</div>
+					<div class="col-md-6 center-aligned">
+						<span *ngIf="inactiveMessageText != undefined"> <span
+							class="center-aligned button button-blue-transparent"
+							(click)="closeOkPopUp()">{{inactiveMessageText.includes('Inactivate')
+								? 'Cancel' : 'No'}}</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end of the above code -->
+	<!-- below code is for Downe's Score -->
+	<div class="overlay" id="downesOverlay"></div>
+	<div class="modal-box-lg ballard-popup silverman-popup"
+		id="downesScorePopup">
+		<button class="modal-popup-close-btn" (click)="closeModalDownes()"></button>
+		<div class="inicu-tab-container">
+			<div class="tab-header">
+				<div class="tab-header-menu">
+					<input type="radio" id="downes" name="downes tab menu"
+						[(ngModel)]="downesTabContent" value="downes"> <label
+						for="downes">Downes</label>
+					<div class="right-aligned pull-right padding-5-y padding-10-x">
+						<label id="downesNotValid" style="display: none;"
+							class="no-padding right-aligned error-labels">Some fields
+							are not selected</label>
+						<button class="button button-blue button-large"
+							(click)="closeModalDownesOnSave()">Save</button>
+					</div>
+				</div>
+			</div>
+			<div class="tab-content-cont full silverman-tab-cont">
+				<div class="tab-content full downes-tab" id="Downes_tab"
+					*ngIf="downesTabContent==downes">
+					<div class="table full">
+						<div class="table-row">
+							<div class="table-cell">
+								<span></span>
+							</div>
+							<div class="table-cell">
+								<span>0</span>
+							</div>
+							<div class="table-cell">
+								<span>1</span>
+							</div>
+							<div class="table-cell">
+								<span>2</span>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="table-cell middle-aligned">
+								<label>CYANOSIS</label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" class="no-input" name="cyanosis"
+									id="cyanosis0" value=0
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.cynosis"
+									(ngModelChange)="totalDownesValue('cyanosis')"> <label
+									class="score-radio downes-radio" for="cyanosis0"><span
+									class="ivh-span">None</span></label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="cyanosis" id="cyanosis1"
+									class="no-input" value=1
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.cynosis"
+									(ngModelChange)="totalDownesValue('cyanosis')"> <label
+									class="score-radio downes-radio" for="cyanosis1"><span
+									class="ivh-span">Cyanotic in air</span></label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="cyanosis" id="cyanosis2"
+									class="no-input" value=2
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.cynosis"
+									(ngModelChange)="totalDownesValue('cyanosis')"> <label
+									class="score-radio downes-radio" for="cyanosis2"><span
+									class="ivh-span">Cyanotic in 40% O2</span></label>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="table-cell middle-aligned">
+								<label>RETRACTIONS</label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="retractions" class="no-input"
+									id="retractions0" value=0
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.retractions"
+									(ngModelChange)="totalDownesValue('retractions')"> <label
+									class="score-radio downes-radio" for="retractions0"><span
+									class="ivh-span">None</span></label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="retractions" id="retractions1"
+									class="no-input" value=1
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.retractions"
+									(ngModelChange)="totalDownesValue('retractions')"> <label
+									class="score-radio downes-radio" for="retractions1"><span
+									class="ivh-span">Mild</span></label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="retractions" id="retractions2"
+									class="no-input" value=2
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.retractions"
+									(ngModelChange)="totalDownesValue('retractions')"> <label
+									class="score-radio downes-radio" for="retractions2"><span
+									class="ivh-span">Severe</span></label>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="table-cell middle-aligned">
+								<label>GRUNTING</label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="grunting" class="no-input"
+									id="grunting0" value=0
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.grunting"
+									(ngModelChange)="totalDownesValue('grunting')"> <label
+									class="score-radio downes-radio" for="grunting0"><span
+									class="ivh-span">None</span></label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="grunting" class="no-input"
+									id="grunting1" value=1
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.grunting"
+									(ngModelChange)="totalDownesValue('grunting')"> <label
+									class="score-radio downes-radio" for="grunting1"><span
+									class="ivh-span">Audible with stethoscope</span></label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="grunting" id="grunting2"
+									class="no-input" value=2
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.grunting"
+									(ngModelChange)="totalDownesValue('grunting')"> <label
+									class="score-radio downes-radio" for="grunting2"><span
+									class="ivh-span">Audible without stethoscope</span></label>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="table-cell middle-aligned">
+								<label>AIR ENTRY</label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="airEntry" class="no-input"
+									id="airEntry0" value=0
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.airentry"
+									(ngModelChange)="totalDownesValue('airEntry')"> <label
+									class="score-radio downes-radio" for="airEntry0"><span
+									class="ivh-span">Clear</span></label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="airEntry" id="airEntry1"
+									class="no-input" value=1
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.airentry"
+									(ngModelChange)="totalDownesValue('airEntry')"> <label
+									class="score-radio downes-radio" for="airEntry1"><span
+									class="ivh-span">Delayed or decreased</span></label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="airEntry" id="airEntry2"
+									class="no-input" value=2
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.airentry"
+									(ngModelChange)="totalDownesValue('airEntry')"> <label
+									class="score-radio downes-radio" for="airEntry2"><span
+									class="ivh-span">Barely audible</span></label>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="table-cell middle-aligned">
+								<label>RESPIRATORY RATE</label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="respiratoryRate" class="no-input"
+									id="respiratoryRate0" value=0
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.respiratoryrate"
+									(ngModelChange)="totalDownesValue('respiratoryRate')">
+								<label class="score-radio downes-radio" for="respiratoryRate0"><span
+									class="ivh-span">60</span></label>
+							</div>
+							<div class="table-cell">
+								<input type="radio" name="respiratoryRate" class="no-input"
+									id="respiratoryRate1" value=1
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.respiratoryrate"
+									(ngModelChange)="totalDownesValue('respiratoryRate')">
+								<label class="score-radio downes-radio" for="respiratoryRate1"><span
+									class="ivh-span">60-80</span></label>
+							</div>
+							<!-- <div class="table-cell">
+								<input type="radio" name="respiratoryRate" id=""
+									class="no-input"
+                  value=1
+									[ngModel]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.respiratoryrate"
+									(ngModelChange)="totalDownesValue('respiratoryRate')"> <label
+									class="score-radio downes-radio" for="respiratoryRate1"><span
+									class="ivh-span"></span></label>
+							</div> -->
+							<div class="table-cell">
+								<input type="radio" name="respiratoryRate" id="respiratoryRate2"
+									class="no-input" value=2
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.respiratoryrate"
+									(ngModelChange)="totalDownesValue('respiratoryRate')">
+								<label class="score-radio downes-radio" for="respiratoryRate2"><span
+									class="ivh-span">80 or Apneic episodes</span></label>
+							</div>
+						</div>
+					</div>
+					<div class="table full padding-y-10 downes-bottom-table">
+						<div class="table-row">
+							<div class="table-cell left-aligned width-50">
+								<label style="display: block">Score &lt; 4 = No
+									respiratory distress</label> <label style="display: block">Score
+									7 = Respiratory distress</label> <label style="display: block">Score
+									&gt; 7 = Impending respiratory distress</label>
+							</div>
+							<div class="tabel-cell pull-right width-50">
+								<span class="input-label ivh-total-span silver-total-span">Score</span>
+								<input type="text" name="downesName"
+									[(ngModel)]="infectSystemObj.infectionEventObject.commonEventsInfo.downeScoreObj.downesscore"
+									class="full pull-right center-aligned silverman-input" disabled>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- end of downes -->
+			</div>
+		</div>
+	</div>
+	<div class="overlay" id="bellOverlay"></div>
+	<div class="modal-box-lg bind-popup levene-popup bell-popup"
+		id="bellScorePopup">
+		<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+		<button class="modal-popup-close-btn" (click)="closeBell()"></button>
+		<div class="inicu-tab-container">
+			<div class="tab-header">
+				<div class="tab-header-menu">
+					<input type="radio" id="bindScoreRadio" name="bind tab menu"
+						[(ngModel)]="tabContent" value="bind"><label
+						for="bindScoreRadio">Bell Staging</label>
+				</div>
+			</div>
+			<div class="tab-content-cont full" style="height: 450px">
+				<div
+					class="tab-content full bind-tab levene-tab bell-tab padding-10-x"
+					id="bindScore" style="overflow-x: hidden; height: 450px">
+					<div class="table" style="">
+						<div class="table-row">
+							<div class="table-cell">
+								<span></span>
+							</div>
+							<div class="table-cell">
+								<span>IA</span>
+							</div>
+							<div class="table-cell">
+								<span>IB</span>
+							</div>
+							<div class="table-cell">
+								<span>IIA</span>
+							</div>
+							<div class="table-cell">
+								<span>IIB</span>
+							</div>
+							<div class="table-cell">
+								<span>IIIA</span>
+							</div>
+							<div class="table-cell">
+								<span>IIIB</span>
+							</div>
+						</div>
+						<div class="table-row"
+							*ngFor="let status of sepsisTempObj.bellStageObj.bindStructure.slice(0,3)">
+							<div class="table-cell middle-aligned">
+								<span>{{status.clinicalStatus}}</span>
+							</div>
+							<div class="table-cell middle-aligned"
+								*ngFor="let scores of status.scoreList; let i = index"
+								[attr.data-index]="i">
+								<input type="radio"
+									[(ngModel)]="sepsisTempObj.bellStageObj.statusScore[scores.scoreName]"
+									name="{{status.clinicalStatus}}"
+									id="{{status.clinicalStatus.split(' ').join('')}}{{status.statusIndex}}{{i}}"
+									class="hidden" [value]="i">
+								<!-- <label class="score-radio" for="{{status.clinicalStatus.split(' ').join('')}}{{status.statusIndex}}{{$index}}"> -->
+								<label class="score-radio">
+									<div class="bind-score-list">
+										<ul>
+											<li *ngFor="let item of scores.signList">
+												<input
+												type="checkbox" id="{{item.dbRefId}}" name="redfItemName"
+												[value]="true" [(ngModel)]="item.selected"
+												class="bind-check"
+												(ngModelChange)="scoreSelect(item.dbRefId, status.clinicalStatus.split(' ').join(''), scores.scoreValue)"
+												[checked]="item.selected"> <label
+												for="{{item.dbRefId}}" class="inline item"><span class="clinicalsign">{{item.clinicalSign}}
+												</span></label></li>
+										</ul>
+									</div>
+								</label>
+
+							</div>
+						</div>
+						<div class="table-row"
+							*ngFor="let status of sepsisTempObj.bellStageObj.bindStructure.slice(3,sepsisTempObj.bellStageObj.bindStructure.length)">
+							<div class="table-cell middle-aligned">
+								<span>{{status.clinicalStatus}}</span>
+							</div>
+							<div class="table-cell middle-aligned"
+								*ngFor="let scores of status.scoreList; let i = index"
+								[attr.data-index]="i">
+								<input type="radio"
+									[(ngModel)]="sepsisTempObj.bellStageObj.statusScore[scores.scoreName]"
+									name="{{status.clinicalStatus}}"
+									id="{{status.clinicalStatus.split(' ').join('')}}{{status.statusIndex}}{{i}}"
+									class="hidden" [value]="i">
+									<label for="{{status.clinicalStatus.split(' ').join('')}}{{status.statusIndex}}{{i}}" class="score-radio">
+										<div class="bind-score-list">
+											<ul>
+												<li *ngFor="let item of scores.signList"><span>{{item.clinicalSign}}</span>
+												</li>
+											</ul>
+										</div>
+									</label>
+							</div>
+						</div>
+					</div>
+					<div class="row margin-0">
+						<div class="col-md-7 no-padding"></div>
+						<div class="col-md-5">
+							<span class="input-label ivh-total-span">Stage</span> <input
+								type="text"
+								class="full pull-right center-aligned silverman-input" disabled
+								[(ngModel)]="sepsisTempObj.bellStageObj.scoreTempTotal"
+								class="pull-right">
+						</div>
+					</div>
+					<div
+						class="block right-aligned col-md-12 table full margin-20-y pull-right">
+						<div class="col-md-10 no-padding-right">
+							<label id="bindNotValid" style="display: none;"
+								class="no-padding right-aligned error-labels">Some
+								fields are not selected</label>
+						</div>
+						<div class="col-md-1 no-padding-right">
+							<button class="center-aligned button button-blue button-large"
+								(click)="saveBindScorefunctionlity()">Save</button>
+						</div>
+					</div>
+					<div class="table">
+						<div class="table-cell"></div>
+						<div class="table-cell"></div>
+					</div>
+					<pre>{{scoreInputs}}</pre>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end of the above code -->
+</div>
+
+<div class="overlay" id="guidelineOverlay"></div>
+<div class="modal-box-lg ballard-popup" id="guideline"
+	style="width: 800px; height: 550px">
+	<button class="modal-popup-close-btn" (click)="closeGuideline()"></button>
+	<div class="inicu-tab-container ivh-container" style="height: 550px">
+		<div class="tab-header">
+			<div class="tab-header-menu">
+				<input type="radio" id="guideline" name="guideline"
+					[(ngModel)]="tabContentGuideline" value="guideline"><label
+					for="guideline">CDC Guidelines for
+					{{whichGuidelineVisible}}</label>
+				<div
+					class="toggle-options-radio tab-header-cont right-aligned pull-right padding-5-y padding-10-x"
+					*ngIf="whichGuidelineVisible == 'VAP'">
+					<input type="radio" name="vapInfoMain" [value]="true"
+						[(ngModel)]="vapTempObj.isvapavailable" id="vapPresentMain"
+						(ngModelChange)="progressNotesVap()"> <label
+						for="vapPresentMain">Present</label> <input type="radio"
+						name="vapInfoMain" [value]="false"
+						[(ngModel)]="vapTempObj.isvapavailable"
+						(ngModelChange)="progressNotesVap()" id="vapAbsentMain"> <label
+						for="vapAbsentMain">Absent</label>
+				</div>
+				<div
+					class="toggle-options-radio tab-header-cont right-aligned pull-right padding-5-y padding-10-x"
+					*ngIf="whichGuidelineVisible == 'CLABSI'">
+					<input type="radio" name="CLABSIInfoMain" [value]="true"
+						[(ngModel)]="clabsiTempObj.isclabsiavailable"
+						id="CLABSIPresentMain" (ngModelChange)="progressNotesClabsi()">
+					<label for="CLABSIPresentMain">Present</label> <input type="radio"
+						name="CLABSIInfoMain" [value]="false"
+						[(ngModel)]="clabsiTempObj.isclabsiavailable"
+						id="CLABSIAbsentMain" (ngModelChange)="progressNotesClabsi()">
+					<label for="CLABSIAbsentMain">Absent</label>
+				</div>
+			</div>
+		</div>
+		<div class="tab-content-cont full"
+			*ngIf="whichGuidelineVisible == 'VAP'">
+			<div class="tab-content full ivh-tab" id="heal_tab">
+				<ul>
+					<li class="left-aligned">A pneumonia where the patient is on
+						mechanical ventilation for &gt; 2 calendar days on the date of
+						event, with day of ventilator placement being Day 1.</li>
+					<li class="left-aligned">The ventilator was in place on the
+						date of event or the day before.</li>
+					<li class="left-aligned">Definition of Pneumonia - Patient
+						with or without underlying diseases has 2 or more imaging test
+						results with one of the following:</li>
+					<ul>
+						<li class="left-aligned">New & persistent</li>
+						<ul>
+							<li class="left-aligned">Infiltrate</li>
+							<li class="left-aligned">Consolidation</li>
+							<li class="left-aligned">Cavitation</li>
+							<li class="left-aligned">Pneumatoceles, in &le; 1 y.o</li>
+						</ul>
+						<li class="left-aligned">Progressive & persistent</li>
+						<ul>
+							<li class="left-aligned">Infiltrate</li>
+							<li class="left-aligned">Consolidation</li>
+							<li class="left-aligned">Cavitation</li>
+							<li class="left-aligned">Pneumatoceles, in &le; 1 y.o</li>
+						</ul>
+
+					</ul>
+					<li class="left-aligned">ALTERNATE CRITERIA for Infants &lt; 1
+						year old</li>
+					<ul>
+						<li class="left-aligned">Worsening gas exchange (e.g., O2
+							desaturations [e.g., pulse oximetry &lt; 94%], increased oxygen
+							requirements, or increased ventilator demand)</li>
+						<li class="left-aligned">THREE of the following:</li>
+						<ul>
+							<li class="left-aligned">Temperature instability</li>
+							<li class="left-aligned">Leukopenia ( &le; 4000 WBC/mm3)</li>
+							<li class="left-aligned">leukocytosis ( &gt; 15,000 WBC/mm3)</li>
+							<li class="left-aligned">left shift ( &gt; 10% band forms)</li>
+							<li class="left-aligned">New onset of purulent sputum or
+								change in character of sputum, or increasd respiratory
+								secretions or increased suctioning requirements.</li>
+							<li class="left-aligned">Apnea, tachypnea, nasal flaring
+								with retraction of chest wall or grunting</li>
+							<li class="left-aligned">Wheezing, rales or rhonchi</li>
+							<li class="left-aligned">Cough</li>
+							<li class="left-aligned">Bradycardia ( &lt; 100 beats/min)
+								or tachycardia ( &gt; 170 beats/min)</li>
+						</ul>
+					</ul>
+				</ul>
+			</div>
+		</div>
+		<div class="tab-content-cont full"
+			*ngIf="whichGuidelineVisible == 'CLABSI'">
+			<div class="tab-content full ivh-tab" id="heal_tab">
+				<ul>
+					<li class="left-aligned font-size-16">A laboratory-confirmed
+						bloodstream infection (LCBI) where central line (CL) or umbilical
+						catheter (UC) was in place for >2 calendar days on the date of
+						event, with day of device placement being Day 1.</li>
+					<li class="left-aligned font-size-16">The line was also in
+						place on the date of event or the day before. If a CL (central
+						line) or UC (umbilical catheter) was in place for &gt; 2 calendar
+						days and then removed, the date of event of the LCBI must be the
+						day of discontinuation or the next day to be a CLABSI.</li>
+					<li class="left-aligned font-size-16">Laboratory-Confirmed
+						Bloodstream Infection (LCBI) :</li>
+					<ul>
+						<li class="left-aligned font-size-16">Patient of any age has
+							a recognized pathogen identified (i.e., an organism which is not
+							on the NHSN common commensal list) from one or more blood
+							specimens by a culture or non-culture based microbiologic testing
+							method AND Organism(s) identified in blood is not related to an
+							infection at another site</li>
+					</ul>
+					<li class="left-aligned font-size-16">Patient &le; 1 year of
+						age has at least oneof the following signs or symptoms:</li>
+					<ul>
+						<li class="left-aligned font-size-16">fever (>38.0oC),
+							hypothermia ( &lt; 36.0oC), apnea, or bradycardia AND Organism(s)
+							identified from blood is not related to an infection at another
+							site</li>
+					</ul>
+					<li class="left-aligned font-size-16">The same NHSN common
+						commensal is identified from two or more blood specimens drawn on
+						separate occasions</li>
+					<li class="left-aligned font-size-16">Common Commensal
+						organisms include, but not are not limited to, diphtheroids
+						(Corynebacterium spp. not C. diphtheria), Bacillusspp. (not B.
+						anthracis), Propionibacterium spp., coagulase-negative
+						staphylococci (including S. epidermidis), viridans group
+						streptococci, Aerococcus spp. Micrococcus spp, and Rhodococcusspp.</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="overlay" id="warningOverlay"></div>
+<div class="modal-box-lg bind-popup" id="OkWarningPopUp"
+	style="width: 400px; top: 50px;">
+	<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+	<button class="modal-popup-close-btn" (click)="closeWarningPopUp()"></button>
+	<div class="inicu-tab-container">
+		<div class="tab-content-cont full padding-10-y">
+			<span class="bold" style="font-size: 17px"> {{warningMessage}}
+			</span>
+		</div>
+	</div>
+</div>
+
+<!-- below code is for inactive Sepsis Active Medication-->
+<div class="overlay" id="MedicationOverlay"></div>
+<div class="modal-box-lg bind-popup" id="medicationPopup"
+	style="width: 80%; top: 50px;">
+	<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+	<button class="modal-popup-close-btn" (click)="closeMedicationPopUp()"></button>
+	<div>
+		<div class="tab-content-cont full padding-10-y">
+			<div class="table">
+				<span style="color: #74afff;font-size: 20px;margin-left: 14px;">Medication status at Inactive state</span>
+			</div>
+			<div class="col-md-12 padding-20-y" style="height:500px;overflow-y:scroll">
+				<div class="row padding-2-y">
+					<div class="col-md-2">
+						<span style="float: left;">Medicine Name</span>
+					</div>
+					<div class="col-md-2">
+						<span style="float: left;">Start Date | Time</span>
+					</div>
+					<div class="col-md-2">
+						<input type="checkbox" name="stop" style="width: 13px;height: auto;display: inline-block;float: left;-webkit-appearance: checkbox;" [ngModel]="selectAll" (click)="stopAllMed(selectAll)">&nbsp;
+						<span style="float:left;">Stop All</span>
+					</div>
+
+				</div>
+			<div *ngFor="let medicine of pastPrescriptionList; let i = index" [attr.data-index]="i">
+				<div class="row padding-2-y" *ngIf="medicine.eventname == currentEvent && medicine.isactive == true">
+					<div class="col-md-2">
+						<span style="float: left;">{{medicine.medicinename}}</span>
+					</div>
+					<div class="col-md-2">
+						<span style="float: left;">{{medicine.startdate | date:'dd-MM-yyyy hh:mm a'}}</span>
+					</div>
+					<div class="col-md-1">
+						<input type="checkbox" name="stop" [ngModel]="medicine.isStopped" (ngModelChange)="setEndDate(i)" style="width: 13px;height: auto;float: left;-webkit-appearance: checkbox;" >Stop
+					</div>
+					<div class="col-md-3">
+						<owl-date-time class="owl-dateTime" [(ngModel)]="medicine.enddate" [ngModelOptions]="{standalone: true}" [max]="maxDate" (ngModelChange)="toggleIscontinue(i)"></owl-date-time>
+					</div>
+					<div class="col-md-2">
+						<span style="float: left;"><button class="btn button-blue" (click)="commentBoxEnable(i)">Continue</button></span>
+					</div>
+					<div class="col-md-2" *ngIf="medicine.isContinue">
+						<input type="text" name="free" [(ngModel)]="medicine.continueReason" style="float: left;">
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 15px">
+				<span><button class="btn button-blue" (click)="saveMedicine()">Save</button></span>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of the above code -->
+
+<!-- code of loader -->
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+	<span class="inicu-loader-content">
+        <span class="inicu-adding-image"></span>
+		<span class="inicu-loading-content">{{loaderContent}}</span>
+	</span>
+</span>
+<!-- end of Above Code -->

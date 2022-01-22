@@ -1,0 +1,34 @@
+export class MiscellaneousJSON{
+  sa_miscellaneous_id: any;
+  ageatassesment: number;
+  isageofassesmentinhours: boolean;
+  ageofonset: number;
+  causeofmiscellaneous: string;
+  creationtime: any;
+  creationTimeStr: string;
+  modificationtime: any;
+  uhid: string;
+  loggeduser: string;
+  description: string;
+  isNewEntry: boolean;
+  isageofonsetinhours: boolean;
+  orderinvestigation: string;
+  orderinvestigationList: any;
+  isinvestigationodered: boolean;
+  miscellaneousstatus: string;
+  eventstatus: string;
+  dateofbirth: any;
+  associatedevent: any;
+  gestation: number;
+  isEdit: any;
+  pastOrderInvestigationStr: string;
+  treatment: string;
+  planOther: string;
+  actionduration: number;
+  comment: string;
+  isactiondurationinhours: string;
+  assessmentTime: any;
+  samiscellaneousid: any;
+  saMiscellaneous2Id: any;
+  disease : any;
+}

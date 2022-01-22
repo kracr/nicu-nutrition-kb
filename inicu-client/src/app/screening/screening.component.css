@@ -1,0 +1,94 @@
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+.left-35 .inline{
+	padding-left: 22px;
+}
+.left-35{
+	left: 6px !important;
+}
+.fromneurological{
+	width: 19%;
+	margin-left: -40px;
+}
+.toneurological{
+	width: 19%;
+}
+.eventsummary{
+	width: 22%;
+}
+.eventexport{
+	padding: 8px;
+}
+.metabolicData{
+	width: 28%;
+}
+.ototoxic{
+	width: 18%;
+	margin-left: -12px;
+}
+.ultrasoundscreening{
+	width: 39%;
+}
+.fromultrasound{
+	width: 18%;
+	margin-left: -12px;
+}
+.toultrasound{
+	width: 18%;
+	margin-left: -8px;
+}
+.ultrasoundoption{
+	width: 29%;
+	margin-left: -19px;
+	left: 12px;
+}
+.hyperbilirubinemia{
+	margin-left: -12px;
+}
+.intraUtero{
+	width: 18%;
+	margin-left: -12px;
+}
+.culturepositive{
+	width: 19%;
+	margin-left: -12px;
+}
+.varicella{
+	margin-left: -46px;
+}
+.whiteForelock{
+	margin-left: -22px;
+}
+.fromevent{
+	width: 19%;
+	margin-left: -15px;
+}
+.toevent{
+	width: 19%;
+}
+.printoption{
+	width: 40%;
+}
+.ropsummary{
+	width: 20%;
+}
+.fromrop{
+	width: 19%;
+}
+.showoption{
+	width: 40%;
+	margin-left: -72px;
+	left: 62px
+}
+.nolefteye{
+	margin-left: 42px;
+}
+.exportcv{
+	padding: 4px;
+}
+.gestationweek{
+	width: 18%
+}
+.oxygensupplement{
+	width: 20%;
+}
+}

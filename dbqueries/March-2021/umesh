@@ -1,0 +1,476 @@
+alter table apollo.screen_neurological add hc_reading_time timestamp;
+alter table apollo.screen_neurological add head_circumference varchar(10);
+
+INSERT INTO gangaram.ref_testslist (testid, testcode, testname, assesment_category, isactive) VALUES
+(500,'IB108', 'Covid RT PCR', 'Others', true);
+
+-- Added 14th March 2021
+INSERT INTO gangaram.clinical_alert_item_dropdown (clinical_item_id, clinical_item_name, clinical_item_code, clinical_item_description)
+ VALUES (DEFAULT, 'RBS', 'CLI012', 'Random Blood Sugar');
+
+UPDATE gangaram.clinical_alert_item_dropdown SET clinical_item_name = 'CTemp' WHERE clinical_item_id = 21;
+UPDATE gangaram.clinical_alert_item_dropdown SET clinical_item_name = 'PTemp' WHERE clinical_item_id = 22;
+
+-- Added 16th March 2021
+alter table gangaram.nursing_intake_output add stool_consistency varchar(50),
+                                        add diaper_weight float4;
+
+-- Added on 19th March 2021
+alter table gangaram.babyfeed_detail add normal_saline float4,
+                                     add kcl float4,
+                                      add ors float4;
+
+alter table gangaram.babyfeed_detail add normal_saline_duration varchar(10),
+                                     add kcl_duration varchar(10),
+                                      add ors_duration varchar(10);
+
+alter table gangaram.babyfeed_detail add normal_saline_feed float4;
+alter table gangaram.babyfeed_detail add kcl_feed float4,
+                                      add ors_feed float4;
+
+alter table gangaram.nursing_intake_output add normal_saline float4,
+    add kcl float4,
+    add ors float4;
+
+drop view gangaram.vw_doctornotes_list_final;
+drop view gangaram.vw_doctornotes_list_rule;
+drop view gangaram.vw_doctornotes_list_control;
+drop view gangaram.vw_doctornotes_list_raw;
+
+create view gangaram.vw_doctornotes_list_raw
+            (assesmentid, uhid, creationtime, modificationtime, sa_event, treatment, plan, testname, progressnotes,diseasename) as
+SELECT j.sajaundiceid    AS assesmentid,
+       j.uhid,
+       j.assessment_time AS creationtime,
+       j.modificationtime,
+       'Jaundice'::text  AS sa_event,
+       j.actiontype      AS treatment,
+       j.planother       AS plan,
+       i.testname,
+       j.comment         AS progressnotes,
+       'diseasename'::text AS diseasename
+FROM gangaram.sa_jaundice j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.sajaundiceid::text AND lower(i.assesment_type::text) = 'jaundice'::text
+UNION
+SELECT j.resprdsid       AS assesmentid,
+       j.uhid,
+       j.assessment_time AS creationtime,
+       j.modificationtime,
+       'RDS'::text       AS sa_event,
+       j.treatmentaction AS treatment,
+       j.othercomments   AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_resp_rds j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.resprdsid::text AND lower(i.assesment_type::text) = 'respiratory'::text
+UNION
+SELECT j.resppphnid      AS assesmentid,
+       j.uhid,
+       j.assessment_time AS creationtime,
+       j.modificationtime,
+       'PPHN'::text      AS sa_event,
+       j.treatmentaction AS treatment,
+       j.pphnplan        AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_resp_pphn j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.resppphnid::text AND lower(i.assesment_type::text) = 'pphn'::text
+UNION
+SELECT j.resppneumothoraxid AS assesmentid,
+       j.uhid,
+       j.assessment_time    AS creationtime,
+       j.modificationtime,
+       'Pneumothorax'::text AS sa_event,
+       j.treatmentaction    AS treatment,
+       j.otherplan_comments AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_resp_pneumothorax j
+         LEFT JOIN gangaram.investigation_ordered i ON i.assesmentid::text = j.resppneumothoraxid::text AND
+                                                     lower(i.assesment_type::text) = 'pneumothorax'::text
+UNION
+SELECT j.apneaid         AS assesmentid,
+       j.uhid,
+       j.assessment_time AS creationtime,
+       j.modificationtime,
+       'Apnea'::text     AS sa_event,
+       j.actiontype      AS treatment,
+       j.action_plan     AS plan,
+       i.testname,
+       j.apnea_comment   AS progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_resp_apnea j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.apneaid::text AND lower(i.assesment_type::text) = 'apnea'::text
+UNION
+SELECT j.sacnsasphyxiaid    AS assesmentid,
+       j.uhid,
+       j.assessment_time    AS creationtime,
+       j.modificationtime,
+       'Asphyxia'::text     AS sa_event,
+       j.treatmentaction    AS treatment,
+       j.otherplan_comments AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_cns_asphyxia j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.sacnsasphyxiaid::text AND lower(i.assesment_type::text) = 'asphyxia'::text
+UNION
+SELECT j.sacnsseizuresid    AS assesmentid,
+       j.uhid,
+       j.assessment_time    AS creationtime,
+       j.modificationtime,
+       'Seizures'::text     AS sa_event,
+       j.treatmentaction    AS treatment,
+       j.otherplan_comments AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_cns_seizures j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.sacnsseizuresid::text AND lower(i.assesment_type::text) = 'seizures'::text
+UNION
+SELECT j.sacnsivhid      AS assesmentid,
+       j.uhid,
+       j.assessment_date AS creationtime,
+       j.modificationtime,
+       'IVH'::text       AS sa_event,
+       j.treatmentaction AS treatment,
+       j.othercomments   AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_cns_ivh j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.sacnsivhid::text AND lower(i.assesment_type::text) = 'ivh'::text
+UNION
+SELECT j.sasepsisid         AS assesmentid,
+       j.uhid,
+       j.assessment_time    AS creationtime,
+       j.modificationtime,
+       'Sepsis'::text       AS sa_event,
+       j.treatmentaction    AS treatment,
+       j.otherplan_comments AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_infection_sepsis j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.sasepsisid::text AND lower(i.assesment_type::text) = 'sepsis'::text
+UNION
+SELECT sn.id                  AS assesmentid,
+       sn.uhid,
+       sn.entrytime           AS creationtime,
+       sn.modificationtime,
+       'Stable Notes'::text   AS sa_event,
+       'NA'::text             AS treatment,
+       sn.plan,
+       'NA'::text             AS testname,
+       sn.notes AS progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.stable_notes sn
+UNION
+SELECT j.sa_miscellaneous_id AS assesmentid,
+       j.uhid,
+       j.assessment_time     AS creationtime,
+       j.modificationtime,
+       'Misc'::text          AS sa_event,
+       j.treatment,
+       j.planother           AS plan,
+       i.testname,
+       j.comment             AS progressnotes,
+       CASE
+           WHEN j.disease::text = 'Others' THEN j.otherdisease ::text
+           ELSE j.disease ::text
+       END AS diseasename
+FROM gangaram.sa_miscellaneous j
+         LEFT JOIN gangaram.investigation_ordered i ON i.assesmentid::text = j.sa_miscellaneous_id::text AND
+                                                     lower(i.assesment_type::text) = 'miscellaneous'::text
+UNION
+SELECT j.sa_miscellaneous_2_id AS assesmentid,
+       j.uhid,
+       j.assessment_time       AS creationtime,
+       j.modificationtime,
+       'Misc 2'::text          AS sa_event,
+       j.treatment,
+       j.planother             AS plan,
+       i.testname,
+       j.comment               AS progressnotes,
+       CASE
+           WHEN j.disease::text = 'Others' THEN j.otherdisease ::text
+           ELSE j.disease ::text
+       END AS diseasename
+FROM gangaram.sa_miscellaneous_2 j
+         LEFT JOIN gangaram.investigation_ordered i ON i.assesmentid::text = j.sa_miscellaneous_2_id::text AND
+                                                     lower(i.assesment_type::text) = 'miscellaneous'::text
+UNION
+SELECT j.renalid         AS assesmentid,
+       j.uhid,
+       j.assessment_time AS creationtime,
+       j.modificationtime,
+       'Renal'::text     AS sa_event,
+       j.action_type     AS treatment,
+       j.plancomment     AS plan,
+       i.testname,
+       j.comment         AS progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_renalfailure j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.renalid::text AND lower(i.assesment_type::text) = 'renal'::text
+UNION
+SELECT j.feedintoleranceid      AS assesmentid,
+       j.uhid,
+       j.assessment_time        AS creationtime,
+       j.modificationtime,
+       'Feed Intolerance'::text AS sa_event,
+       j.action_type            AS treatment,
+       j.planother              AS plan,
+       i.testname,
+       j.comment                AS progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_feed_intolerance j
+         LEFT JOIN gangaram.investigation_ordered i ON i.assesmentid::text = j.feedintoleranceid::text AND
+                                                     lower(i.assesment_type::text) = 'feedintolerance'::text
+UNION
+SELECT j.sashockid       AS assesmentid,
+       j.uhid,
+       j.assessment_time AS creationtime,
+       j.modificationtime,
+       'Shock'::text     AS sa_event,
+       j.actiontype      AS treatment,
+       j.planother       AS plan,
+       i.testname,
+       j.comment         AS progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_shock j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.sashockid::text AND lower(i.assesment_type::text) = 'Shock'::text
+UNION
+SELECT j.painid          AS assesmentid,
+       j.uhid,
+       j.assessment_time AS creationtime,
+       j.modificationtime,
+       'Pain'::text      AS sa_event,
+       j.action_string   AS treatment,
+       j.planother       AS plan,
+       i.testname,
+       j.comment         AS progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_pain j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.painid::text AND lower(i.assesment_type::text) = 'Pain'::text
+UNION
+SELECT j.sanec_id            AS assesmentid,
+       j.uhid,
+       j.assessment_time     AS creationtime,
+       j.modificationtime,
+       'NEC'::text           AS sa_event,
+       j.treatmentaction     AS treatment,
+       j.other_plan_comments AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_infection_nec j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.sanec_id::text AND lower(i.assesment_type::text) = 'NEC'::text
+UNION
+SELECT j.savapid            AS assesmentid,
+       j.uhid,
+       j.assessment_time    AS creationtime,
+       j.modificationtime,
+       'VAP'::text          AS sa_event,
+       j.treatmentaction    AS treatment,
+       j.otherplan_comments AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_infection_vap j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.savapid::text AND lower(i.assesment_type::text) = 'VAP'::text
+UNION
+SELECT j.saclabsiid         AS assesmentid,
+       j.uhid,
+       j.assessment_date    AS creationtime,
+       j.modificationtime,
+       'CLABSI'::text       AS sa_event,
+       j.treatmentaction    AS treatment,
+       j.otherplan_comments AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_infection_clabsi j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.saclabsiid::text AND lower(i.assesment_type::text) = 'CLABSI'::text
+UNION
+SELECT j.saintrauterineid             AS assesmentid,
+       j.uhid,
+       j.timeofassessment             AS creationtime,
+       j.modificationtime,
+       'Intrauterine Infection'::text AS sa_event,
+       j.treatmentaction              AS treatment,
+       j.otherplan_comments           AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_infection_intrauterine j
+         LEFT JOIN gangaram.investigation_ordered i ON i.assesmentid::text = j.saintrauterineid::text AND
+                                                     lower(i.assesment_type::text) = 'Intrauterine Infection'::text
+UNION
+SELECT j.hypoglycemiaid     AS assesmentid,
+       j.uhid,
+       j.assessment_time    AS creationtime,
+       j.modificationtime,
+       'Hypoglycemia'::text AS sa_event,
+       j.treatmentaction    AS treatment,
+       j.otherplan_comments AS plan,
+       i.testname,
+       j.comment            AS progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_hypoglycemia j
+         LEFT JOIN gangaram.investigation_ordered i
+                   ON i.assesmentid::text = j.hypoglycemiaid::text AND lower(i.assesment_type::text) = 'Hypoglycemia'::text
+UNION
+SELECT j.saencephalopathyid   AS assesmentid,
+       j.uhid,
+       j.assessment_date      AS creationtime,
+       j.modificationtime,
+       'Encephalopathy'::text AS sa_event,
+       'NA'::text             AS treatment,
+       j.othercomments        AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_cns_encephalopathy j
+         LEFT JOIN gangaram.investigation_ordered i ON i.assesmentid::text = j.saencephalopathyid::text AND
+                                                     lower(i.assesment_type::text) = 'Encephalopathy'::text
+UNION
+SELECT j.sacnshydrocephalusid AS assesmentid,
+       j.uhid,
+       j.assessment_date      AS creationtime,
+       j.modificationtime,
+       'Hydrocephalus'::text  AS sa_event,
+       'NA'::text             AS treatment,
+       j.othercomments        AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_cns_hydrocephalus j
+         LEFT JOIN gangaram.investigation_ordered i ON i.assesmentid::text = j.sacnshydrocephalusid::text AND
+                                                     lower(i.assesment_type::text) = 'Hydrocephalus'::text
+UNION
+SELECT j.sa_neuromuscular_disorderid   AS assesmentid,
+       j.uhid,
+       j.assessment_date               AS creationtime,
+       j.modificationtime,
+       'Neuromuscular Disorders'::text AS sa_event,
+       'NA'::text                      AS treatment,
+       j.othercomments                 AS plan,
+       i.testname,
+       j.progressnotes,
+         'diseasename'::text AS diseasename
+FROM gangaram.sa_cns_neuromuscular_disorder j
+         LEFT JOIN gangaram.investigation_ordered i ON i.assesmentid::text = j.sa_neuromuscular_disorderid::text AND
+                                                     lower(i.assesment_type::text) = 'Neuromuscular Disorders'::text;
+
+alter table gangaram.vw_doctornotes_list_raw
+    owner to postgres;
+
+
+create view gangaram.vw_doctornotes_list_control
+            (assesmentid, uhid, creationtime, modificationtime, sa_event, treatment, plan, testname, progressnotes,diseasename) as
+SELECT j.assesmentid,
+       j.uhid,
+       j.creationtime,
+       j.modificationtime,
+       j.sa_event,
+       j.treatment,
+       j.plan,
+       j.testname,
+       j.progressnotes,
+       j.diseasename
+FROM gangaram.vw_doctornotes_list_raw j
+ORDER BY j.uhid, j.creationtime DESC;
+
+alter table gangaram.vw_doctornotes_list_control
+    owner to postgres;
+
+create view gangaram.vw_doctornotes_list_rule(assesmentid, testname) as
+SELECT j.assesmentid,
+       string_agg(j.testname::text, ', '::text) AS testname
+FROM gangaram.vw_doctornotes_list_control j
+GROUP BY j.assesmentid;
+
+alter table gangaram.vw_doctornotes_list_rule
+    owner to postgres;
+
+
+
+create view gangaram.vw_doctornotes_list_final
+            (assesmentid, uhid, creationtime, modificationtime, sa_event, treatment, plan, testname, progressnotes,diseasename) as
+SELECT DISTINCT j.assesmentid,
+                j.uhid,
+                j.creationtime,
+                j.modificationtime,
+                j.sa_event,
+                j.treatment,
+                j.plan,
+                r.testname,
+                j.progressnotes,
+                j.diseasename
+FROM gangaram.vw_doctornotes_list_control j
+         LEFT JOIN gangaram.vw_doctornotes_list_rule r ON j.assesmentid = r.assesmentid
+ORDER BY j.uhid, j.creationtime DESC;
+
+
+alter table gangaram.vw_doctornotes_list_final
+    owner to postgres;
+
+
+-- Update on 20th March,2021
+INSERT INTO gangaram.ref_testslist (testid, testcode, testname, assesment_category, isactive) VALUES
+(100174,'HCV', 'HCV', 'Infection', true);
+
+INSERT INTO gangaram.ref_testslist (testid, testcode, testname, assesment_category, isactive) VALUES
+(100175,'HBsAg spot tests', 'HBsAg spot tests', 'Infection', true);
+
+INSERT INTO gangaram.ref_testslist (testid, testcode, testname, assesment_category, isactive) VALUES
+(100176,'Covid Rapid RT PCR', 'Covid Rapid RT PCR', 'Infection', true);
+
+INSERT INTO gangaram.ref_testslist (testid, testcode, testname, assesment_category, isactive) VALUES
+(100177,'TORCH', 'TORCH', 'Infection', true);
+
+INSERT INTO gangaram.ref_testslist (testid, testcode, testname, assesment_category, isactive) VALUES
+(100178,'MCU', 'MCU', 'Others', true);
+
+INSERT INTO gangaram.ref_testslist (testid, testcode, testname, assesment_category, isactive) VALUES
+(100179,'KUB USG', 'KUB USG', 'Others', true);
+
+INSERT INTO gangaram.ref_testslist (testid, testcode, testname, assesment_category, isactive) VALUES
+(100180,'HIV', 'HIV', 'Infection', true);
+
+alter table apollo.nursing_intake_output add normal_saline_comments varchar(200);
+alter table apollo.nursing_intake_output add kcl_comments varchar(200);
+alter table apollo.nursing_intake_output add ors_comments varchar(200);
+
+-- Commands already executed for gangaram
+INSERT INTO gangaram.ref_testslist (testid, testcode, testname, assesment_category, isactive) VALUES
+(100181,'CSF Cell Count', 'CSF Cell Count ', 'Others', true),
+(100182,'MRI - MRV', 'MRI - MRV', 'Others', true),
+(100183,'EEG', 'EEG', 'Others', true),
+(100184,'G6PD Quantitative', 'G6PD Quantitative', 'Others', true),
+(100185,'GCMS', 'GCMS', 'Others', true),
+(100186,'Stool Rotavirus', 'Stool Rotavirus', 'Others', true),
+(100187,'Stool Culture', 'Stool Culture', 'Others', true),
+(100188,'Occult Blood', 'Occult Blood', 'Others', true),
+(100189,'Stool for Antigen', 'Stool for Antigen', 'Others', true),
+(100190,'Urine Microscopy', 'Urine Microscopy', 'Others', true),
+(100191,'Stool Microscopy', 'Stool Microscopy', 'Others', true),
+(100192,'ET Aspirate Culture', 'ET Aspirate Culture', 'Others', true),
+(100193,'Body Fluid Culture', 'Body Fluid Culture', 'Others', true);

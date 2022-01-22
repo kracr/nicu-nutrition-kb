@@ -1,0 +1,604 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww25840\viewh15820\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Alter table fernandez.sa_resp_rds add column episodeid character varying(50);\
+Alter table fernandez.sa_resp_pphn add column episodeid character varying(50);\
+Alter table fernandez.sa_resp_apnea add column episodeid character varying(50);\
+Alter table fernandez.sa_resp_others add column episodeid character varying(50);\
+Alter table fernandez.sa_resp_pneumothorax add column episodeid character varying(50);\
+Alter table fernandez.sa_jaundice add column episodeid character varying(50);\
+Alter table fernandez.sa_infection add column episodeid character varying(50);\
+Alter table fernandez.sa_infection_sepsis add column episodeid character varying(50);\
+Alter table fernandez.sa_infection_vap add column episodeid character varying(50);\
+Alter table fernandez.sa_infection_clabsi add column episodeid character varying(50);\
+Alter table fernandez.sa_infection_intrauterine add column episodeid character varying(50);\
+Alter table fernandez.sa_infection_nec add column episodeid character varying(50);\
+\
+Alter table fernandez.sa_cns_ivh add column episodeid character varying(50);\
+Alter table fernandez.sa_cns_seizures add column episodeid character varying(50);\
+Alter table fernandez.sa_cns_asphyxia add column episodeid character varying(50);\
+Alter table fernandez.sa_cns_encephalopathy add column episodeid character varying(50);\
+Alter table fernandez.sa_cns_neuromuscular_disorder add column episodeid character varying(50);\
+Alter table fernandez.sa_cns_hydrocephalus add column episodeid character varying(50);\
+Alter table fernandez.sa_hypoglycemia add column episodeid character varying(50);\
+Alter table fernandez.sa_renalfailure add column episodeid character varying(50);\
+Alter table fernandez.sa_feed_intolerance add column episodeid character varying(50);\
+Alter table fernandez.sa_miscellaneous add column episodeid character varying(50);\
+Alter table fernandez.sa_miscellaneous_2 add column episodeid character varying(50);\
+Alter table fernandez.babyfeed_detail add column episodeid character varying(50);\
+\
+CREATE OR REPLACE VIEW fernandez.vw_sa_assesment_count_raw\
+ AS\
+ SELECT j.uhid,\
+    count(j.uhid) AS eventcount,\
+    'jaundice'::text AS sa_event,\
+    j.creationtime::date AS creationtime,\
+	j.episodeid AS episodeid\
+   FROM fernandez.sa_jaundice j\
+  WHERE (j.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY j.uhid, (j.creationtime::date), j.episodeid\
+UNION ALL\
+ SELECT r.uhid,\
+    count(r.uhid) AS eventcount,\
+    'rds'::text AS sa_event,\
+    r.creationtime::date AS creationtime,\
+	r.episodeid AS episodeid\
+   FROM fernandez.sa_resp_rds r\
+  WHERE (r.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY r.uhid, (r.creationtime::date), r.episodeid\
+UNION ALL\
+ SELECT r.uhid,\
+    count(r.uhid) AS eventcount,\
+    'sepsis'::text AS sa_event,\
+    r.creationtime::date AS creationtime,\
+	r.episodeid AS episodeid\
+   FROM fernandez.sa_infection_sepsis r\
+  WHERE (r.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY r.uhid, (r.creationtime::date), r.episodeid\
+UNION ALL\
+ SELECT a.uhid,\
+    count(a.uhid) AS eventcount,\
+    'apnea'::text AS sa_event,\
+    a.creationtime::date AS creationtime,\
+	a.episodeid AS episodeid\
+   FROM fernandez.sa_resp_apnea a\
+  WHERE (a.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY a.uhid, (a.creationtime::date), a.episodeid\
+UNION ALL\
+ SELECT p.uhid,\
+    count(p.uhid) AS eventcount,\
+    'pphn'::text AS sa_event,\
+    p.creationtime::date AS creationtime,\
+	p.episodeid AS episodeid\
+   FROM fernandez.sa_resp_pphn p\
+  WHERE (p.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY p.uhid, (p.creationtime::date), p.episodeid\
+UNION ALL\
+ SELECT n.uhid,\
+    count(n.uhid) AS eventcount,\
+    'pneumothorax'::text AS sa_event,\
+    n.creationtime::date AS creationtime,\
+	n.episodeid AS episodeid\
+   FROM fernandez.sa_resp_pneumothorax n\
+  WHERE (n.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY n.uhid, (n.creationtime::date), n.episodeid\
+UNION ALL\
+ SELECT go.uhid,\
+    count(go.uhid) AS eventcount,\
+    'hypoglycemia'::text AS sa_event,\
+    go.creationtime::date AS creationtime,\
+	go.episodeid AS episodeid\
+   FROM fernandez.sa_hypoglycemia go\
+  WHERE (go.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY go.uhid, (go.creationtime::date), go.episodeid\
+UNION ALL\
+ SELECT gy.uhid,\
+    count(gy.uhid) AS eventcount,\
+    'hyperglycemia'::text AS sa_event,\
+    gy.creationtime::date AS creationtime,\
+	'0' AS episodeid\
+   FROM fernandez.sa_hyperglycemia gy\
+  WHERE (gy.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY gy.uhid, (gy.creationtime::date)\
+UNION ALL\
+ SELECT co.uhid,\
+    count(co.uhid) AS eventcount,\
+    'hypocalcemia'::text AS sa_event,\
+    co.creationtime::date AS creationtime,\
+	'0' AS episodeid\
+   FROM fernandez.sa_hypocalcemia co\
+  WHERE (co.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY co.uhid, (co.creationtime::date)\
+UNION ALL\
+ SELECT cr.uhid,\
+    count(cr.uhid) AS eventcount,\
+    'hypercalcemia'::text AS sa_event,\
+    cr.creationtime::date AS creationtime,\
+	'0' AS episodeid\
+   FROM fernandez.sa_hypercalcemia cr\
+  WHERE (cr.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY cr.uhid, (cr.creationtime::date)\
+UNION ALL\
+ SELECT ko.uhid,\
+    count(ko.uhid) AS eventcount,\
+    'hypokalemia'::text AS sa_event,\
+    ko.creationtime::date AS creationtime,\
+	'0' AS episodeid\
+   FROM fernandez.sa_hyperkalemia ko\
+  WHERE (ko.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY ko.uhid, (ko.creationtime::date)\
+UNION ALL\
+ SELECT kr.uhid,\
+    count(kr.uhid) AS eventcount,\
+    'hyperkalemia'::text AS sa_event,\
+    kr.creationtime::date AS creationtime,\
+	'0' AS episodeid\
+   FROM fernandez.sa_hyperkalemia kr\
+  WHERE (kr.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY kr.uhid, (kr.creationtime::date)\
+UNION ALL\
+ SELECT no.uhid,\
+    count(no.uhid) AS eventcount,\
+    'hyponatremia'::text AS sa_event,\
+    no.creationtime::date AS creationtime,\
+	'0' AS episodeid\
+   FROM fernandez.sa_hyponatremia no\
+  WHERE (no.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY no.uhid, (no.creationtime::date)\
+UNION ALL\
+ SELECT nr.uhid,\
+    count(nr.uhid) AS eventcount,\
+    'hypernatremia'::text AS sa_event,\
+    nr.creationtime::date AS creationtime,\
+	'0' AS episodeid\
+   FROM fernandez.sa_hypernatremia nr\
+  WHERE (nr.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY nr.uhid, (nr.creationtime::date)\
+UNION ALL\
+ SELECT ac.uhid,\
+    count(ac.uhid) AS eventcount,\
+    'acidosis'::text AS sa_event,\
+    ac.creationtime::date AS creationtime,\
+	'0' AS episodeid\
+   FROM fernandez.sa_acidosis ac\
+  WHERE (ac.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY ac.uhid, (ac.creationtime::date)\
+UNION ALL\
+ SELECT ie.uhid,\
+    count(ie.uhid) AS eventcount,\
+    'iem'::text AS sa_event,\
+    ie.creationtime::date AS creationtime,\
+	'0' AS episodeid\
+   FROM fernandez.sa_iem ie\
+  WHERE (ie.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY ie.uhid, (ie.creationtime::date)\
+UNION ALL\
+ SELECT asp.uhid,\
+    count(asp.uhid) AS eventcount,\
+    'asphyxia'::text AS sa_event,\
+    asp.creationtime::date AS creationtime,\
+	asp.episodeid AS episodeid\
+   FROM fernandez.sa_cns_asphyxia asp\
+  WHERE (asp.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY asp.uhid, (asp.creationtime::date), asp.episodeid\
+UNION ALL\
+ SELECT sei.uhid,\
+    count(sei.uhid) AS eventcount,\
+    'seizure'::text AS sa_event,\
+    sei.creationtime::date AS creationtime,\
+	sei.episodeid AS episodeid\
+   FROM fernandez.sa_cns_seizures sei\
+  WHERE (sei.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY sei.uhid, (sei.creationtime::date), sei.episodeid\
+UNION ALL\
+ SELECT ivh.uhid,\
+    count(ivh.uhid) AS eventcount,\
+    'ivh'::text AS sa_event,\
+    ivh.creationtime::date AS creationtime,\
+	ivh.episodeid AS episodeid\
+   FROM fernandez.sa_cns_ivh ivh\
+  WHERE (ivh.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY ivh.uhid, (ivh.creationtime::date), ivh.episodeid\
+UNION ALL\
+ SELECT renal.uhid,\
+    count(renal.uhid) AS eventcount,\
+    'renal'::text AS sa_event,\
+    renal.creationtime::date AS creationtime,\
+	renal.episodeid AS episodeid\
+   FROM fernandez.sa_renalfailure renal\
+  WHERE (renal.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY renal.uhid, (renal.creationtime::date), renal.episodeid\
+UNION ALL\
+ SELECT feed.uhid,\
+    count(feed.uhid) AS eventcount,\
+    'feed'::text AS sa_event,\
+    feed.creationtime::date AS creationtime,\
+	feed.episodeid AS episodeid\
+   FROM fernandez.sa_feed_intolerance feed\
+  WHERE (feed.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY feed.uhid, (feed.creationtime::date), feed.episodeid\
+UNION ALL\
+ SELECT nec.uhid,\
+    count(nec.uhid) AS eventcount,\
+    'nec'::text AS sa_event,\
+    nec.creationtime::date AS creationtime,\
+	nec.episodeid AS episodeid\
+   FROM fernandez.sa_infection_nec nec\
+  WHERE (nec.uhid::text IN ( SELECT baby_detail.uhid\
+           FROM fernandez.baby_detail\
+          WHERE baby_detail.admissionstatus = true))\
+  GROUP BY nec.uhid, (nec.creationtime::date), nec.episodeid;\
+\
+ALTER TABLE fernandez.vw_sa_assesment_count_raw\
+    OWNER TO postgres;\
+\
+\
+CREATE OR REPLACE VIEW fernandez.vw_sa_assesment_count_control\
+ AS\
+ SELECT s.uhid,\
+    s.creationtime,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'jaundice'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS jaundice,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'rds'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS rds,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'apnea'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS apnea,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'pphn'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS pphn,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'pneumothorax'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS pneumothorax,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'hypoglycemia'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS hypoglycemia,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'hyperglycemia'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS hyperglycemia,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'hypocalcemia'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS hypocalcemia,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'hypercalcemia'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS hypercalcemia,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'hypokalemia'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS hypokalemia,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'hyperkalemia'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS hyperkalemia,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'hyponatremia'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS hyponatremia,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'hypernatremia'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS hypernatremia,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'acidosis'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS acidosis,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'iem'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS iem,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'asphyxia'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS asphyxia,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'seizure'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS seizure,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'ivh'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS ivh,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'sepsis'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS sepsis,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'renal'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS renal,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'feed'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS feed,\
+    max(\
+        CASE s.sa_event\
+            WHEN 'nec'::text THEN s.eventcount::text\
+            ELSE '0'::text\
+        END) AS nec,\
+    s.episodeid\
+   FROM ( SELECT r.uhid,\
+            r.sa_event,\
+            r.eventcount,\
+            r.creationtime,\
+        r.episodeid\
+           FROM fernandez.vw_sa_assesment_count_raw r\
+          GROUP BY r.uhid, r.sa_event, r.eventcount, r.creationtime, r.episodeid) s\
+  GROUP BY s.uhid, s.creationtime, s.episodeid\
+  ORDER BY s.creationtime;\
+\
+ALTER TABLE fernandez.vw_sa_assesment_count_control\
+    OWNER TO postgres;\
+\
+\
+CREATE OR REPLACE VIEW fernandez.vw_sa_assesment_count_rule\
+ AS\
+ SELECT DISTINCT r.uhid,\
+        CASE\
+            WHEN r.jaundice::integer > 0 THEN 'Jaundice'::text\
+            ELSE ','::text\
+        END AS jaundice,\
+        CASE\
+            WHEN r.rds::integer > 0 THEN 'Respiratory Distress'::text\
+            ELSE ','::text\
+        END AS rds,\
+        CASE\
+            WHEN r.apnea::integer > 0 THEN 'Apnea'::text\
+            ELSE ','::text\
+        END AS apnea,\
+        CASE\
+            WHEN r.pphn::integer > 0 THEN 'PPHN'::text\
+            ELSE ','::text\
+        END AS pphn,\
+        CASE\
+            WHEN r.pneumothorax::integer > 0 THEN 'Pneumothorax'::text\
+            ELSE ','::text\
+        END AS pneumothorax,\
+        CASE\
+            WHEN r.hypoglycemia::integer > 0 THEN 'Hypoglycemia'::text\
+            ELSE ','::text\
+        END AS hypoglycemia,\
+        CASE\
+            WHEN r.hyperglycemia::integer > 0 THEN 'Hyperglycemia'::text\
+            ELSE ','::text\
+        END AS hyperglycemia,\
+        CASE\
+            WHEN r.hypocalcemia::integer > 0 THEN 'Hypocalcemia'::text\
+            ELSE ','::text\
+        END AS hypocalcemia,\
+        CASE\
+            WHEN r.hypercalcemia::integer > 0 THEN 'Hypercalcemia'::text\
+            ELSE ','::text\
+        END AS hypercalcemia,\
+        CASE\
+            WHEN r.hypokalemia::integer > 0 THEN 'Hypokalemia'::text\
+            ELSE ','::text\
+        END AS hypokalemia,\
+        CASE\
+            WHEN r.hyperkalemia::integer > 0 THEN 'Hyperkalemia'::text\
+            ELSE ','::text\
+        END AS hyperkalemia,\
+        CASE\
+            WHEN r.hyponatremia::integer > 0 THEN 'Hyponatremia'::text\
+            ELSE ','::text\
+        END AS hyponatremia,\
+        CASE\
+            WHEN r.hypernatremia::integer > 0 THEN 'Hypernatremia'::text\
+            ELSE ','::text\
+        END AS hypernatremia,\
+        CASE\
+            WHEN r.acidosis::integer > 0 THEN 'Acidosis'::text\
+            ELSE ','::text\
+        END AS acidosis,\
+        CASE\
+            WHEN r.iem::integer > 0 THEN 'IEM'::text\
+            ELSE ','::text\
+        END AS iem,\
+        CASE\
+            WHEN r.asphyxia::integer > 0 THEN 'Asphyxia'::text\
+            ELSE ','::text\
+        END AS asphyxia,\
+        CASE\
+            WHEN r.seizure::integer > 0 THEN 'Seizure'::text\
+            ELSE ','::text\
+        END AS seizure,\
+        CASE\
+            WHEN r.ivh::integer > 0 THEN 'IVH'::text\
+            ELSE ','::text\
+        END AS ivh,\
+        CASE\
+            WHEN r.sepsis::integer > 0 THEN 'Sepsis'::text\
+            ELSE ','::text\
+        END AS sepsis,\
+        CASE\
+            WHEN r.renal::integer > 0 THEN 'Renal'::text\
+            ELSE ','::text\
+        END AS renal,\
+        CASE\
+            WHEN r.feed::integer > 0 THEN 'FeedIntolerance'::text\
+            ELSE ','::text\
+        END AS feed,\
+        CASE\
+            WHEN r.nec::integer > 0 THEN 'NEC'::text\
+            ELSE ','::text\
+        END AS nec,\
+    r.episodeid\
+   FROM fernandez.vw_sa_assesment_count_control r;\
+\
+ALTER TABLE fernandez.vw_sa_assesment_count_rule\
+    OWNER TO postgres;\
+\
+\
+CREATE OR REPLACE VIEW fernandez.vw_sa_assesment_count_rule1\
+ AS\
+ SELECT DISTINCT r.uhid,\
+    btrim((((((((((((((((((((((((((((((((((((((((r.nec || ','::text) || r.jaundice) || ','::text) || r.rds) || ','::text) || r.apnea) || ','::text) || r.pphn) || ','::text) || r.pneumothorax) || ','::text) || r.hypoglycemia) || ','::text) || r.hyperglycemia) || ','::text) || r.hypocalcemia) || ','::text) || r.hypercalcemia) || ','::text) || r.hypokalemia) || ','::text) || r.hyperkalemia) || ','::text) || r.hyponatremia) || ','::text) || r.hypernatremia) || ','::text) || r.acidosis) || ','::text) || r.iem) || ','::text) || r.sepsis) || ','::text) || r.asphyxia) || ','::text) || r.seizure) || ','::text) || r.ivh) || ','::text) || r.renal, ','::text) AS eventlist\
+   , r.episodeid\
+   FROM fernandez.vw_sa_assesment_count_rule r;\
+\
+ALTER TABLE fernandez.vw_sa_assesment_count_rule1\
+    OWNER TO postgres;\
+\
+\
+CREATE OR REPLACE VIEW fernandez.vw_sa_assesment_count_rule2\
+ AS\
+ SELECT r.uhid,\
+    btrim(string_agg(r.eventlist, ', '::text), ','::text) AS eventlist\
+  , r.episodeid\
+   FROM fernandez.vw_sa_assesment_count_rule1 r\
+  GROUP BY r.uhid, r.episodeid;\
+\
+ALTER TABLE fernandez.vw_sa_assesment_count_rule2\
+    OWNER TO postgres;\
+\
+\
+CREATE OR REPLACE VIEW fernandez.vw_sa_assesment_count_final\
+ AS\
+ SELECT DISTINCT r.uhid,\
+    btrim(regexp_replace(r.eventlist, '(,)\{2,\}'::text, ','::text, 'g'::text)) AS diagnosis\
+  , r.episodeid\
+   FROM fernandez.vw_sa_assesment_count_rule2 r;\
+\
+ALTER TABLE fernandez.vw_sa_assesment_count_final\
+    OWNER TO postgres;\
+\
+\
+CREATE OR REPLACE VIEW fernandez.baby_dashboard_listview_final\
+ AS\
+ SELECT b.uhid,\
+    b.isassessmentsubmit,\
+    b.episodeid,\
+    b.babyname,\
+    b.nicubedno,\
+    b.dateofbirth,\
+    b.dateofadmission,\
+    ((now()::date - b.dateofbirth) || ' '::text) || 'days'::text AS dayoflife,\
+    ac.weightatadmission,\
+    lc.lastdayweight,\
+    cc.currentdayweight,\
+    cc.currentdayweight - lc.lastdayweight AS difference,\
+    bf.feedtext AS feed_detail,\
+    bd.diagnosis\
+   FROM fernandez.baby_detail b\
+     LEFT JOIN fernandez.baby_admissionweight_control ac ON b.uhid::text = ac.uhid::text\
+     LEFT JOIN fernandez.baby_lastdayweight_control lc ON b.uhid::text = lc.uhid::text\
+     LEFT JOIN fernandez.baby_currentdayweight_control cc ON b.uhid::text = cc.uhid::text\
+     LEFT JOIN fernandez.vw_sa_assesment_count_final bd ON b.uhid::text = bd.uhid::text  AND b.episodeid::text = bd.episodeid::text\
+     LEFT JOIN fernandez.baby_feeddetail_final bf ON b.uhid::text = bf.uhid::text\
+  WHERE b.admissionstatus = true\
+  ORDER BY b.nicubedno;\
+\
+ALTER TABLE fernandez.baby_dashboard_listview_final\
+    OWNER TO postgres;\
+\
+alter table fernandez.nursing_vitalparameters\
+	add central_temp_source varchar(50);\
+\
+alter table fernandez.nursing_vitalparameters\
+	add peripheral_temp_source varchar(50);\
+\
+alter table fernandez.nursing_vitalparameters\
+	add central_temp_unit varchar(10);\
+\
+alter table fernandez.nursing_vitalparameters\
+	add peripheral_temp_unit varchar(10);\
+\
+CREATE OR REPLACE VIEW fernandez.vw_sa_assesment_count_rule1\
+ AS\
+SELECT DISTINCT r.uhid,\
+    btrim((((((((((((((((((((((((((((((((((((((((((r.nec || ','::text) || r.jaundice) || ','::text) || r.rds) || ','::text) || r.apnea) || ','::text) || r.pphn) || ','::text) || r.pneumothorax) || ','::text) || r.hypoglycemia) || ','::text) || r.hyperglycemia) || ','::text) || r.hypocalcemia) || ','::text) || r.hypercalcemia) || ','::text) || r.hypokalemia) || ','::text) || r.hyperkalemia) || ','::text) || r.hyponatremia) || ','::text) || r.hypernatremia) || ','::text) || r.acidosis) || ','::text) || r.iem) || ','::text) || r.sepsis) || ','::text) || r.asphyxia) || ','::text) || r.seizure) || ','::text) || r.ivh) || ','::text) || r.renal) || ','::text) || r.feed, ','::text) AS eventlist\
+   , r.episodeid\
+   FROM fernandez.vw_sa_assesment_count_rule r;\
+\
+ALTER TABLE fernandez.vw_sa_assesment_count_rule1\
+    OWNER TO postgres;\
+\
+\
+insert into fernandez.ref_medtype values('TYPE0037','Nutritional Supplements');\
+update fernandez.medicine set medicationtype = 'TYPE0037' where medid = 'MED0000000155';\
+update fernandez.medicine set medicationtype = 'TYPE0037' where medid = 'MED0000000145';\
+update fernandez.medicine set medicationtype = 'TYPE0037' where medid = 'MED0000000065';\
+update fernandez.medicine set medicationtype = 'TYPE0037' where medid = 'MED0000000073';\
+update fernandez.medicine set medicationtype = 'TYPE0037' where medid = 'MED0000000074';\
+update fernandez.medicine set medicationtype = 'TYPE0037' where medid = 'MED0000000185';\
+\
+delete from fernandez.ref_medtype where typeid = 'TYPE0036';\
+delete from fernandez.ref_medtype where typeid = 'TYPE0013';\
+}

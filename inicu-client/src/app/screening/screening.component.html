@@ -1,0 +1,3129 @@
+<doctor-panel></doctor-panel>
+<div>
+	<div class="container-fluid background-color-white">
+		<div class="col-md-12 no-padding padding-10-y">
+			<div class="col-md-3 col-lg-2">
+				<div>
+					<div class="resp-event-box" style="padding-bottom: 10px"
+						[ngClass]="{'resp-event-box-selected':  screeningObj.whichTab == 'Neurological Screening'}"
+						(click)="screeningTabVisible('Neurological Screening')">
+						<div class="table full">
+							<span class="bold">Neurological Screening</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div>
+					<div class="resp-event-box padding-bottom-10"
+						style="padding-bottom: 10px"
+						[ngClass]="{'resp-event-box-selected':  screeningObj.whichTab == 'ROP'}"
+						(click)="screeningTabVisible('ROP')">
+						<div class="table full">
+							<span class="bold">ROP</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div>
+					<div class="resp-event-box padding-bottom-10"
+						style="padding-bottom: 10px"
+						[ngClass]="{'resp-event-box-selected': screeningObj.whichTab == 'Hearing'}"
+						(click)="screeningTabVisible('Hearing')">
+						<div class="table full">
+							<span class="bold">Hearing</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div>
+					<div class="resp-event-box padding-bottom-10"
+						style="padding-bottom: 10px"
+						[ngClass]="{'resp-event-box-selected': screeningObj.whichTab == 'Metabolic'}"
+						(click)="screeningTabVisible('Metabolic')">
+						<div class="table full">
+							<span class="bold">Metabolic</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div>
+					<div class="resp-event-box padding-bottom-10"
+						style="padding-bottom: 10px"
+						[ngClass]="{'resp-event-box-selected': screeningObj.whichTab == 'Cranial USG'}"
+						(click)="screeningTabVisible('Cranial USG')">
+						<div class="table full">
+							<span class="bold">Cranial USG</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding padding-10-y" *ngIf="screeningObj.whichTab == 'Neurological Screening' && neurologicalData != null && neurologicalData.currentObj != null">
+			<div>
+	  			<div class="col-md-3 col-lg-2 no-padding-right">
+	  				<div class="col-md-12 no-padding">
+	  					<span class="bold">Date & Time of Screening</span>
+	  				</div>
+	  				<div class="col-md-12 no-padding">
+	  					<div class="desktop-column-20 padding-0-x force-left">
+	  						<owl-date-time class="owl-dateTime" name="neurologicalDate" [(ngModel)]="neurologicalData.currentObj.screening_time" (ngModelChange)="calNeurologicalCgaNpa()" [min]="minDate" [max]="maxDate"></owl-date-time>
+	  					</div>
+	  				</div>
+	  			</div>
+	  			<div class="col-md-2 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">CGA</span>
+					</div>
+					<div class="relative-input-group block desktop-column-20">
+						<input class="input input-medium desktop-column-8" type="number" name="neurologicalCGAWeeks" [(ngModel)]="neurologicalData.currentObj.cga_weeks" disabled><span class="input-group-icon center-aligned desktop-column-12">Weeks</span>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold visiblity-hidden">CGA</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="relative-input-group block desktop-column-20">
+							<input class="input input-medium desktop-column-8" type="number" name="neurologicalCGADays" [(ngModel)]="neurologicalData.currentObj.cga_days" disabled><span class="input-group-icon center-aligned desktop-column-12">Days</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Post Natal Age</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="relative-input-group block desktop-column-20">
+							<input class="input input-medium desktop-column-8" type="number" name="neurologicalPostNatalAgeWeek" [(ngModel)]="neurologicalData.currentObj.pna_weeks" disabled><span class="input-group-icon center-aligned desktop-column-12">Weeks</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold visiblity-hidden">CGA</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="relative-input-group block desktop-column-20">
+							<input class="input input-medium desktop-column-8" type="number" name="neurologicalPostNatalAgeDays" [(ngModel)]="neurologicalData.currentObj.pna_days" disabled><span class="input-group-icon center-aligned desktop-column-12">Days</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding padding-5-y">
+				<div class="col-md-12">
+					<span class="blue-text">Limb Tone</span>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding col-md-12 no-padding ">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 no-padding center-aligned"></div>
+					<div class="col-md-3 no-padding center-aligned">
+						<span class="bold">ABNORMAL</span>
+					</div>
+					<div class="col-md-3 no-padding center-aligned">
+						<span class="bold">OPTIMAL</span>
+					</div>
+					<div class="col-md-3 no-padding center-aligned">
+						<span class="bold">ABNORMAL / DEVIANT</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding" style="padding:50px">
+						<span class="bold">POSTURE</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.posture_type" (click)="postureNeurological('Abnormal')" name="posture" id="postureAbnormal" class="hidden">
+						<label for="postureAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="postureAbnormalImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Arms and Legs Extended</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.posture_type" (ngModelChange)="postureNeurological('Optimal')" name="Optimal" id="postureOptimal" class="hidden">
+						<label for="postureOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="postureOptimalImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text center-aligned">Leg well flexed but not adducted</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left background-color-grey">
+						<input type="radio" value="abnormal / deviant" [(ngModel)]="neurologicalData.currentObj.posture_type" (ngModelChange)="postureNeurological('abnormal / deviant')" name="posture" id="postureAbnormalDeviant" class="hidden">
+						<label for="postureAbnormalDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="postureAbnormalImg"></span></li>
+									<li class="left-35">
+										<input type="checkbox" id="postureOpisthotonousCheckbox" name="postureOpisthotonousCheckbox" [value]="true" [(ngModel)]="neurological.postureOpisthotonous" (ngModelChange)="postureNeurological('abnormal / deviant')" class="bind-check"> <label for="postureOpisthotonousCheckbox" class="inline">Opisthotonous</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="postureArmFlexedCheckbox" name="postureArmFlexedCheckbox" [value]="true" [(ngModel)]="neurological.postureArmFlexed" (ngModelChange)="postureNeurological('abnormal / deviant')" class="bind-check"> <label for="postureArmFlexedCheckbox" class="inline">Arm very flexed</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="postureLegExtendedCheckbox" name="postureLegExtendedCheckbox" [value]="true" [(ngModel)]="neurological.postureLegExtended" (ngModelChange)="postureNeurological('abnormal / deviant')" class="bind-check"> <label for="postureLegExtendedCheckbox" class="inline">Legs very extended</label>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding set-neurological-heading-cell" style="padding:50px">
+						<span class="bold">ARM TRACTION</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.arm_traction_type" (ngModelChange)="progressNotesNeurological()" name="armTraction" id="armTractionAbnormal" class="hidden">
+						<label for="armTractionAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="armAbnormalImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Arm remain straight no resistance</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.arm_traction_type" (ngModelChange)="progressNotesNeurological()" name="armTraction" id="armTractionOptimal" class="hidden">
+						<label for="armTractionOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="armOptimalImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Arm flex and remain flexed as shoulders lift</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left">
+						<input type="radio" value="abnormal / deviant" [(ngModel)]="neurologicalData.currentObj.arm_traction_type" (ngModelChange)="progressNotesNeurological()" name="armTraction" id="armTractionAbnormalDeviant" class="hidden">
+						<label for="armTractionAbnormalDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="armDeviantImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Arm remain flexed when body lifts	up</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding set-neurological-heading-cell" style="padding:50px">
+						<span class="bold">LEG TRACTION</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.leg_traction_type" (ngModelChange)="progressNotesNeurological()" name="legTraction" id="legTractionAbnormal" class="hidden">
+						<label for="legTractionAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="legAbnormalImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Legs straight - no resistance</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.leg_traction_type" (ngModelChange)="progressNotesNeurological()" name="legTractionOptimal" id="legTractionOptimal" class="hidden">
+						<label for="legTractionOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="legOptimalImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Knee flexes - remians flexed when bottoms lifts up</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left">
+						<input type="radio" value="abnormal / deviant" [(ngModel)]="neurologicalData.currentObj.leg_traction_type" (ngModelChange)="progressNotesNeurological()" name="legTraction" id="legTractionAbnormalDeviant" class="hidden">
+						<label for="legTractionAbnormalDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="legDeviantImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Flexion stays when back + bottom lifts up</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding  padding-5-y">
+				<div class="col-md-12">
+					<span class="blue-text">Head and Trunk Control</span>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding ">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding set-neurological-heading-cell" style="padding:50px"><span class="bold">HEAD CONTROL (Extensor Tone)</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding  background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.head_extensor_type" (ngModelChange)="headExtensorNeurological('Abnormal')" name="headControl" id="headControlAbnormal" class="hidden">
+						<label for="headControlAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="headAbnormalImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">No Attempt to raise head</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.head_extensor_type" (ngModelChange)="headExtensorNeurological('Optimal')" name="headControl" id="headControlOptimal" class="hidden">
+						<label for="headControlOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="headOptimalImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Raise head</p>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="headControlRemainVerticalCheckbox" name="headControlRemainVerticalCheckbox" [value]="true" [(ngModel)]="neurological.headControlRemainVertical" (ngModelChange)="headExtensorNeurological('Optimal')" class="bind-check"> <label for="headControlRemainVerticalCheckbox" class="inline">Remain vertical</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="headControlWobblesCheckbox" name="headControlWobblesCheckbox" [value]="true" [(ngModel)]="neurological.headControlWobbles" (ngModelChange)="headExtensorNeurological('Optimal')" class="bind-check"> <label for="headControlWobblesCheckbox" class="inline">Wobbles</label>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left">
+						<input type="radio" value="abnormal / deviant" [(ngModel)]="neurologicalData.currentObj.head_extensor_type" (ngModelChange)="headExtensorNeurological('abnormal / deviant')" name="headControl" id="headControlDeviant" class="hidden">
+						<label for="headControlDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<p class="no-margin grey-text">Head cannot be flexed</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding set-neurological-heading-cell" style="padding:50px">
+						<span class="bold">HEAD CONTROL (Flexor Tone)</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.head_flexor_type" (ngModelChange)="headFlexorNeurological('Abnormal')" name="headFlexor" id="headFlexorAbnormal" class="hidden">
+						<label for="headFlexorAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="headFlexorAbnormalImg"></span></li>
+									<li>
+										<p class="no-margin grey-text center-aligned">No Attempt to raise head</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.head_flexor_type" (ngModelChange)="headFlexorNeurological('Optimal')" name="headFlexor" id="headFlexorOptimal" class="hidden">
+						<label for="headFlexorOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="headOptimalImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Raise head</p>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="headFlexorRemainVerticalCheckbox" name="headFlexorRemainVerticalCheckbox" [value]="true" [(ngModel)]="neurological.headFlexorRemainVertical" (ngModelChange)="headFlexorNeurological('Optimal')" class="bind-check"> <label for="headFlexorRemainVerticalCheckbox" class="inline">Remain vertical</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="headFlexorWobblesCheckbox" name="headFlexorWobblesCheckbox" [value]="true" [(ngModel)]="neurological.headFlexorWobbles" (ngModelChange)="headFlexorNeurological('Optimal')" class="bind-check"> <label for="headFlexorWobblesCheckbox" class="inline">Wobbles</label>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left">
+						<input type="radio" value="abnormal / deviant" name="headFlexor" id="headFlexorDeviant" class="hidden" disabled>
+						<label for="headFlexorDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding set-neurological-heading-cell" style="padding:50px">
+						<span class="bold">HEAD LAG</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.head_lag_type" (ngModelChange)="progressNotesNeurological()" name="headLag" id="headLagAbnormal" class="hidden">
+						<label for="headLagAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="lagAbnormalImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Head drops back & Stays</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.head_lag_type" (ngModelChange)="progressNotesNeurological()" name="headLag" id="headLagOptimal" class="hidden">
+						<label for="headLagOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="lagOptimalImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Lift head in line with body</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left">
+						<input type="radio" value="abnormal / deviant" name="headLag" id="headLagDeviant" class="hidden" disabled>
+						<label for="headLagDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding set-neurological-heading-cell" style="padding:50px">
+						<span class="bold">VENTRAL SUSPENSION</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding  background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.ventral_type" (ngModelChange)="ventralNeurological('Abnormal')" name="ventralSuspension" id="ventralSuspensionAbnormal" class="hidden">
+						<label for="ventralSuspensionAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="ventralSuspensionAbnormalImg"></span></li>
+									<li class="left-35">
+										<input type="checkbox" id="backCurvedCheckbox" name="backCurvedCheckbox" [value]="true" [(ngModel)]="neurological.backCurved" (ngModelChange)="ventralNeurological('Abnormal')" class="bind-check"> <label for="backCurvedCheckbox" class="inline">Back curved</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="handStraightCheckbox" name="handStraightCheckbox" [value]="true" [(ngModel)]="neurological.handStraight" (ngModelChange)="ventralNeurological('Abnormal')" class="bind-check"> <label for="handStraightCheckbox" class="inline">Head and limbs hang stright</label>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.ventral_type" (ngModelChange)="ventralNeurological('Optimal')" name="ventralSuspension" id="ventralSuspensionOptimal" class="hidden">
+						<label for="ventralSuspensionOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="ventralSuspensionOptimalImg"></span></li>
+									<li class="left-35">
+										<input type="checkbox" id="backStraightCheckbox" name="backStraightCheckbox" [value]="true" [(ngModel)]="neurological.backStraight" (ngModelChange)="ventralNeurological('Optimal')" class="bind-check"> <label for="backStraightCheckbox" class="inline">Back straight</label>
+									</li>
+									<li class="left-35">
+										<p class="no-margin grey-text">head in line or above body</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left">
+						<input type="radio" value="abnormal / deviant" name="ventralSuspension" id="ventralSuspensionDeviant" class="hidden" disabled>
+						<label for="ventralSuspensionDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-12">
+					<span class="blue-text">Other Signs</span>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding set-neurological-heading-cell" style="padding:50px">
+						<span class="bold">BODY MOVEMENT</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.body_type" (ngModelChange)="bodyNeurological('Abnormal')" name="bodyMovement" id="bodyMovementAbnormal" class="hidden">
+						<label for="bodyMovementAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<p class="no-margin grey-text">head in line or above body</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.body_type" (ngModelChange)="bodyNeurological('Optimal')" name="bodyMovement" id="bodyMovementOptimal" class="hidden">
+						<label for="bodyMovementOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<p class="no-margin grey-text">Mainly smooth, alternating</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left background-color-grey">
+						<input type="radio" value="abnormal / deviant" [(ngModel)]="neurologicalData.currentObj.body_type" (ngModelChange)="bodyNeurological('abnormal / deviant')" name="bodyMovement" id="bodyMovementDeviant" class="hidden">
+						<label for="bodyMovementDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<input type="checkbox" id="crampedCheckbox" name="crampedCheckbox" [value]="true" [(ngModel)]="neurological.cramped" (ngModelChange)="bodyNeurological('abnormal / deviant')" class="bind-check"> <label for="crampedCheckbox" class="inline">Cramped</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="athetoidCheckbox" name="athetoidCheckbox" [value]="true" [(ngModel)]="neurological.athetoid" (ngModelChange)="bodyNeurological('abnormal / deviant')" class="bind-check"> <label for="athetoidCheckbox" class="inline">Athetoid</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="otherAbnormalMovementCheckbox" name="otherAbnormalMovementCheckbox" [value]="true" [(ngModel)]="neurological.otherAbnormalMovement" (ngModelChange)="bodyNeurological('abnormal / deviant')" class="bind-check"> <label for="otherAbnormalMovementCheckbox" class="inline">Other abnormal movement</label>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding set-neurological-heading-cell" style="padding:50px">
+						<span class="bold">TREMORS & STARTLES</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.tremor_startles_type" (ngModelChange)="tremorsNeurological('Abnormal')" name="tremorsAndStartles" id="tremorsAndStartlesAbnormal" class="hidden">
+						<label for="tremorsAndStartlesAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li>
+										<p class="no-margin grey-text left-35">None</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.tremor_startles_type" (ngModelChange)="tremorsNeurological('Optimal')" name="tremorsAndStartles" id="tremorsAndStartlesOptimal" class="hidden">
+						<label for="tremorsAndStartlesOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<p class="no-margin grey-text">Only occasional</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left background-color-grey">
+						<input type="radio" value="abnormal / deviant" [(ngModel)]="neurologicalData.currentObj.tremor_startles_type" (ngModelChange)="tremorsNeurological('abnormal / deviant')" name="tremorsAndStartles" id="tremorsAndStartlesDeviant" class="hidden">
+						<label for="tremorsAndStartlesDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<input type="checkbox" id="tremulousAlwaysCheckbox" name="tremulousAlwaysCheckbox" [value]="true" [(ngModel)]="neurological.tremulousAlways" (ngModelChange)="tremorsNeurological('abnormal / deviant')" class="bind-check"> <label for="tremulousAlwaysCheckbox" class="inline">Tremulous always</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="manyStartlesCheckbox" name="manyStartlesCheckbox" [value]="true" [(ngModel)]="neurological.manyStartles" (ngModelChange)="tremorsNeurological('abnormal / deviant')" class="bind-check"> <label for="manyStartlesCheckbox" class="inline">Many startles</label>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding ">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding set-neurological-heading-cell" style="padding:50px">
+						<span class="bold">MORO REFLEX</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.moro_reflex_type" (ngModelChange)="reflexNeurological('Abnormal')" name="moroReflex" id="moroReflexAbnormal" class="hidden">
+						<label for="moroReflexAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="moroAbnormalImg"></span></li>
+									<li class="left-35">
+										<input type="checkbox" id="noResponseCheckbox" name="noResponseCheckbox" [value]="true" [(ngModel)]="neurological.noResponse" (ngModelChange)="reflexNeurological('Abnormal')" class="bind-check"> <label for="noResponseCheckbox" class="inline">No Response</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="fullAbductionCheckbox" name="fullAbductionCheckbox" [value]="true" [(ngModel)]="neurological.fullAbduction" (ngModelChange)="reflexNeurological('Abnormal')" class="bind-check"> <label for="fullAbductionCheckbox" class="inline">Full abduction of the arms</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="extensionElbowsCheckbox" name="extensionElbowsCheckbox" [value]="true" [(ngModel)]="neurological.extensionElbows" (ngModelChange)="reflexNeurological('Abnormal')" class="bind-check"> <label for="extensionElbowsCheckbox" class="inline">Extension at the elbows</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="noAdductionCheckbox" name="noAdductionCheckbox" [value]="true" [(ngModel)]="neurological.noAdduction" (ngModelChange)="reflexNeurological('Abnormal')" class="bind-check"> <label for="noAdductionCheckbox" class="inline">No Adduction</label>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.moro_reflex_type" (ngModelChange)="reflexNeurological('Optimal')" name="moroReflex" id="moroReflexOptimal" class="hidden">
+						<label for="moroReflexOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul>
+									<li class="padding-10-y"><span class="moroOptimalImg"></span></li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Full abduction,</p>
+									</li>
+									<li class="left-35">
+										<p class="no-margin grey-text">followed by adduction</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left">
+						<input type="radio" value="abnormal / deviant" [(ngModel)]="neurologicalData.currentObj.moro_reflex_type" (ngModelChange)="reflexNeurological('abnormal / deviant')" name="moroReflex" id="moroReflexDeviant" class="hidden">
+						<label for="moroReflexDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<input type="checkbox" id="minimalAdductionCheckbox" name="minimalAdductionCheckbox" [value]="true" [(ngModel)]="neurological.minimalAdduction" (ngModelChange)="reflexNeurological('abnormal / deviant')" class="bind-check"> <label for="minimalAdductionCheckbox" class="inline">Minimal Adduction or abduction</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="difficultElicitCheckbox" name="difficultElicitCheckbox" [value]="true" [(ngModel)]="neurological.difficultElicit" (ngModelChange)="reflexNeurological('abnormal / deviant')" class="bind-check"> <label for="difficultElicitCheckbox" class="inline">Difficult to elicit</label>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding ">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding set-neurological-heading-cell" style="padding:50px"><span class="bold">AUDITORY ORIENTATION</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.auditory_type" (ngModelChange)="auditoryNeurological('Abnormal')" name="auditoryOrientation" id="auditoryOrientationAbnormal" class="hidden">
+						<label for="auditoryOrientationAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<p class="no-margin grey-text">No response</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.auditory_type" (ngModelChange)="auditoryNeurological('Optimal')" name="auditoryOrientation" id="auditoryOrientationOptimal" class="hidden">
+						<label for="auditoryOrientationOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<input type="checkbox" id="brightensCheckbox" name="brightensCheckbox" [value]="true" [(ngModel)]="neurological.brightens" (ngModelChange)="auditoryNeurological('Optimal')" class="bind-check"> <label for="brightensCheckbox" class="inline">Brightens</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="stimulusCheckbox" name="stimulusCheckbox" [value]="true" [(ngModel)]="neurological.stimulus" (ngModelChange)="auditoryNeurological('Optimal')" class="bind-check"> <label for="stimulusCheckbox" class="inline">Turns to stimulus either side</label>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left">
+						<input type="radio" value="abnormal / deviant" name="auditoryOrientation" id="auditoryOrientationDeviant" class="hidden" disabled>
+						<label for="auditoryOrientationDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding ">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding set-neurological-heading-cell" style="padding:50px">
+						<span class="bold">VISUAL ORIENTATION</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.visual_type" (ngModelChange)="progressNotesNeurological()" name="visualOrientation" id="visualOrientationAbnormal" class="hidden">
+						<label for="visualOrientationAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<p class="no-margin grey-text">No Focusing</p>
+									</li>
+									<li class="left-35">
+										<p class="no-margin grey-text">Tracking < 60</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.visual_type" (ngModelChange)="progressNotesNeurological()" name="visualOrientation" id="visualOrientationOptimal" class="hidden">
+						<label for="visualOrientationOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<p class="no-margin grey-text">Good Horizontal and 	Vertical Tracking</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left">
+						<input type="radio" value="abnormal / deviant" name="visualOrientation" id="visualOrientationDeviant" class="hidden" disabled>
+						<label for="visualOrientationDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding ">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-3 center-aligned middle-aligned no-padding set-neurological-heading-cell" style="padding:50px">
+						<span class="bold">ALERTNESS</span>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding background-color-grey">
+						<input type="radio" value="Abnormal" [(ngModel)]="neurologicalData.currentObj.alertness_type" (ngModelChange)="alertnessNeurological('Abnormal')" name="alertness" id="alertnessAbnormal" class="hidden">
+						<label for="alertnessAbnormal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<p class="no-margin grey-text">When awake variable response to orientation</p>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding">
+						<input type="radio" value="Optimal" [(ngModel)]="neurologicalData.currentObj.alertness_type" (ngModelChange)="alertnessNeurological('Optimal')" name="alertness" id="alertnessOptimal" class="hidden">
+						<label for="alertnessOptimal" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+								<ul class="padding-45">
+									<li class="left-35">
+										<input type="checkbox" id="alertnessSustainedCheckbox" name="alertnessSustainedCheckbox" [value]="true" [(ngModel)]="neurological.alertnessSustained" (ngModelChange)="alertnessNeurological('Optimal')" class="bind-check"> <label for="alertnessSustainedCheckbox" class="inline">Alertness Sustained</label>
+									</li>
+									<li class="left-35">
+										<input type="checkbox" id="alertStateCheckbox" name="alertStateCheckbox" [value]="true" [(ngModel)]="neurological.alertState" (ngModelChange)="alertnessNeurological('Optimal')" class="bind-check"> <label for="alertStateCheckbox" class="inline">May use stimulus to come to alert state</label>
+									</li>
+								</ul>
+							</div>
+						</label>
+					</div>
+					<div class="col-md-3 table-cell middle-aligned no-padding-left">
+						<input type="radio" value="abnormal / deviant" name="alertness" id="alertnessDeviant" class="hidden" disabled>
+						<label for="alertnessDeviant" class="score-radio set-neurological-cell">
+							<div class="bind-score-list">
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding ">
+				<div class="col-md-12">
+					<span class="blue-text">Abnormal Signs</span>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding ">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">SUCK</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="radio" [value]="true" name="SUCK" id="SUCKYes" [(ngModel)]="neurologicalData.currentObj.suck" (ngModelChange)="progressNotesNeurological()" class="hidden">
+							<label for="SUCKYes" class="set-neurological-abnormal-cell no-padding col-md-6 setting-radio-neurological" [ngClass]="{ 'score-radio': neurologicalData.currentObj.suck == true }"><span class="screeningCheckbox">Yes</span></label>
+							<input type="radio" name="SUCK" id="SUCKNo" [value]="false" [(ngModel)]="neurologicalData.currentObj.suck" (ngModelChange)="progressNotesNeurological()" class="hidden">
+							<label for="SUCKNo" class="set-neurological-abnormal-cell no-padding col-md-6 background-color-grey setting-radio-neurological" [ngClass]="{ 'score-radio': neurologicalData.currentObj.suck == false }"><span class="screeningCheckbox">No</span></label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">FACIAL PALSY</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="radio" name="facialPalsy" id="facialPalsyYes" [value]="true" [(ngModel)]="neurologicalData.currentObj.facial" (ngModelChange)="progressNotesNeurological()" class="hidden">
+								<label for="facialPalsyYes" class="set-neurological-abnormal-cell no-padding col-md-6 setting-radio-neurological background-color-grey" [ngClass]="{ 'score-radio': neurologicalData.currentObj.facial == true }"><span class="screeningCheckbox ">Yes</span></label>
+							<input type="radio" name="facialPalsy" id="facialPalsyNo" [value]="false" [(ngModel)]="neurologicalData.currentObj.facial" (ngModelChange)="progressNotesNeurological()" class="hidden">
+								<label for="facialPalsyNo" class="set-neurological-abnormal-cell no-padding col-md-6 setting-radio-neurological" [ngClass]="{ 'score-radio': neurologicalData.currentObj.facial == false }"><span class="screeningCheckbox">No</span></label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">ABN. EYE MOVT.</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="radio" name="eyeMovement" id="eyeMovementYes" [value]="true" [(ngModel)]="neurologicalData.currentObj.eye" (ngModelChange)="progressNotesNeurological()" class="hidden">
+							<label for="eyeMovementYes" class="set-neurological-abnormal-cell no-padding col-md-6 setting-radio-neurological background-color-grey" [ngClass]="{ 'score-radio': neurologicalData.currentObj.eye == true }"><span class="screeningCheckbox ">Yes</span></label>
+							<input type="radio" name="eyeMovement" id="eyeMovementNo" [value]="false" [(ngModel)]="neurologicalData.currentObj.eye" (ngModelChange)="progressNotesNeurological()" class="hidden">
+							<label for="eyeMovementNo" class="set-neurological-abnormal-cell no-padding col-md-6 setting-radio-neurological" [ngClass]="{ 'score-radio': neurologicalData.currentObj.eye == false }"><span class="screeningCheckbox">No</span></label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">SUNSET SIGN</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="radio" name="sunsetSign" id="sunsetSignYes" [value]="true" [(ngModel)]="neurologicalData.currentObj.sunset" (ngModelChange)="progressNotesNeurological()" class="hidden">
+								<label for="sunsetSignYes" class="set-neurological-abnormal-cell no-padding col-md-6 setting-radio-neurological background-color-grey"[ngClass]="{ 'score-radio': neurologicalData.currentObj.sunset == true }"><span class="screeningCheckbox ">Yes</span></label>
+							<input type="radio" name="sunsetSign" id="sunsetSignNo" [value]="false" [(ngModel)]="neurologicalData.currentObj.sunset" (ngModelChange)="progressNotesNeurological()" class="hidden">
+								<label for="sunsetSignNo" class="set-neurological-abnormal-cell no-padding col-md-6 setting-radio-neurological" [ngClass]="{ 'score-radio': neurologicalData.currentObj.sunset == false }"><span class="screeningCheckbox">No</span></label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">FISTED HAND</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="radio" name="fistedHand" id="fistedHandYes" [value]="true" [(ngModel)]="neurologicalData.currentObj.hand" (ngModelChange)="progressNotesNeurological()" class="hidden">
+								<label for="fistedHandYes" class="set-neurological-abnormal-cell no-padding col-md-6 setting-radio-neurological background-color-grey"[ngClass]="{ 'score-radio': neurologicalData.currentObj.hand == true }"><span class="screeningCheckbox">Yes</span></label>
+							<input type="radio" name="fistedHand" id="fistedHandNo" [value]="false" [(ngModel)]="neurologicalData.currentObj.hand" (ngModelChange)="progressNotesNeurological()" class="hidden">
+								<label for="fistedHandNo" class="set-neurological-abnormal-cell no-padding col-md-6 setting-radio-neurological" [ngClass]="{ 'score-radio': neurologicalData.currentObj.hand == false }"><span class="screeningCheckbox">No</span></label>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="col-md-12 no-padding">
+							<span class="bold">CLONUS</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="radio" name="clonus" id="clonusYes" [value]="true" [(ngModel)]="neurologicalData.currentObj.clonus" (ngModelChange)="progressNotesNeurological()" class="hidden">
+								<label for="clonusYes" class="set-neurological-abnormal-cell no-padding col-md-6 setting-radio-neurological background-color-grey" [ngClass]="{ 'score-radio': neurologicalData.currentObj.clonus == true }"><span class="screeningCheckbox">Yes</span></label>
+							<input type="radio" name="clonus" id="clonusNo" [value]="false" [(ngModel)]="neurologicalData.currentObj.clonus" (ngModelChange)="progressNotesNeurological()" class="hidden">
+								<label for="clonusNo" class="set-neurological-abnormal-cell no-padding col-md-6 setting-radio-neurological" [ngClass]="{ 'score-radio': neurologicalData.currentObj.clonus == false }"><span class="screeningCheckbox">No</span></label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-2 no-padding-right right-aligned">
+					<span class="bold">INTERPRETATION - </span>
+				</div>
+				<div class="col-md-10 no-padding-right left-aligned">
+					<span class="bold red-text">Infant with 2 or more items in shaded area need to be reassessed</span>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-2 no-padding-right right-aligned">
+					<span class="bold">REPORTS - </span>
+				</div>
+				<div class="col-md-10 no-padding-right left-aligned">
+					<span class="bold red-text">{{neurologicalData.currentObj.reports}}</span>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-12">
+					<span class="blue-text">Other Comment</span>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="4" [(ngModel)]="neurologicalData.currentObj.other_comments" (ngModelChange)="progressNotesNeurological()"></textarea>
+				</div>
+			</div>
+			<div
+				class="desktop-column-20 padding-0-x force-left padding-top-2 center-aligned">
+				<div id="footer">
+					<button class="button button-blue button-large" type="submit"
+						(click)="saveNeurological()">SUBMIT</button>
+					<button class="button button-blue-transparent button-large"
+						(click)="getNeurological()">
+						<i class="refresh"></i>REFRESH
+					</button>
+				</div>
+			</div>
+			<div>
+				<div class="col-md-12 margin-10-y">
+					<div class="col-md-4 col-lg-3 no-padding-left">
+						<h1 class="light margin-5-y blue-text">Neurological Summary</h1>
+					</div>
+					<div class="col-md-0 col-lg-1"></div>
+					<div class="col-md-2 fromneurological no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">From</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime" type="both" autoClose=true
+								[(ngModel)]="printNeurologicalFromDate" [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-2 toneurological no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">To</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime" type="both" autoClose=true
+								[(ngModel)]="printNeurologicalToDate" [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-4 showoption no-padding">
+						<div class="col-md-12 no-padding">
+							<span class="visiblity-hidden">To</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<button class="button button-blue margin-5-x" type="button"
+								(click)="printPdfNeurological('table')">SHOW</button>
+							<button class="button button-blue margin-5-x" type="button"
+								(click)="printPdfNeurological('print')">PRINT</button>
+							<button class="button button-blue margin-5-x exportcv" type="button"
+								(click)="printPdfNeurological('csv')">EXPORT CSV</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 margin-bottom-100">
+				<table
+					class="table table-striped table-bordered headed-table col-md-12 nursing-data-table">
+					<tr>
+						<td class="center-aligned">Date and Time</td>
+						<td class="center-aligned">Age of Screening (CGA)</td>
+						<td class="center-aligned">Age of Screening (Post Natal)</td>
+						<td class="center-aligned">Report</td>
+					</tr>
+					<tr *ngFor="let item of neurologicalData.pastNeurologicalList">
+						<td class="center-aligned">{{item.screening_time |
+							date:'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="center-aligned">{{item.cga_weeks}} weeks
+							{{item.cga_days}} days</td>
+						<td class="center-aligned">{{item.pna_weeks}} weeks
+							{{item.pna_days}} days</td>
+						<td class="center-aligned">{{item.reports}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="row table full padding-10-x padding-10-y"
+			*ngIf="screeningObj.whichTab == 'ROP' && ropData != null && ropData.currentObj != null">
+			<div class="no-padding" (click)="clinicalSectionROPVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-clinical-assessment"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 8%">
+					<h1 class="no-margin system-main-heading clinical-assessment-color">Screening</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="clinical-assessment-line ">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-clinical middle-aligned"
+						*ngIf="screeningObj.isClinicalSectionROPVisible"></a> <a
+						class="sprite sprite-plus-clinical middle-aligned"
+						*ngIf="!(screeningObj.isClinicalSectionROPVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isClinicalSectionROPVisible">
+				<div class="row padding-5-y">
+					<div class="col-md-3 col-lg-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Date & Time of Screening</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="ropData.currentObj.screening_time"
+									(ngModelChange)="calRopCgaNpa()" [min]="minDate" [max]="maxDate"></owl-date-time>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">CGA</span>
+						</div>
+						<div class="relative-input-group block desktop-column-20">
+							<input class="input input-medium desktop-column-8" type="text"
+								[(ngModel)]="ropData.currentObj.cga_weeks" disabled><span
+								class="input-group-icon center-aligned desktop-column-12">Weeks</span>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold visiblity-hidden">CGA</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="text"
+									[(ngModel)]="ropData.currentObj.cga_days" disabled><span
+									class="input-group-icon center-aligned desktop-column-12">Days</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Post Natal Age</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="text"
+									[(ngModel)]="ropData.currentObj.pna_weeks" disabled><span
+									class="input-group-icon center-aligned desktop-column-12">Weeks</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold visiblity-hidden">CGA</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="text"
+									[(ngModel)]="ropData.currentObj.pna_days" disabled><span
+									class="input-group-icon center-aligned desktop-column-12">Days</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 left-aligned no-padding">
+								<span class="bold">Opthalmologist</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select class="input input-medium desktop-column-14" id="Opthalmologist" 
+								[(ngModel)]="ropData.currentObj.ophthalmologist">
+								<option disabled selected hidden value>-- Select--</option>
+								<option value=null hidden>--Select--</option>
+								<option *ngFor="let name of ropData.ophthalmologistNameList">
+									{{name.ophthalmologistName}}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-5-y">
+					<div class="col-md-12">
+						<h1 class="no-margin system-sub-heading blue-text">Risk
+							Factors</h1>
+					</div>
+				</div>
+				<div class="row padding-5-y">
+					<div class="col-md-2 gestationweek no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="Gestation"
+								[(ngModel)]="ropRisk.gestation"
+								(ngModelChange)="createRopRiskText()"><label
+								for="Gestation">Gestation < 32 week</label>
+						</div>
+					</div>
+					<div class="col-md-2 oxygensupplement no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="Oxygen" [(ngModel)]="ropRisk.oxygen"
+								(ngModelChange)="createRopRiskText()"><label
+								for="Oxygen">Oxygen supplementation</label>
+						</div>
+					</div>
+					<div class="col-md-2 oxygensupplement no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="mechanicalVentilation"
+								[(ngModel)]="ropRisk.mv" (ngModelChange)="createRopRiskText()"><label
+								for="mechanicalVentilation">Mechanical Ventilation</label>
+						</div>
+					</div>
+					<div class="col-md-1 col-lg-2 no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="Sepsis" [(ngModel)]="ropRisk.sepsis"
+								(ngModelChange)="createRopRiskText()"><label
+								for="Sepsis">Sepsis</label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="bloodTransfusions"
+								[(ngModel)]="ropRisk.blood"
+								(ngModelChange)="createRopRiskText()"><label
+								for="bloodTransfusions">Blood transfusions</label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="poorWeight"
+								[(ngModel)]="ropRisk.poor_weight"
+								(ngModelChange)="createRopRiskText()"><label
+								for="poorWeight">Poor Weight Gain</label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="isROPOthers"
+								[(ngModel)]="ropRisk.othersType"
+								(ngModelChange)="createRopRiskText()"><label
+								for="isROPOthers">Others</label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right" *ngIf="ropRisk.othersType">
+						<input type="text" name="riskOther"
+							class="col-md-12 input-coloured-gray input-medium assesment-select"
+							[(ngModel)]="ropRisk.othersValue"
+							(ngModelChange)="createRopRiskText()">
+					</div>
+				</div>
+				<div class="row padding-5-y">
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">ROP</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input id="ROPYes" name="ROP" type="radio" [value]="true"
+									[(ngModel)]="ropData.currentObj.is_rop"
+									(ngModelChange)="progressNotesRop()"> <label
+									for="ROPYes">Yes</label> <input id="ROPNo" name="ROP"
+									type="radio" [value]="false"
+									[(ngModel)]="ropData.currentObj.is_rop"
+									(ngModelChange)="progressNotesRop()"> <label
+									for="ROPNo">No</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-y" *ngIf="ropData.currentObj.is_rop">
+					<div class="col-md-6">
+						<div class="col-md-12 no-padding padding-10-y">
+							<div class="blue-round-tick setting-checkbox-without-margin">
+								<input type="checkbox" id="isROPLeftEye"
+									[(ngModel)]="ropData.currentObj.is_rop_left"
+									(ngModelChange)="progressNotesRop()"><label
+									for="isROPLeftEye">Left Eye</label>
+							</div>
+						</div>
+						<div class="col-md-12 no-padding"
+							*ngIf="ropData.currentObj.is_rop_left">
+							<div class="col-md-6">
+								<div class="col-md-12 no-padding">
+									<span class="bold">Zone</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<select
+										class="input input-medium col-md-12 force-left max-height-36"
+										[(ngModel)]="ropData.currentObj.rop_left_zone"
+										(ngModelChange)="progressNotesRop()">
+										<option value="" disabled selected>Select</option>
+										<option value="I">I</option>
+										<option value="II">II</option>
+										<option value="III">III</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="col-md-12 no-padding">
+									<span class="bold">Stage</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<select
+										class="input input-medium col-md-12 force-left max-height-36"
+										[(ngModel)]="ropData.currentObj.rop_left_stage"
+										(ngModelChange)="progressNotesRop()">
+										<option value="" disabled selected>Select</option>
+										<option value="I">I</option>
+										<option value="II">II</option>
+										<option value="III">III</option>
+										<option value="IV">IV</option>
+										<option value="V">V</option>
+									</select>
+								</div>
+								<div class="col-md-12 no-padding padding-top-2">
+									<span class="bold">Plus Disease</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<div class="toggle-options-radio">
+										<input id="plusLeftPresent" name="plusLeft" type="radio"
+											[value]="true" [(ngModel)]="ropData.currentObj.rop_left_plus"
+											(ngModelChange)="progressNotesRop()"> <label
+											for="plusLeftPresent">Present</label> <input
+											id="plusLeftAbsent" name="plusLeft" type="radio"
+											[value]="false"
+											[(ngModel)]="ropData.currentObj.rop_left_plus"
+											(ngModelChange)="progressNotesRop()"> <label
+											for="plusLeftAbsent">Absent</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="col-md-12 no-padding padding-10-y">
+							<div class="blue-round-tick setting-checkbox-without-margin">
+								<input type="checkbox" id="isROPRightEye"
+									[(ngModel)]="ropData.currentObj.is_rop_right"
+									(ngModelChange)="progressNotesRop()"><label
+									for="isROPRightEye">Right Eye</label>
+							</div>
+						</div>
+						<div class="col-md-12 no-padding"
+							*ngIf="ropData.currentObj.is_rop_right">
+							<div class="col-md-6">
+								<div class="col-md-12 no-padding">
+									<span class="bold">Zone</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<select
+										class="input input-medium col-md-12 force-left max-height-36"
+										[(ngModel)]="ropData.currentObj.rop_right_zone"
+										(ngModelChange)="progressNotesRop()">
+										<option value="" disabled selected>Select</option>
+										<option value="I">I</option>
+										<option value="II">II</option>
+										<option value="III">III</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="col-md-12 no-padding">
+									<span class="bold">Stage</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<select
+										class="input input-medium col-md-12 force-left max-height-36"
+										[(ngModel)]="ropData.currentObj.rop_right_stage"
+										(ngModelChange)="progressNotesRop()">
+										<option value="" disabled selected>Select</option>
+										<option value="I">I</option>
+										<option value="II">II</option>
+										<option value="III">III</option>
+										<option value="IV">IV</option>
+										<option value="V">V</option>
+									</select>
+								</div>
+								<div class="col-md-12 no-padding padding-top-2">
+									<span class="bold">Plus Disease</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<div class="toggle-options-radio">
+										<input id="plusRightPresent" name="plusRight" type="radio"
+											[value]="true"
+											[(ngModel)]="ropData.currentObj.rop_right_plus"
+											(ngModelChange)="progressNotesRop()"> <label
+											for="plusRightPresent">Present</label> <input
+											id="plusRightAbsent" name="plusRight" type="radio"
+											[value]="false"
+											[(ngModel)]="ropData.currentObj.rop_right_plus"
+											(ngModelChange)="progressNotesRop()"> <label
+											for="plusRightAbsent">Absent</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="no-padding" (click)="actionSectionROPVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-action"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 6%">
+					<h1 class="no-margin system-main-heading action-assessment-color">Action</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="action-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-action middle-aligned"
+						*ngIf="screeningObj.isActionROPVisible"></a> <a
+						class="sprite  sprite-plus-action middle-aligned"
+						*ngIf="!(screeningObj.isActionROPVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isActionROPVisible">
+				<div class="row padding-5-y padding-10-x">
+					<div class="col-md-12">
+						<h1 class="no-margin system-sub-heading blue-text">Treatment</h1>
+					</div>
+				</div>
+				<div class="row table full padding-10-x padding-10-y">
+					<div class="col-md-2">
+						<div>
+							<div class="resp-event-box" style="padding-bottom: 10px"
+								[ngClass]="{'resp-event-box-selected':  screeningObj.whichTreatmentTab == 'No Treatment', 'resp-event-box-saved': ropData.currentObj.treatmentList.includes('TRE089')}"
+								(click)="screeningTreamentTabVisible('No Treatment')">
+								<div class="table full">
+									<span class="bold">No Treatment</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div>
+							<div class="resp-event-box" style="padding-bottom: 10px"
+								[ngClass]="{'resp-event-box-selected':  screeningObj.whichTreatmentTab == 'Laser', 'resp-event-box-saved': ropData.currentObj.treatmentList.includes('TRE090')}"
+								(click)="screeningTreamentTabVisible('Laser')">
+								<div class="table full">
+									<span class="bold">Laser</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div>
+							<div class="resp-event-box" style="padding-bottom: 10px"
+								[ngClass]="{'resp-event-box-selected':  screeningObj.whichTreatmentTab == 'Avastin', 'resp-event-box-saved': ropData.currentObj.treatmentList.includes('TRE091')}"
+								(click)="screeningTreamentTabVisible('Avastin')">
+								<div class="table full">
+									<span class="bold">Avastin</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div>
+							<div class="resp-event-box" style="padding-bottom: 10px"
+								[ngClass]="{'resp-event-box-selected':  screeningObj.whichTreatmentTab == 'Surgery', 'resp-event-box-saved': ropData.currentObj.treatmentList.includes('TRE092')}"
+								(click)="screeningTreamentTabVisible('Surgery')">
+								<div class="table full">
+									<span class="bold">Surgery</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div>
+							<div class="resp-event-box" style="padding-bottom: 10px"
+								[ngClass]="{'resp-event-box-selected':  screeningObj.whichTreatmentTab == 'Other', 'resp-event-box-saved': ropData.currentObj.treatmentList.includes('Other')}"
+								(click)="screeningTreamentTabVisible('Other')">
+								<div class="table full">
+									<span class="bold">Other</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row table full padding-10-x padding-10-y"
+					*ngIf="screeningObj.whichTreatmentTab == 'No Treatment'">
+					<div class="row padding-10-y">
+						<div class="col-md-2 no-padding nolefteye">
+							<div class="blue-round-tick setting-checkbox-without-margin">
+								<input type="checkbox" id="ropNoTreatmentLeftEye"
+									[(ngModel)]="ropData.currentObj.no_treatment_left"
+									(ngModelChange)="processRopTreatment()"><label
+									for="ropNoTreatmentLeftEye">Left Eye</label>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding">
+							<div class="blue-round-tick setting-checkbox-without-margin">
+								<input type="checkbox" id="ropNoTreatmentRightEye"
+									[(ngModel)]="ropData.currentObj.no_treatment_right"
+									(ngModelChange)="processRopTreatment()"><label
+									for="ropNoTreatmentRightEye">Right Eye</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row table full padding-10-x padding-10-y"
+					*ngIf="screeningObj.whichTreatmentTab == 'Laser'">
+					<div class="row padding-10-y">
+						<div class="col-md-6"
+							*ngIf="!ropData.currentObj.no_treatment_left">
+							<div class="col-md-12 no-padding padding-10-y">
+								<div class="blue-round-tick setting-checkbox-without-margin">
+									<input type="checkbox" id="isROPLaserLeftEye"
+										[(ngModel)]="ropData.currentObj.left_laser"
+										(ngModelChange)="processRopTreatment()"><label
+										for="isROPLaserLeftEye">Left Eye</label>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding"
+								*ngIf="ropData.currentObj.left_laser">
+								<div class="col-md-6">
+									<div class="col-md-12 no-padding">
+										<span class="bold">Date</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<owl-date-time class="owl-dateTime"
+											[(ngModel)]="ropData.currentObj.left_laser_date" [min]="minDate" [max]="maxDate" (ngModelChange)="processRopTreatment()"></owl-date-time>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="col-md-12 no-padding">
+										<span class="bold">Comment</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<input
+											class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+											type="text"
+											[(ngModel)]="ropData.currentObj.left_laser_comment"
+											(ngModelChange)="processRopTreatment()">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6"
+							*ngIf="!ropData.currentObj.no_treatment_right">
+							<div class="col-md-12 padding-10-y">
+								<div class="blue-round-tick setting-checkbox-without-margin">
+									<input type="checkbox" id="isROPLaserRightEye"
+										[(ngModel)]="ropData.currentObj.right_laser"
+										(ngModelChange)="processRopTreatment()"><label
+										for="isROPLaserRightEye">Right Eye</label>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding"
+								*ngIf="ropData.currentObj.right_laser">
+								<div class="col-md-6">
+									<div class="col-md-12 no-padding">
+										<span class="bold">Date</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<owl-date-time class="owl-dateTime"
+											[(ngModel)]="ropData.currentObj.right_laser_date" [min]="minDate" [max]="maxDate" (ngModelChange)="processRopTreatment()"></owl-date-time>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="col-md-12 no-padding">
+										<span class="bold">Comment</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<input
+											class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+											type="text"
+											[(ngModel)]="ropData.currentObj.right_laser_comment"
+											(ngModelChange)="processRopTreatment()">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row table full padding-10-x padding-10-y"
+					*ngIf="screeningObj.whichTreatmentTab == 'Avastin'">
+					<div class="row padding-10-y">
+						<div class="col-md-6"
+							*ngIf="!ropData.currentObj.no_treatment_left">
+							<div class="col-md-12 no-padding padding-10-y">
+								<div class="blue-round-tick setting-checkbox-without-margin">
+									<input type="checkbox" id="isROPAvastinLeftEye"
+										[(ngModel)]="ropData.currentObj.left_avastin"
+										(ngModelChange)="processRopTreatment()"><label
+										for="isROPAvastinLeftEye">Left Eye</label>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding"
+								*ngIf="ropData.currentObj.left_avastin">
+								<div class="col-md-6">
+									<div class="col-md-12 no-padding">
+										<span class="bold">Date</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<owl-date-time class="owl-dateTime"
+											[(ngModel)]="ropData.currentObj.left_avastin_date"
+											(ngModelChange)="processRopTreatment()" [min]="minDate" [max]="maxDate"></owl-date-time>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="col-md-12 no-padding">
+										<span class="bold">Dose</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="relative-input-group block desktop-column-20">
+											<input class="input input-medium desktop-column-8"
+												type="number"
+												[(ngModel)]="ropData.currentObj.left_avastin_dose"
+												(ngModelChange)="processRopTreatment()"><span
+												class="input-group-icon center-aligned desktop-column-12">mg</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6"
+							*ngIf="!ropData.currentObj.no_treatment_right">
+							<div class="col-md-12 no-padding padding-10-y">
+								<div class="blue-round-tick setting-checkbox-without-margin">
+									<input type="checkbox" id="isROPAvastinRightEye"
+										[(ngModel)]="ropData.currentObj.right_avastin"
+										(ngModelChange)="processRopTreatment()"><label
+										for="isROPAvastinRightEye">Right Eye</label>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding"
+								*ngIf="ropData.currentObj.right_avastin">
+								<div class="col-md-6">
+									<div class="col-md-12 no-padding">
+										<span class="bold">Date</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<owl-date-time class="owl-dateTime"
+											[(ngModel)]="ropData.currentObj.right_avastin_date"
+											(ngModelChange)="processRopTreatment()" [min]="minDate" [max]="maxDate"></owl-date-time>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="col-md-12 no-padding">
+										<span class="bold">Dose</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="relative-input-group block desktop-column-20">
+											<input class="input input-medium desktop-column-8"
+												type="number"
+												[(ngModel)]="ropData.currentObj.right_avastin_dose"
+												(ngModelChange)="processRopTreatment()"><span
+												class="input-group-icon center-aligned desktop-column-12">mg</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row table full padding-10-x padding-10-y"
+					*ngIf="screeningObj.whichTreatmentTab == 'Surgery'">
+					<div class="row padding-10-y">
+						<div class="col-md-6"
+							*ngIf="!ropData.currentObj.no_treatment_left">
+							<div class="col-md-12 no-padding padding-10-y">
+								<div class="blue-round-tick setting-checkbox-without-margin">
+									<input type="checkbox" id="isROPAvastinLeftEye"
+										[(ngModel)]="ropData.currentObj.left_surgery"
+										(ngModelChange)="processRopTreatment()"><label
+										for="isROPAvastinLeftEye">Left Eye</label>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding"
+								*ngIf="ropData.currentObj.left_surgery">
+								<div class="col-md-6">
+									<div class="col-md-12 no-padding">
+										<span class="bold">Date</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<owl-date-time class="owl-dateTime"
+											[(ngModel)]="ropData.currentObj.left_surgery_date"
+											(ngModelChange)="processRopTreatment()" [min]="minDate" [max]="maxDate"></owl-date-time>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="col-md-12 no-padding">
+										<span class="bold">Comment</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<input
+											class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+											type="text"
+											[(ngModel)]="ropData.currentObj.left_surgery_comment"
+											(ngModelChange)="processRopTreatment()">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6"
+							*ngIf="!ropData.currentObj.no_treatment_right">
+							<div class="col-md-12 no-padding padding-10-y">
+								<div class="blue-round-tick setting-checkbox-without-margin">
+									<input type="checkbox" id="isROPSurgeryRightEye"
+										[(ngModel)]="ropData.currentObj.right_surgery"
+										(ngModelChange)="processRopTreatment()"><label
+										for="isROPSurgeryRightEye">Right Eye</label>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding"
+								*ngIf="ropData.currentObj.right_surgery">
+								<div class="col-md-6">
+									<div class="col-md-12 no-padding">
+										<span class="bold">Date</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<owl-date-time class="owl-dateTime"
+											[(ngModel)]="ropData.currentObj.right_surgery_date"
+											(ngModelChange)="processRopTreatment()" [min]="minDate" [max]="maxDate"></owl-date-time>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="col-md-12 no-padding">
+										<span class="bold">Comment</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<input
+											class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+											type="text"
+											[(ngModel)]="ropData.currentObj.right_surgery_comment"
+											(ngModelChange)="processRopTreatment()">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row table full padding-10-x padding-10-y"
+					*ngIf="screeningObj.whichTreatmentTab == 'Other'">
+					<div class="col-md-12">
+						<div class="col-md-12">
+							<span class="bold">Other Comment</span>
+						</div>
+						<div class="col-md-12">
+							<input
+								class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+								type="text" [(ngModel)]="ropData.currentObj.other_treatment"
+								(ngModelChange)="processRopTreatment()">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="no-padding" (click)="planSectionROPVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-plan"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 5%">
+					<h1 class="no-margin system-main-heading plan-assessment-color">Plan</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="plan-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-plan middle-aligned"
+						*ngIf="screeningObj.isPlanROPVisible"></a> <a
+						class="sprite sprite-plus-plan middle-aligned"
+						*ngIf="!(screeningObj.isPlanROPVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isPlanROPVisible">
+				<div class="row padding-10-y">
+					<div class="col-md-4">
+						<label><strong>Reassess Time</strong></label>
+						<div class="desktop-column-20  table full padding-top-1">
+							<div class="table-cell top-aligned">
+								<input type="number"
+									class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+									[(ngModel)]="ropData.currentObj.reassess_time"
+									(ngModelChange)="calNextReassessDateRop()">
+							</div>
+							<div class="table-cell padding-5-x">
+								<div class="toggle-options-radio">
+									<input type="radio" name="PlanROPReassess"
+										id="PlanROPReassessDays" value="Days"
+										[(ngModel)]="ropData.currentObj.reassess_timetype"
+										(ngModelChange)="calNextReassessDateRop()"> <label
+										for="PlanROPReassessDays">Days</label> <input type="radio"
+										name="PlanROPReassess" id="PlanROPReassessWeeks" value="Weeks"
+										[(ngModel)]="ropData.currentObj.reassess_timetype"
+										(ngModelChange)="calNextReassessDateRop()"> <label
+										for="PlanROPReassessWeeks">Weeks</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Next due on</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="ropData.currentObj.reassess_date" disabled></owl-date-time>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<span class="bold">Comments (If Other)</span>
+						<div class="input-group input-group-labeled desktop-column-19">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<div class="input-cont block">
+									<input type="text"
+										class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+										[(ngModel)]="ropData.currentObj.reassess_comments"
+										(ngModelChange)="progressNotesRop()">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="no-padding" (click)="progressNotesSectionROPVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-progress"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 14%">
+					<h1 class="no-margin system-main-heading progress-assessment-color">Progress
+						Notes</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="progress-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-progress middle-aligned"
+						*ngIf="screeningObj.isProgressNotesROPVisible"></a> <a
+						class="sprite sprite-plus-progress middle-aligned"
+						*ngIf="!(screeningObj.isProgressNotesROPVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isProgressNotesROPVisible">
+				<div class="row padding-10-y">
+					<div class="col-md-12 no-padding-right">
+						<div
+							class="input-group input-group-labeled col-md-12 right no-padding">
+							<div class="desktop-column-20 padding-0-x force-left no-margin">
+								<textarea
+									class="desktop-column-20 max-height-36 set-font-size-default no-margin"
+									rows="4" [(ngModel)]="ropData.currentObj.progress_note"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div
+				class="desktop-column-20 padding-0-x force-left padding-top-2 center-aligned">
+				<div id="footer">
+					<button class="button button-blue button-large" type="submit"
+						(click)="saveRop()">SUBMIT</button>
+					<button class="button button-blue-transparent button-large"
+						(click)="getRop()">
+						<i class="refresh"></i>REFRESH
+					</button>
+				</div>
+			</div>
+			<div
+				class="assesment-container set-AssessmentSystemtEvent-background">
+				<div class="col-md-12 no-padding margin-10-y">
+					<div class="col-md-3 ropsummary no-padding-left">
+						<h1 class="light margin-5-y blue-text">ROP Summary</h1>
+					</div>
+					<div class="col-md-0 col-lg-1"></div>
+					<div class="col-md-2 fromrop no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">From</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime" type="both" autoClose=true [min]="minDate" [max]="maxDate"
+								[(ngModel)]="printRopFromDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-2 fromrop no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">To</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime" type="both" autoClose=true [min]="minDate" [max]="maxDate"
+								[(ngModel)]="printRopToDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-5 col-lg-4 no-padding">
+						<div class="col-md-12 no-padding">
+							<span class="visiblity-hidden">To</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<button class="button button-blue margin-5-x" type="button"
+								(click)="printPdfRop('table')">SHOW</button>
+							<!-- <button class="button button-blue margin-5-x" type="button"
+								(click)="printPdfRop('print')">PRINT</button> -->
+								<button class="button button-blue margin-5-x" type="button"
+								(click)="ropPrint()">PRINT</button>
+							<button class="button button-blue margin-5-x" type="button"
+								(click)="printPdfRop('csv')">EXPORT CSV</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 margin-bottom-70">
+				<table
+					class="table table-striped table-bordered headed-table col-md-12 nursing-data-table no-padding margin-bottom-70">
+					<tr>
+						<td class="center-aligned">Date and Time</td>
+						<td class="center-aligned">Age of Screening (CGA)</td>
+						<td class="center-aligned">Age of Screening (Post Natal)</td>
+						<td class="center-aligned">Progress Note</td>
+					</tr>
+					<tr *ngFor="let item of ropData.pastRopList let i = index" [attr.data-index]="i" (click)="populatePastRop(i)">
+						<td class="center-aligned">{{item.screening_time |
+							date:'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="center-aligned">{{item.cga_weeks}} weeks
+							{{item.cga_days}} days</td>
+						<td class="center-aligned">{{item.pna_weeks}} weeks
+							{{item.pna_days}} days</td>
+						<td class="center-aligned">{{item.progress_note}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- End of ROP Section -->
+		<!-- Starting of Hearing section -->
+		<div class="row table full padding-10-x padding-10-y"
+			*ngIf="screeningObj.whichTab == 'Hearing' && hearingData != null && hearingData.currentObj != null">
+			<div class="no-padding" (click)="clinicalSectionHearingVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-clinical-assessment"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 8%">
+					<h1 class="no-margin system-main-heading clinical-assessment-color">Screening</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="clinical-assessment-line ">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-clinical middle-aligned"
+						*ngIf="screeningObj.isClinicalSectionHearingVisible"></a> <a
+						class="sprite sprite-plus-clinical middle-aligned"
+						*ngIf="!(screeningObj.isClinicalSectionHearingVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isClinicalSectionHearingVisible">
+				<div class="row padding-5-y">
+					<div class="col-md-3 col-lg-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Date & Time of Screening</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="hearingData.currentObj.screening_time" [min]="minDate" [max]="maxDate"
+									(ngModelChange)="calHearingCgaNpa()"></owl-date-time>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">CGA</span>
+						</div>
+						<div class="relative-input-group block desktop-column-20">
+							<input class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="hearingData.currentObj.cga_weeks" disabled><span
+								class="input-group-icon center-aligned desktop-column-12">Weeks</span>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold visiblity-hidden">CGA</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+									[(ngModel)]="hearingData.currentObj.cga_days" disabled><span
+									class="input-group-icon center-aligned desktop-column-12">Days</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Post Natal Age</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+									[(ngModel)]="hearingData.currentObj.pna_weeks" disabled><span
+									class="input-group-icon center-aligned desktop-column-12">Weeks</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold visiblity-hidden">PNA</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+									[(ngModel)]="hearingData.currentObj.pna_days" disabled><span
+									class="input-group-icon center-aligned desktop-column-12">Days</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-5-y">
+					<div class="col-md-3 col-lg-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Indication</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input id="IndicationRoutine" name="Indication" type="radio"
+									value="Routine" [(ngModel)]="hearingData.currentObj.indication"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="IndicationRoutine">Routine</label> <input
+									id="IndicationHigh" name="Indication" type="radio"
+									value="High Risk"
+									[(ngModel)]="hearingData.currentObj.indication"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="IndicationHigh">High Risk</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-5-y"
+					*ngIf="hearingData.currentObj.indication == 'High Risk'">
+					<div class="col-md-2 no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="familyHistory"
+								[(ngModel)]="hearingRisk.family_history"
+								(ngModelChange)="createHearingRiskText()"><label
+								for="familyHistory">Family History</label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="nICUStay"
+								[(ngModel)]="hearingRisk.nicu_stay"
+								(ngModelChange)="createHearingRiskText()"><label
+								for="nICUStay">NICU Stay > 5days</label>
+						</div>
+					</div>
+					<div class="col-md-2 ototoxic no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="ototoxicMedications"
+								[(ngModel)]="hearingRisk.ototoxic"
+								(ngModelChange)="createHearingRiskText()"><label
+								for="ototoxicMedications">Ototoxic Medications</label>
+						</div>
+					</div>
+					<div class="col-md-4 hyperbilirubinemia no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="Hyperbilirubinemia"
+								[(ngModel)]="hearingRisk.hyperbilirubinemia"
+								(ngModelChange)="createHearingRiskText()"><label
+								for="Hyperbilirubinemia">Hyperbilirubinemia with
+								Exchange Transfusion</label>
+						</div>
+					</div>
+					<div class="col-md-2 ototoxic no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="IntraUtero"
+								[(ngModel)]="hearingRisk.infection"
+								(ngModelChange)="createHearingRiskText()"><label
+								for="IntraUtero">Intra Utero Infections</label>
+						</div>
+					</div>
+					<div class="col-md-2 toneurological no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="CraniofacialAnomalies"
+								[(ngModel)]="hearingRisk.craniofacial"
+								(ngModelChange)="createHearingRiskText()"><label
+								for="CraniofacialAnomalies">Craniofacial Anomalies</label>
+						</div>
+					</div>
+					<div class="col-md-2 whiteForelock no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="WhiteForelock"
+								[(ngModel)]="hearingRisk.forelock"
+								(ngModelChange)="createHearingRiskText()"><label
+								for="WhiteForelock">White Forelock</label>
+						</div>
+					</div>
+					<div class="col-md-2 culturepositive no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="Culture-positive"
+								[(ngModel)]="hearingRisk.sepsis"
+								(ngModelChange)="createHearingRiskText()"><label
+								for="Culture-positive">Culture-positive Sepsis</label>
+						</div>
+					</div>
+					<div class="col-md-2 culturepositive no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="Meningitis"
+								[(ngModel)]="hearingRisk.meningitis"
+								(ngModelChange)="createHearingRiskText()"><label
+								for="Meningitis">Meningitis</label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="Herpes"
+								[(ngModel)]="hearingRisk.herpes"
+								(ngModelChange)="createHearingRiskText()"><label
+								for="Herpes">Herpes</label>
+						</div>
+					</div>
+					<div class="col-md-2 varicella no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="Varicella"
+								[(ngModel)]="hearingRisk.varicella"
+								(ngModelChange)="createHearingRiskText()"><label
+								for="Varicella">Varicella</label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right padding-5-y">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" id="Others"
+								[(ngModel)]="hearingRisk.othersType"
+								(ngModelChange)="createHearingRiskText()"><label
+								for="Others">Others</label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right"
+						*ngIf="hearingRisk.othersType">
+						<input type="text" name="riskOther"
+							[(ngModel)]="hearingRisk.othersValue"
+							(ngModelChange)="createHearingRiskText()"
+							class="col-md-12 input-coloured-gray input-medium assesment-select">
+					</div>
+				</div>
+			</div>
+			<div class="no-padding" (click)="actionSectionHearingVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-action"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 6%">
+					<h1 class="no-margin system-main-heading action-assessment-color">Action</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="action-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-action middle-aligned"
+						*ngIf="screeningObj.isActionHearingVisible"></a> <a
+						class="sprite  sprite-plus-action middle-aligned"
+						*ngIf="!(screeningObj.isActionHearingVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isActionHearingVisible">
+				<div class="row padding-10-y">
+					<div class="col-md-6 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Screening Test</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input id="ScreeningOAE" name="Screening" type="radio"
+									value="OAE" [(ngModel)]="hearingData.currentObj.screening_test"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="ScreeningOAE">OAE</label> <input id="ScreeningABR"
+									name="Screening" type="radio" value="ABR"
+									[(ngModel)]="hearingData.currentObj.screening_test"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="ScreeningABR">ABR</label> <input id="ScreeningBoth"
+									name="Screening" type="radio" value="Both"
+									[(ngModel)]="hearingData.currentObj.screening_test"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="ScreeningBoth">Both</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 no-padding-left">
+						<!-- place code for the browse button -->
+					</div>
+				</div>
+				<div class="row padding-10-y"
+					*ngIf="hearingData.currentObj.screening_test == 'OAE' || hearingData.currentObj.screening_test == 'Both'">
+					<div class="col-md-6 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">OAE Left</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input id="OAELeftPass" name="OAELeft" type="radio" value="Pass"
+									[(ngModel)]="hearingData.currentObj.oae_left"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="OAELeftPass">Pass</label> <input id="OAELeftFail"
+									name="OAELeft" type="radio" value="Fail"
+									[(ngModel)]="hearingData.currentObj.oae_left"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="OAELeftFail">Fail</label> <input id="OAELeftRefer"
+									name="OAELeft" type="radio" value="Refer"
+									[(ngModel)]="hearingData.currentObj.oae_left"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="OAELeftRefer">Refer</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">OAE Right</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input id="OAERightPass" name="OAERight" type="radio"
+									value="Pass" [(ngModel)]="hearingData.currentObj.oae_right"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="OAERightPass">Pass</label> <input id="OAERightFail"
+									name="OAERight" type="radio" value="Fail"
+									[(ngModel)]="hearingData.currentObj.oae_right"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="OAERightFail">Fail</label> <input id="OAERightRefer"
+									name="OAERight" type="radio" value="Refer"
+									[(ngModel)]="hearingData.currentObj.oae_right"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="OAERightRefer">Refer</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-y"
+					*ngIf="hearingData.currentObj.screening_test == 'ABR' || hearingData.currentObj.screening_test == 'Both'">
+					<div class="col-md-6 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">ABR Left</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input id="ABRLeftNormal" name="ABRLeft" type="radio"
+									value="Normal" [(ngModel)]="hearingData.currentObj.abr_left"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="ABRLeftNormal">Normal</label> <input id="ABRLeftAbnormal"
+									name="ABRLeft" type="radio" value="Abnormal"
+									[(ngModel)]="hearingData.currentObj.abr_left"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="ABRLeftAbnormal">Abnormal</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 no-padding">
+						<div class="col-md-12 no-padding">
+							<span class="bold">ABR Right</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input id="ABRRightNormal" name="ABRRight" type="radio"
+									value="Normal" [(ngModel)]="hearingData.currentObj.abr_right"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="ABRRightNormal">Normal</label> <input
+									id="ABRRightAbnormal" name="ABRRight" type="radio"
+									value="Abnormal" [(ngModel)]="hearingData.currentObj.abr_right"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="ABRRightAbnormal">Abnormal</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-y">
+					<div class="col-md-6 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Treatment</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input id="TreatmentYes" name="Treatment" type="radio"
+									[value]="true"
+									[(ngModel)]="hearingData.currentObj.treatment_given"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="TreatmentYes">Yes</label> <input id="TreatmentNo"
+									name="Treatment" type="radio" [value]="false"
+									[(ngModel)]="hearingData.currentObj.treatment_given"
+									(ngModelChange)="progressNotesHearing()"> <label
+									for="TreatmentNo">No</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-y"
+					*ngIf="hearingData.currentObj.treatment_given == true">
+					<div class="col-md-12 no-padding-right">
+						<div
+							class="input-group input-group-labeled col-md-12 right no-padding">
+							<div class="desktop-column-20 padding-0-x force-left no-margin">
+								<textarea name="TreatmentText"
+									class="desktop-column-20 max-height-36 set-font-size-default no-margin"
+									rows="4" [(ngModel)]="hearingData.currentObj.treatment"
+									(ngModelChange)="progressNotesHearing()"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="no-padding" (click)="planSectionHearingVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-plan"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 5%">
+					<h1 class="no-margin system-main-heading plan-assessment-color">Plan</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="plan-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-plan middle-aligned"
+						*ngIf="screeningObj.isPlanHearingVisible"></a> <a
+						class="sprite sprite-plus-plan middle-aligned"
+						*ngIf="!(screeningObj.isPlanHearingVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isPlanHearingVisible">
+				<div class="row padding-10-y">
+					<div class="col-md-4">
+						<label><strong>Reassess Time</strong></label>
+						<div class="desktop-column-20  table full padding-top-1">
+							<div class="table-cell top-aligned">
+								<input type="number"
+									class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+									[(ngModel)]="hearingData.currentObj.reassess_time"
+									(ngModelChange)="calNextReassessDateHearing()">
+							</div>
+							<div class="table-cell padding-5-x">
+								<div class="toggle-options-radio">
+									<input type="radio" name="PlanReassess" id="PlanReassessDays"
+										value="Days"
+										[(ngModel)]="hearingData.currentObj.reassess_timetype"
+										(ngModelChange)="calNextReassessDateHearing()"><label
+										for="PlanReassessDays">Days</label> <input type="radio"
+										name="PlanReassess" id="PlanReassessWeeks" value="Weeks"
+										[(ngModel)]="hearingData.currentObj.reassess_timetype"
+										(ngModelChange)="calNextReassessDateHearing()"><label
+										for="PlanReassessWeeks">Weeks</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Next due on</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="hearingData.currentObj.reassess_date" disabled></owl-date-time>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<span class="bold">Comments (If Other)</span>
+						<div class="input-group input-group-labeled desktop-column-19">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<div class="input-cont block">
+									<input type="text"
+										class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+										[(ngModel)]="hearingData.currentObj.reassess_comments"
+										(ngModelChange)="progressNotesHearing()">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="no-padding"
+				(click)="progressNotesSectionHearingVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-progress"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 14%">
+					<h1 class="no-margin system-main-heading progress-assessment-color">Progress
+						Notes</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="progress-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-progress middle-aligned"
+						*ngIf="screeningObj.isProgressNotesHearingVisible"></a> <a
+						class="sprite sprite-plus-progress middle-aligned"
+						*ngIf="!(screeningObj.isProgressNotesHearingVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isProgressNotesHearingVisible">
+				<div class="row padding-10-y">
+					<div class="col-md-12 no-padding-right">
+						<div
+							class="input-group input-group-labeled col-md-12 right no-padding">
+							<div class="desktop-column-20 padding-0-x force-left no-margin">
+								<textarea
+									class="desktop-column-20 max-height-36 set-font-size-default no-margin"
+									rows="4" [(ngModel)]="hearingData.currentObj.progress_note"
+									(ngModelChange)="progressNotesHearing()"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div
+				class="desktop-column-20 padding-0-x force-left padding-top-2 center-aligned">
+				<div id="footer">
+					<button class="button button-blue button-large" type="submit"
+						(click)="saveHearing()">SUBMIT</button>
+					<button class="button button-blue-transparent button-large"
+						(click)="getHearing()">
+						<i class="refresh"></i>REFRESH
+					</button>
+				</div>
+			</div>
+			<div
+				class="assesment-container set-AssessmentSystemtEvent-background">
+				<div class="col-md-12 no-padding margin-10-y">
+					<div class="col-md-3 eventsummary no-padding-left">
+						<h1 class="light margin-5-y blue-text">Event Summary</h1>
+					</div>
+					<div class="col-md-0 col-lg-1"></div>
+					<div class="col-md-2 fromevent no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">From</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime"
+								[(ngModel)]="printHearingFromDate" type="both" autoClose=true [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-2 toevent no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">To</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime"
+								[(ngModel)]="printHearingToDate" type="both" autoClose=true [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-4 printoption no-padding">
+						<div class="col-md-12 no-padding">
+							<span class="visiblity-hidden">To</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<button class="button button-blue margin-5-x" type="button"
+								(click)="printPdfHearing('table')">SHOW</button>
+							<button class="button button-blue margin-5-x" type="button"
+								(click)="printPdfHearing('print')">PRINT</button>
+							<button class="button button-blue margin-5-x eventexport" type="button"
+								(click)="printPdfHearing('csv')">EXPORT CSV</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<table
+					class="table table-striped table-bordered headed-table col-md-12 nursing-data-table no-padding margin-bottom-70">
+					<tr>
+						<td class="center-aligned">Date and Time</td>
+						<td class="center-aligned">Age of Screening (CGA)</td>
+						<td class="center-aligned">Age of Screening (Post Natal)</td>
+						<td class="center-aligned">Progress Note</td>
+					</tr>
+					<tr *ngFor="let item of hearingData.pastHearingList">
+						<td class="center-aligned">{{item.screening_time |
+							date:'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="center-aligned">{{item.cga_weeks}} weeks
+							{{item.cga_days}} days</td>
+						<td class="center-aligned">{{item.pna_weeks}} weeks
+							{{item.pna_days}} days</td>
+						<td class="center-aligned">{{item.progress_note}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- end of Hearing Section -->
+		<!-- Metabolic Section Start -->
+		<div class="row table full padding-10-x padding-10-y"
+			*ngIf="screeningObj.whichTab == 'Metabolic' && metabolicData != null && metabolicData.currentObj != null">
+			<div class="no-padding" (click)="clinicalSectionMetabolicVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-clinical-assessment"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 8%">
+					<h1 class="no-margin system-main-heading clinical-assessment-color">Screening</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="clinical-assessment-line ">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-clinical middle-aligned"
+						*ngIf="screeningObj.isClinicalSectionMetabolicVisible"></a> <a
+						class="sprite sprite-plus-clinical middle-aligned"
+						*ngIf="!(screeningObj.isClinicalSectionMetabolicVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isClinicalSectionMetabolicVisible">
+				<div class="row padding-5-y">
+					<div class="col-md-3 col-lg-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Date & Time of Screening</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="metabolicData.currentObj.screening_time"
+									(ngModelChange)="calMetabolicCgaNpa()" [min]="minDate" [max]="maxDate"></owl-date-time>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">CGA</span>
+						</div>
+						<div class="relative-input-group block desktop-column-20">
+							<input class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="metabolicData.currentObj.cga_weeks" disabled><span
+								class="input-group-icon center-aligned desktop-column-12">Weeks</span>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold visiblity-hidden">CGA</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+									[(ngModel)]="metabolicData.currentObj.cga_days" disabled><span
+									class="input-group-icon center-aligned desktop-column-12">Days</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Post Natal Age</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+									[(ngModel)]="metabolicData.currentObj.pna_weeks" disabled><span
+									class="input-group-icon center-aligned desktop-column-12">Weeks</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold visiblity-hidden">PNA</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+									[(ngModel)]="metabolicData.currentObj.pna_days" disabled><span
+									class="input-group-icon center-aligned desktop-column-12">Days</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="no-padding" (click)="actionSectionMetabolicVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-action"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 6%">
+					<h1 class="no-margin system-main-heading action-assessment-color">Action</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="action-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-action middle-aligned"
+						*ngIf="screeningObj.isActionMetabolicVisible"></a> <a
+						class="sprite sprite-plus-action middle-aligned"
+						*ngIf="!(screeningObj.isActionMetabolicVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isActionMetabolicVisible">
+				<div class="row padding-10-y">
+					<div class="col-md-3 metabolicData">
+						<div>
+							<div class="resp-event-box" style="padding-bottom: 10px"
+								(click)="showMetabolicInvestigations()">
+								<div class="table full">
+									<span class="bold">Metabolic Screening ( 8 Tests )</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5 col-lg-3 no-padding">
+						<input type="checkbox" id="metabolicScreenCheckbox" name="metabolicScreenCheckbox" [(ngModel)]="metabolicData.currentObj.screening_panel" style="display:none">
+						<label for="metabolicScreenCheckbox" class="inline">
+							<div class="resp-event-box" style="padding-bottom: 10px" [ngClass]="{'resp-event-box-saved':  metabolicData.currentObj.screening_panel == true}">
+								<div class="table full">
+									<span class="bold">Metabolic Screening pannel (123 Conditions)</span>
+								</div>
+							</div>
+						</label>
+					</div>
+				</div>
+				<div class="row padding-5-y">
+					<div class="col-md-12">
+						<span class="blue-text" *ngIf="metabolicData.currentObj.metabolic_screening != null && metabolicData.currentObj.metabolic_screening != ''">Selected Text : {{metabolicData.currentObj.metabolic_screening}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="no-padding" (click)="planSectionMetabolicVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-plan"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 5%">
+					<h1 class="no-margin system-main-heading plan-assessment-color">Plan</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="plan-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-plan middle-aligned"
+						*ngIf="screeningObj.isPlanMetabolicVisible"></a> <a
+						class="sprite sprite-plus-plan middle-aligned"
+						*ngIf="!(screeningObj.isPlanMetabolicVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isPlanMetabolicVisible">
+				<div class="row padding-10-y">
+					<div class="col-md-4">
+						<label><strong>Reassess Time</strong></label>
+						<div class="desktop-column-20  table full padding-top-1">
+							<div class="table-cell top-aligned">
+								<input type="number"
+									class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+									[(ngModel)]="metabolicData.currentObj.reassess_time"
+									(ngModelChange)="calNextReassessDateMetabolic()">
+							</div>
+							<div class="table-cell padding-5-x">
+								<div class="toggle-options-radio">
+									<input type="radio" name="PlanReassess" id="PlanReassessDays"
+										value="Days"
+										[(ngModel)]="metabolicData.currentObj.reassess_timetype"
+										(ngModelChange)="calNextReassessDateMetabolic()"><label
+										for="PlanReassessDays">Days</label> <input type="radio"
+										name="PlanReassess" id="PlanReassessWeeks" value="Weeks"
+										[(ngModel)]="metabolicData.currentObj.reassess_timetype"
+										(ngModelChange)="calNextReassessDateMetabolic()"><label
+										for="PlanReassessWeeks">Weeks</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Next due on</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="metabolicData.currentObj.reassess_date" disabled></owl-date-time>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<span class="bold">Comments (If Other)</span>
+						<div class="input-group input-group-labeled desktop-column-19">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<div class="input-cont block">
+									<input type="text"
+										class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+										[(ngModel)]="metabolicData.currentObj.reassess_comments"
+										(ngModelChange)="progressNotesMetabolic()">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div
+				class="desktop-column-20 padding-0-x force-left padding-top-2 center-aligned">
+				<div id="footer">
+					<button class="button button-blue button-large" type="submit"
+						(click)="saveMetabolic()">SUBMIT</button>
+					<button class="button button-blue-transparent button-large"
+						(click)="getMetabolic()">
+						<i class="refresh"></i>REFRESH
+					</button>
+				</div>
+			</div>
+			<div
+				class="set-AssessmentSystemtEvent-background">
+				<div class="col-md-12 no-padding margin-10-y">
+					<div class="col-md-3 eventsummary no-padding-left">
+						<h1 class="light margin-5-y blue-text">Event Summary</h1>
+					</div>
+					<div class="col-md-0 col-lg-1"></div>
+					<div class="col-md-2 fromevent no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">From</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime"
+								[(ngModel)]="printMetabolicFromDate" type="both" autoClose=true [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-2 toevent no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">To</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime"
+								[(ngModel)]="printMetabolicToDate" type="both" autoClose=true [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-4 printoption no-padding">
+						<div class="col-md-12 no-padding">
+							<span class="visiblity-hidden">To</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<button class="button button-blue margin-5-x" type="button"
+								(click)="printPdfMetabolic('table')">SHOW</button>
+							<button class="button button-blue margin-5-x" type="button"
+								(click)="printPdfMetabolic('print')">PRINT</button>
+							<button class="button button-blue margin-5-x eventexport" type="button"
+								(click)="printPdfMetabolic('csv')">EXPORT CSV</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding">
+					<table
+						class="table table-striped table-bordered headed-table col-md-12 nursing-data-table no-padding margin-bottom-70">
+						<tr>
+							<td class="center-aligned">Date and Time</td>
+							<td class="center-aligned">Age of Screening (CGA)</td>
+							<td class="center-aligned">Age of Screening (Post Natal)</td>
+							<td class="center-aligned">Report</td>
+						</tr>
+						<tr *ngFor="let item of metabolicData.pastMetabolicList">
+							<td class="center-aligned">{{item.screening_time |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.cga_weeks}} weeks
+								{{item.cga_days}} days</td>
+							<td class="center-aligned">{{item.pna_weeks}} weeks
+								{{item.pna_days}} days</td>
+							<td class="center-aligned">{{item.report}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<!-- below code is used to modal of order investigation -->
+			<div class="overlay" id="metabolicOrderOverlay"></div>
+			<div class="modal-box-lg ballard-popup" id="OrderInvestigationPopup">
+				<button class="modal-popup-close-btn" (click)="closeMetabolicInvestigation()"></button>
+				<div class="inicu-tab-container">
+					<div class="tab-header" ng-init="tabContent = 'neuro'">
+						<div class="padding-20-x table full">
+							<div class="table-cell pull-left">
+								<h1 class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Tests</h1>
+							</div>
+							<div class="table-cell pull-right padding-5-y">
+								<span class="button button-green  middle-aligned pull-right" (click)="orderSelected()">Order</span>
+							</div>
+						</div>
+					</div>
+					<hr class="no-margin">
+					<div class="tab-content-cont full">
+						<div class="col-md-12 no-padding border-bottom-2">
+							<div class="col-md-5">
+								<div class="table full padding-10-y left-aligned" *ngFor="let test of metabolicData.testsList">
+									<div class="blue-round-tick setting-checkbox-without-margin">
+										<input type="checkbox" name="{{'testid' +test.testid}}" id="{{'testid' + test.testid}}" [(ngModel)]="test.isSelected"> <label for="{{'testid' + test.testid}}">{{test.testname}}</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end of the above code -->
+		</div>
+		<!-- end of Metabolic Section -->
+		<div class="row table full padding-10-x padding-10-y" *ngIf="screeningObj.whichTab == 'Cranial USG' && usgData != null && usgData.currentObj != null">
+			<div class="no-padding" (click)="screeningUSGVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-clinical-assessment"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 8%">
+					<h1 class="no-margin system-main-heading clinical-assessment-color">Screening</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="clinical-assessment-line ">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-clinical middle-aligned"
+						*ngIf="screeningObj.isScreeningUSGVisible"></a> <a
+						class="sprite sprite-plus-clinical middle-aligned"
+						*ngIf="!(screeningObj.isScreeningUSGVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isScreeningUSGVisible">
+				<div class="row padding-5-y">
+					<div class="col-md-3 col-lg-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Date & Time of Screening</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="usgData.currentObj.screening_time"
+									(ngModelChange)="calUSGCgaNpa()" [min]="minDate" [max]="maxDate"></owl-date-time>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">CGA</span>
+						</div>
+						<div class="relative-input-group block desktop-column-20">
+							<input class="input input-medium desktop-column-8" type="number"
+								[(ngModel)]="usgData.currentObj.cga_weeks" disabled><span
+								class="input-group-icon center-aligned desktop-column-12">Weeks</span>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold visiblity-hidden">CGA</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+									[(ngModel)]="usgData.currentObj.cga_days" disabled><span
+									class="input-group-icon center-aligned desktop-column-12">Days</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Post Natal Age</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+									[(ngModel)]="usgData.currentObj.pna_weeks" disabled><span
+									class="input-group-icon center-aligned desktop-column-12">Weeks</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold visiblity-hidden">PNA</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="number"
+									[(ngModel)]="usgData.currentObj.pna_days" disabled><span
+									class="input-group-icon center-aligned desktop-column-12">Days</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="no-padding" (click)="findingUSGVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-action"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 8%">
+					<h1 class="no-margin system-main-heading action-assessment-color">Finding</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="action-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-action middle-aligned"
+						*ngIf="screeningObj.isFindingUSGVisible"></a> <a
+						class="sprite sprite-plus-action middle-aligned"
+						*ngIf="!(screeningObj.isFindingUSGVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isFindingUSGVisible">
+				<div class="row padding-10-y">
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<label><strong>Brain Parenchyma</strong></label>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<div class="table-cell top-aligned">
+									<select [(ngModel)]="usgData.currentObj.brain_parenchyma" (ngModelChange)="progressNotesUSG()" class="input input-medium desktop-column-20"  style="height:36px !important">
+								     	<option disabled selected> -- Select -- </option>
+							        	<option value="Grossly normal">Grossly normal</option>
+							        	<option value="Hyperechoic">Hyperechoic</option>
+							        	<option value="Hypoechoic">Hypoechoic</option>
+								    </select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-9 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Parenchyma Description</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<div class="input-cont block">
+									<input type="text" class="desktop-column-20 input-coloured-gray input-medium assesment-select" [(ngModel)]="usgData.currentObj.parenchyma_description" (ngModelChange)="progressNotesUSG()">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-y">
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<label><strong>Lateral Ventricle</strong></label>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<div class="table-cell top-aligned">
+									<select [(ngModel)]="usgData.currentObj.lateral_ventricle" (ngModelChange)="progressNotesUSG()" class="input input-medium desktop-column-20 no-margin"  style="height:36px !important">
+								     	<option disabled selected> -- Select -- </option>
+							        	<option value="Normal in size">Normal in size</option>
+							        	<option value="Chinked">Chinked</option>
+							        	<option value="Mildly prominent">Mildly prominent</option>
+							        	<option value="Grossly dilated">Grossly dilated</option>
+								    </select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<label><strong>Right Ventricle</strong></label>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<div class="relative-input-group block">
+									<input type="number" class="input input-medium desktop-column-12" [(ngModel)]="usgData.currentObj.right_ventricle" (ngModelChange)="progressNotesUSG()"/>
+									<span class="input-group-icon desktop-column-8 center-aligned" style="top: 0px; left: 1px">mm</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<label><strong>Left Ventricle</strong></label>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<div class="relative-input-group block">
+									<input type="number" class="input input-medium desktop-column-12" [(ngModel)]="usgData.currentObj.left_ventricle" (ngModelChange)="progressNotesUSG()"/>
+										<span class="input-group-icon desktop-column-8 center-aligned"
+										style="top: 0px; left: 1px">mm</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<label><strong>Third Ventricle</strong></label>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<div class="relative-input-group block">
+									<input type="number" class="input input-medium desktop-column-12" [(ngModel)]="usgData.currentObj.third_ventricle" (ngModelChange)="progressNotesUSG()"/>
+										<span class="input-group-icon desktop-column-8 center-aligned" style="top: 0px; left: 1px">mm</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-y">
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<label><strong>IVH</strong></label>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<div class="table-cell top-aligned">
+									<select [(ngModel)]="usgData.currentObj.ivh_type" (ngModelChange)="progressNotesUSG()" class="input input-medium desktop-column-20 no-margin"  style="height:36px !important">
+								     	<option disabled selected> -- Select -- </option>
+							        	<option value="No intraventricular or sub ependymal haemorrhage">No intraventricular or sub ependymal haemorrhage</option>
+							        	<option value="Germinal matrix haemorrhage">Germinal matrix haemorrhage</option>
+							        	<option value="IVH Grade II">IVH Grade II</option>
+							        	<option value="IVH Grade III">IVH Grade III</option>
+							        	<option value="IVH Grade IV">IVH Grade IV</option>
+								    </select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<label><strong>IVH Side</strong></label>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<select [(ngModel)]="usgData.currentObj.ivh_side" (ngModelChange)="progressNotesUSG()" class="input input-medium desktop-column-20 no-margin"  style="height:36px !important">
+								    <option disabled selected> -- Select -- </option>
+							        <option value="Left">Left</option>
+							       	<option value="Right">Right</option>
+							       	<option value="Bilateral">Bilateral</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">IVH Description</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<div class="input-cont block">
+									<input type="text" class="desktop-column-20 input-coloured-gray input-medium assesment-select" [(ngModel)]="usgData.currentObj.ivh_description" (ngModelChange)="progressNotesUSG()">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-y">
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<label><strong>Ventriculomegaly</strong></label>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<div class="table-cell top-aligned">
+									<select [(ngModel)]="usgData.currentObj.ventriculomegaly" (ngModelChange)="progressNotesUSG()" class="input input-medium desktop-column-20 no-margin"  style="height:36px !important">
+								     	<option disabled selected> -- Select -- </option>
+							        	<option value="No ventriculomegaly">No ventriculomegaly</option>
+							        	<option value="Mild ventriculomegaly">Mild ventriculomegaly</option>
+							        	<option value="Moderate ventriculomegaly">Moderate ventriculomegaly</option>
+							        	<option value="Severe ventriculomegaly">Severe ventriculomegaly</option>
+								    </select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<label><strong>PVL</strong></label>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<select [(ngModel)]="usgData.currentObj.pvl_type" (ngModelChange)="progressNotesUSG()" class="input input-medium desktop-column-20 no-margin" style="height:36px !important">
+								    <option disabled selected> -- Select -- </option>
+							        <option value="No periventricular leukomalacia">No periventricular leukomalacia</option>
+							       	<option value="PVL Grade I">PVL Grade 1</option>
+							       	<option value="PVL Grade 2">PVL Grade 2</option>
+							       	<option value="PVL Grade 3">PVL Grade 3</option>
+							       	<option value="PVL Grade 4s">PVL Grade 4s</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">PVL Description</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<div class="input-cont block">
+									<input type="text" class="desktop-column-20 input-coloured-gray input-medium assesment-select" [(ngModel)]="usgData.currentObj.pvl_description" (ngModelChange)="progressNotesUSG()">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-y">
+					<div class="col-md-6 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Comments</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 table full">
+								<div class="input-cont block">
+									<input type="text" class="desktop-column-20 input-coloured-gray input-medium assesment-select" [(ngModel)]="usgData.currentObj.finding_comments" (ngModelChange)="progressNotesUSG()">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="no-padding" (click)="planUSGVisible()">
+				<div class="table-cell middle-aligned">
+					<div class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-plan"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 5%">
+					<h1 class="no-margin system-main-heading plan-assessment-color">Plan</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned" style="width: 100%">
+					<hr class="plan-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-plan middle-aligned" *ngIf="screeningObj.isPlanUSGVisible"></a>
+					<a class="sprite sprite-plus-plan middle-aligned" *ngIf="!(screeningObj.isPlanUSGVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isPlanUSGVisible">
+				<div class="row padding-10-y">
+					<div class="col-md-4">
+						<label><strong>Reassess Time</strong></label>
+						<div class="desktop-column-20  table full padding-top-1">
+							<div class="table-cell top-aligned">
+								<input type="number" class="desktop-column-20 input-coloured-gray input-medium assesment-select" [(ngModel)]="usgData.currentObj.reassess_time" (ngModelChange)="calNextReassessDateUSG()">
+							</div>
+							<div class="table-cell padding-5-x">
+								<div class="toggle-options-radio">
+									<input type="radio" name="PlanROPReassess"
+										id="PlanROPReassessDays" value="Days"
+										[(ngModel)]="usgData.currentObj.reassess_timetype"
+										(ngModelChange)="calNextReassessDateUSG()"> <label
+										for="PlanROPReassessDays">Days</label> <input type="radio"
+										name="PlanROPReassess" id="PlanROPReassessWeeks" value="Weeks"
+										[(ngModel)]="usgData.currentObj.reassess_timetype"
+										(ngModelChange)="calNextReassessDateUSG()"> <label
+										for="PlanROPReassessWeeks">Weeks</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Next due on</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<owl-date-time class="owl-dateTime" [(ngModel)]="usgData.currentObj.reassess_date" disabled></owl-date-time>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<span class="bold">Comments (If Other)</span>
+						<div class="input-group input-group-labeled desktop-column-19">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<div class="input-cont block">
+									<input type="text"
+										class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+										[(ngModel)]="usgData.currentObj.reassess_comments"
+										(ngModelChange)="progressNotesUSG()">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="no-padding" (click)="reportUSGVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-progress"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 14%">
+					<h1 class="no-margin system-main-heading progress-assessment-color">Progress Notes</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned" style="width: 100%">
+					<hr class="progress-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-progress middle-aligned"
+						*ngIf="screeningObj.isReportUSGVisible"></a> <a
+						class="sprite sprite-plus-progress middle-aligned"
+						*ngIf="!(screeningObj.isReportUSGVisible)"></a>
+				</div>
+			</div>
+			<div *ngIf="screeningObj.isReportUSGVisible">
+				<div class="row padding-10-y">
+					<div class="col-md-12 no-padding-right">
+						<div
+							class="input-group input-group-labeled col-md-12 right no-padding">
+							<div class="desktop-column-20 padding-0-x force-left no-margin">
+								<textarea
+									class="desktop-column-20 max-height-36 set-font-size-default no-margin"
+									rows="4" [(ngModel)]="usgData.currentObj.progress_note"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div
+				class="desktop-column-20 padding-0-x force-left padding-top-2 center-aligned">
+				<div id="footer">
+					<button class="button button-blue button-large" type="submit"
+						(click)="saveUSG()">SUBMIT</button>
+					<button class="button button-blue-transparent button-large"
+						(click)="getUSG()">
+						<i class="refresh"></i>REFRESH
+					</button>
+				</div>
+			</div>
+			<div>
+				<div class="col-md-12 no-padding margin-10-y">
+					<div class="col-md-4 ultrasoundscreening no-padding-left">
+						<h1 class="light margin-5-y blue-text">Ultrasound Screening summary</h1>
+					</div>
+					<div class="col-md-2 fromultrasound no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">From</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime" type="both" autoClose=true
+								[(ngModel)]="printUSGFromDate" [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-2 toultrasound no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">To</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime" type="both" autoClose=true
+								[(ngModel)]="printUSGToDate" [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-4 ultrasoundoption no-padding">
+						<div class="col-md-12 no-padding">
+							<span class="visiblity-hidden">To</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<button class="button button-blue margin-5-x" type="button"
+								(click)="printPdfUSG('table')">SHOW</button>
+							<button class="button button-blue margin-5-x" type="button"
+								(click)="printPdfUSG('print')">PRINT</button>
+							<button class="button button-blue margin-5-x" type="button"
+								(click)="printPdfUSG('csv')">EXPORT CSV</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 margin-bottom-70 no-padding">
+				<table class="table table-striped table-bordered headed-table col-md-12 nursing-data-table no-padding margin-bottom-70">
+					<tr>
+						<td class="center-aligned">Date and Time</td>
+						<td class="center-aligned">Age of Screening (CGA)</td>
+						<td class="center-aligned">Age of Screening (Post Natal)</td>
+						<td class="center-aligned">Progress Note</td>
+					</tr>
+					<tr *ngFor="let item of usgData.pastUSGList">
+						<td class="center-aligned">{{item.screening_time |
+							date:'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="center-aligned">{{item.cga_weeks}} weeks
+							{{item.cga_days}} days</td>
+						<td class="center-aligned">{{item.pna_weeks}} weeks
+							{{item.pna_days}} days</td>
+						<td class="center-aligned">{{item.progress_note}}</td>
+					</tr>
+				</table>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!-- end for the code callingRequiredFieldPopup -->
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+    <span class="inicu-loader-content">
+    	<span class="inicu-adding-image"></span>
+        <span class="inicu-loading-content">{{loaderContent}}</span>
+	</span>
+</span>

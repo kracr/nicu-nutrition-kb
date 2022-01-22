@@ -1,0 +1,99 @@
+{
+  "admissionForm": {
+    "uhid": "",
+    "babyName": "",
+    "nicuBedNo": "",
+    "nicuRoomNo": "",
+    "dateOfAdmission": "2016-11-04",
+    "dateOfBirth": "",
+    "timeOfAdmission": {
+      "hours": "",
+      "minutes": "",
+      "meridium": ""
+    },
+    "timeOfBirth": {
+      "hours": "",
+      "minutes": "",
+      "meridium": ""
+    },
+    "ipopStatus": "",
+    "nicuLevel": "",
+    "criticality": "",
+    "personalDetails": {
+      "mothersName": "",
+      "fathersName": "",
+      "mobileNumber": "",
+      "landlineNumber": "",
+      "aadharCardNumber": "",
+      "emailId": "",
+      "address": "",
+      "village": ""
+    }
+  },
+  "addChild": {
+    "typeOfAdmission": "",
+    "tagNumber": "",
+    "gestationByUSG": {
+      "weeks": "",
+      "days": ""
+    },
+    "correctedGestationByUSG": {
+      "weeks": "",
+      "days": ""
+    },
+    "bloodGroup": "",
+    "lmp": "",
+    "g": "",
+    "a": "",
+    "p": "",
+    "l": "",
+    "modeOfDelivery": "",
+    "edd": "",
+    "apgarScore1Min": "",
+    "apgarScore5Min": "",
+    "isInjectionVitaminKGiven": false,
+    "isAntenatalSteroidsGiven": false,
+    "isANCPass": false,
+    "isFlatusTubePass": false,
+    "isResuscitationDone": false,
+    "isIPPRShifted": false,
+    "causeExplanation": ""
+  },
+  "childDetails": {
+    "birthWeight": "",
+    "birthLength": "",
+    "headCircumference": "",
+    "sex": "",
+    "cry": "",
+    "bloodGroup": "",
+    "significantMaterial": {
+      "isLeakingPvChecked": false,
+      "isPrematurityChecked": false,
+      "isLBWChecked": false,
+      "isPIHChecked": false,
+      "isOligoChecked": false
+    },
+    "history": {
+      "isGDMChecked": false,
+      "isSteroidsRecievedChecked": false,
+      "isRegisteredChecked": false,
+      "isIllnessChecked": false
+    },
+    "headToToe": {
+      "isHeadChecked": false,
+      "isPalateChecked": false,
+      "isHeartChecked": false,
+      "isFingerAndToesChecked": false,
+      "isNGPastChecked": false
+    },
+    "examination": {
+      "isBackChecked": false,
+      "isCDHNegativeChecked": false,
+      "isAnusChecked": false
+    },
+    "comments": "",
+    "shiftedTo": "",
+    "isDischarge": false,
+    "residentDoctor": ""
+  }
+}

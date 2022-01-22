@@ -1,0 +1,52 @@
+CREATE SEQUENCE apollo.ichr_token_for_video_detail_seq  INCREMENT 1  MINVALUE 1  MAXVALUE 9223372036854775807  START 1  CACHE 1;
+ALTER TABLE apollo.ichr_token_for_video_detail_seq  OWNER TO postgres;
+
+CREATE OR REPLACE FUNCTION apollo.ichr_token_for_video_detail_creationtime()  RETURNS trigger AS
+$BODY$    
+BEGIN        
+NEW.creationtime := current_timestamp;        
+NEW.modificationtime := current_timestamp;        
+RETURN NEW;    
+END;
+$BODY$  
+LANGUAGE plpgsql VOLATILE  COST 100;
+ALTER FUNCTION apollo.ichr_token_for_video_detail_creationtime()  
+OWNER TO postgres;
+
+CREATE OR REPLACE FUNCTION apollo.ichr_token_for_video_detail_modificationtime()  RETURNS trigger AS
+$BODY$    
+BEGIN        
+NEW.modificationtime := current_timestamp;        
+RETURN NEW;    
+END;
+$BODY$  
+LANGUAGE plpgsql VOLATILE  COST 100;
+ALTER FUNCTION apollo.ichr_token_for_video_detail_modificationtime()  
+OWNER TO postgres;
+
+CREATE TABLE apollo.ichr_token_for_video_detail(  
+ichr_token_for_video_detail_id bigint NOT NULL DEFAULT nextval('apollo.ichr_token_for_video_detail_seq'::regclass),
+
+creationtime timestamp without time zone NOT NULL,
+modificationtime timestamp without time zone NOT NULL,
+uhid character varying(50) NOT NULL,
+token text,
+tokenEndTime timestamp without time zone NOT NULL,
+
+
+CONSTRAINT ichr_token_for_video_detail_pkey PRIMARY KEY (ichr_token_for_video_detail_id)) WITH (OIDS=FALSE);
+
+ALTER TABLE apollo.ichr_token_for_video_detail OWNER TO postgres;
+
+CREATE TRIGGER set_creationtime  
+BEFORE INSERT  
+ON apollo.ichr_token_for_video_detail 
+FOR EACH ROW  
+EXECUTE PROCEDURE apollo.ichr_token_for_video_detail_creationtime();
+
+CREATE TRIGGER set_modificationtime  
+BEFORE UPDATE  
+ON apollo.ichr_token_for_video_detail  
+FOR EACH ROW  
+EXECUTE PROCEDURE apollo.ichr_token_for_video_detail_modificationtime();
+

@@ -1,0 +1,99 @@
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+
+.centerline{
+  width: 12%;
+}
+.lumbar{
+  width: 15%;
+}
+.vtap{
+  width: 10%;
+}
+.etincubation{
+  width: 14%;
+}
+.etsuction{
+  width: 12%;
+}
+
+}
+.peripheralCannula{
+	width: 12%;
+}
+.margin-top{
+	margin-top: 6px;
+}
+.bloodgroup{
+	margin-left: -15px;
+}
+.margin{
+	margin-top: 30px;
+}
+.left{
+	left: 40px;
+}
+.transfusion-box{
+	padding: 15px 7px;
+  border: 2px solid #DADADA;
+  background-color: #F8F8F8;
+  margin: 40px 0px;
+}
+
+.weightforcal {
+  width: 13%;
+}
+
+.typeforexch{
+  width: 10%;
+}
+
+.margin-left {
+  margin-left: 30px;
+}
+
+.left-margin {
+  margin-left: 22px;
+}
+
+.central-selection {
+  margin-top: 25px;
+}
+.bagImg-circle-critical-border{
+  border-radius: 50% !important;
+  height: 100px !important;
+  width: 100px !important;
+
+}
+.bagImg-circle {
+  border-radius: 50% !important;
+  max-height: 120px !important;
+  width: 131px;
+  padding: 20px !important;
+}
+
+.left-transfusion{
+  margin-left: 10px;
+}
+
+.upload-button input {
+    position: absolute !important;
+    opacity: 0 !important;
+    left: 0px !important;
+    top: 0px !important;
+    width: 114px !important;
+    height: 35px !important;
+}
+
+.margin-bottom {
+  margin-bottom: 40px !important;
+  position: relative;
+  left: 20%;
+}
+
+/* .disabled-extubation {
+  cursor: not-allowed;
+}
+
+.hide-reasons {
+  display: none;
+} */

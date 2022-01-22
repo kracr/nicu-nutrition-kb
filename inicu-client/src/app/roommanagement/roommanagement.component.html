@@ -1,0 +1,117 @@
+<div class="tab-container col-md-12" *ngIf = "bedData.returnedObject != undefined && bedData.returnedObject != null">
+	<div class="row admin-panel-cont" style="margin-left: 5px; margin-right: 5px; margin-top:0px">
+		<div class="col-md-2 inline-block top-aligned">
+			<div class="left-tabs" style="width:100%">
+				<ul>
+			        <li style="padding-top:10px;padding-right:15px;padding-bottom:10px;padding-left:15px;display:block;color:#323044;line-height:20px">
+					    <a>
+					        <span class="linkText">
+						      	<div class="row no-gutter">
+						      	<div class="col-md-12 no-gutter" style="padding-left:0%;padding-right:0%">
+							        <div class="col-md-6 no-gutter">
+								      	<input type="text" [(ngModel)]="newRoom"  class="input input-medium desktop-column-18" style="height:36px !important"/>
+									</div>
+								    <div class="col-md-6 no-gutter">
+							            <button class="button button-blue button-large desktop-column-20" style="padding:0%;font-size:14px" (click)="roomNoCheck()" value="Add Room">Add Room</button>
+								    </div>
+								</div>
+							</div>
+						    </span>
+					    </a>
+				    </li>
+				    <div *ngFor="let room of bedData.returnedObject.roomList">
+				     	<div class="row no-gutter">
+				        	<div class="col-md-12 no-gutter">
+				       			<li   [ngClass]="{ 'highlighttab' : room.key==roomId}" style="padding-top:20px;padding-right:15px;padding-bottom:10px;padding-left:15px;display:block;color:#323044;line-height:20px">
+				       				<div class="row no-gutter">
+					       				<div class="col-md-6 no-gutter" style="text-align:center">
+					        				<a (click)= "getBedListOfRoom(room.key)">
+					        					<span class="linkText">{{room.value}}</span>
+						        			</a>
+					        			</div>
+					        			<div class="col-md-6 no-gutter pull-right">
+						        			<a>
+						       					<span (click) ="setdeleteRoom(room.key)" class="sprite sprite-delete right-align" style="margin-left:48%;vertical-align:middle"></span>
+						       				</a>
+						       			</div>
+						       		</div>
+				        		</li>
+				      		</div>
+				     	</div>
+				    </div>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-10 inline-block">
+			<div class="row">
+				<div class="col-md-6 pull-left no-gutter">
+					<div class="coloured-bullets-cont">
+			            <div class="margin-10-top">
+			                <ul>
+				                <li class="red-item"><span (click)="getStatusBed(false)">Occupied</span></li>
+					            <li class="green-item"><span (click)="getStatusBed(true)">Vacant</span></li>
+					        </ul>
+					    </div>
+					</div>
+				</div>
+				<div class="col-md-3 pull-right no-gutter" style="padding-top:0.5%">
+					<div class="col-md-6 no-gutter">
+						<input type="number"  pattern="((^\d{1}$)|(^\d{2}$)|(^\d{3}$)|(^\d{4}$))" class="input input-medium desktop-column-19" min="1" max="99999" [(ngModel)]="newBed" style="height:36px !important" />
+					</div>
+					<div class="col-md-6 no-gutter">
+						<button class="button button-blue button-large desktop-column-18" value="Add Bed" (click)="newBedVerify()" style="font-size:14px">Add Bed</button>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="vacant">
+				<div class="dashboard-bed-box  col-md-3 no-gutter margin-10-x margin-10-y" *ngFor="let bed of roomBed.bedJSON" style="background-color:#F8FAFB !important;padding:0px">
+					<div class="visible-box" style="background-color:#F8FAFB !important;min-height:165px">
+						<div class="all-content">
+							<span class="sprite bed-box" [ngClass]="{ 'sprite-bed-box-red' : bed.status=='false' ,'sprite-bed-box-green' : bed.status=='true'}" style="display:block;height:80px;margin-left:22%"></span>
+					        <p [hidden]="(moveBedStatus && (bed.bedId==moveBed))" class="bed-no" style="text-align:center;margin-top:0%">Bed No: {{bed.bedName}} <span></span></p>
+					        <div class="col-md-12 no-gutter" [hidden]="!(moveBedStatus==true && (bed.bedId==moveBed))">
+						        <select [(ngModel)]="moveInRoom" (ngModelChange)="setRoomChange(moveInRoom)" class="input input-medium desktop-column-20"  style="height:36px !important">
+							     	<option disabled selected value="">Room No. </option>
+						        	<option  *ngFor="let r of bedData.returnedObject.roomList" value="{{r.key}}">{{r.value}}</option>
+							    </select>
+							</div>
+						    <div class="row no-gutter">
+						    	<div class="col-md-6 no-gutter" style="text-align:center;display:inline;">
+					           		<span class="sprite sprite-delete" (click)="deleteBed(bed.bedId)"></span>
+						        </div>
+					           	<div class="col-md-6 no-gutter" style="text-align:center;display:inline">
+					          		<span class="sprite sprite-edit" (click)="bedDropdown(bed.bedId)" disabled></span><!--[disabled]=true-->
+					           	</div>
+						    </div>
+				        </div>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="!vacant" style="background-color:#F8FAFB !important">
+				<div class="dashboard-bed-box  col-md-3 margin-10-x margin-10-y" *ngFor="let bed of vacantBedList" style="background-color:#F8FAFB !important"><!--| filter: {status: bedDisplay}" style="background-color:#F8FAFB !important-->
+					<div class="visible-box" style="background-color:#F8FAFB !important;min-height:165px">
+						<div class="all-content">
+							<span class="sprite bed-box" [ngClass]="{ 'sprite-bed-box-red' : bed.status=='false' ,'sprite-bed-box-green' : bed.status=='true'}" style="display:block;height:80px;margin-left:20%"></span>
+					        <p [hidden]="(moveBedStatus && (bed.bedId==moveBed))" class="bed-no" style="text-align:center;margin-top:0%">Bed No: {{bed.bedName}}</p>
+					        <div class="desktop-column-20" [hidden]="!(moveBedStatus && (bed.bedId==moveBed))">
+							    <select [(ngModel)]="moveInRoom" (ngModelChange)="setRoomChange(moveInRoom)" class="input input-medium desktop-column-20"  style="height:36px !important">
+									<option disabled selected value="">Room No. </option>
+									<option  *ngFor="let r of bedData.returnedObject.roomList" value="{{r.key}}">{{r.value}}</option>
+								</select>
+							</div>
+						    <div class="desktop-column-20">
+						      	<div class="desktop-column-10" style="text-align:center;display:inline;margin-left:15%;margin-right:24%">
+					              	<span class="sprite sprite-delete" (click)="deleteBed(bed.bedId)"></span>
+					            </div>
+					            <div class="desktop-column-10" style="text-align:center;display:inline">
+						           	<span class="sprite sprite-edit" (click)="bedDropdown(bed.bedId)" disabled></span><!--[disabled]= true-->
+						        </div>
+						    </div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

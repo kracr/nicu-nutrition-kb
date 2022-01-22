@@ -1,0 +1,238 @@
+<div class="admin-panel-cont no-margin-top" style="margin-top:0px">
+	<div class="tab-container padding-20-x padding-10-y">
+	    <div class="left-tabs">
+	    	<ul class=" margin-10-top">
+			    <li [ngClass]="{ 'active' : selectedDrugTab == 'List of Drug'}" (click)="whichTab('List of Drug')"><a><span class="linkText">LIST OF DRUGS</span></a></li>
+			    <li [ngClass]="{ 'active' : selectedDrugTab == 'Add Drug'}" (click)="whichTab('Add Drug')"><a><span class="linkText">{{tab_value}}</span></a></li>
+					<li [ngClass]="{ 'active' : selectedDrugTab == 'Add Strength'}" (click)="whichTab('Add Strength')"><a><span class="linkText">Add Brand</span></a></li>
+			</ul>
+	    </div>
+		<div class="tab-view" *ngIf="selectedDrugTab == 'List of Drug'">
+			<div class="user-list table" *ngIf="drugsData != undefined">
+				<div class="header table-row">
+					<div class="table-cell">
+					<span>Medicine Name</span>
+					</div>
+					<div class="table-cell">
+					<span>Brand Name</span>
+					</div>
+					<div class="table-cell">
+					<span>Dose</span>
+					</div>
+					<div class="table-cell">
+					<span>Type</span>
+					</div>
+					<div class="table-cell">
+					<span>Frequency</span>
+					</div>
+			        <div class="table-cell">
+					<span>Instructions</span>
+					</div>
+			        <div class="table-cell">
+					<span></span>
+					</div>
+				</div>
+			    <div class="table-row" *ngFor="let drug of drugsData.drugsList">
+					<div class="table-cell">
+						<span [ngClass]="{'blue-text': drug.monitoring != null}">{{drug.medname}}</span>
+					</div>
+					<div class="table-cell">
+						<span>{{drug.brand}}</span>
+					</div>
+					<div class="table-cell">
+						<span>BodyWeight X {{drug.suspensiondose}} {{drug.suspensiondoseunit}}</span>
+						<span [hidden]="!(drug.eachDose == 'true')">/dose</span>
+						<span [hidden]="!(drug.eachDose == 'false')">/day</span>
+					</div>
+					<div class="table-cell">
+						<span>{{drug.typeKeyVal.value}}</span>
+					</div>
+			        <div class="table-cell">
+						<span>{{drug.freqKeyVal.value}}</span>
+					</div>
+			        <div class="table-cell">
+						<span>{{drug.description}}</span>
+					</div>
+					<div class="table-cell">
+						<button class="inline-block sprite sprite-edit" (click)="populateDrug(drug)" ></button>
+				        <button class="inline-block sprite sprite-delete" (click)="deleteDrug(drug.medid)"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-view" *ngIf="selectedDrugTab == 'Add Drug'">
+			<form (submit)="submitDrug()">
+				<div class="col-md-12">
+					<div class="table full">
+						<div class="row">
+							<div class="col-md-3 padding-10-x">
+								<label class="block blue-text">Medicine</label>
+								<input type="text" class="input input-medium desktop-column-20"
+									[(ngModel)]="drugsData.drug.medname"
+									(ngModelChange)="updateBrand(drugsData.drug.medname)"
+									[ngModelOptions]="{standalone: true}">
+							</div>
+							<div class="col-md-3 padding-10-x">
+								<label class="block blue-text">Brand</label>
+								<input type="text" class="input input-medium desktop-column-20"
+									[(ngModel)]="drugsData.drug.brand" [ngModelOptions]="{standalone: true}">
+							</div>
+							<div class="col-md-3 padding-10-x">
+								<label class="block blue-text">Dose</label> <input
+									name="susDoseVal" type="text"
+									class="inline-block col-md-12 margin-10-right"
+									[(ngModel)]="drugsData.drug.suspensiondose"
+									(ngModelChange)="formulaChange()" [ngModelOptions]="{standalone: true}">
+								<!-- <div class="col-md-12 no-padding right-aligned ng-hide"
+									[hidden]="!(addDrugForm.susDoseVal.$dirty && addDrugForm.susDoseVal.$invalid)">
+									<label style="color: red; font-size: 10px">Not a valid dose Value</label>
+								</div> -->
+							</div>
+							<div class="col-md-3 middle-aligned">
+								<div class="col-md-12 no-padding">
+									<span class="visiblity-hidden">dummy</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<form style="padding-left:1%" class="no-margin">
+										<label class="radio-inline" style="padding-right: 3px"> <input
+											type="radio" name="optradio"
+											style="display: table-cell; width: 22px; height: 15px; -webkit-appearance: radio"
+											[(ngModel)]="drugsData.drug.suspensiondoseunit" value="Mg" [ngModelOptions]="{standalone: true}" (ngModelChange)="formulaChange()" [disabled]="isunit">Mg
+										</label> <label class="radio-inline" style="padding-right: 12px">
+											<input type="radio" name="optradio"
+											style="display: table-cell; width: 22px; height: 15px; -webkit-appearance: radio; padding-left: 5px" [ngModelOptions]="{standalone: true}"
+											[(ngModel)]="drugsData.drug.suspensiondoseunit" value="IU"
+											(ngModelChange)="formulaChange()">IU
+										</label>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2">
+								<label class="block blue-text">Type</label>
+								<select type="text"
+										[(ngModel)]="drugsData.drug.medicationtype"
+										(ngModelChange)="typeOthers()" [ngModelOptions]="{standalone: true}"
+										style="margin-right: 0%; width: 100%;">
+										<option  value="" hidden selected disabled>select</option>
+										<option *ngFor="let obj of drugsData.typeDropDown" [ngValue]="obj.key">{{obj.value}}</option>
+								</select>
+							</div>
+							<div class="col-md-2" data-ng-if="isOthers">
+								<label class="blue-text" style="color: #FFFFFF">Frequency</label><input [ngModelOptions]="{standalone: true}"
+									type="text" class="input input-medium col-md-12"
+									[(ngModel)]="drugsData.drug.mentionOthers" />
+							</div>
+							<div class="col-md-2">
+								<label class="block blue-text">Frequency</label>
+								<select
+									type="text" class="block" [(ngModel)]="drugsData.drug.frequency"
+									style="width: 100%;" [ngModelOptions]="{standalone: true}">
+									<option value="" hidden selected disabled>select</option>
+									<option *ngFor="let obj of drugsData.freqDropDown" [ngValue]="obj.key">{{obj.value}}</option>
+								</select>
+							</div>
+							<div class="col-md-2">
+								<label class="block blue-text">Formula</label>
+								<div class="block no-gutter">
+									<input type="text" class="input input-medium col-md-12" [ngModelOptions]="{standalone: true}"
+										[(ngModel)]="formulaValue" disabled />
+								</div>
+							</div>
+							<div class="col-md-4 padding-10-x left-aligned"
+								style="height: 100%; padding-top: 3%">
+								<form style="margin: 0%">
+									<label class="radio-inline" style="padding-right: 3px">
+										<input
+											type="radio" name="Each"
+											style="display: table-cell; width: 22px; height: 15px; -webkit-appearance: radio"
+											[(ngModel)]="drugsData.drug.eachDose" value="true" [ngModelOptions]="{standalone: true}">Each
+											Dose </label><label class="radio-inline" style="padding-right: 12px">
+										<input type="radio" name="Each"
+										style="display: table-cell; width: 22px; height: 15px; -webkit-appearance: radio; padding-left: 5px" [ngModelOptions]="{standalone: true}"
+										[(ngModel)]="drugsData.drug.eachDose" value="false">Each
+										Day
+									</label>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="full ">
+						<label class="block blue-text">Add Instructions</label>
+						<textarea type="text" class="block full"
+							[(ngModel)]="drugsData.drug.description" [ngModelOptions]="{standalone: true}"></textarea>
+					</div>
+					<div id="footer">
+						<button type="submit" class="button button-blue">{{tab_value}}</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="tab-view" *ngIf="selectedDrugTab == 'Add Strength'">
+	   <form (submit)="submitStrength()">
+	    <div class="col-md-12">
+	     <div class="table full">
+	      <div class="row">
+	       <div class="col-md-3 padding-10-x">
+	        <span class="block blue-text required">Medicine Name</span>
+	        <select type="text" style="width: 230px" [(ngModel)]="drugsData.brand.medname" [ngModelOptions]="{standalone: true}">
+	          <option value="" hidden selected disabled>select</option>
+						<option *ngFor="let obj of drugsData.drugsList" [ngValue]="obj.medname">{{obj.medname}}</option>
+	        </select>
+	       </div>
+	       <div class="col-md-3 padding-10-x">
+	        <span class="block blue-text required">Brand</span>
+	        <input type="text" class="input input-medium desktop-column-20" [(ngModel)]="drugsData.brand.brandName" [ngModelOptions]="{standalone: true}">
+	       </div>
+	       <div class="col-md-3 padding-10-x">
+	        <label class="block blue-text">Type</label>
+	        <select type="text" style="width: 220px;" [(ngModel)]="drugsData.brand.brandType" [ngModelOptions]="{standalone: true}">
+	          <option  value="" hidden selected disabled>select</option>
+	          <option value="Vial">Vial</option>
+	          <option value="Ampule">Ampule</option>
+	        </select>
+
+	        <!-- <div class="col-md-12 no-padding right-aligned ng-hide"
+	         [hidden]="!(addDrugForm.susDoseVal.$dirty && addDrugForm.susDoseVal.$invalid)">
+	         <label style="color: red; font-size: 10px">Not a valid dose Value</label>
+	        </div> -->
+	       </div>
+	       <div class="col-md-3 middle-aligned">
+	        <div class="col-md-12 no-padding">
+	         <span class="block blue-text">Form</span>
+	        </div>
+	        <div class="col-md-12 no-padding">
+	         <select type="text" style="width: 230px" [(ngModel)]="drugsData.brand.brandForm" [ngModelOptions]="{standalone: true}">
+	          <option  value="" hidden selected disabled>Select</option>
+	          <option  value="Powder">Powder</option>
+	          <option value="Liquid">Liquid</option>
+	         </select>
+	        </div>
+	       </div>
+	      </div>
+	      <div class="row">
+	       <div class="col-md-3">
+	        <span class="block blue-text required">Strength</span>
+	           <input class="input input-medium col-md-12" type="number" name="strength" [(ngModel)]="drugsData.brand.brandStrength" [ngModelOptions]="{standalone: true}">
+	       </div>
+	       <div class="col-md-3">
+	        <span class="blue-text required">Strength Unit</span>
+	        <select type="text" style="width: 230px" [(ngModel)]="drugsData.brand.brandStrengthUnit" [ngModelOptions]="{standalone: true}">
+	          <option  value="" hidden selected disabled>Select</option>
+	          <option value="mg/ml">mg/ml</option>
+	          <option value="μg/ml">μg/ml</option>
+	          <option value="IU/ml">IU/ml</option>
+	        </select>
+	       </div>
+	      </div>
+	     </div>
+	     <div id="footer">
+	      <button type="submit" class="button button-blue">Submit</button>
+	     </div>
+	   	</div>
+	   </form>
+  	</div>
+	</div>
+</div>

@@ -1,0 +1,3 @@
+alter table apollo.edited_doctor_notes add column fromwhere character varying(50) default 'progressNotes';
+
+alter table apollo.device_bloodgas_detail_detail add column is_processed boolean DEFAULT false;

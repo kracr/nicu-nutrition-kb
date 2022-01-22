@@ -1,0 +1,50 @@
+.value-panel{
+    
+    min-width:205px; border:solid 1px lighten($gray,10%);
+    
+    .value-panel-title{color:$white; margin:0; padding:3px 8px 3px 18px; font-weight:100;}
+    .value-panel-title,.individual-val,.gross-val{line-height:1; margin:0; }
+    
+    .gross-val{font-family:$fontLight;margin-right:30px;}
+    
+    .value-cont{background-color:$white; padding:15px 10px;clear:both; overflow:auto;}
+    
+    &.green-box{
+        .value-panel-title{background-color:$green;}
+        .individual-val,.gross-val{color:$green;}
+    }
+    &.blue-box{
+        .value-panel-title{background-color:$blue;}
+        .individual-val,.gross-val{color:$blue;}
+    }
+    
+    &.big-box{
+        .value-panel-title{font-size:20px;}
+        .gross-val{font-size:68px;}
+        .individual-val{font-size:22px; padding:5px;}
+    }
+    &.small-box{
+        .value-cont{padding:8px 10px;}
+        
+        .value-panel-title{font-size:14px;}
+        .gross-val{font-size:48px;}
+        .individual-val{font-size:12px;}
+        .unit{font-size:11px; float:right; margin-top:1px; color:lighten($green,30%);}
+    }
+    
+}
+
+
+/*
+s="value-panel big-box green-box">
+                	<h3 class="value-panel-title">MAP cmH<sub>2</sub>O</h3>
+                    <div class="inline-block">
+	                    <p class="gross-val">5.4</p>
+                    </div>
+                    <div class="inline-block">
+                        <p class="individual-val">7.8</p>
+                        <p class="individual-val">2.8</p>
+                    </div>
+                </div>
+
+*/

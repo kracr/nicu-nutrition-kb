@@ -1,0 +1,211 @@
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+.monthlyIncome{
+  width: 20%;
+}
+.mobileNumber{
+  width: 15%;
+}
+.owl-timer-wrapper .owl-timer-input{
+	width: 60%;
+	height: 110%
+}
+.admissionType{
+  width: 20%;
+}
+.babyname{
+  width: 15%;
+}
+.multiplePregnancy{
+  width: 20%;
+}
+.antenatal-risk-factor{
+  width: 18%;
+  margin-left: -10px;
+}
+.twintype{
+  margin-left: -22px;
+}
+.pregnancie{
+  margin-left: -22px
+}
+.maternal-investigation{
+  width: 19%;
+  margin-left: -10px;
+}
+.antenatal_screening{
+  margin-left: -10px;
+}
+.feedIntolerance{
+  width: 160%;
+  margin-left: 10px
+}
+.extra-space{
+  left: 10px;
+}
+.labourdelivery{
+  margin-left: -10px;
+}
+.gestBallard{
+  margin-top: 3px;
+}
+.fourlimb{
+  margin-left: -42px;
+}
+.twin{
+  width: 10%;
+}
+.iem{
+  left: -3px;
+
+}
+.vdrl{
+  left: 12px;
+}
+.motherbg{
+  margin-left: -25px
+}
+.criedImmediately{
+  width: 31%;
+}
+.birthageatonset{
+  margin-left: -8px;
+}
+.passedUrine{
+  width: 12%;
+}
+.birthToNicu{
+  width: 62%;
+  margin-left: -110px;
+  left: 93px
+}
+.lowflow{
+  width: 92px;
+  padding: 2px !important;
+}
+.unknown{
+  padding: 2px !important;
+}
+.cpap{
+  width: 40px;
+  padding: 2px !important;
+}
+.mechanicalventilation{
+  padding: 2px !important;
+  width: 160px
+}
+.highflow{
+  width: 95px;
+  padding: 2px !important;
+}
+.urineOutput{
+  width: 30%;
+  margin-left: -15px;
+}
+.birthcategory{
+  margin-left: -101px;
+  left: 92px;
+  width: 62%;
+}
+.durainput{
+  left: -5px;
+}
+.dursec{
+  width: 38px;
+}
+.skininput{
+  width: 142px;
+}
+.rdsbirth{
+  width: 26%;
+}
+.rdsonset{
+  margin-left: -8px;
+}
+.other{
+  position: relative;
+  right: 960px;
+  top: 50px
+}
+.duration{
+  margin-left: -12px
+}
+.o2{
+  margin-left: -28px;
+}
+.initialStep{
+  width: 13%;
+}
+.secwidth{
+  width: 32%;
+}
+.admnhead{
+  margin-top: 17px;
+}
+.admnweight{
+  width: 28%;
+}
+.chestbox{
+  width: 38px;
+}
+.chest-compression{
+  margin-left: -35px
+}
+
+.torchbox{
+  margin-left: -35px;
+  left: 35px;
+}
+.edd{
+  margin-left: -6px;
+}
+.etdate{
+  margin-left: -40px;
+}
+.antenatalhistory{
+  margin-top: 15px;
+}
+.gestationbyetdate{
+  margin-left: -64px;
+  width: 19%;
+  left: 55px
+}
+.basedon{
+  margin-left: -20px;
+}
+.ballard{
+  width: 19%;
+}
+.gestationbybalard{
+  width: 22%;
+}
+.treatment-tab-box{
+  padding: 5px !important;
+}
+.some-space{
+  left: 5px;
+}
+.bloodgroup{
+  width: 95px;
+}
+.kuppuswamy{
+  width: 25%;
+}
+.dateofbirth{
+  width: 18%;
+}
+.dayoflife{
+  width: 20%;
+  margin-left: -6px;
+}
+.dateofadm{
+  width: 23%;
+  margin-left: -10px;
+}
+.timeofadm{
+  width: 23%;
+  margin-left: -10px;
+}
+.motheroccupation{
+  width: 20%;
+}
+}

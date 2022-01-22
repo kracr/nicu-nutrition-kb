@@ -1,0 +1,611 @@
+<doctor-panel></doctor-panel>
+<div class="clear desktop-column-20 nursing-medication-background-color" style="background-color:white !important">
+	<div class="">
+		<div class="col-md-12 padding-20-y">
+			<div class="col-md-2 no-padding-left center-aligned">
+				<input type="radio" name="progressNotesTabs" id="doctorNotesTab" value="Note" [(ngModel)]="progressNotesTab" style="display: none">
+					<label for="doctorNotesTab" class="table full assessment-treatment-tab-box" [ngClass]="{'selected-tab': progressNotesTab == 'Note'}">Doctor Notes</label>
+			</div>
+			<div class="col-md-2 no-padding-left center-aligned">
+				<input type="radio" name="progressNotesTabs" id="doctorOrderTab" value="Order" [(ngModel)]="progressNotesTab"style="display: none">
+				<label for="doctorOrderTab" class="table full assessment-treatment-tab-box" [ngClass]="{'selected-tab': progressNotesTab == 'Order'}">Doctor Orders</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="assesment-container" *ngIf="response != undefined && response != null && progressNotesTab == 'Note'">
+		<div class="col-md-12 no-padding padding-10-y">
+			<div class="col-md-5"></div>
+			<div class="col-md-2 no-padding">
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" name="progressNoteDate" id="progressNoteDate" type="calendar"
+					autoClose=true placeholder="dd-mm-yyyy" dateFormat='DD-MM-YYYY' [(ngModel)]="dateObj" [min]="minDate"
+					[max]="maxDate" (ngModelChange)="getDailyProgressNotes(true)"></owl-date-time>
+				</div>
+			</div>
+			<div class="col-md-5 right-aligned">
+				<button (click)="printDailyProgressNotes()" class="button button-blue button-large" type="button">Print</button>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-3 no-padding">
+				<span class="bold">Previous Wt : </span>
+					<span *ngIf="response.basicDetails != undefined && response.basicDetails != null && response.basicDetails.prevDateWeight != null">{{response.basicDetails.prevDateWeight}} gm</span>
+			</div>
+			<div class="col-md-3 no-padding">
+				<span class="bold">Today's Wt : </span>
+				<span *ngIf="response.basicDetails != undefined && response.basicDetails != null && response.basicDetails.currentdateweight != null">{{response.basicDetails.currentdateweight}} gm</span>
+			</div>
+			<div class="col-md-3 no-padding">
+				<span class="bold">Diff Wt : </span>
+				<span *ngIf="response.basicDetails != undefined && response.basicDetails != null && response.basicDetails.currentdateweight != null && response.basicDetails.prevDateWeight != null">{{response.basicDetails.currentdateweight - response.basicDetails.prevDateWeight}} gm</span>
+			</div>
+			<div class="col-md-3 no-padding">
+				<span class="bold">Working Wt : </span>
+				<span *ngIf="response.basicDetails != undefined && response.basicDetails != null && response.basicDetails.workingweight != null">{{response.basicDetails.workingweight}} gm</span>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-6 no-padding">
+				<span class="bold">Diagnosis : </span>
+				<span>{{response.diagnosis}}</span>
+			</div>
+			<div class="col-md-3 no-padding">
+				<span class="bold">DOL : </span>
+				<span>{{response.nicuDays}}</span>
+			</div>
+			<div class="col-md-3 no-padding">
+				<span class="bold">CGA : </span>
+				<span>{{response.gestationWeeks}}<sup *ngIf="response.gestationDays != null"> + {{response.gestationDays}}</sup></span>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<span class="bold">Vital : </span>
+			<span>{{response.vital}}</span>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<span class="bold">TCB : </span>
+			<span>{{response.tcb}}</span>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<h1 class="blue-text no-margin">System Wise Summary : </h1>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-2 no-padding-left center-aligned">
+				<div class="table full assessment-treatment-tab-box" [ngClass]="{'resp-event-box-selected': whichProgressNoteSelected == 'Stable-Notes'}" (click)="whichProgressNoteSelectedFun('Stable-Notes')">
+					<span class="bold">Stable Notes</span>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left center-aligned">
+				<div class="table full assessment-treatment-tab-box" [ngClass]="{'resp-event-box-selected': whichProgressNoteSelected == 'Resp-Systems'}" (click)="whichProgressNoteSelectedFun('Resp-Systems')">
+					<span class="bold">Resp Systems</span>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left center-aligned">
+				<div class="table full assessment-treatment-tab-box" [ngClass]="{'resp-event-box-selected': whichProgressNoteSelected == 'Jaundice'}" (click)="whichProgressNoteSelectedFun('Jaundice')">
+					<span class="bold">Jaundice</span>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left center-aligned">
+				<div class="table full assessment-treatment-tab-box" [ngClass]="{'resp-event-box-selected': whichProgressNoteSelected == 'CNS'}" (click)="whichProgressNoteSelectedFun('CNS')">
+					<span class="bold">CNS</span>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left center-aligned">
+				<div class="table full assessment-treatment-tab-box" [ngClass]="{'resp-event-box-selected': whichProgressNoteSelected == 'Infection'}" (click)="whichProgressNoteSelectedFun('Infection')">
+					<span class="bold">Infection</span>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left center-aligned">
+				<div class="table full assessment-treatment-tab-box" [ngClass]="{'resp-event-box-selected': whichProgressNoteSelected == 'Misc'}" (click)="whichProgressNoteSelectedFun('Misc')">
+					<span class="bold">Misc</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y" *ngIf="whichProgressNoteSelected == 'Stable-Notes'">
+			<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="6" [(ngModel)]="response.stable_notes" [ngModelOptions]="{standalone: true}" placeholder="Stable Notes"></textarea>
+		</div>
+		<div class="col-md-12 padding-10-y" *ngIf="whichProgressNoteSelected == 'Resp-Systems'">
+			<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="6" [(ngModel)]="response.resp_system" [ngModelOptions]="{standalone: true}" placeholder="Resp Systems"></textarea>
+		</div>
+		<div class="col-md-12 padding-10-y" *ngIf="whichProgressNoteSelected == 'Jaundice'">
+			<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="6" [(ngModel)]="response.jaundice" [ngModelOptions]="{standalone: true}" placeholder="Jaundice"></textarea>
+		</div>
+		<div class="col-md-12 padding-10-y" *ngIf="whichProgressNoteSelected == 'CNS'">
+			<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="6" [(ngModel)]="response.cns" [ngModelOptions]="{standalone: true}" placeholder="CNS"></textarea>
+		</div>
+		<div class="col-md-12 padding-10-y" *ngIf="whichProgressNoteSelected == 'Infection'">
+			<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="6" [(ngModel)]="response.infection" [ngModelOptions]="{standalone: true}" placeholder="Infection"></textarea>
+		</div>
+		<div class="col-md-12 padding-10-y" *ngIf="whichProgressNoteSelected == 'Misc'">
+			<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="6" [(ngModel)]="response.misc" [ngModelOptions]="{standalone: true}" placeholder="Misc"></textarea>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-12 no-padding">
+				<span class="bold">Intake-Output</span>
+			</div>
+			<div class="col-md-12 no-padding">
+				<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="10" placeholder="Intake-Output" disabled>{{response.intake_output}}</textarea>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-12 no-padding">
+				<span class="bold">Lab-report</span>
+			</div>
+			<div class="col-md-12 no-padding">
+				<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="4" placeholder="Lab report" disabled>{{response.lab_details}}</textarea>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-12 no-padding">
+				<span class="bold">Medication</span>
+			</div>
+			<div class="col-md-12 no-padding">
+				<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="4" placeholder="Medication" disabled>{{response.medication}}</textarea>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-12 no-padding">
+				<span class="bold">Procedure</span>
+			</div>
+			<div class="col-md-12 no-padding">
+				<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="4" placeholder="Procedure" disabled>{{response.procedure}}</textarea>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-12 no-padding">
+				<span class="bold">Screening</span>
+			</div>
+			<div class="col-md-12 no-padding">
+				<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="4" placeholder="Screening" disabled>{{response.screening}}</textarea>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-12 no-padding">
+				<span class="bold">Blood Product</span>
+			</div>
+			<div class="col-md-12 no-padding">
+				<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="6" placeholder="Blood Product" disabled>{{response.bloodProduct}}</textarea>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-12 no-padding">
+				<span class="bold">Plan</span>
+			</div>
+			<div class="col-md-12 no-padding">
+				<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="4" placeholder="Plan" disabled>{{response.plan}}</textarea>
+			</div>
+		</div>
+		<div class="assesment-container set-AssessmentSystemtEvent-background">
+			<div class="col-md-12 no-padding margin-10-y">
+				<div class="col-md-3 no-padding-left">
+					<h1 class="light margin-5-y blue-text">Subsequent Notes</h1>
+				</div>
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">From</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<owl-date-time class="owl-dateTime" name="printDataObjNotesFromDateNotes" dateFormat='DD-MM-YYYY hh:mm A' [(ngModel)]="progressNoteDateFrom" [min]="minTimeDate" [max]="maxTimeDate" type="both" autoClose=true></owl-date-time>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">To</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<owl-date-time class="owl-dateTime" name="printDataObjNotesToDateNotes" type="both" dateFormat='DD-MM-YYYY hh:mm A' [(ngModel)]="progressNoteDateTo" [min]="minTimeDate" [max]="maxTimeDate" autoClose=true></owl-date-time>
+					</div>
+				</div>
+
+				<div class="col-md-5 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="visiblity-hidden">To</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<button class="button button-blue margin-5-x" type="button" (click)="getDailyProgressNotes(false)"> SHOW </button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y margin-bottom-100">
+			<div class="col-md-12 no-padding">
+				<table
+					class="table table-striped table-bordered headed-table desktop-column-20">
+					<tr>
+						<td class="center-aligned">Date</td>
+						<td class="center-aligned">Event</td>
+						<td class="center-aligned">Notes</td>
+					</tr>
+					<tr *ngFor="let item of response.subsequent_notes">
+						<td class="center-aligned">{{item.creationtime | date:'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="center-aligned">{{item.saEvent}}</td>
+						<td class="center-aligned">{{item.progressnotes}}</td>
+					</tr>
+					<tr *ngIf="response.intakeOutputNote != null && response.intakeOutputNote != ''">
+						<td class="center-aligned">{{hrDiff}} hrs</td>
+						<td class="center-aligned">Intake Output</td>
+						<td class="center-aligned">{{response.intakeOutputNote}}</td>
+					</tr>
+					<tr *ngIf="response.procedureNote != null && response.procedureNote != ''">
+						<td class="center-aligned">{{hrDiff}} hrs</td>
+						<td class="center-aligned">Procedure</td>
+						<td class="center-aligned">{{response.procedureNote}}</td>
+					</tr>
+					<tr *ngIf="response.screeningNote != null && response.screeningNote != ''">
+						<td class="center-aligned">{{hrDiff}} hrs</td>
+						<td class="center-aligned">Screening</td>
+						<td class="center-aligned">{{response.screeningNote}}</td>
+					</tr>
+					<tr *ngIf="response.bloodProductNote != null && response.bloodProductNote != ''">
+						<td class="center-aligned">{{hrDiff}} hrs</td>
+						<td class="center-aligned">Blood Product</td>
+						<td class="center-aligned">{{response.bloodProductNote}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="desktop-column-20 padding-0-x force-left padding-top-2 center-aligned">
+			<div id="footer">
+				<button (click)="setDailyProgressNotes()" class="button button-blue button-large" type="submit">SUBMIT</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="assesment-container" *ngIf="doctorOrderObj != undefined && doctorOrderObj != null && progressNotesTab == 'Order'">
+		<div class="col-md-12 no-padding padding-10-y">
+			<div class="col-md-5"></div>
+			<div class="col-md-2 no-padding">
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" name="doctorOrderDate" id="doctorOrderDate" type="calendar"
+					autoClose=true placeholder="dd-mm-yyyy" dateFormat='DD-MM-YYYY' [(ngModel)]="orderDateObj" [min]="minDate"
+					[max]="maxDate" (ngModelChange)="getDoctorOrders()"></owl-date-time>
+				</div>
+			</div>
+			<div class="col-md-5 right-aligned">
+				<button (click)="printDailyDoctorOrders()" class="button button-blue button-large" type="button">Print</button>
+			</div>
+		</div>
+		<div class="col-md-12 padding-10-y">
+			<div class="col-md-3 no-padding">
+				<span class="bold">Previous Wt : </span>
+					<span *ngIf="doctorOrderObj.basicDetails != undefined && doctorOrderObj.basicDetails != null && doctorOrderObj.basicDetails.prevDateWeight != null">{{doctorOrderObj.basicDetails.prevDateWeight}} gm</span>
+			</div>
+			<div class="col-md-3 no-padding">
+				<span class="bold">Today's Wt : </span>
+				<span *ngIf="doctorOrderObj.basicDetails != undefined && doctorOrderObj.basicDetails != null && doctorOrderObj.basicDetails.currentdateweight != null">{{doctorOrderObj.basicDetails.currentdateweight}} gm</span>
+			</div>
+			<div class="col-md-3 no-padding">
+				<span class="bold">Diff Wt : </span>
+				<span *ngIf="doctorOrderObj.basicDetails != undefined && doctorOrderObj.basicDetails != null && doctorOrderObj.basicDetails.currentdateweight != null && doctorOrderObj.basicDetails.prevDateWeight != null">{{doctorOrderObj.basicDetails.currentdateweight - doctorOrderObj.basicDetails.prevDateWeight}} gm</span>
+			</div>
+			<div class="col-md-3 no-padding">
+				<span class="bold">Working Wt : </span>
+				<span *ngIf="doctorOrderObj.basicDetails != undefined && doctorOrderObj.basicDetails != null && doctorOrderObj.basicDetails.workingweight != null">{{doctorOrderObj.basicDetails.workingweight}} gm</span>
+			</div>
+		</div>
+
+		<div class="table row full padding-10-x no-padding-top">
+			<div class="col-md-12 no-padding padding-10-y no-padding-bottom">
+				<div class="col-md-6 table full">
+
+					<div class="col-md-12 no-padding center-aligned">
+						<h1 class="bold">Frequencies of Procedures</h1>
+					</div>
+
+					<div class="col-md-12 padding-left :20%" *ngIf = "doctorOrderObj.procedureObj == null">
+						No Procedure Orders
+					</div>
+					<div class="col-md-12 no-padding padding-10-y" *ngIf = "doctorOrderObj.procedureObj != null">
+
+						<table class="table table-striped table-bordered headed-table desktop-column-20">
+			        <tr>
+								<td class="center-aligned bold"><span>Procedure Name</span></td>
+			          <td class="center-aligned bold"><span>Duration</span></td>
+			        </tr>
+			        <!-- iterate Anthroprometry Obj -->
+			        <tr *ngFor="let item of doctorOrderObj.procedureObj">
+								<td class="center-aligned" *ngIf = "item.etSuctionType != null"><span>ET Suction</span></td>
+			        	<td class="center-aligned" *ngIf = "item.etSuctionType != null">
+									<span>{{item.etSuctionType}}<span style="padding-left:10px" *ngIf="item.etSuctionType == 'q' && item.etSuctionType != null && item.etSuctionValue != null">
+										{{item.etSuctionValue}} <span *ngIf="item.etSuctionValue > 1"> hrs </span> <span *ngIf="item.etSuctionValue == 1"> hr </span> </span></span>
+								</td>
+							</tr>
+							<tr *ngFor="let item of doctorOrderObj.procedureObj">
+								<td class="center-aligned" *ngIf = "item.abdominalGirthType != null"><span>Abdominal Grith</span></td>
+			        	<td class="center-aligned" *ngIf = "item.abdominalGirthType != null">
+									<span>{{item.abdominalGirthType}}<span style="padding-left:10px" *ngIf="item.abdominalGirthType == 'q' && item.abdominalGirthType != null && item.abdominalGirthValue != null">
+										{{item.abdominalGirthValue}} <span *ngIf="item.abdominalGirthValue > 1"> hrs </span> <span *ngIf="item.abdominalGirthValue == 1"> hr </span> </span></span>
+								</td>
+							</tr>
+							<tr *ngFor="let item of doctorOrderObj.procedureObj">
+								<td class="center-aligned" *ngIf = "item.oralSuctionType != null"><span>Oral Suction</span></td>
+			        	<td class="center-aligned" *ngIf = "item.oralSuctionType != null">
+									<span>{{item.oralSuctionType}}<span style="padding-left:10px" *ngIf="item.oralSuctionType == 'q' && item.oralSuctionType != null && item.oralSuctionValue != null">
+										{{item.oralSuctionValue}} <span *ngIf="item.oralSuctionValue > 1"> hrs </span> <span *ngIf="item.oralSuctionValue == 1"> hr </span> </span></span>
+								</td>
+							</tr>
+							<tr *ngFor="let item of doctorOrderObj.procedureObj">
+								<td class="center-aligned" *ngIf = "item.stomachAspirationType != null"><span>Stomach Aspiration</span></td>
+			        	<td class="center-aligned" *ngIf = "item.stomachAspirationType != null">
+									<span>{{item.stomachAspirationType}}<span style="padding-left:10px" *ngIf="item.stomachAspirationType == 'q' && item.stomachAspirationType != null && item.stomachAspirationValue != null">
+										{{item.stomachAspirationValue}} <span *ngIf="item.stomachAspirationValue > 1"> hrs </span> <span *ngIf="item.stomachAspirationValue == 1"> hr </span> </span></span>
+								</td>
+							</tr>
+							<tr *ngFor="let item of doctorOrderObj.procedureObj">
+								<td class="center-aligned" *ngIf = "item.chestPhysiotherapyType != null"><span>Chest Physiotherapy</span></td>
+			        	<td class="center-aligned" *ngIf = "item.chestPhysiotherapyType != null">
+									<span>{{item.chestPhysiotherapyType}}<span style="padding-left:10px" *ngIf="item.chestPhysiotherapyType == 'q' && item.chestPhysiotherapyType != null && item.chestPhysiotherapyValue != null">
+										{{item.chestPhysiotherapyValue}} <span *ngIf="item.chestPhysiotherapyValue > 1"> hrs </span> <span *ngIf="item.chestPhysiotherapyValue == 1"> hr </span> </span></span>
+								</td>
+							</tr>
+							<tr *ngFor="let item of doctorOrderObj.procedureObj">
+								<td class="center-aligned" *ngIf = "item.bpMeasurementType != null"><span>BP Measurement</span></td>
+			        	<td class="center-aligned" *ngIf = "item.bpMeasurementType != null">
+									<span>{{item.bpMeasurementType}}<span style="padding-left:10px" *ngIf="item.bpMeasurementType == 'q' && item.bpMeasurementType != null && item.bpMeasurementValue != null">
+										{{item.bpMeasurementValue}} <span *ngIf="item.bpMeasurementValue > 1"> hrs </span> <span *ngIf="item.bpMeasurementValue == 1"> hr </span> </span></span>
+								</td>
+							</tr>
+							<tr *ngFor="let item of doctorOrderObj.procedureObj">
+								<td class="center-aligned" *ngIf = "item.positionChangeType != null"><span>Position Change</span></td>
+			        	<td class="center-aligned" *ngIf = "item.positionChangeType != null">
+									<span>{{item.positionChangeType}}<span style="padding-left:10px" *ngIf="item.positionChangeType == 'q' && item.positionChangeType != null && item.positionChangeValue != null">
+										{{item.positionChangeValue}} <span *ngIf="item.positionChangeValue > 1"> hrs </span> <span *ngIf="item.positionChangeValue == 1"> hr </span> </span></span>
+								</td>
+							</tr>
+							<tr *ngFor="let item of doctorOrderObj.procedureObj">
+								<td class="center-aligned" *ngIf = "item.cvpMeasurementType != null"><span>CVP Measurement</span></td>
+			        	<td class="center-aligned" *ngIf = "item.cvpMeasurementType != null">
+									<span>{{item.cvpMeasurementType}}<span style="padding-left:10px" *ngIf="item.cvpMeasurementType == 'q' && item.cvpMeasurementType != null && item.cvpMeasurementValue != null">
+										{{item.cvpMeasurementValue}} <span *ngIf="item.cvpMeasurementValue > 1"> hrs </span> <span *ngIf="item.cvpMeasurementValue == 1"> hr </span> </span></span>
+								</td>
+							</tr>
+							<tr *ngFor="let item of doctorOrderObj.procedureObj">
+								<td class="center-aligned" *ngIf = "item.pulseOximeterType != null"><span>Resite Pulse Oximeter</span></td>
+			        	<td class="center-aligned" *ngIf = "item.pulseOximeterType != null">
+									<span>{{item.pulseOximeterType}}<span style="padding-left:10px" *ngIf="item.pulseOximeterType == 'q' && item.pulseOximeterType != null && item.pulseOximeterValue != null">
+										{{item.pulseOximeterValue}} <span *ngIf="item.pulseOximeterValue > 1"> hrs </span> <span *ngIf="item.pulseOximeterValue == 1"> hr </span> </span></span>
+								</td>
+							</tr>
+							<tr *ngFor="let item of doctorOrderObj.procedureObj">
+								<td class="center-aligned" *ngIf = "item.glucoseStripType != null"><span>Glucose Reagent Strip</span></td>
+			        	<td class="center-aligned" *ngIf = "item.glucoseStripType != null">
+									<span>{{item.glucoseStripType}}<span style="padding-left:10px" *ngIf="item.glucoseStripType == 'q' && item.glucoseStripType != null && item.glucoseStripValue != null">
+										{{item.glucoseStripValue}} <span *ngIf="item.glucoseStripValue > 1"> hrs </span> <span *ngIf="item.glucoseStripValue == 1"> hr </span> </span></span>
+								</td>
+							</tr>
+				    </table>
+					</div>
+				</div>
+
+				<div class="col-md-6 table full">
+					<div class="col-md-12 no-padding center-aligned">
+						<h1 class="bold">Investigation Orders</h1>
+					</div>
+
+					<div class="col-md-12 padding-left :20%" *ngIf = "doctorOrderObj.invOrderedList == null">
+						No Investigation Orders
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y" *ngIf = "doctorOrderObj.invOrderedList != null">
+						<table class="table table-striped table-bordered headed-table desktop-column-20">
+			        <tr>
+								<td class="center-aligned bold"><span>Date</span></td>
+			          <td class="center-aligned bold"><span>Test Name</span></td>
+			        </tr>
+			        <!-- iterate Anthroprometry Obj -->
+			        <tr *ngFor="let item of doctorOrderObj.invOrderedList">
+								<td class="center-aligned" *ngIf = "item.investigationorder_time != null">{{item.investigationorder_time | date:'dd-MM-yyyy hh:mm a'}}</td>
+			        	<td class="center-aligned" *ngIf = "item.testname != null">{{item.testname}}
+								</td>
+							</tr>
+				    </table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="col-md-12 no-padding center-aligned">
+			<h1 class="bold">Feeds</h1>
+		</div>
+		<div class="col-md-12 padding-left :20%" *ngIf = "doctorOrderObj.babyFeedObj == null">
+			No EN Orders
+		</div>
+
+		<div class="col-md-12 padding-left :20%" *ngIf = "doctorOrderObj.babyFeedObj != null">
+				<!-- Code of Table -->
+			<table class="table table-striped table-bordered headed-table desktop-column-20">
+	        <tr >
+						<td class="center-aligned bold">Time</td>
+	          <td class="center-aligned bold">Route</td>
+	          <td class="center-aligned bold">Type of Milk</td>
+	          <td class="center-aligned bold">Volume (ml)</td>
+	          <td class="center-aligned bold">Frequency (hrs)</td>
+	          <td class="center-aligned bold">Additives</td>
+	          <td class="center-aligned bold">Doctor's Name</td>
+
+	        </tr>
+	        <!-- iterate Anthroprometry Obj -->
+	        <tr *ngFor="let item of doctorOrderObj.babyFeedObj">
+						<td class="center-aligned" *ngIf="item != null && item.isenternalgiven == true">{{item.creationtime
+						| date:'dd-MM-yyyy hh:mm a'}}</td>
+	        	<td class="center-aligned" *ngIf="item != null && item.isenternalgiven == true">{{item.feedmethod}}</td>
+	        	<td class="center-aligned" *ngIf="item != null && item.isenternalgiven == true">{{item.feedtype}}</td>
+	          <td class="center-aligned" *ngIf="item != null && item.isenternalgiven == true">{{item.totalfeedMlDay}}</td>
+	          <td class="center-aligned" *ngIf = "item.feedduration != null && item.isenternalgiven == true">{{item.feedduration}}</td>
+	          <td class="center-aligned" *ngIf="item != null && item.isenternalgiven == true">
+						<span>
+							<span *ngIf="item.calsyrupFeed != null && item.calsyrupDuration != null">Calcium Syrup - {{item.calsyrupFeed}} ml/feed in every {{item.calsyrupDuration}} hours</span>
+							<span *ngIf="item.ironFeed != null && item.ironDuration != null">Iron - {{item.ironFeed}} ml/feed in every {{item.ironDuration}} hours</span>
+							<span *ngIf="item.vitaminaFeed != null && item.vitaminaDuration != null">Multi Vitamin - {{item.vitaminaFeed}} ml/feed in every {{item.vitaminaDuration}} hours</span>
+							<span *ngIf="item.vitaminDFeed != null && item.vitaminDDuration != null">Vitamin D - {{item.vitaminDFeed}} ml/feed in every {{item.vitaminDDuration}} hours</span>
+							<span *ngIf="item.otherFeed != null && item.otherDuration != null">{{item.otherAdditive}} - {{item.otherFeed}} ml/feed in every {{item.otherDuration}} hours</span>
+						</span>
+						</td>
+	          <td class="center-aligned" *ngIf="item != null && item.isenternalgiven == true"></td>
+					</tr>
+	    </table>
+		</div>
+
+		<div class="col-md-12 no-padding center-aligned">
+			<h1 class="bold">Fluids</h1>
+		</div>
+		<div class="col-md-12 padding-left :20%" *ngIf = "doctorOrderObj.babyFeedObj == null && doctorOrderObj.bloodProductObj == null && doctorOrderObj.centralLineObj == null && doctorOrderObj.babyPrescriptionList == null">
+			No Fluids Order
+		</div>
+
+		<div class="col-md-12 padding-left :20%" *ngIf = "doctorOrderObj.babyFeedObj != null || doctorOrderObj.bloodProductObj != null || doctorOrderObj.centralLineObj != null || doctorOrderObj.babyPrescriptionList != null">
+			<table class="table table-striped table-bordered headed-table desktop-column-20">
+	        <tr>
+						<td class="center-aligned bold">Time</td>
+	          <td class="center-aligned bold">Instructions</td>
+	          <td class="center-aligned bold">Doctor's Name</td>
+	        </tr>
+	        <!-- iterate PN Obj -->
+	        <tr *ngFor="let item of doctorOrderObj.babyFeedObj">
+						<td class="left-aligned" *ngIf="item != null && item.isparentalgiven == true">{{item.creationtime
+						| date:'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="left-aligned" *ngIf="item != null && item.isparentalgiven == true">
+
+							<div *ngIf = "item.isReadymadeSolutionGiven !=null && item.isReadymadeSolutionGiven ==false" class="col-md-12 no-padding margin-10-y">
+								<span class="bold" *ngIf="(item.bolus_executed == null || item.bolus_executed == false) && item.isBolusGiven && item.bolusType != null">
+								Bolus {{item.bolusType}}	: {{item.bolusTotalFeed}} ml @ {{item.bolus_rate | number:'1.0-1'}} ml/hr over {{item.bolus_infusiontime}} min.<br></span>
+
+								<span class="bold" *ngIf="item.lipidTotal != null">Fluid Type : Lipid Solution<br>Lipids (20%): {{item.lipidTotal}} ml @ {{item.lipidTotal/item.duration | number:'1.0-1'}} ml/hr over {{item.duration}} hrs<br>
+								</span>
+								<span class="bold">Fluid Type : Dextrose, Amino Acid & others (over {{item.duration}} hrs)<br>
+									<span *ngIf="item.aminoacidTotal != null">Amino Acid = {{item.aminoacidTotal}} ml<br></span>
+									<span *ngIf="item.girvalue != null">GIR: {{item.girvalue | number:'1.0-2'}} mg/kg/min<br></span>
+									<span *ngIf="item.currentDextroseConcentration != null && item.dextroseVolumemlperday != null">Dextrose {{item.currentDextroseConcentration | number:'1.0-2'}} %: {{item.dextroseVolumemlperday | number:'1.0-2'}} ml<br></span>
+									<span *ngIf="item.dextroseConcLow != null && item.dextroseConcLowvolume != null">Low Concentration {{item.dextroseConcLow | number:'1.0-1'}} %: {{item.dextroseConcLowvolume | number:'1.0-2'}} ml<br></span>
+									<span *ngIf="item.dextroseConcHigh != null && item.dextroseConcHighvolume != null">High Concentration {{item.dextroseConcHigh | number:'1.0-1'}} %: {{item.dextroseConcHighvolume | number:'1.0-2'}} ml<br></span>
+								</span>
+								<span class="bold">Additive<br>
+									<span class="bold" *ngIf="item.sodiumTotal != null && item.sodiumTotal != ''">NaCl = {{item.sodiumTotal}} ml <br></span>
+									<span class="bold" *ngIf="item.potassiumTotal != null && item.potassiumTotal != ''">KCl = {{item.potassiumTotal}} ml<br></span>
+									<span class="bold" *ngIf="item.calciumTotal != null && item.calciumTotal != ''">Calcium = {{item.calciumTotal}} ml<br></span>
+									<span class="bold" *ngIf="item.phosphorousTotal != null && item.phosphorousTotal != ''">Phosphorus = {{item.phosphorousTotal}} ml<br></span>
+									<span class="bold" *ngIf="item.mviTotal != null && item.mviTotal != ''"> Multi Vitamin Infusion = {{item.mviTotal}} ml<br></span>
+									<span class="bold" *ngIf="item.hco3Total != null && item.hco3Total != ''">NaHCO3 = {{item.hco3Total}} ml<br></span>
+									<span class="bold" *ngIf="item.magnesiumTotal != null && item.magnesiumTotal != ''">Magnesium = {{item.magnesiumTotal}} ml<br></span>
+								</span>
+								<span class="bold">Total Fluid Mix<br>
+									Total {{(item.totalparenteralAdditivevolume + item.aminoacidTotal + item.dextroseVolumemlperday) | number:'1.0-2'}} (ml/day), give @ {{(item.totalparenteralAdditivevolume + item.aminoacidTotal + item.dextroseVolumemlperday) / item.duration | number:'1.0-2'}} ml/hr.
+									<span *ngIf="item.osmolarity != null">Osmolarity: {{item.osmolarity | number:'1.0-2'}} mosmol/L</span>
+								</span>
+							</div>
+
+							<div *ngIf = "item != null && item != undefined && item.isReadymadeSolutionGiven !=null && item.isReadymadeSolutionGiven == true" class="col-md-12 no-padding margin-10-y">
+
+								<span class="bold" *ngIf="(item.bolus_executed == null || item.bolus_executed == false) && item.isBolusGiven && item.bolusType != null">
+								Bolus {{item.bolusType}}	: {{item.bolusTotalFeed}} ml @ {{item.bolus_rate | number:'1.0-1'}} ml/hr over {{item.bolus_infusiontime}} min.<br></span>
+
+								<span class="bold">Fluid Type : Maintenance IV Fluid & Additives<br>
+									<span *ngIf="item.readymadeFluidType != null">{{item.readymadeFluidType}} = {{item.readymadeTotalFluidVolume}} ml over {{item.duration}} hrs<br></span>
+									<span *ngIf="item.girvalue != null">GIR: {{item.girvalue | number:'1.0-2'}} mg/kg/min<br></span>
+								</span>
+								<span class="bold">Additive<br>
+									<span class="bold" *ngIf="item.sodiumTotal != null && item.sodiumTotal != ''">NaCl = {{item.sodiumTotal}} ml <br></span>
+									<span class="bold" *ngIf="item.potassiumTotal != null && item.potassiumTotal != ''">KCl = {{item.potassiumTotal}} ml<br></span>
+									<span class="bold" *ngIf="item.calciumTotal != null && item.calciumTotal != ''">Calcium = {{item.calciumTotal}} ml<br></span>
+									<span class="bold" *ngIf="item.phosphorousTotal != null && item.phosphorousTotal != ''">Phosphorus = {{item.phosphorousTotal}} ml<br></span>
+									<span class="bold" *ngIf="item.mviTotal != null && item.mviTotal != ''"> Multi Vitamin Infusion = {{item.mviTotal}} ml<br></span>
+									<span class="bold" *ngIf="item.hco3Total != null && item.hco3Total != ''">NaHCO3 = {{item.hco3Total}} ml<br></span>
+									<span class="bold" *ngIf="item.magnesiumTotal != null && item.magnesiumTotal != ''">Magnesium = {{item.magnesiumTotal}} ml<br></span>
+								</span>
+								<span class="bold">Total Fluid Mix<br>
+									Total {{(item.totalparenteralAdditivevolume + item.readymadeTotalFluidVolume) | number:'1.0-2'}} (ml/day), give @ {{(item.totalparenteralAdditivevolume + item.readymadeTotalFluidVolume) / item.duration | number:'1.0-2'}} ml/hr.
+									<span *ngIf="item.osmolarity != null">Osmolarity: {{item.osmolarity | number:'1.0-2'}} mosmol/L</span>
+								</span>
+							</div>
+
+						</td>
+	          <td class="left-aligned" *ngIf="item != null && item.isparentalgiven == true"></td>
+					</tr>
+					<!-- iterate Blood Product Obj -->
+
+
+
+
+
+					<tr *ngFor="let item of doctorOrderObj.bloodProductObj">
+						<td class="left-aligned">{{item.assessment_time | date:'dd-MM-yyyy hh:mm a'}}</td>
+
+					 <td class="left-aligned">
+
+					 <p class="bold no-margin" *ngIf="item.bag_number != null && item.bag_number != '' && item.checked_by != null && item.checked_by != ''">
+						 Bag no. {{item.bag_number}} of {{item.blood_group}} blood group, total volume of {{item.bag_volume}} ml with expiry date
+							{{item.expiry_date | date:'dd-MM-yyyy'}} collected on {{item.collection_date | date:'dd-MM-yyyy'}} checked by Dr. {{item.checked_by}}.
+					 </p>
+					 <p class="bold no-margin" *ngIf="item.blood_volume_kg != null && item.blood_volume_kg != '' && item.infusion_time != null && item.infusion_time != ''">
+						 Give {{item.blood_product}} {{item.blood_volume_kg}} ml/kg (total volume {{item.total_volume}} ml) over
+							{{item.infusion_time}} hr @ {{item.infusion_rate}} ml/hr through {{item.venous_access}} vein.
+					 </p>
+					 <p class="bold no-margin">
+						 <span *ngIf="item.vital_time != null && item.vital_time != ''">
+							 Monitor vital every {{item.vital_time}} {{item.vital_time_type}}.
+						 </span>
+						 <span *ngIf="item.plan_test != null && item.plan_test != '' && item.test_time != null && item.test_time != ''">
+							 Repeat {{item.plan_test}} after {{item.test_time}} {{item.test_time_type}}.
+						 </span>
+					 </p>
+
+
+					 </td>
+					 <td class="left-aligned"></td>
+				 </tr>
+				 <!-- iterate Heplock Obj -->
+				 <tr *ngFor="let item of doctorOrderObj.centralLineObj">
+					<td class="left-aligned">{{item.insertion_timestamp | date:'dd-MM-yyyy hh:mm a'}}</td>
+					<td class="left-aligned bold no-margin">{{item.orderString}}</td>
+					<td class="left-aligned"></td>
+				</tr>
+				<!-- iterate Medication Obj -->
+				<tr *ngFor="let item of doctorOrderObj.babyPrescriptionList">
+				 <td class="left-aligned">{{item.startdate | date:'dd-MM-yyyy hh:mm a'}}</td>
+				 <td class="left-aligned bold no-margin">{{item.instruction}}</td>
+				 <td class="left-aligned"></td>
+			 </tr>
+	    </table>
+		</div>
+
+		<br>
+		<div class="col-md-12 table full margin-10-y">
+			<div class="col-md-2 no-padding table-cell print-width-3">
+				<span class="bold">Fluids = </span>
+				<span> {{ ((enVolume + pnVolume + heplockVolume + medVolume + bloodVolume) / weight) | number:'1.0-2'}} ml/kg/day</span>
+			</div>
+			<div class="col-md-2 no-padding table-cell print-width-3">
+				<span class="bold">Glucose = </span>
+				<span> {{ girValue | number:'1.0-2'}} mg/kg/min</span>
+			</div>
+			<div class="col-md-2 no-padding table-cell print-width-3">
+				<span class="bold">Na<sup></sup> = </span><span> {{ sodiumVolume | number:'1.0-2'}} meq/kg/day</span>
+			</div>
+			<div class="col-md-2 no-padding table-cell print-width-3">
+				<span class="bold">K<sup></sup> = </span><span > {{ potassiumTotal | number:'1.0-2'}} meq/kg/day</span>
+			</div>
+			<div class="col-md-2 no-padding table-cell print-width-3">
+				<span class="bold">Mg<sup></sup> = </span><span> {{ magnesiumTotal | number:'1.0-2'}} mg/kg/day</span>
+			</div>
+			<div class="col-md-2 no-padding table-cell print-width-3">
+				<span class="bold">Ca<sup></sup> = </span><span> {{ calciumVolume | number:'1.0-2'}} mg/kg/day</span>
+			</div>
+		</div>
+
+		<div class="table row full padding-10-x no-padding-top" *ngIf = "doctorOrderObj.babyPrescriptionList != null">
+			<span *ngFor="let item of doctorOrderObj.babyPrescriptionList">
+				<!-- <span *ngIf = "item.patient_receive != null">
+					<span class="padding-40-x" style="padding-left:20px">{{item.medicinename}} = {{item.patient_receive}} {{item.dose_unit}}/day</span>
+				</span> -->
+				<span *ngIf = "item.dose != null">
+					<span class="padding-40-x" style="padding-left:20px">{{item.medicinename}} = {{item.dose}} {{item.dose_unit}}/{{item.dose_unit_time}}</span>
+				</span>
+			</span>
+		</div>
+	</div>
+
+
+
+</div>

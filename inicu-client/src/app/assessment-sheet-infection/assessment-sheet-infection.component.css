@@ -1,0 +1,111 @@
+.padding-2-y
+{
+		padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid lightgrey;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 58px;
+}
+
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+.extrawidth{
+	width: 20%;
+}
+.ageatassessment{
+	width: 25%;
+}
+.cft{
+	margin-left: 25px;
+}
+.diast{
+	margin-left: -28px;
+	width: 520px;
+}
+.pulses{
+	position: relative;
+	top: 5px;
+	right: 90px
+}
+.mmhg{
+	width: 55px;
+}
+.sepsisentrytype{
+	width: 20%;
+}
+.peripheraltemp{
+	width: 30%;
+}
+.episode{
+	position: absolute;
+	bottom: 70px;
+	right: 22px
+}
+.owl-dateTime .owl-timer-input{
+	width: 60%;
+	height: 110%
+}
+.medication{
+	width: 12%;
+}
+.bind-score-list ul li input[type=checkbox]~label{
+	margin-left: 0px;
+}
+.manageseizure{
+	width: 17%;
+}
+.manageshock{
+	width: 15%;
+}
+.managehypoglycemia{
+	width: 22%;
+}
+.managerds{
+	width: 25%;
+}
+.clinicalsign{
+	margin-left: 22px;
+}
+.modal-box-lg.showing.levene-popup{
+	overflow-x: scroll;
+}
+.modal-box-lg.showing{
+	position: absolute;
+	top: 80%;
+}
+.ageAtOnset{
+	width: 22%;
+}
+.dateandtime{
+	width: 25%;
+}
+.ageatassessment{
+	width: 22%;
+}
+.vapentrytype{
+	width: 22%;
+
+}
+.clabsiAgeatonset{
+	width: 22%;
+}
+.clabsiAgeAssessment{
+	width: 25%;
+}
+.clabsientrytype{
+	width: 20%;
+}
+.clabsiepisode{
+	padding-right: 20px;
+	position: absolute;
+	bottom: 100px;
+	right: 0px;
+}
+.vapepisode{
+	padding-right: 20px;
+	position: absolute;
+	right: 0px;
+	bottom: 80px
+}
+
+}

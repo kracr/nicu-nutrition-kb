@@ -1,0 +1,7 @@
+alter table apollo.sa_infection_sepsis add column iseditednotes boolean;
+alter table apollo.sa_hypoglycemia add column iseditednotes boolean;
+
+alter table apollo.sa_feed_intolerance add column iseditednotes boolean;
+alter table apollo.sa_cns_asphyxia add column iseditednotes boolean;
+alter table apollo.sa_cns_seizures add column iseditednotes boolean;
+alter table apollo.sa_infection_nec add column iseditednotes boolean;

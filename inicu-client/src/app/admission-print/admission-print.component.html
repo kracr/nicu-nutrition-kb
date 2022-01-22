@@ -1,0 +1,290 @@
+<div *ngIf="admitPatientModel != undefined && admitPatientModel != ''">
+	<div class="background-white">
+		<div class="col-md-12 no-padding center-aligned">
+			<h1 class="bold">Admission Details</h1>
+		</div>
+		<div
+			class="col-md-12 no-padding table full margin-5-y print-width-main">
+			<div
+				class="col-md-12 no-padding table full print-width-main">
+				<h2 class="bold">Baby Details</h2>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Prn No. / UHID :</span><span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.uhid != null">{{admitPatientModel.babyDetailObj.uhid}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Baby Name :</span><span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.babyname != null">{{admitPatientModel.babyDetailObj.babyname}} <span *ngIf="admitPatientModel.babyDetailObj.babyNumber != null">{{admitPatientModel.babyDetailObj.babyNumber}}</span></span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Gender :</span><span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.gender != null">{{admitPatientModel.babyDetailObj.gender}}</span>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Admission Type:</span><span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.inoutPatientStatus != null">{{admitPatientModel.babyDetailObj.inoutPatientStatus}} </span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Neonatologist :</span><span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.admittingdoctor != null">{{admitPatientModel.babyDetailObj.admittingdoctor}}</span>
+			</div>
+			<div
+				class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">NICU Room No. :</span><span *ngIf="admitPatientModel.babyDetailObj.nicuroomno != null"><span *ngFor="let item of dropDownData.nicuRooms"><span *ngIf="item.room.key == admitPatientModel.babyDetailObj.nicuroomno" class="padding-10-x">{{item.room.value}}</span></span></span>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div
+				class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">NICU Bed No. :</span><span *ngIf="admitPatientModel.babyDetailObj.nicubedno != null"><span *ngFor="let item of tempBedArray"><span *ngIf="item.key == admitPatientModel.babyDetailObj.nicubedno" class="padding-10-x">{{item.value}}</span></span></span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">NICU Level:</span>
+				<span *ngIf="admitPatientModel.babyDetailObj.niculevelno != null">
+					<span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.niculevelno == 'LVL01'">L-1 </span>
+					<span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.niculevelno == 'LVL02'">L-2 </span>
+					<span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.niculevelno == 'LVL03'">L-3 </span>
+				</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Criticality :</span>
+				<span *ngIf="admitPatientModel.babyDetailObj.criticalitylevel != null">
+					<span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.criticalitylevel == 'CR01'">Stable</span>
+					<span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.criticalitylevel == 'CR02'">Satisfactory</span>
+					<span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.criticalitylevel == 'CR03'">Sick</span>
+					<span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.criticalitylevel == 'CR04'">Critical</span>
+				</span>
+
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div
+				class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">D.O.B :</span><span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.dateofbirth != null">{{admitPatientModel.babyDetailObj.dobObj | date:'dd - MM - yyyy'}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">T.O.B:</span>
+				<span class="padding-10-x" *ngIf="timeOfBirthStr != null">{{timeOfBirthStr}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Day of Life :</span>
+				<span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.dayoflife != null">{{admitPatientModel.babyDetailObj.dayoflife}}</span>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div
+				class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">D.O.A :</span><span class="padding-10-x" *ngIf="admitPatientModel.babyDetailObj.dateofadmission != null">{{admitPatientModel.babyDetailObj.doaObj | date:'dd - MM - yyyy'}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">T.O.A:</span>
+				<span class="padding-10-x" *ngIf="timeOfAdmissionStr != null">{{timeOfAdmissionStr}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">GA at Birth : </span>
+				<span class="padding-10-x"
+					*ngIf="admitPatientModel.antenatalHistoryObj != null">{{admitPatientModel.antenatalHistoryObj.gestationbyLmpWeeks}}
+					<sup *ngIf="admitPatientModel.antenatalHistoryObj.gestationbyLmpWeeks != null">
+						+ {{admitPatientModel.antenatalHistoryObj.gestationbyLmpDays}}</sup>
+				</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">EDD : </span><span class="padding-10-x">{{admitPatientModel.antenatalHistoryObj.eddTimestamp
+					| date:'dd - MM - yyyy'}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Blood Group : </span><span class="padding-10-x">{{admitPatientModel.babyDetailObj.bloodgroup}}</span>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Birth Weight :</span><span class="padding-10-x"
+					*ngIf="admitPatientModel.babyDetailObj != null">{{admitPatientModel.babyDetailObj.birthweight}}
+					<span
+					*ngIf="admitPatientModel.babyDetailObj.birthweight != null">gm</span>
+				</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Birth Length :</span><span class="padding-10-x"
+					*ngIf="admitPatientModel.babyDetailObj != null">{{admitPatientModel.babyDetailObj.birthlength}}
+					<span
+					*ngIf="admitPatientModel.babyDetailObj.birthlength != null">cm</span>
+				</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Birth HC :</span><span class="padding-10-x"
+					*ngIf="admitPatientModel.babyDetailObj != null">{{admitPatientModel.babyDetailObj.birthheadcircumference}}
+					<span
+					*ngIf="admitPatientModel.babyDetailObj.birthheadcircumference != null">cm</span>
+				</span>
+			</div>
+		</div>
+		<div
+			class="col-md-12 no-padding table full margin-5-y print-width-main">
+			<div
+				class="col-md-12 no-padding table full print-width-main">
+				<h2 class="bold">Mother Details</h2>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Name:</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.mothername != null">{{admitPatientModel.personalDetailObj.mothername}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">D.O.B:</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.motherdob != null">{{admitPatientModel.personalDetailObj.motherdob}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Age:</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.motherage != null">{{admitPatientModel.personalDetailObj.motherage}}</span>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">UHID : </span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.mother_uhid != null">{{admitPatientModel.personalDetailObj.mother_uhid}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Gynacologist : </span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.mother_gynaecologist != null">{{admitPatientModel.personalDetailObj.mother_gynaecologist}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Mobile No. :</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.mother_phone != null">{{admitPatientModel.personalDetailObj.mother_phone}}</span>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-5-y print-width-main">
+			<div class="col-md-12 no-padding table full print-width-main">
+				<h2 class="bold">Father Details</h2>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Name:</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.fathername != null">{{admitPatientModel.personalDetailObj.fathername}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">D.O.B:</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.fatherdobStr != null">{{admitPatientModel.personalDetailObj.fatherdobStr}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Age:</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.fatherage != null">{{admitPatientModel.personalDetailObj.fatherage}}</span>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Mobile No. :</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.father_phone != null">{{admitPatientModel.personalDetailObj.father_phone}}</span>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-5-y print-width-main">
+			<div class="col-md-12 no-padding table full print-width-main">
+				<h2 class="bold">Address</h2>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Address:</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.address != null">{{admitPatientModel.personalDetailObj.address}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Sate:</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.add_state != null">{{admitPatientModel.personalDetailObj.add_state}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">District:</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.add_district != null">{{admitPatientModel.personalDetailObj.add_district}}</span>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y">
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">City :</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.add_city != null">{{admitPatientModel.personalDetailObj.add_city}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4">
+				<span class="bold">Pin Number :</span><span class="padding-10-x" *ngIf="admitPatientModel.personalDetailObj.add_pin != null">{{admitPatientModel.personalDetailObj.add_pin}}</span>
+			</div>
+			<div class="col-md-4 no-padding table-cell print-width-4"></div>
+		</div>
+		<div class="page-break"></div>
+		<div class="col-md-12 no-padding table full margin-5-y print-width-main">
+			<div class="col-md-12 no-padding table full margin-5-y print-width-main">
+				<h2 class="bold">Initial Assessment</h2>
+			</div>
+		</div>
+		<div
+			class="col-md-12 no-padding table full margin-10-y print-width-main" *ngIf="admitPatientModel.admissionNotesObj.reason_admission != null || admitPatientModel.admissionNotesObj.reason_admission != ''">
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main">
+				<span class="bold">Reason For Admission : </span>
+			</div>
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main"
+				>
+				{{admitPatientModel.admissionNotesObj.reason_admission}}</div>
+		</div>
+		<div
+			class="col-md-12 no-padding table full margin-10-y print-width-main" *ngIf="admitPatientModel.admissionNotesObj.antenatal_history != null || admitPatientModel.admissionNotesObj.antenatal_history != ''">
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main">
+				<span class="bold">Antenatal History : </span>
+			</div>
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main"
+				>
+				{{admitPatientModel.admissionNotesObj.antenatal_history}}</div>
+		</div>
+		<div
+			class="col-md-12 no-padding table full margin-10-y print-width-main" *ngIf="admitPatientModel.admissionNotesObj.birth_to_inicu != null || admitPatientModel.admissionNotesObj.birth_to_inicu != ''">
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main">
+				<span class="bold">Birth to NICU : </span>
+			</div>
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main"
+				>
+				{{admitPatientModel.admissionNotesObj.birth_to_inicu}}</div>
+		</div>
+		<div
+			class="col-md-12 no-padding table full margin-10-y print-width-main" *ngIf="admitPatientModel.admissionNotesObj.status_at_admission != null || admitPatientModel.admissionNotesObj.status_at_admission != ''">
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main">
+				<span class="bold">Status at Admission : </span>
+			</div>
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main"
+				>
+				{{admitPatientModel.admissionNotesObj.status_at_admission}}</div>
+		</div>
+		<div
+			class="col-md-12 no-padding table full margin-10-y print-width-main" *ngIf="admitPatientModel.admissionNotesObj.gen_phy_exam != null || admitPatientModel.admissionNotesObj.gen_phy_exam != ''">
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main">
+				<span class="bold">Gen. Phys. Examination : </span>
+			</div>
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main"
+				>
+				{{admitPatientModel.admissionNotesObj.gen_phy_exam}}</div>
+		</div>
+		<div class="col-md-12 no-padding table full margin-10-y print-width-main" *ngIf="admitPatientModel.admissionNotesObj.diagnosis != null || admitPatientModel.admissionNotesObj.diagnosis != '' || admitPatientModel.admissionNotesObj.systemic_exam != null || admitPatientModel.admissionNotesObj.systemic_exam != ''">
+			<div class="col-md-12 no-padding table full margin-5-y print-width-main">
+				<h3 class="bold">Systemic Examination : </h3>
+			</div>
+		</div>
+		<div
+			class="col-md-12 no-padding table full margin-10-y print-width-main" *ngIf="admitPatientModel.admissionNotesObj.systemic_exam != null || admitPatientModel.admissionNotesObj.systemic_exam != ''" style="margin-left: 10px !important">
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main">
+				<span class="bold">Initial Assessment Progress Notes : </span>
+			</div>
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main"
+				>
+				{{admitPatientModel.admissionNotesObj.systemic_exam}}</div>
+		</div>
+		<div
+			class="col-md-12 no-padding table full margin-10-y print-width-main" *ngIf="admitPatientModel.admissionNotesObj.diagnosis != null || admitPatientModel.admissionNotesObj.diagnosis != ''" style="margin-left: 10px !important">
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main">
+				<span class="bold">Diagnosis : </span>
+			</div>
+			<div
+				class="col-md-12 no-padding table full margin-5-y print-width-main"
+				>
+				{{admitPatientModel.admissionNotesObj.diagnosis}}</div>
+		</div>
+	</div>
+</div>

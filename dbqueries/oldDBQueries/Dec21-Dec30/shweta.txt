@@ -1,0 +1,40 @@
+
+-- SEQUENCE: kdah.nursing_notes_history_seq
+
+-- DROP SEQUENCE kdah.nursing_notes_history_seq;
+
+CREATE SEQUENCE kdah.nursing_notes_history_seq
+    INCREMENT 1
+    START 29643
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE kdah.nursing_notes_history_seq
+    OWNER TO postgres;
+
+
+
+-- Table: kdah.nursing_notes_history
+
+-- DROP TABLE kdah.nursing_notes_history;
+
+CREATE TABLE kdah.nursing_notes_history
+(
+    nursing_notes_history_id bigint NOT NULL DEFAULT nextval('kdah.nursing_notes_history_seq'::regclass),
+    creationtime timestamp with time zone NOT NULL,
+    uhid character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    nursing_notes_id bigint NOT NULL,
+    from_time timestamp with time zone NOT NULL,
+    to_time timestamp with time zone NOT NULL,
+    nursing_notes text COLLATE pg_catalog."default" NOT NULL,
+    loggeduser character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT nursing_notes_history_pkey PRIMARY KEY (nursing_notes_history_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE kdah.nursing_notes_history
+    OWNER to postgres;

@@ -1,0 +1,2253 @@
+<div class="background-white font-size">
+	<div class="col-md-12 print-width-12 col-print-12 no-padding table full margin-5-y display-flex">
+		<div class="col-md-4 print-width-4 no-padding table-cell">
+			<span class="bold">UHID :</span><span class="padding-10-x  "
+				*ngIf="childData.uhid != null">{{childData.uhid}}</span>
+		</div>
+		<div class="col-md-4 print-width-4 no-padding table-cell">
+			<span class="bold  ">Baby Name : </span><span class="padding-10-x  " *ngIf="childData.name != null">{{childData.name}} <span *ngIf="childData.babyNumber != null" class=" ">{{childData.babyNumber}}</span></span>
+		</div>
+		<div class="col-md-4 print-width-4 no-padding table-cell">
+			<span class="bold">Gestation : </span>
+			<span *ngIf="childData.gestation != null">
+				<span class="padding-10-x" *ngIf="this.gestationWeeks != null">
+					{{this.gestationWeeks}} <sup *ngIf="this.gestationDays != null"> + {{this.gestationDays}}</sup>
+				</span>
+			</span>
+		</div>
+	</div>
+	<div class="col-md-12 print-width-12 col-print-12 no-padding table full margin-5-y display-flex">
+		<div class="col-md-4 print-width-4 no-padding table-cell">
+			<span class="bold ">Gender : </span><span class="padding-10-x  " *ngIf="childData.uhid != null">{{childData.gender}}</span>
+		</div>
+		<div class="col-md-4 print-width-4 no-padding table-cell">
+			<span class="bold">DOB : </span>
+			<span class="padding-10-x" *ngIf="childData.dob != null">{{childData.dob | date:'dd-MM-yyyy'}}</span>
+		</div>
+		<div class="col-md-4 print-width-4 no-padding table-cell">
+			<span class="bold">Today's Weight :</span><span class="padding-10-x  " *ngIf="childData.todayWeight != null">{{childData.todayWeight}} gm</span>
+		</div>
+	</div>
+	<div class="col-md-12 col-print-12 no-padding table full margin-5-y print-width-12 display-flex">
+		<div class="col-md-4 print-width-4 no-padding table-cell">
+			<span class="bold" >From : </span>
+			<span class="padding-10-x" *ngIf="printDataObj.from_time != null">
+				{{printDataObj.from_time | date:'dd-MM-yyyy hh:mm a'}}
+			</span>
+		</div>
+		<div class="col-md-4 print-width-4 no-padding table-cell">
+			<span class="bold">To : </span>
+			<span class="padding-10-x" *ngIf="printDataObj.to_time != null">
+				{{printDataObj.to_time | date:'dd-MM-yyyy hh:mm a'}}
+			</span>
+		</div>
+
+	</div>
+	<!-- <div class="col-md-12 col-print-12 no-padding table full margin-5-y print-width-12">
+
+		<div class="col-md-4 no-padding table-cell print-width-4"></div>
+	</div> -->
+	<div class="col-md-12 print-width-12 col-print-12 no-padding table full margin-5-y display-flex" *ngIf="printDataObj.whichTab == 'Nursing-output'">
+		<span class="bold">Alarm Set</span>
+		<div class="col-md-4 print-width-4 col-print-4 no-padding table-cell" *ngIf="nursingOutputData.stableNoteObj.hrAlarmHi != null
+			|| nursingOutputData.stableNoteObj.hrAlarmLo != null"  >
+			<span class="bold">   HR : </span>
+			<span class="bold padding-10-x" *ngIf="nursingOutputData.stableNoteObj.hrAlarmHi != null">High : </span><span *ngIf="nursingOutputData.stableNoteObj.hrAlarmHi != null">{{nursingOutputData.stableNoteObj.hrAlarmHi}}</span>
+			<span class="bold padding-10-x" *ngIf="nursingOutputData.stableNoteObj.hrAlarmLo != null">Low : </span><span *ngIf="nursingOutputData.stableNoteObj.hrAlarmLo != null">{{nursingOutputData.stableNoteObj.hrAlarmLo}}</span>
+		</div>
+		<div class="col-md-4 print-width-4 col-print-4 no-padding table-cell" *ngIf="nursingOutputData.stableNoteObj.spo2AlarmHi != null ||
+		nursingOutputData.stableNoteObj.spo2AlarmLo != null">
+			<span class="bold">SpO<sub>2</sub> : </span>
+			<span class="bold padding-10-x">High : </span><span *ngIf="nursingOutputData.stableNoteObj.spo2AlarmHi != null">{{nursingOutputData.stableNoteObj.spo2AlarmHi}}</span>
+			<span class="bold padding-10-x">Low : </span><span *ngIf="nursingOutputData.stableNoteObj.spo2AlarmLo != null">{{nursingOutputData.stableNoteObj.spo2AlarmLo}}</span>
+		</div>
+		<div class="col-md-4 print-width-4 col-print-4 no-padding table-cell" *ngIf="nursingOutputData.stableNoteObj.ettFixed != null" >
+			<span class="bold">ETT fixed at : {{nursingOutputData.stableNoteObj.ettFixed}} <span *ngIf="nursingOutputData.stableNoteObj.ettFixed != null">cm</span></span>
+		</div>
+	</div>
+	<div class="col-md-12 print-width-12 col-print-12 no-padding table full margin-5-y display-flex" *ngIf="printDataObj.whichTab == 'Nursing-output'">
+		<div class="col-md-4 print-width-4 col-print-4 no-padding table-cell" *ngIf="nursingOutputData.stableNoteObj.ettSuction != null" >
+			<span class="bold">ET suction cath. Depth: {{nursingOutputData.stableNoteObj.ettSuction}} <span *ngIf="nursingOutputData.stableNoteObj.ettSuction != null">cm</span> </span>
+		</div>
+		<div class="col-md-4 print-width-4 col-print-4 no-padding table-cell" *ngIf="nursingOutputData.stableNoteObj.incubatorHumidity != null">
+				<span class="bold">Incubator Humidity set : {{nursingOutputData.stableNoteObj.incubatorHumidity}}</span>
+		</div>
+		<div class="col-md-4 print-width-4 col-print-4 no-padding table-cell" *ngIf="nursingOutputData.stableNoteObj.airSkinModeTemp != null" >
+				<span class="bold">Temp Set= {{nursingOutputData.stableNoteObj.airSkinModeTemp}}<span *ngIf="nursingOutputData.stableNoteObj.airSkinModeTemp != null"><sup>o</sup>C</span></span>
+		</div>
+	</div>
+	<!-- <div class="col-md-12 col-print-12 no-padding table full margin-5-y print-width-12" *ngIf="printDataObj.whichTab == 'Nursing-output'">
+
+
+
+	</div> -->
+	<div
+		class="col-md-12 col-print-12 no-padding table full margin-10-y center-aligned">
+		<div class="col-md-12 col-print-12 no-padding table-cell">
+			<span class="print-heading"><span
+				*ngIf="printDataObj != undefined">{{printDataObj.whichTab}}</span></span>
+		</div>
+	</div>
+	<div *ngIf="printDataObj.whichTab != 'Nursing-output'">
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="printDataObj.whichTab == 'Vital Parameters'">
+			<table
+				class="table table-striped table-bordered headed-table"
+				*ngIf="printDataObj.vitalList.length != 0">
+				<tr class="border-black">
+					<td class="center-aligned border-black">Date</td>
+					<td class="center-aligned border-black">Position</td>
+					<td class="center-aligned border-black">Baby Color</td>
+					<td class="center-aligned border-black">HR(bpm)</td>
+					<td class="center-aligned border-black">SpO<sub>2</sub></td>
+					<td class="center-aligned border-black">RR(bpm)</td>
+					<td class="center-aligned border-black">PR(bpm)</td>
+					<td class="center-aligned border-black">NIBP</td>
+					<td class="center-aligned border-black">IBP</td>
+					<td class="center-aligned border-black">Central Temp (C)</td>
+					<td class="center-aligned border-black">Peripheral Temp (C)</td>
+					<td class="center-aligned border-black">CFT</td>
+					<td class="center-aligned border-black">RBS</td>
+					<td class="center-aligned border-black">TCB</td>
+				</tr>
+				<tr *ngFor="let vitalObj  of  printDataObj.vitalList">
+					<td class="center-aligned border-black">{{vitalObj.userDate |
+						date:'dd-MM-yyyy'}}<span> {{vitalObj.nnVitalparameterTime}}</span>
+					</td>
+					<td class="center-aligned border-black">{{vitalObj.vpPosition}}</td>
+					<td class="center-aligned border-black">{{vitalObj.baby_color}}</td>
+					<td class="center-aligned border-black">{{vitalObj.hrRate}}</td>
+					<td class="center-aligned border-black">{{vitalObj.spo2}}</td>
+					<td class="center-aligned border-black">{{vitalObj.rrRate}}</td>
+					<td class="center-aligned border-black">{{vitalObj.pulserate}}</td>
+					<td class="center-aligned border-black"><span
+						*ngIf="vitalObj.systBp != null && vitalObj.systBp != undefined  && vitalObj.systBp != '' ">{{vitalObj.systBp}}/{{vitalObj.diastBp}}
+							({{vitalObj.meanBp}})</span></td>
+					<td class="center-aligned border-black"><span
+						*ngIf="vitalObj.systiBp != null && vitalObj.systiBp != undefined  && vitalObj.systiBp != '' ">{{vitalObj.systiBp}}/{{vitalObj.diastiBp}}
+							({{vitalObj.meaniBp}})</span></td>
+					<td class="center-aligned border-black">{{vitalObj.centraltemp}}</td>
+					<td class="center-aligned border-black">{{vitalObj.peripheraltemp}}</td>
+					<td class="center-aligned border-black">{{vitalObj.cft}}</td>
+					<td class="center-aligned border-black">{{vitalObj.rbs}}</td>
+					<td class="center-aligned border-black">{{vitalObj.tcb}}</td>
+				</tr>
+			</table>
+			<span class="bold" *ngIf="printDataObj.vitalList.length == 0">
+				No Vitals Found</span>
+		</div>
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="printDataObj.whichTab =='Events'">
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20"
+				*ngIf="printDataObj.episodeList.length != 0">
+				<tr class="border-black">
+					<td class="center-aligned border-black">Time</td>
+					<td class="center-aligned border-black">Seizures</td>
+					<td class="center-aligned border-black">Symptomatic</td>
+					<td class="center-aligned border-black">Duration (Seizures)</td>
+					<td class="center-aligned border-black">Type</td>
+					<td class="center-aligned border-black">Apnea</td>
+					<td class="center-aligned border-black">Duration (Apnea)</td>
+					<td class="center-aligned border-black">Min Spo<sub>2</sub>(%)</td>
+					<td class="center-aligned border-black">Bradycardia</td>
+					<td class="center-aligned border-black">Min HR(per min)</td>
+					<td class="center-aligned border-black">Recovery</td>
+				</tr>
+				<tr class="border-black"
+					*ngFor="let eventObj of printDataObj.episodeList.slice().reverse()">
+					<td class="center-aligned">{{eventObj.creationtime |
+						date:'dd-MM-yyyy hh:mm a'}}</td>
+					<td class="center-aligned border-black" *ngIf="eventObj.seizures">Yes</td>
+					<td class="center-aligned border-black" *ngIf="!eventObj.seizures">No</td>
+					<td class="center-aligned border-black"
+						*ngIf="eventObj.symptomaticStatus">Yes</td>
+					<td class="center-aligned border-black"
+						*ngIf="!eventObj.symptomaticStatus">No</td>
+					<td class="center-aligned border-black"><span
+						*ngIf="eventObj.duration_unit_seizure == 'hr'">{{eventObj.seizureDuration}}
+							hrs</span> <span *ngIf="eventObj.duration_unit_seizure == 'min'">{{eventObj.seizureDuration}}
+							min</span> <span *ngIf="eventObj.duration_unit_seizure == 'sec'">{{eventObj.seizureDuration}}
+							sec</span> <span *ngIf="eventObj.duration_unit_seizure == null">{{eventObj.seizureDuration}}</span>
+					</td>
+					<td class="center-aligned border-black">{{eventObj.seizureType}}</td>
+					<td class="center-aligned border-black" *ngIf="eventObj.apnea">Yes</td>
+					<td class="center-aligned border-black" *ngIf="!eventObj.apnea">No</td>
+
+					<td class="center-aligned"
+						(click)="populateNursingObserVationSheetEvent(this.eventObj)">
+						<span *ngIf="eventObj.duration_unit_apnea == 'min'">{{eventObj.apneaDuration}}
+							min</span> <span *ngIf="eventObj.duration_unit_apnea == 'sec'">{{eventObj.apneaDuration}}
+							sec</span> <span *ngIf="eventObj.duration_unit_apnea == null">{{eventObj.apneaDuration}}</span>
+					</td>
+
+					<td class="center-aligned border-black">{{eventObj.spo2}}</td>
+					<td class="center-aligned border-black"
+						*ngIf="eventObj.bradycardia">Yes</td>
+					<td class="center-aligned border-black"
+						*ngIf="!eventObj.bradycardia">No</td>
+					<td class="center-aligned border-black">{{eventObj.hr}}</td>
+					<td class="center-aligned border-black">{{eventObj.recovery}}</td>
+				</tr>
+			</table>
+			<span class="bold" *ngIf="printDataObj.episodeList.length == 0">
+				No Events Data Found</span>
+		</div>
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="printDataObj.whichTab =='Ventilator'">
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20">
+				<tr class="border-black">
+					<td class="center-aligned border-black">Date</td>
+					<td class="center-aligned border-black">Time</td>
+					<td class="center-aligned border-black">Vent Mode</td>
+					<td class="center-aligned border-black">PIP</td>
+					<td class="center-aligned border-black">PEEP/CPAP</td>
+					<td class="center-aligned border-black">Press Supp</td>
+					<td class="center-aligned border-black">MAP</td>
+					<td class="center-aligned border-black">Freq Rate</td>
+					<td class="center-aligned border-black">Tidal Vol.</td>
+					<td class="center-aligned border-black">Min Vol.</td>
+					<td class="center-aligned border-black">Ti</td>
+					<td class="center-aligned border-black">FiO<sub>2</sub></td>
+					<td class="center-aligned border-black">Flow Per Min</td>
+				</tr>
+				<tr class="border-black"
+					*ngFor="let ventilator of printDataObj.ventilatorList.slice().reverse()">
+					<td class="center-aligned border-black">{{ventilator.userDate}}</td>
+					<td class="center-aligned border-black">{{ventilator.nnVentilaorTime}}</td>
+					<td class="center-aligned border-black">
+						<div *ngFor="let item of printDataObj.ventilatorMode">
+							<div *ngIf="ventilator.ventmode == item.key">{{item.value}}</div>
+						</div>
+					</td>
+					<td class="center-aligned border-black">{{ventilator.pip}}</td>
+					<td class="center-aligned border-black">{{ventilator.peepCpap}}</td>
+					<td class="center-aligned border-black">{{ventilator.pressureSupply}}</td>
+					<td class="center-aligned border-black">{{ventilator.map}}</td>
+					<td class="center-aligned border-black">{{ventilator.freqRate}}</td>
+					<td class="center-aligned border-black">{{ventilator.tidalVolume}}</td>
+					<td class="center-aligned border-black">{{ventilator.minuteVolume}}</td>
+					<td class="center-aligned border-black">{{ventilator.ti}}</td>
+					<td class="center-aligned border-black">{{ventilator.fio2}}</td>
+					<td class="center-aligned border-black">{{ventilator.flowPerMin}}</td>
+				</tr>
+			</table>
+			<span class="bold" *ngIf="printDataObj.ventilatorList.length == 0">
+				No Ventilator Data Found</span>
+		</div>
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="printDataObj.whichTab =='Blood Gas'">
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20"
+				*ngIf="printDataObj.bloodGasList != null && printDataObj.bloodGasList != undefined && printDataObj.bloodGasList.length != 0">
+				<tr class="border-black">
+					<td class="center-aligned border-black">Date</td>
+					<td class="center-aligned border-black">Time</td>
+					<td class="center-aligned border-black">Sample Type</td>
+					<td class="center-aligned border-black">pH</td>
+					<td class="center-aligned border-black">pCO<sub>2</sub></td>
+					<td class="center-aligned border-black">pO<sub>2</sub></td>
+					<td class="center-aligned border-black">HCO<sub>3</sub><sup>-</sup>(Regular)
+					</td>
+					<td class="center-aligned border-black">HCO<sub>3</sub><sup>-</sup>(Standard)
+					</td>
+					<td class="center-aligned border-black">BE (Blood)</td>
+					<td class="center-aligned border-black">BE (ECF)</td>
+					<td class="center-aligned border-black">SpO<sub>2</sub></td>
+					<td class="center-aligned border-black">Lactate</td>
+					<td class="center-aligned border-black">Na<sup>+</sup></td>
+					<td class="center-aligned border-black">K<sup>+</sup></td>
+					<td class="center-aligned border-black">Cl <sup> - </sup></td>
+					<td class="center-aligned border-black">Glucose</td>
+					<td class="center-aligned border-black">Calcium</td>
+					<td class="center-aligned border-black">Hct</td>
+					<td class="center-aligned border-black">THbc</td>
+				</tr>
+				<tr class="border-black"
+					*ngFor="let bloodGas of printDataObj.bloodGasList.slice().reverse()">
+					<td class="center-aligned border-black">{{bloodGas.userDate}}</td>
+					<td class="center-aligned border-black">{{bloodGas.nnBloodgasTime}}</td>
+					<td class="center-aligned border-black">{{bloodGas.sampleType}}</td>
+					<td class="center-aligned border-black">{{bloodGas.ph}}</td>
+					<td class="center-aligned border-black">{{bloodGas.pco2}}</td>
+					<td class="center-aligned border-black">{{bloodGas.po2}}</td>
+					<td class="center-aligned border-black">{{bloodGas.regular_hco3}}</td>
+					<td class="center-aligned border-black">{{bloodGas.hco2}}</td>
+					<td class="center-aligned border-black">{{bloodGas.be}}</td>
+					<td class="center-aligned border-black">{{bloodGas.be_ecf}}</td>
+					<td class="center-aligned border-black">{{bloodGas.spo2}}</td>
+					<td class="center-aligned border-black">{{bloodGas.lactate}}</td>
+					<td class="center-aligned border-black">{{bloodGas.na}}</td>
+					<td class="center-aligned border-black">{{bloodGas.k}}</td>
+					<td class="center-aligned border-black">{{bloodGas.cl}}</td>
+					<td class="center-aligned border-black">{{bloodGas.glucose}}</td>
+					<td class="center-aligned border-black">{{bloodGas.ionized_calcium}}</td>
+					<td class="center-aligned border-black">{{bloodGas.hct}}</td>
+					<td class="center-aligned border-black">{{bloodGas.thbc}}</td>
+
+				</tr>
+			</table>
+			<span class="bold" *ngIf="printDataObj.bloodGasList.length == 0">
+				No Blood Gas Data Found</span>
+		</div>
+
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="printDataObj.whichTab =='Intake/Output'">
+			<div class="col-md-12 col-print-12 no-padding">
+				<div class="col-md-6 col-print-6 no-padding">
+					<span class="bold">Total Intake = </span><span
+						*ngIf="totalFeed != undefined">{{totalFeed}} ml</span>
+				</div>
+				<div class="col-md-6 col-print-6 no-padding">
+					<span class="bold">Total Output = </span><span
+						*ngIf="urineMlKgHr != undefined">{{urineMlKgHr |
+						number:'1.0-2'}} ml/kg/hr</span>
+				</div>
+			</div>
+			<h2 class="bold padding-10-y" *ngIf="isOutputSummary == true">Output
+				Summary</h2>
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20"
+				*ngIf="printDataObj.intakeOutputList.length != 0 && isOutputSummary == true">
+				<tr class="border-black">
+					<td class="center-aligned border-black">Date & Time</td>
+					<td class="center-aligned border-black">Abd Girth.</td>
+					<td class="center-aligned border-black">Gastric Aspirate</td>
+					<td class="center-aligned border-black">Urine</td>
+					<td class="center-aligned border-black">Cummulative Urine</td>
+					<td class="center-aligned border-black">Stool</td>
+					<td class="center-aligned border-black">Vomit</td>
+					<td class="center-aligned border-black">Drain</td>
+					<td class="center-aligned border-black">Comments</td>
+				</tr>
+				<tr
+					*ngFor="let item of printDataObj.intakeOutputList.slice().reverse()"
+					[hidden]="item.abdomenGirth == null && item.gastricAspirate == null && item.urine == null && item.stool == null && item.vomit == null && item.drain == null && item.outputComment == null"
+					class="border-black">
+					<td class="center-aligned border-black">{{item.entry_timestamp
+						| date:'dd-MM-yyyy'}} {{item.nursingEntryTime}}</td>
+					<td class="center-aligned border-black">{{item.abdomenGirth}}</td>
+					<td class="center-aligned border-black">{{item.gastricAspirate}}</td>
+					<td class="center-aligned border-black">{{item.urine}}<span *ngIf="item.urinePassed != null && item.urine == null"> Passed</span></td>
+					<td class="center-aligned border-black">{{item.cummulativeUrine}}</td>
+					<td class="center-aligned border-black">{{item.stool}}<span *ngIf="item.stoolPassed != null && item.stool == null"> Passed</span></td>
+					<td class="center-aligned border-black">{{item.vomit}}<span
+						*ngIf="item.vomitColor != null"> - {{item.vomitColor}}</span><span *ngIf="item.vomitPassed != null && item.vomitColor == null && item.vomit == null && item.vomitPassed == true"> Yes</span> <span *ngIf="item.vomitPassed != null && item.vomitColor == null && item.vomit == null && item.vomitPassed == false"> No</span></td>
+					<td class="center-aligned border-black">{{item.drain}}</td>
+					<td class="center-aligned border-black">{{item.outputComment}}</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="col-md-12 col-print-12 no-padding"
+			*ngIf="totalUrine != undefined && isOutputSummary == true"
+			style="margin-bottom: 0px">
+			<div class="col-md-6 col-print-6 no-padding">
+				<span class="bold">Total Urine Output = </span><span>{{totalUrine}}
+					ml</span>
+			</div>
+		</div>
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="printDataObj.whichTab =='Intake/Output'">
+
+			<h2 class="bold padding-10-y" *ngIf="isEnteralSummary != 0">Enteral
+				Summary</h2>
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20"
+				*ngIf="printDataObj.intakeOutputList.length != 0 && isEnteralSummary == true">
+				<tr class="border-black">
+					<td class="center-aligned border-black">Date & Time</td>
+					<td class="center-aligned border-black">Feed Type</td>
+					<td class="center-aligned border-black">Primary Feed</td>
+					<td class="center-aligned border-black">Formula Feed</td>
+					<td class="center-aligned border-black">Total</td>
+					<td class="center-aligned border-black">Total Cummulative</td>
+					<td class="center-aligned border-black">Comments</td>
+				</tr>
+				<tr
+					*ngFor="let item of printDataObj.intakeOutputList.slice().reverse()"
+					[hidden]="item.primaryFeedValue == null && item.formulaValue == null && item.actualFeed == null && item.enteralComment == null"
+					class="border-black">
+					<td class="center-aligned border-black">{{item.entry_timestamp
+						| date:'dd-MM-yyyy'}} {{item.nursingEntryTime}}</td>
+					<td class="center-aligned border-black">{{item.route}}</td>
+					<td class="center-aligned border-black">
+						<div
+							*ngIf="refFeedTypeList != undefined && item.primaryFeedValue != null">
+							<div class="bold" *ngFor="let option of refFeedTypeList">
+								<span *ngIf="option.feedtypeid == item.primaryFeedType">
+									<div>{{option.feedtypename}}</div>
+									<div>{{item.primaryFeedValue}}</div>
+								</span>
+							</div>
+						</div>
+					</td>
+					<td class="center-aligned border-black">
+						<div
+							*ngIf="refFeedTypeList != undefined && item.formulaValue != null">
+							<div class="bold" *ngFor="let option of refFeedTypeList">
+								<span *ngIf="option.feedtypeid == item.formulaType">
+									<div>{{option.feedtypename}}</div>
+									<div>{{item.formulaValue}}</div>
+								</span>
+							</div>
+						</div>
+					</td>
+					<td class="center-aligned border-black">{{item.actualFeed}}</td>
+					<td class="center-aligned border-black">{{item.cummulativeEn}}</td>
+					<td class="center-aligned border-black">{{item.enteralComment}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			style="margin-bottom: 0px"
+			*ngIf="totalEn != undefined && isEnteralSummary == true">
+			<div class="col-md-6 col-print-6 no-padding">
+				<span class="bold">Total EN Feed = </span><span>{{totalEn}}
+					ml</span>
+			</div>
+		</div>
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="printDataObj.whichTab =='Intake/Output'">
+
+			<h2 class="bold padding-10-y" *ngIf="isParenteralSummary != 0">Parenteral
+				Summary</h2>
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20"
+				*ngIf="printDataObj.intakeOutputList.length != 0 && isParenteralSummary == true">
+				<tr class="border-black">
+					<td class="center-aligned border-black">Date & Time</td>
+					<td class="center-aligned border-black">Lipid Total Vol.</td>
+					<td class="center-aligned border-black">Lipid Delivered Vol.</td>
+					<td class="center-aligned border-black">Lipid Remaining Vol.</td>
+					<td class="center-aligned border-black">TPN Total Vol.</td>
+					<td class="center-aligned border-black">TPN Delivered Vol.</td>
+					<td class="center-aligned border-black">TPN Remaining Vol.</td>
+					<td class="center-aligned border-black">Readymade Total Vol.</td>
+					<td class="center-aligned border-black">Readymade Delivered Vol.</td>
+					<td class="center-aligned border-black">Readymade Remaining Vol.</td>
+					<td class="center-aligned border-black">Comments</td>
+				</tr>
+				<tr
+					*ngFor="let item of printDataObj.intakeOutputList.slice().reverse()"
+					[hidden]="item.lipid_delivered == null && item.tpn_delivered == null && item.parenteralComment == null"
+					class="border-black">
+					<td class="center-aligned border-black">{{item.entry_timestamp
+						| date:'dd-MM-yyyy'}} {{item.nursingEntryTime}}</td>
+					<td class="center-aligned border-black">{{item.lipid_total_volume}}</td>
+					<td class="center-aligned border-black">{{item.lipid_delivered}}</td>
+					<td class="center-aligned border-black">{{item.lipid_remaining}}</td>
+					<td class="center-aligned border-black">{{item.tpn_total_volume}}</td>
+					<td class="center-aligned border-black">{{item.tpn_delivered}}</td>
+					<td class="center-aligned border-black">{{item.tpn_remaining}}</td>
+					<td class="center-aligned border-black">{{item.readymadeTotalFeed}}</td>
+					<td class="center-aligned border-black">{{item.readymadeDeliveredFeed}}</td>
+					<td class="center-aligned border-black">{{item.readymadeRemainingFeed}}</td>
+					<td class="center-aligned border-black">{{item.parenteralComment}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="totalPn != undefined && isParenteralSummary == true"
+			style="margin-bottom: 0px">
+			<div class="col-md-6 col-print-6 no-padding">
+				<span class="bold">Total PN Feed = </span><span>{{totalPn}}
+					ml</span>
+			</div>
+		</div>
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="printDataObj.whichTab =='Intake/Output'">
+			<h2 class="bold padding-10-y" *ngIf="isOtherAdditivesSummary != 0">Other
+				Additives Summary</h2>
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20"
+				*ngIf="printDataObj.intakeOutputList.length != 0 && isOtherAdditivesSummary == true">
+				<tr class="border-black">
+					<td class="center-aligned border-black">Date & Time</td>
+					<td class="center-aligned border-black">Calcium Total Vol</td>
+					<td class="center-aligned border-black">Iron Total Vol</td>
+					<td class="center-aligned border-black">Multi vit. Total</td>
+					<td class="center-aligned border-black">Vitamin D Total</td>
+				</tr>
+				<tr
+					*ngFor="let item of printDataObj.intakeOutputList.slice().reverse()"
+					[hidden]="item.calciumVolume == null && item.ironVolume == null && item.mvVolume == null && item.otherAdditiveVolume == null && item.calciumComment == null && item.ironComment == null && item.mvComment == null && item.otherAdditiveComment == null"
+					class="border-black">
+					<td class="center-aligned border-black">{{item.entry_timestamp
+						| date:'dd-MM-yyyy'}} {{item.nursingEntryTime}}</td>
+					<td class="center-aligned border-black">{{item.calciumVolume}}</td>
+					<td class="center-aligned border-black">{{item.ironVolume}}</td>
+					<td class="center-aligned border-black">{{item.mvVolume}}</td>
+					<td class="center-aligned border-black">{{item.mvVolume}}</td>
+					<td class="center-aligned border-black">{{item.vitamindVolume}}</td>
+
+				</tr>
+			</table>
+			<span class="bold" *ngIf="printDataObj.intakeOutputList.length == 0">
+				No Events Found</span>
+		</div>
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="printDataObj.whichTab =='Medications'">
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20"
+				*ngIf="printDataObj.data.length != 0">
+				<tr class="border-black">
+					<td class="center-aligned border-black">Date & Time</td>
+					<td class="center-aligned border-black">Status</td>
+					<td class="center-aligned border-black">Medicine</td>
+					<td class="center-aligned border-black">Dose</td>
+					<td class="center-aligned border-black">Mode</td>
+					<td class="center-aligned border-black">Route</td>
+					<td class="center-aligned border-black">Frequency</td>
+					<td class="center-aligned border-black">Dilution</td>
+					<td class="center-aligned border-black">Type</td>
+					<td class="center-aligned border-black">Next Dose</td>
+					<td class="center-aligned border-black">Day</td>
+					<td class="center-aligned border-black">Remaining Vol</td>
+					<td class="center-aligned border-black">Comments</td>
+				</tr>
+				<tr *ngFor="let item of printDataObj.data.slice().reverse()"
+					[hidden] ="!item.visibility" class="border-black">
+					<td class="center-aligned border-black">{{item.given_time |
+						date:'dd-MM-yyyy hh:mm a'}}</td>
+					<td class="center-aligned border-black"><span
+						*ngIf="!item.stop_flag">Active</span> <span *ngIf="item.stop_flag">Stopped</span></td>
+					<td class="center-aligned border-black">{{item.doctorMedicine.medicinename}}</td>
+					<td class="center-aligned border-black"><span *ngIf="item.doctorMedicine.cal_dose_volume != null">{{item.doctorMedicine.cal_dose_volume}}
+						mg</span></td>
+					<td class="center-aligned border-black">{{item.doctorMedicine.freq_type}}</td>
+					<td class="center-aligned border-black">{{item.doctorMedicine.route}}</td>
+					<td class="center-aligned border-black">{{item.doctorMedicine.medicationFreqStr}}</td>
+					<td class="center-aligned border-black"><span *ngIf="item.doctorMedicine.inf_volume != null">{{item.doctorMedicine.inf_volume}}
+						ml</span></td>
+					<td class="center-aligned border-black">{{item.doctorMedicine.dilution_type}}</td>
+					<td class="center-aligned border-black">{{item.next_dose |
+						date:'dd-MM-yyyy hh:mm a'}}</td>
+					<td class="center-aligned border-black">{{item.day_number}}</td>
+					<td class="center-aligned border-black"><span
+						*ngIf="item.remaining_volume != null">{{item.remaining_volume}}
+							ml</span></td>
+					<td class="center-aligned border-black"><span
+						class="blue-text"
+						(click)="viewCommentsPopUp(item.nursing_comment)">View</span></td>
+				</tr>
+			</table>
+			<span class="bold" *ngIf="printDataObj.data.length == 0"> No
+				Medication Data Found</span>
+		</div>
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="printDataObj.whichTab =='Orders'">
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20"
+				*ngIf="printDataObj.data.length != 0">
+				<tr class="border-black">
+					<td class="center-aligned border-black">Date & Time</td>
+					<td class="center-aligned border-black">Test Name</td>
+					<td class="center-aligned border-black">Sample Type</td>
+					<td class="center-aligned border-black">Sample Volume</td>
+					<td class="center-aligned border-black">Sent Time</td>
+				</tr>
+				<tr *ngFor="let item of printDataObj.data.slice().reverse()"
+					class="border-black">
+					<td class="center-aligned border-black">{{item.orderdate |
+						date:'dd-MM-yyyy hh:mm a'}}</td>
+					<td class="center-aligned border-black"><span
+						*ngFor="let data of item.ordersList"><span
+							[ngClass]="{'green-text': data.results != null,'red-text': data.results == null }"
+							(click)="showTestsResult(data.results)">{{data.investigationOrder.testname}}
+								,</span></span></td>
+					<td class="center-aligned border-black">{{item.sampletype}}</td>
+					<td class="center-aligned border-black">{{item.samplevolume}}</td>
+					<td class="center-aligned border-black">{{item.sentdate |
+						date:'dd-MM-yyyy hh:mm a'}}</td>
+				</tr>
+			</table>
+			<span class="bold" *ngIf="printDataObj.data.length == 0"> No
+				Medication Data Found</span>
+		</div>
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="printDataObj.whichTab =='Nursing Anthropometry'">
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20">
+				<tr class="border-black">
+					<td class="center-aligned border-black">Date</td>
+					<td class="center-aligned border-black">CGA</td>
+					<td class="center-aligned border-black">DOL</td>
+					<td class="center-aligned border-black">Weight(gm)</td>
+					<td class="center-aligned border-black">Length(cm)</td>
+					<td class="center-aligned border-black">Head Circumference(cm)</td>
+				</tr>
+				<tr *ngFor="let item of printDataObj.data.slice().reverse()"
+					class="border-black">
+					<td class="center-aligned border-black">{{item.visitdate |
+						date:'dd-MM-yyyy'}}</td>
+					<td class="center-aligned border-black"><span
+						*ngIf="item.admission_entry == null">{{item.gestationWeek}}
+							<sup> + {{item.gestationDays}}</sup>
+					</span> <span *ngIf="item.admission_entry == true">Birth</span></td>
+					<td class="center-aligned border-black">{{item.currentage}}</td>
+					<td class="center-aligned border-black">{{item.currentdateweight}}</td>
+					<td class="center-aligned border-black">{{item.currentdateheight}}</td>
+					<td class="center-aligned border-black">{{item.currentdateheadcircum}}</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="col-md-12 col-print-12 no-padding table full margin-5-y"
+			*ngIf="printDataObj.whichTab =='Nursing Notes'">
+			<div class="col-md-12 col-print-12 no-padding">
+				<table
+					class="table table-striped table-bordered headed-table col-md-12 col-print-12"
+					*ngIf="printDataObj.nursingNotes.length !=0">
+					<tr class="border-black">
+						<td class="center-aligned border-black">From Time</td>
+						<td class="center-aligned border-black">To Time</td>
+						<td class="center-aligned border-black">Notes</td>
+						<td class="center-aligned border-black">Nurse</td>
+					</tr>
+					<tr class="border-black"
+						*ngFor="let notes of printDataObj.nursingNotes">
+						<td class="center-aligned border-black">{{notes.from_time |
+							date: 'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="center-aligned border-black">{{notes.to_time |
+							date: 'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="left-aligned border-black">
+							<div style="white-space: pre-wrap;">{{notes.nursing_notes}}</div>
+						</td>
+						<td class="center-aligned border-black">{{notes.loggeduser}}</td>
+					</tr>
+				</table>
+				<span class="bold" *ngIf="printDataObj.nursingNotes.length == 0">No
+					Nursing Note Data Found</span>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="nursingOutputData != undefined && printDataObj.whichTab == 'Nursing-output' && nursingOutputData.printFormatType =='expand'">
+		<div>
+			<div class="col-md-12 col-print-12 center-aligned" *ngIf="nursingOutputData.anthropometryList != null && nursingOutputData.anthropometryList.length != 0" style="height: 50px;">
+				<h1 class="bold heading">Anthropometry Summary</h1>
+			</div>
+			<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.anthropometryList != null && nursingOutputData.anthropometryList.length != 0">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 border-black">
+				<tr class="border-black">
+				  <td class="center-aligned border-black bold">Date</td>
+				  <td class="center-aligned border-black bold">CGA</td>
+				  <td class="center-aligned border-black bold">DOL</td>
+				  <td class="center-aligned border-black bold">Yest. Wt(gm)</td>
+				  <td class="center-aligned border-black bold">Today's Wt(gm)</td>
+				  <td class="center-aligned border-black bold">Length(cm)</td>
+				  <td class="center-aligned bold">Head Circumference(cm)</td>
+				</tr>
+				<tr *ngFor="let item of nursingOutputData.anthropometryList.slice().reverse()">
+					<td class="center-aligned border-black  ">{{item.visitdate | date:'dd-MM-yyyy' | removeAmPm}}</td>
+					<td class="center-aligned border-black  ">
+						  <span *ngIf="item.admission_entry == null">{{item.gestationWeek}}
+						  <sup> + {{item.gestationDays}}</sup>
+						  </span>
+						<span *ngIf="item.admission_entry == true">Birth</span>
+					</td>
+				  <td class="center-aligned border-black">{{item.currentage}}</td>
+				  <td class="center-aligned border-black">{{item.prevDateWeight}}</td>
+				  <td class="center-aligned border-black">{{item.currentdateweight}}</td>
+				  <td class="center-aligned border-black">{{item.currentdateheight}}</td>
+				  <td class="center-aligned">{{item.currentdateheadcircum}}</td>
+				</tr>
+			  </table>
+			</div>
+			<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.vitalList != null && nursingOutputData.vitalList != 0">
+				<h1 class="bold heading">Vital Parameters ( Temperature, Circulation, Respiratory, Misc )</h1>
+			</div>
+			<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.vitalList != null && nursingOutputData.vitalList.length != 0" style="margin-top:-12px;">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 border-black" [ngClass]="{'tabelToBreak':pupilStr == '' || pupilStr == undefined}"  *ngIf="nursingOutputData.vitalList.length != 0">
+					<tr class="border-black">
+						<th class="center-aligned border-black bold col-width-5" rowspan="2">Time</th>
+						<th class="center-aligned border-black bold" colspan="2">Temp</th>
+						<th class="center-aligned border-black bold col-width-1" rowspan="2">Humi<br>dity</th>
+						<th class="center-aligned border-black bold col-width-3" rowspan="2">Baby Color</th>
+						<th class="center-aligned border-black bold col-width-3" rowspan="2">HR</th>
+						<th class="center-aligned border-black bold col-width-3" rowspan="2">PR</th>
+						<th class="center-aligned border-black bold col-width-3" rowspan="2">CFT</th>
+						<th class="center-aligned border-black bold col-width-5" rowspan="2">NIBP</th>
+						<th class="center-aligned border-black bold col-width-5" rowspan="2">IBP</th>
+						<th class="center-aligned border-black bold col-width-1" rowspan="2">SpO<sub>2</sub></th>
+						<th class="center-aligned border-black bold col-width-1" rowspan="2">RR</th>
+						<th class="center-aligned border-black bold col-width-4" rowspan="2">Downe</th>
+						<th class="center-aligned border-black bold col-width-6" rowspan="2">Activity</th>
+						<th class="center-aligned border-black bold col-width-5" rowspan="2">Position</th>
+						<th class="center-aligned border-black bold col-width-4" rowspan="2">RBS</th>
+						<th class="center-aligned bold col-width-4" rowspan="2">TCB</th>
+					</tr>
+					<tr>
+						<td class="center-aligned border-black col-width-1" style="border-right: 2px solid black;">C</td>
+						<td class="center-aligned border-black col-width-1" style="border-right: 2px solid black;"> P</td>	
+					</tr>
+					<tr class="border-black" *ngFor="let vitalObj  of  nursingOutputData.vitalList">
+						<td class="center-aligned border-black">
+						<!-- {{vitalObj.userDate | date:'dd-MM-yyyy'}} -->
+							<span> {{vitalObj.nnVitalparameterTime | removeAmPm}}</span>
+						</td>
+						<td class="center-aligned border-black  ">
+							<span *ngIf="vitalObj.centraltemp != null">
+								{{vitalObj.centraltemp}}
+							</span>
+							<span *ngIf="vitalObj.centraltemp == null"> -- </span>
+						</td>
+						<td class="center-aligned border-black" style="border-right: 2px solid black;">
+							<span *ngIf="vitalObj.peripheraltemp != null">
+									{{vitalObj.peripheraltemp}}
+								</span>
+								<span *ngIf="vitalObj.peripheraltemp == null"> -- </span>
+						</td>
+
+						<td class="center-aligned border-black">{{vitalObj.humidification}}</td>
+						<td class="center-aligned border-black">{{vitalObj.baby_color}}</td>
+						<td class="center-aligned border-black"><span *ngIf="vitalObj.hrRate != null">{{vitalObj.hrRate}}</span><span *ngIf="vitalObj.hrRate == null"> -- </span></td>
+						<td class="center-aligned border-black"><span *ngIf="vitalObj.pulserate != null">{{vitalObj.pulserate}}</span><span *ngIf="vitalObj.pulserate == null"> -- </span></td>
+						<td class="center-aligned border-black">{{vitalObj.cft}}</td>
+						<td class="center-aligned border-black">
+							<span *ngIf = "vitalObj.systBp != null && vitalObj.systBp != undefined  && vitalObj.systBp != '' ">{{vitalObj.systBp}}/{{vitalObj.diastBp}} ({{vitalObj.meanBp}})</span>
+						</td>
+						<td class="center-aligned border-black">
+							<span *ngIf = "vitalObj.systiBp != null && vitalObj.systiBp != undefined  && vitalObj.systiBp != '' ">{{vitalObj.systiBp}}/{{vitalObj.diastiBp}} ({{vitalObj.meaniBp}})</span>
+						</td>
+						<td class="center-aligned border-black">{{vitalObj.spo2}}</td>
+						<td class="center-aligned border-black">{{vitalObj.rrRate}}</td>
+						<td class="center-aligned border-black">{{vitalObj.downesscore}}</td>
+						<td class="center-aligned border-black">{{vitalObj.consciousness}}</td>
+						<td class="center-aligned border-black">{{vitalObj.vpPosition}}</td>
+						<td class="center-aligned border-black">{{vitalObj.rbs}}</td>
+						<td class="center-aligned">{{vitalObj.tcb}}</td>
+					</tr>
+				</table>
+			</div>
+			<div *ngIf="pupilStr != ''"  >
+				<div class="col-md-12 col-print-12 tabelToBreak">
+					<p>{{pupilStr}} </p>
+				</div>
+			</div>
+
+
+
+			<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.bgVentilatorList != null && nursingOutputData.bgVentilatorList != 0" style="height:50px;">
+				<h1 class="bold heading">Ventilator & Blood Gas Summary</h1>
+			</div>
+			<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.bgVentilatorList != null && nursingOutputData.bgVentilatorList.length != 0">
+				<table class="table table-striped table-bordered headed-table desktop-column-20" [ngClass]="{'tabelToBreak':nursingOutputData.episodeList == null || nursingOutputData.episodeList.length == 0 }">
+					<tr class="border-black">
+						<!-- Fields for Ventilator  -->
+						<td class="center-aligned border-black bold padding-10">Time</td>
+						<td class="center-aligned border-black bold padding-10">Mode</td>
+						<td class="center-aligned border-black bold padding-10">PIP</td>
+						<td class="center-aligned border-black bold padding-10 col-width-4">PEEP/<br>CPAP</td>
+						<td class="center-aligned border-black bold padding-10">Press Supp</td>
+						<td class="center-aligned border-black bold padding-10">MAP</td>
+						<td class="center-aligned border-black bold padding-10">Freq / Rate</td>
+						<td class="center-aligned border-black bold padding-10 col-width-5">TV</td>
+						<td class="center-aligned border-black bold padding-10 col-width-5">MV</td>
+						<td class="center-aligned border-black bold padding-10">Ti</td>
+						<td class="center-aligned border-black bold padding-10">FiO<sub>2</sub></td>
+						<td class="center-aligned border-black bold padding-10">DcO<sub>2</sub></td>
+						<td class="center-aligned border-black bold padding-10">Amp.</td>
+						<td class="center-aligned border-black bold padding-10">Flow</td>
+						<!-- end of Fields for ventilator -->
+						<!-- Fields for Blood Gas  -->
+						<td class="center-aligned border-black bold">pH</td>
+						<td class="center-aligned border-black bold">PO<sub>2</sub></td>
+						<td class="center-aligned border-black bold">PCO<sub>2</sub></td>
+						<td class="center-aligned border-black bold">HCO<sub>3</sub>(Std)</td>
+						<td class="center-aligned border-black bold">BE(S)</td>
+						<td class="center-aligned bold">Lact</td>
+						<!-- end of Fields for Blood Gas -->
+					</tr>
+					<tr class="border-black" *ngFor="let ventilator of nursingOutputData.bgVentilatorList">
+						<!-- Fields for Ventilator  -->
+						<td class="center-aligned  border-black"><span>{{(ventilator.entrydate | date:'hh:mm a') | removeAmPm}}</span></td>
+						<td class="center-aligned  border-black">
+							<div *ngFor="let item of nursingOutputData.ventilatorModeDropDown">
+								<div *ngIf="ventilator.ventmode == item.key">{{item.value}}</div>
+							</div>
+						</td>
+						<td class="center-aligned  border-black">{{ventilator.pip}}</td>
+						<td class="center-aligned  border-black">{{ventilator.peep_cpap}}</td>
+						<td class="center-aligned  border-black">{{ventilator.pressure_supply}}</td>
+						<td class="center-aligned  border-black">{{ventilator.map}}</td>
+						<td class="center-aligned  border-black">{{ventilator.freq_rate}}</td>
+						<td class="center-aligned  border-black">{{ventilator.tidal_volume}}</td>
+						<td class="center-aligned  border-black">{{ventilator.minute_volume}}</td>
+						<td class="center-aligned  border-black">{{ventilator.ti}}</td>
+						<td class="center-aligned  border-black">{{ventilator.fio2}}</td>
+						<td class="center-aligned  border-black">{{ventilator.dco2}}</td>
+						<td class="center-aligned  border-black">{{ventilator.amplitude}}</td>
+						<td class="center-aligned  border-black">{{ventilator.flow_per_min}}</td>
+						<!-- end of Fields for ventilator  -->
+						<!-- Fields for Blood Gas  -->
+						<td class="center-aligned border-black">{{this.round(ventilator.ph,2)}}</td>
+						<td class="center-aligned border-black">{{ventilator.po2}}</td>
+						<td class="center-aligned border-black">{{ventilator.pco2}}</td>
+						<td class="center-aligned border-black">{{ventilator.hco2}}</td>
+						<td class="center-aligned border-black">{{ventilator.be}}</td>
+						<td class="center-aligned">{{this.round(ventilator.lactate,1)}}</td>
+						<!-- end of Fields for Blood Gas -->
+					</tr>
+				</table>
+			</div>
+
+			<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.episodeList != null && nursingOutputData.episodeList != 0">
+					<h1 class="bold heading">Event Summary</h1>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.episodeList != null && nursingOutputData.episodeList.length != 0">
+					<table class="table table-striped table-bordered headed-table desktop-column-20 border-black tabelToBreak" *ngIf="nursingOutputData.episodeList.length != 0">
+						<tr class="border-black">
+							<td class="center-aligned border-black bold">Time</td>
+							<td class="center-aligned border-black bold">Seizures</td>
+							<!-- <td class="center-aligned border- boldblack">Symptomatic</td> -->
+							<td class="center-aligned border-black bold">Duration (Seizures)</td>
+							<td class="center-aligned border-black bold">Type</td>
+							<td class="center-aligned border-black bold">Apnea</td>
+							<td class="center-aligned border-black bold">Duration (Apnea)</td>
+							<td class="center-aligned border-black bold">Min Spo<sub>2</sub> (%)</td>
+							<td class="center-aligned border-black bold">Bradycardia</td>
+							<td class="center-aligned border-black bold" >Min HR (per min)</td>
+							<td class="center-aligned border-black bold">Recovery</td>
+						</tr>
+							<tr class="border-black" *ngFor="let eventObj of nursingOutputData.episodeList.slice().reverse()">
+							<td class="center-aligned border-black">{{eventObj.creationtime | date:'hh:mm a' | removeAmPm}}</td>
+							<td class="center-aligned border-black">
+								<span *ngIf="eventObj.seizures == true">Yes</span>
+								<span *ngIf="eventObj.seizures == false && eventObj.seizures != null">No</span>
+							</td>
+							<!-- <td class="center-aligned border-black" *ngIf="">
+								<span *ngIf="eventObj.symptomaticStatus == true">Yes</span>
+								<span *ngIf="eventObj.symptomaticStatus == false && eventObj.symptomaticStatus != null">No</span>
+							</td> -->
+							<td class="center-aligned border-black  ">
+								<span *ngIf="eventObj.duration_unit_seizure == 'hr'">{{eventObj.seizureDuration}} hrs</span>
+								<span *ngIf="eventObj.duration_unit_seizure == 'min'">{{eventObj.seizureDuration}} min</span>
+								<span *ngIf="eventObj.duration_unit_seizure == 'sec'">{{eventObj.seizureDuration}} sec</span>
+								<span *ngIf="eventObj.duration_unit_seizure == null">{{eventObj.seizureDuration}}</span>
+							</td>
+							<td class="center-aligned border-black">{{eventObj.seizureType}}</td>
+							<td class="center-aligned border-black">
+								<span *ngIf="eventObj.apnea == true">Yes</span>
+								<span *ngIf="eventObj.apnea == false && eventObj.apnea != null">No</span>
+							</td>
+							<td class="center-aligned border-black">
+								<span *ngIf="eventObj.duration_unit_apnea == 'min'">{{eventObj.apneaDuration}} min</span>
+								<span *ngIf="eventObj.duration_unit_apnea == 'sec'">{{eventObj.apneaDuration}} sec</span>
+								<span *ngIf="eventObj.duration_unit_apnea == null">{{eventObj.apneaDuration}}</span>
+							</td>
+							<td class="center-aligned border-black">{{eventObj.spo2}}</td>
+							<td class="center-aligned border-black">
+								<span *ngIf="eventObj.bradycardia == true">Yes</span>
+								<span *ngIf="eventObj.bradycardia == false && eventObj.bradycardia != null">No</span>
+							</td>
+							<td class="center-aligned border-black">{{eventObj.hr}}</td>
+							<td class="center-aligned border-black">{{eventObj.recovery}}</td>
+						</tr>
+					</table>
+				</div>
+						<!--EN order-->
+			<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.doctorNutritionOrder != null && nursingOutputData.doctorNutritionOrder.length != 0">
+					<h1 class="bold heading">EN Orders</h1>
+				</div>
+				<div class="col-md-12 col-print-12" *ngIf="nursingOutputData.doctorNutritionOrder != null && nursingOutputData.doctorNutritionOrder.length != 0">
+
+					<table class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr >
+							<td class="center-aligned bold">Time</td>
+							<td class="center-aligned bold">Instructions</td>
+							<td class="center-aligned bold">Doctor's Name</td>
+
+						</tr>
+						<!-- iterate Anthroprometry Obj -->
+						<tr *ngFor="let item of nursingOutputData.doctorNutritionOrder">
+							<td class="center-aligned" *ngIf="item != null">{{item.creationtime
+									| date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned" *ngIf="item != null">
+								<span class="bold" *ngIf="item.isenternalgiven == null">
+									No Enteral Order.</span>
+								<span class="bold" *ngIf="item.isenternalgiven == false">
+									NPO </span>
+								<span class="bold" *ngIf="item.isenternalgiven == true">
+									{{item.enFeedStr}} by {{item.feedMethodStr}}, {{item.primaryFeed}}
+									<span *ngIf="item.feedduration == null"> on demand</span>
+									<span *ngIf="item.feedduration != null && item.feedduration != 'Continuous'"> every {{item.feedduration}} hours</span>
+									<span *ngIf="formulaType != null && formulaType != ''"> (Give {{item.formulaType}} if {{item.primaryFeed}} volume is not sufficient)</span>.
+								</span>
+							</td>
+
+							<td class="center-aligned" *ngIf="item != null"></td>
+						</tr>
+					</table>
+				</div>
+				<!--end of end order-->
+				<!--pn order code-->
+				<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.doctorNutritionOrder != null && nursingOutputData.doctorNutritionOrder.length != 0">
+					<h1 class="bold heading">PN Orders</h1>
+				</div>
+				<div class="col-md-12 col-print-12" *ngIf="nursingOutputData.doctorNutritionOrder != null && nursingOutputData.doctorNutritionOrder.length != 0">
+					<table class="table table-striped table-bordered headed-table desktop-column-20 tabelToBreak">
+						<tr>
+							<td class="center-aligned bold">Time</td>
+							<td class="center-aligned bold">Instructions</td>
+							<td class="center-aligned bold">Doctor's Name</td>
+						</tr>
+						<!-- iterate PN Obj -->
+						<tr *ngFor="let item of nursingOutputData.doctorNutritionOrder">
+							<td class="left-aligned" *ngIf="item != null && item.isparentalgiven == true">{{item.creationtime
+							| date:'dd-MM-yyyy hh:mm a' | removeAmPm}}</td>
+							<td class="left-aligned" *ngIf="item != null && item.isparentalgiven == true">
+
+								<div *ngIf = "item.isReadymadeSolutionGiven !=null && item.isReadymadeSolutionGiven ==false" class="col-md-12 no-padding margin-10-y">
+									<span class="bold" *ngIf="(item.bolus_executed == null || item.bolus_executed == false) && item.isBolusGiven && item.bolusType != null">
+									Bolus {{item.bolusType}}	: {{item.bolusTotalFeed}} ml @ {{item.bolus_rate | number:'1.0-1'}} ml/hr over {{item.bolus_infusiontime}} min.<br></span>
+
+									<span class="bold" *ngIf="item.lipidTotal != null">Fluid Type : Lipid Solution<br>Lipids (20%): {{item.lipidTotal}} ml @ {{item.lipidTotal/item.duration | number:'1.0-1'}} ml/hr over {{item.duration}} hrs<br>
+									</span>
+									<span class="bold">Fluid Type : Dextrose, Amino Acid & others (over {{item.duration}} hrs)<br>
+										<span *ngIf="item.aminoacidTotal != null">Amino Acid = {{item.aminoacidTotal}} ml<br></span>
+										<span *ngIf="item.girvalue != null">GIR: {{item.girvalue | number:'1.0-2'}} mg/kg/min<br></span>
+										<span *ngIf="item.currentDextroseConcentration != null && item.dextroseVolumemlperday != null">Dextrose {{item.currentDextroseConcentration | number:'1.0-2'}} %: {{item.dextroseVolumemlperday | number:'1.0-2'}} ml<br></span>
+										<span *ngIf="item.dextroseConcLow != null && item.dextroseConcLowvolume != null">Low Concentration {{item.dextroseConcLow | number:'1.0-1'}} %: {{item.dextroseConcLowvolume | number:'1.0-2'}} ml<br></span>
+										<span *ngIf="item.dextroseConcHigh != null && item.dextroseConcHighvolume != null">High Concentration {{item.dextroseConcHigh | number:'1.0-1'}} %: {{item.dextroseConcHighvolume | number:'1.0-2'}} ml<br></span>
+									</span>
+									<span class="bold">Additive<br>
+										<span class="bold" *ngIf="item.sodiumTotal != null && item.sodiumTotal != ''">NaCl = {{item.sodiumTotal}} ml <br></span>
+										<span class="bold" *ngIf="item.potassiumTotal != null && item.potassiumTotal != ''">KCl = {{item.potassiumTotal}} ml<br></span>
+										<span class="bold" *ngIf="item.calciumTotal != null && item.calciumTotal != ''">Calcium = {{item.calciumTotal}} ml<br></span>
+										<span class="bold" *ngIf="item.phosphorousTotal != null && item.phosphorousTotal != ''">Phosphorus = {{item.phosphorousTotal}} ml<br></span>
+										<span class="bold" *ngIf="item.mviTotal != null && item.mviTotal != ''"> Multi Vitamin Infusion = {{item.mviTotal}} ml<br></span>
+										<span class="bold" *ngIf="item.hco3Total != null && item.hco3Total != ''">NaHCO3 = {{item.hco3Total}} ml<br></span>
+										<span class="bold" *ngIf="item.magnesiumTotal != null && item.magnesiumTotal != ''">Magnesium = {{item.magnesiumTotal}} ml<br></span>
+									</span>
+									<span class="bold">Total Fluid Mix<br>
+										Total {{(item.totalparenteralAdditivevolume + item.aminoacidTotal + item.dextroseVolumemlperday) | number:'1.0-2'}} (ml/day), give @ {{(item.totalparenteralAdditivevolume + item.aminoacidTotal + item.dextroseVolumemlperday) / item.duration | number:'1.0-2'}} ml/hr.
+										<span *ngIf="item.osmolarity != null">Osmolarity: {{item.osmolarity | number:'1.0-2'}} mosmol/L</span>
+									</span>
+								</div>
+
+								<div *ngIf = "item != null && item != undefined && item.isReadymadeSolutionGiven !=null && item.isReadymadeSolutionGiven == true" class="col-md-12 no-padding margin-10-y">
+
+									<span class="bold" *ngIf="(item.bolus_executed == null || item.bolus_executed == false) && item.isBolusGiven && item.bolusType != null">
+									Bolus {{item.bolusType}}	: {{item.bolusTotalFeed}} ml @ {{item.bolus_rate | number:'1.0-1'}} ml/hr over {{item.bolus_infusiontime}} min.<br></span>
+
+									<span class="bold">Fluid Type : Maintenance IV Fluid & Additives<br>
+										<span *ngIf="item.readymadeFluidType != null">{{item.readymadeFluidType}} = {{item.readymadeTotalFluidVolume}} ml over {{item.duration}} hrs<br></span>
+										<span *ngIf="item.girvalue != null">GIR: {{item.girvalue | number:'1.0-2'}} mg/kg/min<br></span>
+									</span>
+									<span class="bold">Additive<br>
+										<span class="bold" *ngIf="item.sodiumTotal != null && item.sodiumTotal != ''">NaCl = {{item.sodiumTotal}} ml <br></span>
+										<span class="bold" *ngIf="item.potassiumTotal != null && item.potassiumTotal != ''">KCl = {{item.potassiumTotal}} ml<br></span>
+										<span class="bold" *ngIf="item.calciumTotal != null && item.calciumTotal != ''">Calcium = {{item.calciumTotal}} ml<br></span>
+										<span class="bold" *ngIf="item.phosphorousTotal != null && item.phosphorousTotal != ''">Phosphorus = {{item.phosphorousTotal}} ml<br></span>
+										<span class="bold" *ngIf="item.mviTotal != null && item.mviTotal != ''"> Multi Vitamin Infusion = {{item.mviTotal}} ml<br></span>
+										<span class="bold" *ngIf="item.hco3Total != null && item.hco3Total != ''">NaHCO3 = {{item.hco3Total}} ml<br></span>
+										<span class="bold" *ngIf="item.magnesiumTotal != null && item.magnesiumTotal != ''">Magnesium = {{item.magnesiumTotal}} ml<br></span>
+									</span>
+									<span class="bold">Total Fluid Mix<br>
+										Total {{(item.totalparenteralAdditivevolume + item.readymadeTotalFluidVolume) | number:'1.0-2'}} (ml/day), give @ {{(item.totalparenteralAdditivevolume + item.readymadeTotalFluidVolume) / item.duration | number:'1.0-2'}} ml/hr.
+										<span *ngIf="item.osmolarity != null">Osmolarity: {{item.osmolarity | number:'1.0-2'}} mosmol/L</span>
+									</span>
+								</div>
+
+							</td>
+							<td class="left-aligned" *ngIf="item != null && item.isparentalgiven == true"></td>
+						</tr>
+					</table>
+				</div>
+				<!--end of PN order-->
+
+			<!--Procedure code start-->
+			<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.procedureList != null && nursingOutputData.procedureList.length != 0">
+					<h1 class="bold heading">Procedure Summary</h1>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="nursingOutputData.procedureList != null && nursingOutputData.procedureList.length != 0">
+				<table class="table table-striped table-bordered headed-table desktop-column-20" [ngClass]="{'tabelToBreak':nursingOutputData.invOrderedList == null ||
+					nursingOutputData.invOrderedList.length == 0}">
+					<tr class="border-black">
+						<td class="center-aligned border-black bold">Name</td>
+						<!-- <td class="center-aligned border-black bold">Start Date</td> -->
+						<td class="center-aligned border-black bold">Insertion Time</td>
+						<!-- <td class="center-aligned border-black bold">End Date</td> -->
+						<td class="center-aligned border-black bold">Removal Time</td>
+					</tr>
+					<tr *ngFor="let item of nursingOutputData.procedureList" class="border-black">
+						<td class="center-aligned border-black">{{item[0]}}</td>
+						<td class="center-aligned border-black"><span *ngIf="item[1] != null">{{item[1] | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+						<!-- <td class="center-aligned border-black"><span *ngIf="item[1] != null">{{item[1]| date:'hh:mm a' | removeAmPm}}</span></td> -->
+						<td class="center-aligned border-black"><span *ngIf="item[2] != null">{{item[2] |date:'dd-MM-yyyy hh:mm a'}}</span></td>
+						<!-- <td class="center-aligned border-black"> <span *ngIf="item[2] != null">{{item[2] | date:'hh:mm a' | removeAmPm}}</span></td> -->
+					</tr>
+				</table>
+			</div>
+				<!--procedure code end-->
+
+			<!--investigation code start-->
+			<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.invOrderedList != null && nursingOutputData.invOrderedList.length != 0">
+				<h1 class="bold heading">Investigation Order</h1>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="nursingOutputData.invOrderedList != null && nursingOutputData.invOrderedList.length != 0">
+				<table class="table table-striped table-bordered headed-table desktop-column-20" [ngClass]="{'tabelToBreak':nursingOutputData.doctorNutritionOrder == null ||
+				nursingOutputData.doctorNutritionOrder.length == 0}">
+					<tr class="border-black">
+						<td class="center-aligned border-black bold">Date</td>
+						<td class="center-aligned border-black bold">Test Name</td>
+						<td class="center-aligned border-black bold">Execution Time</td>
+					</tr>
+					<tr *ngFor="let item of nursingOutputData.invOrderedList" class="border-black">
+						<td class="center-aligned border-black">{{item.modificationtime | date:'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="center-aligned border-black">{{item.testname}}</td>
+						<td class="center-aligned border-black"><span *ngIf="item.senttolab_time!=null">{{item.senttolab_time | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+					</tr>
+				</table>
+			</div>
+			<!--investigation code end-->
+
+			<!--intake-output code start-->
+			<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.intakeOutputList != null && nursingOutputData.intakeOutputList != 0">
+				<h1 class="bold heading">Nursing Intake-Output</h1>
+			</div>
+			<div class="col-md-12 col-print-12 table full margin-10-y" *ngIf="nursingOutputData.intakeOutputList != null && nursingOutputData.intakeOutputList != 0" style="margin-top:-20px;">
+				<div class="col-md-3 no-padding table-cell print-width-3">
+					<span class="bold">Total Fluid Req. = </span><span *ngIf="nursingOutputData.doctorNutritionOrder[0] != undefined && nursingOutputData.doctorNutritionOrder[0].totalfluidMlDay != null">{{nursingOutputData.doctorNutritionOrder[0].totalfluidMlDay}} ml/kg/d</span>
+				</div>
+				<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+					<span class="bold  ">Fluid Req. in this shift = </span><span class=" " *ngIf="fluidReq != null"> {{fluidReq | number:'1.0-2'}} ml</span>
+				</div>
+				<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+					<span class="bold visiblity-hidden">Fluid Req. = </span><span class="visiblity-hidden"><!-- 50 ml --></span>
+				</div>
+				<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+					<span class="bold visiblity-hidden">Fluid Req. = </span><span class="visiblity-hidden"><!-- 50 ml --></span>
+				</div>
+			</div>
+			<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.intakeOutputList.length != 0">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 border-black" [ngClass]="{'tabelToBreak':isFlag == false}">
+					<tr class="border-black">
+						<!-- these are the EN parameters -->
+						<td class="center-aligned border-black bold">Time</td>
+						<td class="center-aligned border-black bold">Mode</td>
+						<td class="center-aligned border-black bold" style="width:2%">Pr. Feed(ml)</td>
+						<td class="center-aligned border-black bold">Formula (ml)</td>
+						<td class="center-aligned border-black bold">Total Add.(ml)</td>
+						<td class="center-aligned border-black bold">Cumm Vol(ml)</td>
+						<!-- End of EN parameters -->
+						<!-- these are the PN parameters -->
+						<td class="center-aligned border-black bold">IVF(ml)</td>
+						<td class="center-aligned border-black bold">TPN Del. Vol(ml)</td>
+						<!-- <td class="center-aligned border-black  ">Lipid Del. Vol.</td> -->
+						<td class="center-aligned border-black bold">Ca<sup>++</sup> (ml)</td>
+						<td class="center-aligned border-black bold">Bolus (ml)</td>
+						<!-- End of PN parameters -->
+						<!-- these are the output summary parameters -->
+						<td class="center-aligned border-black bold">Abd Girth. (cm)</td>
+						<td class="center-aligned border-black bold" style="width:8%">Gastric Aspirate (ml)</td>
+						<td class="center-aligned border-black bold">Urine (ml)</td>
+						<td class="center-aligned border-black bold">Cumm Urine (ml)</td>
+						<td class="center-aligned border-black bold">Stool</td>
+						<td class="center-aligned border-black bold">Vomit</td>
+						<td class="center-aligned border-black bold">Drain (ml)</td>
+						<!-- <td class="center-aligned border-black  ">Remarks</td> -->
+						<!-- End of output summary parameters -->
+					</tr>
+					<tr class="border-black" *ngFor="let item of nursingOutputData.intakeOutputList">
+						<!-- these are the EN parameters -->
+						<td class="center-aligned border-black">
+							<!-- {{item.entry_timestamp | date:'dd-MM-yyyy'}}  -->
+							{{item.nursingEntryTime | removeAmPm}}</td>
+						<td class="center-aligned border-black">
+							<span *ngIf="item.route == 'Tube Feed'">TF</span>
+							<span *ngIf="item.route == 'Breast Feed'">BF</span>
+							<span *ngIf="item.route == 'Spoon Feed'">SF</span>
+							<span *ngIf="item.route != 'Tube Feed' && item.route != 'Breast Feed' && item.route != 'Spoon Feed'">{{item.route}}</span>
+						</td>
+						<td class="center-aligned border-black">
+							<div *ngIf="item.primaryFeedValue != null">
+								<div class="bold" *ngFor="let option of nursingOutputData.refFeedTypeList">
+									<span *ngIf="option.feedtypeid == item.primaryFeedType">
+										<div *ngIf="option.feedtypename == 'EBM & Lactodex HMF'">EBM & HMF(L)</div>
+										<div *ngIf="option.feedtypename == 'EBM & Similac HMF'">EBM & HMF(S)</div>
+										<div *ngIf="option.feedtypename != 'EBM & Similac HMF' && option.feedtypename != 'EBM & Lactodex HMF'">{{option.feedtypename}}</div>
+										<div>{{item.primaryFeedValue}}</div>
+									</span>
+								</div>
+							</div>
+						</td>
+						<td class="center-aligned border-black">
+							<div *ngIf="item.formulaValue != null">
+								<div class="bold" *ngFor="let option of nursingOutputData.refFeedTypeList">
+									<span *ngIf="option.feedtypeid == item.formulaType">
+									<div>{{option.feedtypename}}</div>
+									<div>{{item.formulaValue}}</div>
+									</span>
+								</div>
+							</div>
+						</td>
+						<td class="center-aligned border-black">{{item.totalAdditives | number:'1.0-2'}}</td>
+						<td class="center-aligned border-black">{{item.cummulativeEn | number:'1.0-2'}}</td>
+						<!-- End of EN parameters -->
+						<!-- these are the PN parameters -->
+						<td class="center-aligned border-black">{{item.readymadeDeliveredFeed | number:'1.0-2'}}</td>
+						<td class="center-aligned border-black"><span *ngIf="item.tpn_delivered != null || item.lipid_delivered != null">{{item.tpn_delivered + item.lipid_delivered | number:'1.0-2'}}</span></td>
+						<!-- <td class="center-aligned border-black  ">{{item.lipid_delivered}}</td> -->
+						<td class="center-aligned border-black"><span *ngIf="item.calciumDeliveredFeed != undefined && item.calciumDeliveredFeed != null">{{item.calciumDeliveredFeed | number:'1.0-2'}}</span></td>
+						<td class="center-aligned border-black">{{item.bolusDeliveredFeed | number:'1.0-2'}}</td>
+						<!-- End of PN parameters -->
+						<!-- these are the output summary parameters -->
+						<td class="center-aligned border-black">{{item.abdomenGirth}}</td>
+						<td class="center-aligned border-black">{{item.gastricAspirate}}</td>
+						<td class="center-aligned border-black">{{item.urine | number:'1.0-2'}} <span *ngIf="item.urinePassed != null && item.urinePassed == true && item.urine == null"> Passed</span><span *ngIf="item.urinePassed != null && item.urinePassed == false && item.urine == null">Not Passed</span></td>
+						<td class="center-aligned border-black">{{item.cummulativeUrine | number:'1.0-2'}}</td>
+						<td class="center-aligned border-black">{{item.stool}}<span *ngIf="item.stoolPassed != null && item.stoolPassed == true && item.stool == null"> Passed</span><span *ngIf="item.stoolPassed != null && item.stoolPassed == false && item.stool == null">Not Passed</span></td>
+						<td class="center-aligned border-black">{{item.vomit}}<span *ngIf="item.vomitColor != null"> - {{item.vomitColor}}</span><span *ngIf="item.vomitPassed != null && item.vomitColor == null && item.vomit == null && item.vomitPassed == true"> Yes</span> <span *ngIf="item.vomitPassed != null && item.vomitColor == null && item.vomit == null && item.vomitPassed == false"> No</span> </td>
+						<td class="center-aligned border-black">{{item.drain}} </td>
+						<!-- <td class="center-aligned border-black  "><span *ngIf="item.enteralComment != null && item.enteralComment != ''">{{item.enteralComment}} <span *ngIf="item.parenteralComment != null && item.parenteralComment != ''">,</span></span><span *ngIf="item.parenteralComment != null && item.parenteralComment != ''"> {{item.parenteralComment}}<span *ngIf="item.outputComment != null && item.outputComment != ''" >and</span></span> <span *ngIf="item.outputComment != null && item.outputComment != ''">{{item.outputComment}}</span></td> -->
+						<!-- End of output summary parameters -->
+					</tr>
+				</table>
+			</div>
+			<div *ngIf="isFlag == true" class="tabelToBreak">
+				<div class="col-md-12 col-print-12 no-padding table full margin-5-y">
+
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Total PN Feed = </span>
+						<span *ngIf="totalPn != undefined && totalPn != null">{{ totalPn | number:'1.0-2'}} ml</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Total Bolus = </span>
+						<span *ngIf="totalBolus != undefined && totalBolus != null">{{totalBolus | number:'1.0-2'}} ml</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Total Med Volume = </span><span>{{totalMedicineVol | number:'1.0-2'}} ml</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Total Blood Product = </span><span>{{totalBloodDelVolume | number:'1.0-2'}} ml</span>
+					</div>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding table full margin-5-y">
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Total Art. Line = </span><span>{{totalHeplockDelVolume | number:'1.0-2'}} ml</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Total Intake = </span>
+						<span  *ngIf="(totalFeed != undefined && totalFeed != null) || (totalMedicineVol != 0)">
+							{{((totalMedicineVol + totalFeed + totalHeplockDelVolume + totalBloodDelVolume + totalBolus)/weight) | number:'1.0-2'}} ml/kg/d
+							({{totalMedicineVol + totalFeed + totalHeplockDelVolume + totalBloodDelVolume + totalBolus | number:'1.0-2'}} ml)
+						</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Total Output = </span>
+						<span *ngIf="totalUrine != null">
+							{{((totalUrine + totalDrain + totalGastricAspirate)/weight) | number:'1.0-2'}} ml/kg/d
+							 ({{(totalUrine + totalDrain + totalGastricAspirate) | number:'1.0-2'}} ml)
+						</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Fluid Bal. ( I-O ) = </span>
+						<span>{{(totalMedicineVol + totalFeed) - (totalUrine + totalDrain + totalGastricAspirate)}} ml</span>
+					</div>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding table full margin-5-y">
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Wt Gain/Loss = </span>
+						<span *ngIf="childObject.todayWeight != null && childObject.lastDayWeight != null">
+							{{((100 * (childObject.todayWeight - childObject.lastDayWeight)) / childObject.lastDayWeight) | number:'1.0-2'}} %
+						</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Calorie Intake = </span>
+						<span>{{(this.energy / weight) | number:'1.0-2'}} cal/kg/day</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Protein Intake = </span>
+						<span>{{(this.protein / weight) | number:'1.0-2'}} gm/kg/day</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Na<sup>++</sup> Intake = </span><span>{{ sodiumVolume | number:'1.0-2'}} meq/kg/day</span>
+					</div>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding table full margin-5-y">
+					<div class="col-md-3 col-print-3 no-padding table-cell">
+						<span class="bold">Ca<sup>++</sup> Intake = </span><span>{{ calciumVolume | number:'1.0-2'}} mg/kg/day</span>
+					</div>
+				</div>
+			</div>
+			<!--intake-output code end-->
+
+			<!--Medication order code start-->
+			<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.currentMedicationList != null && nursingOutputData.currentMedicationList != 0">
+				<h1 class="bold">Medication Orders</h1>
+			</div>
+			<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.currentMedicationList != null && nursingOutputData.currentMedicationList.length != 0">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 border-black" [ngClass]="{'tabelToBreak':nursingOutputData.medicationList == null ||
+				nursingOutputData.medicationList.length == 0}" *ngIf="nursingOutputData.currentMedicationList.length != 0">
+					<tr class="border-black">
+						<td class="center-aligned border-black bold">Date</td>
+						<td class="center-aligned border-black bold">Order</td>
+						<td class="center-aligned border-black bold">Route</td>
+					</tr>
+					<tr class="border-black" *ngFor="let item of nursingOutputData.currentMedicationList">
+						<td class="center-aligned border-black">{{item.medicineOrderDate | date: 'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="center-aligned border-black">{{item.instruction}}</td>
+						<td class="center-aligned border-black">{{item.route}}</td>
+					</tr>
+				</table>
+			</div>
+			<!--Medication code start-->
+			<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.medicationList != null && nursingOutputData.medicationList != 0">
+				<h1 class="bold heading">Execution Summary</h1>
+			</div>
+			<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.medicationList != null && nursingOutputData.medicationList.length != 0">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 border-black tabelToBreak" *ngIf="nursingOutputData.medicationList.length != 0">
+					<tr class="border-black">
+						<td class="center-aligned border-black bold">Time</td>
+						<!-- <td class="center-aligned border- boldblack  ">Status</td> -->
+						<td class="center-aligned border-black bold" style="width:18%">Medicine</td>
+						<td class="center-aligned border-black bold">Dose</td>
+						<td class="center-aligned border-black bold">Mode</td>
+						<td class="center-aligned border-black bold">Route</td>
+						<td class="center-aligned border-black bold">Freq./Rate</td>
+						<td class="center-aligned border-black bold">Dilution</td>
+						<td class="center-aligned border-black bold">Type</td>
+						<td class="center-aligned border-black bold">Infusion Time</td>
+						<td class="center-aligned border-black bold">Next Dose</td>
+						<td class="center-aligned border-black bold">Day</td>
+						<td class="center-aligned bold">Delivered Vol</td>
+
+						<!-- <td class="center-aligned border-black  ">Remaining Vol</td> -->
+					</tr>
+					<tr class="border-black" *ngFor="let item of nursingOutputData.medicationList.slice().reverse()">
+						<td class="center-aligned border-black  ">{{item.given_time | date:'hh:mm a' | removeAmPm}}</td>
+						<!-- <td class="center-aligned border-black  "><span *ngIf="!item.stop_flag">Active</span>
+							<span *ngIf="item.stop_flag">Stopped</span></td> -->
+						<td class="center-aligned border-black  ">{{item.doctorMedicine.medicinename}}</td>
+						<td class="center-aligned border-black  "><span *ngIf="item.given_dose != null && item.given_dose != 0">{{item.given_dose | number:'1.0-2'}}
+							<span *ngIf="item.doctorMedicine.medicinename == 'survanta' || item.doctorMedicine.medicinename == 'curosurf' || item.doctorMedicine.medicinename == 'neosurf'"> ml</span>
+							<span *ngIf="item.doctorMedicine.medicinename != 'survanta' && item.doctorMedicine.medicinename != 'curosurf' && item.doctorMedicine.medicinename != 'neosurf'"> mg</span></span>
+						</td>
+						<td class="center-aligned border-black  ">{{item.doctorMedicine.freq_type}}</td>
+						<td class="center-aligned border-black  ">{{item.doctorMedicine.route}}</td>
+						<td class="center-aligned border-black  ">
+							<span *ngIf="item.doctorMedicine.medicationFreqStr != null"> {{item.doctorMedicine.medicationFreqStr}}</span>
+							<span *ngIf="item.doctorMedicine.medicationFreqStr == null"> -- </span>
+							<span *ngIf="item.doctorMedicine.rate != null"> {{item.doctorMedicine.rate}}</span>
+							<span *ngIf="item.doctorMedicine.rate == null"> -- </span></td>
+						<td class="center-aligned border-black  "><span *ngIf="item.doctorMedicine.inf_volume != null">{{item.doctorMedicine.inf_volume}} ml</span></td>
+						<td class="center-aligned border-black  ">{{item.doctorMedicine.dilution_type}}</td>
+						<td class="center-aligned border-black  ">
+							<span *ngIf="item.doctorMedicine.inf_time != null">{{item.doctorMedicine.inf_time}}</span>
+							<span *ngIf="item.doctorMedicine.inf_mode != null">{{item.doctorMedicine.inf_mode}} </span>
+						</td>
+						<td class="center-aligned border-black  ">{{item.next_dose | date:'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="center-aligned border-black  ">{{item.day_number}}</td>
+						<td class="center-aligned">
+							<span *ngIf="item.delivered_volume != null && item.doctorMedicine.medicinename != 'Gentil' && item.doctorMedicine.medicinename != 'Tobramycin' && item.doctorMedicine.medicinename != 'Nasal saline drops' && item.doctorMedicine.sachets == null">{{item.delivered_volume}} ml</span>
+							<span *ngIf="item.delivered_volume != null && (item.doctorMedicine.medicinename == 'Gentil' || item.doctorMedicine.medicinename == 'Tobramycin' || item.doctorMedicine.medicinename == 'Nasal saline drops')">{{item.delivered_volume}} drops</span>
+							<span *ngIf="item.delivered_volume != null && item.doctorMedicine.sachets != null">{{item.delivered_volume}} sachets</span>
+						</td>
+						<!-- <td class="center-aligned border-black  "><span *ngIf="item.remaining_volume != null">{{item.remaining_volume}} ml</span></td> -->
+					</tr>
+				</table>
+			</div>
+			<!--Medication code end-->
+
+			<!--Nursing Notes code start-->
+			<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.notesList != null && nursingOutputData.notesList != 0" style="height:50px;">
+				<h1 class="bold heading">Nursing Notes</h1>
+			</div>
+			<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.notesList != null && nursingOutputData.notesList.length != 0">
+				<table
+					class="table table-striped table-bordered headed-table col-md-12 col-print-12 no-padding border-black tabelToBreak" *ngIf="nursingOutputData.notesList.length !=0">
+					<tr class="border-black">
+						<td class="center-aligned border-black bold">From Time</td>
+						<td class="center-aligned border-black bold">To Time</td>
+						<td class="center-aligned border-black bold">Notes</td>
+						<td class="center-aligned border-black bold">Nurse</td>
+					</tr>
+					<tr class="border-black" *ngFor="let notes of nursingOutputData.notesList">
+						<td class="center-aligned border-black">{{notes.from_time | date: 'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="center-aligned border-black">{{notes.to_time | date: 'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="left-aligned border-black"> <div style="white-space: pre-wrap;">{{notes.nursing_notes}}</div></td>
+						<td class="center-aligned border-black">{{notes.loggeduser}}</td>
+					</tr>
+				</table>
+			</div>
+
+
+
+			<!--Nursing Notes code end-->
+
+<!--
+			<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.etSuctionList != null && nursingOutputData.etSuctionList != 0">
+				<h1 class="bold heading">Et Suction Summary</h1>
+			</div>
+			<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.etSuctionList != null && nursingOutputData.etSuctionList.length != 0">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 border-black" *ngIf="nursingOutputData.etSuctionList.length != 0">
+					<tr class="border-black">
+						<td class="center-aligned border-black">Date</td>
+						<td class="center-aligned border-black">Site</td>
+						<td class="center-aligned border-black">Catheter Size (cm)</td>
+						<td class="center-aligned border-black">Length of Catheter (cm)</td>
+						<td class="center-aligned border-black">Saline Vol. (ml)</td>
+						<td class="center-aligned border-black">No. Of Attempts</td>
+						<td class="center-aligned border-black">Min Spo2</td>
+						<td class="center-aligned border-black">Secretion Color</td>
+						<td class="center-aligned border-black">Secretion Vol. (ml)</td>
+						<td class="center-aligned">Sent Orders</td>
+					</tr>
+					<tr class="border-black" *ngFor="let item of nursingOutputData.etSuctionList">
+						<td class="center-aligned border-black">{{item.orderTime | date:'hh:mm a' | removeAmPm}}</td>
+						<td class="center-aligned border-black">{{item.site}}</td>
+						<td class="center-aligned border-black">{{item.size}}</td>
+						<td class="center-aligned border-black">{{item.length}}</td>
+						<td class="center-aligned border-black">{{item.salineVolume}}</td>
+						<td class="center-aligned border-black">{{item.attemptsCount}}</td>
+						<td class="center-aligned border-black">{{item.minSpo2}}</td>
+						<td class="center-aligned border-black">{{item.secretionColor}}</td>
+						<td class="center-aligned border-black">{{item.secretionVolume}}</td>
+						<td class="center-aligned">{{item.labOrders}}</td>
+					</tr>
+				</table>
+			</div> -->
+
+
+
+			<!-- Code for blood Product Table for nursing output -->
+			<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.pastNursingBloodProductList != null && nursingOutputData.pastNursingBloodProductList != 0">
+				<h1 class="bold heading">Blood Product Summary</h1>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="nursingOutputData.bloodProductList != null && nursingOutputData.bloodProductList != 0">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 tabelToBreak" *ngIf="nursingOutputData.isBloodProductTableVisible != undefined && nursingOutputData.isBloodProductTableVisible == true">
+					<tr class="border-black">
+						<td class="center-aligned border-black bold">Date & Time</td>
+						<td class="center-aligned border-black bold">Status</td>
+						<td class="center-aligned border-black bold">Blood Product</td>
+						<td class="center-aligned border-black bold">Total Vol. (ml)</td>
+						<td class="center-aligned">Delivered Vol. (ml)</td>
+					</tr>
+					<tr *ngFor="let item of nursingOutputData.bloodProductList" class="border-black"
+					 [hidden]="item.nursingObj.delivered_volume == null || item.nursingObj.delivered_volume == ''">
+						<td class="center-aligned border-black">{{item.nursingObj.execution_time | date:'dd-MM-yyyy hh:mm a' | removeAmPm}}</td>
+						<td class="center-aligned border-black">Active</td>
+						<td class="center-aligned border-black">{{item.blood_product}}</td>
+						<td class="center-aligned border-black">{{item.total_volume}}</td>
+						<td class="center-aligned">{{item.nursingObj.delivered_volume}}</td>
+					</tr>
+				</table>
+			</div>
+			<!-- end of the code of blood product for nursing output -->
+			<!-- Code for Heplock Table for nursing output -->
+			<!-- <div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.heplockList != null && nursingOutputData.heplockList != 0">
+				<h1 class="bold heading">Heplock Summary</h1>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="nursingOutputData.heplockList.length != 0">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 border-black">
+					<tr class="border-black">
+						<td class="center-aligned border-black">Date & Time</td>
+						<td class="center-aligned border-black">Status</td>
+						<td class="center-aligned border-black">Sol.</td>
+						<td class="center-aligned border-black">Anti-Coagulent</td>
+						<td class="center-aligned border-black">Total Vol.</td>
+						<td class="center-aligned border-black">Rate</td>
+						<td class="center-aligned">Delivered Vol.</td>
+					</tr>
+					<tr class="border-black" *ngFor="let item of nursingOutputData.heplockList">
+						<td class="center-aligned border-black">{{item.execution_time | date:'dd-MM-yyyy hh:mm a' | removeAmPm}}</td>
+						<td class="center-aligned border-black">Active</td>
+						<td class="center-aligned border-black">{{item.solutionType}}</td>
+						<td class="center-aligned border-black">{{item.antiCoagulentType}}</td>
+						<td class="center-aligned border-black">{{item.heparinTotalVolume}} ml</td>
+						<td class="center-aligned border-black">{{item.heparinRate}}</td>
+						<td class="center-aligned">{{item.deliveredVolume}} ml</td>
+					</tr>
+				</table>
+			</div> -->
+			<!-- end of the code of Heplock for nursing output -->
+
+			<!-- <div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.intakeOutputList.length != 0 && isDisplayRemark == true">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 border-black">
+					<tr class="border-black">
+						<td class="center-aligned border-black  ">Time</td>
+						<td class="center-aligned border-black  ">Remarks</td>
+					</tr>
+					<tr class="border-black" *ngFor="let item of nursingOutputData.intakeOutputList" [hidden]="(item.enteralComment != null || item.enteralComment != '' || item.parenteralComment != null || item.parenteralComment != '' || item.outputComment != null || item.outputComment != '')">
+						<td class="center-aligned border-black  ">{{item.nursingEntryTime}}</td>
+						<td class="center-aligned border-black  "><span *ngIf="item.enteralComment != null && item.enteralComment != ''">{{item.enteralComment}} <span *ngIf="item.parenteralComment != null && item.parenteralComment != ''">,</span></span><span *ngIf="item.parenteralComment != null && item.parenteralComment != ''"> {{item.parenteralComment}}<span *ngIf="item.outputComment != null && item.outputComment != ''" >and</span></span> <span *ngIf="item.outputComment != null && item.outputComment != ''">{{item.outputComment}}</span></td>
+					</tr>
+				</table>
+			</div> -->
+			<!-- <div *ngIf="isFlag == false">
+				<div class="col-md-12 col-print-12 table full margin-10-y">
+					<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+						<span class="bold">Total EN Feed = </span>
+						<span *ngIf="totalEn != undefined && totalEn != null">{{totalEn | number:'1.0-2'}} ml</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+						<span class="bold">Total PN Feed = </span>
+						<span *ngIf="totalPn != undefined && totalPn != null">{{totalPn | number:'1.0-2'}} ml</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+						<span class="bold">Total Medication Volume = </span><span>{{totalMedicineVol | number:'1.0-2'}} ml</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+						<span class="bold">Total Intake = </span>
+						<span *ngIf="(totalFeed != undefined && totalFeed != null) || (totalMedicineVol != 0)">
+							{{totalMedicineVol + totalFeed | number:'1.0-2'}} ml</span>
+					</div>
+				</div>
+				<div class="col-md-12 col-print-12 table full margin-10-y">
+					<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+						<span class="bold">Total Intake(ml/kg/day) = </span>
+						<span *ngIf="(totalFeed != undefined && totalFeed != null) || (totalMedicineVol != 0)">
+							{{(((totalMedicineVol + totalFeed + totalHeplockDelVolume + totalBloodDelVolume) * 24) / hours) | number:'1.0-2'}} ml/kg/d</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+						<span class="bold">Total Output = </span>
+						<span *ngIf="totalUrine != null">
+							{{(totalUrine + totalDrain + totalGastricAspirate) | number:'1.0-2'}} ml
+						</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+						<span class="bold">Wt Gain/Loss = </span>
+						<span *ngIf="childData.todayWeight != null">
+							{{((1000 * (childData.todayWeight - childData.workingWeight)) / childData.workingWeight) | number:'1.0-2'}} g/kg/d
+						</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+						<span class="bold">fluid Bal. ( I-O ) = </span>
+						<span>{{(totalMedicineVol + totalFeed) - (totalUrine + totalDrain + totalGastricAspirate)}} ml</span>
+					</div>
+				</div>
+			</div> -->
+
+
+
+
+			<!-- <div class="col-md-12 col-print-12" *ngIf="totalFeed != undefined || urineMlKgHr != undefined">
+				<div class="col-md-6 col-print-6 no-padding">
+					<span class="bold">Total Intake = </span><span *ngIf="totalFeed != undefined">{{totalFeed}} ml</span>
+				</div>
+				<div class="col-md-6 col-print-6 no-padding">
+					<span class="bold">Total Output = </span><span *ngIf="urineMlKgHr != undefined">{{urineMlKgHr | number:'1.0-2'}} ml/kg/hr</span>
+				</div>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="isOutputSummary == true">
+				<h2 class="bold padding-10-y">Output Summary</h2>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="nursingOutputData.intakeOutputList.length != 0 && isOutputSummary == true">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 border-black">
+					<tr class="border-black">
+						<td class="center-aligned border-black">Date & Time</td>
+						<td class="center-aligned border-black">Abd Girth.</td>
+						<td class="center-aligned border-black">Gastric Aspirate</td>
+						<td class="center-aligned border-black">Urine</td>
+						<td class="center-aligned border-black">Cummulative Urine</td>
+						<td class="center-aligned border-black">Stool</td>
+						<td class="center-aligned border-black">Vomit</td>
+						<td class="center-aligned border-black">Drain</td>
+						<td class="center-aligned border-black">Comments</td>
+					</tr>
+					<tr class="border-black" *ngFor="let item of nursingOutputData.intakeOutputList.slice().reverse()" [hidden]="item.abdomenGirth == null && item.gastricAspirate == null && item.urine == null && item.stool == null && item.vomit == null && item.drain == null && item.outputComment == null">
+						<td class="center-aligned border-black">{{item.entry_timestamp | date:'dd-MM-yyyy'}} {{item.nursingEntryTime}}</td>
+						<td class="center-aligned border-black">{{item.abdomenGirth}}</td>
+						<td class="center-aligned border-black">{{item.gastricAspirate}}</td>
+						<td class="center-aligned border-black">{{item.urine}}</td>
+						<td class="center-aligned border-black">{{item.cummulativeUrine}}</td>
+						<td class="center-aligned border-black">{{item.stool}}</td>
+						<td class="center-aligned border-black">{{item.vomit}}<span *ngIf="item.vomitColor != null"> - {{item.vomitColor}}</span></td>
+						<td class="center-aligned border-black">{{item.drain}}</td>
+						<td class="center-aligned border-black">{{item.outputComment}}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="totalUrine != undefined && isOutputSummary == true" style="margin-bottom:0px">
+				<div class="col-md-6 col-print-6 no-padding">
+					<span class="bold">Total Urine Output = </span><span >{{totalUrine}} ml</span>
+				</div>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="isEnteralSummary == true">
+				<h2 class="bold padding-10-y" >Enteral Summary</h2>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="nursingOutputData.intakeOutputList.length != 0 && isEnteralSummary == true">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 border-black" *ngIf="nursingOutputData.intakeOutputList.length != 0 && isEnteralSummary == true">
+					<tr class="border-black">
+						<td class="center-aligned border-black">Date & Time</td>
+						<td class="center-aligned border-black">Feed Type</td>
+						<td class="center-aligned border-black">Primary Feed</td>
+						<td class="center-aligned border-black">Formula Feed</td>
+						<td class="center-aligned border-black">Total</td>
+						<td class="center-aligned border-black">Total Cummulative</td>
+						<td class="center-aligned border-black">Comments</td>
+					</tr>
+					<tr class="border-black" *ngFor="let item of nursingOutputData.intakeOutputList" [hidden]="item.route != 'Breast Feed' && item.primaryFeedValue == null && item.formulaValue == null && item.actualFeed == null && item.enteralComment == null">
+						<td class="center-aligned border-black">{{item.entry_timestamp | date:'dd-MM-yyyy'}} {{item.nursingEntryTime}}</td>
+						<td class="center-aligned border-black">{{item.route}}</td>
+						<td class="center-aligned border-black">
+							<div *ngIf="item.primaryFeedValue != null">
+								<div class="bold" *ngFor="let option of nursingOutputData.refFeedTypeList">
+									<span *ngIf="option.feedtypeid == item.primaryFeedType">
+										<div>{{option.feedtypename}}</div>
+										<div>{{item.primaryFeedValue}}</div>
+									</span>
+								</div>
+							</div>
+						</td>
+						<td class="center-aligned border-black">
+							<div *ngIf="item.formulaValue != null">
+								<div class="bold" *ngFor="let option of nursingOutputData.refFeedTypeList">
+									<span *ngIf="option.feedtypeid == item.formulaType">
+									<div>{{option.feedtypename}}</div>
+									<div>{{item.formulaValue}}</div>
+									</span>
+								</div>
+							</div>
+						</td>
+						<td class="center-aligned border-black">{{item.actualFeed}}</td>
+						<td class="center-aligned border-black">{{item.cummulativeEn}}</td>
+						<td class="center-aligned border-black">{{item.enteralComment}}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-md-12 col-print-12 no-padding margin-5-y" style="margin-bottom:0px" *ngIf="totalEn != undefined && isEnteralSummary == true">
+				<div class="col-md-6 col-print-6">
+					<span class="bold">Total EN Feed = </span><span >{{totalEn}} ml</span>
+				</div>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="isParenteralSummary != 0">
+				<h2 class="bold padding-10-y">Parenteral Summary</h2>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="nursingOutputData.intakeOutputList.length != 0 && isOtherAdditivesSummary == true">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 border-black" *ngIf="printDataObj.intakeOutputList.length != 0 && isParenteralSummary == true">
+					<tr class="border-black">
+						<td class="center-aligned border-black">Date & Time</td>
+						<td class="center-aligned border-black">Lipid Total Vol.</td>
+						<td class="center-aligned border-black">Lipid Delivered Vol.</td>
+						<td class="center-aligned border-black">Lipid Remaining Vol.</td>
+						<td class="center-aligned border-black">TPN Total Vol.</td>
+						<td class="center-aligned border-black">TPN Delivered Vol.</td>
+						<td class="center-aligned border-black">TPN Remaining Vol.</td>
+						<td class="center-aligned border-black">Comments</td>
+					</tr>
+					<tr class="border-black" *ngFor="let item of nursingOutputData.intakeOutputList.slice().reverse()" [hidden]="item.lipid_delivered == null && item.tpn_delivered == null && item.parenteralComment == null">
+						<td class="center-aligned border-black">{{item.entry_timestamp | date:'dd-MM-yyyy'}} {{item.nursingEntryTime}}</td>
+						<td class="center-aligned border-black">{{item.lipid_total_volume}}</td>
+						<td class="center-aligned border-black">{{item.lipid_delivered}}</td>
+						<td class="center-aligned border-black">{{item.lipid_remaining}}</td>
+						<td class="center-aligned border-black">{{item.tpn_total_volume}}</td>
+						<td class="center-aligned border-black">{{item.tpn_delivered}}</td>
+						<td class="center-aligned border-black">{{item.tpn_remaining}}</td>
+						<td class="center-aligned border-black">{{item.parenteralComment}}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="isOtherAdditivesSummary != 0">
+				<h2 class="bold padding-10-y">Other Additives Summary</h2>
+			</div>
+			<div class="col-md-12 col-print-12" *ngIf="nursingOutputData.intakeOutputList.length != 0 && isOtherAdditivesSummary == true">
+				<table class="table table-striped table-bordered headed-table desktop-column-20 border-black" *ngIf="nursingOutputData.intakeOutputList.length != 0 && isOtherAdditivesSummary == true">
+					<tr class="border-black">
+						<td class="center-aligned border-black">Date & Time</td>
+						<td class="center-aligned border-black">Calcium Total Vol</td>
+						<td class="center-aligned border-black">Calcium Comments</td>
+						<td class="center-aligned border-black">Iron Total Vol</td>
+						<td class="center-aligned border-black">Iron Comments</td>
+						<td class="center-aligned border-black">Multi vit. Total</td>
+						<td class="center-aligned border-black">Multi vit. Comments</td>
+						<td class="center-aligned border-black">Other Total</td>
+						<td class="center-aligned border-black">Other Comments</td>
+					</tr>
+					<tr class="border-black" *ngFor="let item of nursingOutputData.intakeOutputList.slice().reverse()" [hidden]="item.calciumVolume == null && item.ironVolume == null && item.mvVolume == null && item.otherAdditiveVolume == null && item.calciumComment == null && item.ironComment == null && item.mvComment == null && item.otherAdditiveComment == null">
+						<td class="center-aligned border-black">{{item.entry_timestamp | date:'dd-MM-yyyy'}} {{item.nursingEntryTime}}</td>
+						<td class="center-aligned border-black">{{item.calciumVolume}}</td>
+						<td class="center-aligned border-black">{{item.calciumComment}}</td>
+						<td class="center-aligned border-black">{{item.ironVolume}}</td>
+						<td class="center-aligned border-black">{{item.ironComment}}</td>
+						<td class="center-aligned border-black">{{item.mvVolume}}</td>
+						<td class="center-aligned border-black">{{item.mvComment}}</td>
+						<td class="center-aligned border-black"><span *ngIf="item.otherAdditive != null && item.otherAdditiveVolume != null">{{item.otherAdditive}} - {{item.otherAdditiveVolume}}</span></td>
+						<td class="center-aligned border-black">{{item.otherAdditiveComment}}</td>
+					</tr>
+				</table>
+			</div>
+		</div> -->
+	</div>
+	</div>
+
+	<div *ngIf="nursingOutputData != undefined && printDataObj.whichTab == 'Nursing-output' && nursingOutputData.printFormatType =='shrink'">
+			<div>
+				<div class="col-md-12 col-print-12 center-aligned" *ngIf="nursingOutputData.anthropometryList != null && nursingOutputData.anthropometryList.length != 0" style="height: 50px;">
+					<h1 class="bold heading">Anthropometry Summary</h1>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.anthropometryList != null && nursingOutputData.anthropometryList.length != 0">
+					<table class="table table-striped table-bordered shrink-table desktop-column-20 border-black">
+					<tr class="border-black">
+					  <td class="center-aligned border-black">Date</td>
+					  <td class="center-aligned border-black">CGA</td>
+					  <td class="center-aligned border-black">DOL</td>
+					  <td class="center-aligned border-black">Yest. Wt(gm)</td>
+					  <td class="center-aligned border-black">Today's Wt(gm)</td>
+					  <td class="center-aligned border-black">Length(cm)</td>
+					  <td class="center-aligned border-black">Head Circumference(cm)</td>
+					</tr>
+					<tr *ngFor="let item of nursingOutputData.anthropometryList.slice().reverse()">
+						<td class="center-aligned border-black  ">{{item.visitdate | date:'dd-MM-yyyy'}}</td>
+						<td class="center-aligned border-black  ">
+							  <span *ngIf="item.admission_entry == null">{{item.gestationWeek}}
+							  <sup> + {{item.gestationDays}}</sup>
+							  </span>
+							<span *ngIf="item.admission_entry == true">Birth</span>
+						</td>
+					  <td class="center-aligned border-black  ">{{item.currentage}}</td>
+					  <td class="center-aligned border-black  ">{{item.prevDateWeight}}</td>
+					  <td class="center-aligned border-black  ">{{item.currentdateweight}}</td>
+					  <td class="center-aligned border-black  ">{{item.currentdateheight}}</td>
+					  <td class="center-aligned border-black  ">{{item.currentdateheadcircum}}</td>
+					</tr>
+				  </table>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.vitalList != null && nursingOutputData.vitalList != 0">
+					<h1 class="bold heading">Vital Parameters ( Temperature, Circulation, Respiratory, Misc )</h1>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.vitalList != null && nursingOutputData.vitalList.length != 0" style="margin-top:-12px;">
+					<table class="table table-striped table-bordered shrink-table  desktop-column-20 border-black" *ngIf="nursingOutputData.vitalList.length != 0">
+						<tr class="border-black">
+							<td class="center-aligned border-black  ">Time</td>
+							<td class="center-aligned"> C / P Temp</td>
+							<td class="center-aligned border-black border-right-print  ">Humidity</td>
+							<td class="center-aligned border-black  ">Baby Color</td>
+							<td class="center-aligned border-black  ">HR/PR</td>
+							<td class="center-aligned border-black  ">CFT</td>
+							<td class="center-aligned border-black  ">NIBP</td>
+							<td class="center-aligned border-black border-right-print">IBP</td>
+							<td class="center-aligned border-black  ">SpO<sub>2</sub></td>
+							<td class="center-aligned border-black  ">RR</td>
+							<td class="center-aligned border-black  ">Retract</td>
+							<td class="center-aligned border-black  ">Grunt</td>
+							<td class="center-aligned border-black  ">Air Entry</td>
+							<td class="center-aligned border-black  ">FiO<sub>2</sub></td>
+							<td class="center-aligned border-black border-right-print  ">Downe</td>
+							<td class="center-aligned border-black  ">Activity</td>
+							<td class="center-aligned border-black  ">Position</td>
+							<td class="center-aligned border-black  ">RBS</td>
+							<td class="center-aligned border-black  ">TCB</td>
+						</tr>
+						<tr class="border-black" *ngFor="let vitalObj  of  nursingOutputData.vitalList">
+							<td class="center-aligned border-black  ">
+								<!-- {{vitalObj.userDate | date:'dd-MM-yyyy'}} -->
+								<span> {{vitalObj.nnVitalparameterTime}}</span>
+							  </td>
+							  <td class="center-aligned border-black  ">
+								  <span *ngIf="vitalObj.centraltemp != null">
+									  {{vitalObj.centraltemp}}
+								  </span>
+								  <span *ngIf="vitalObj.centraltemp == null"> -- </span>
+								  /
+								  <span *ngIf="vitalObj.peripheraltemp != null">
+									  {{vitalObj.peripheraltemp}}
+								  </span>
+								  <span *ngIf="vitalObj.peripheraltemp == null"> -- </span>
+							  </td>
+							<td class="center-aligned border-black border-right-print  ">{{vitalObj.humidification}}</td>
+							  <td class="center-aligned border-black  ">{{vitalObj.baby_color}}</td>
+							  <td class="center-aligned border-black  "><span *ngIf="vitalObj.hrRate != null">{{vitalObj.hrRate}}</span><span *ngIf="vitalObj.hrRate == null"> -- </span> / <span *ngIf="vitalObj.pulserate != null">{{vitalObj.pulserate}}</span><span *ngIf="vitalObj.pulserate == null"> -- </span></td>
+							  <td class="center-aligned border-black  ">{{vitalObj.cft}}</td>
+							  <td class="center-aligned border-black  ">
+								<span *ngIf = "vitalObj.systBp != null && vitalObj.systBp != undefined  && vitalObj.systBp != '' ">{{vitalObj.systBp}}/{{vitalObj.diastBp}} ({{vitalObj.meanBp}})</span>
+							</td>
+							<td class="center-aligned border-black border-right-print  ">
+								<span *ngIf = "vitalObj.systiBp != null && vitalObj.systiBp != undefined  && vitalObj.systiBp != '' ">{{vitalObj.systiBp}}/{{vitalObj.diastiBp}} ({{vitalObj.meaniBp}})</span>
+							</td>
+							<td class="center-aligned border-black  ">{{vitalObj.spo2}}</td>
+							<td class="center-aligned border-black  ">{{vitalObj.rrRate}}</td>
+							<td class="center-aligned border-black  ">{{vitalObj.retractions}}</td>
+							<td class="center-aligned border-black  ">{{vitalObj.grunting}}</td>
+							<td class="center-aligned border-black  ">{{vitalObj.airentry}}</td>
+							<td class="center-aligned border-black  ">{{vitalObj.cynosis}}</td>
+							<td class="center-aligned border-black border-right-print  ">{{vitalObj.downesscore}}</td>
+							<td class="center-aligned border-black  ">{{vitalObj.consciousness}}</td>
+							<td class="center-aligned border-black  ">{{vitalObj.vpPosition}}</td>
+							<td class="center-aligned border-black  ">{{vitalObj.rbs}}</td>
+							<td class="center-aligned border-black">{{vitalObj.tcb}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.episodeList != null && nursingOutputData.episodeList != 0">
+					<h1 class="bold heading">Event Summary</h1>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.episodeList != null && nursingOutputData.episodeList.length != 0">
+					<table class="table table-striped table-bordered shrink-table desktop-column-20 border-black" *ngIf="nursingOutputData.episodeList.length != 0">
+						<tr class="border-black">
+							<td class="center-aligned border-black  ">Time</td>
+							<td class="center-aligned border-black  ">Seizures</td>
+							<!-- <td class="center-aligned border-black">Symptomatic</td> -->
+							<td class="center-aligned border-black  ">Duration (Seizures)</td>
+							<td class="center-aligned border-black border-right-print  ">Type</td>
+							<td class="center-aligned border-black  ">Apnea</td>
+							<td class="center-aligned border-black  ">Duration (Apnea)</td>
+							<td class="center-aligned border-black  ">Min Spo<sub>2</sub> (%)</td>
+							<td class="center-aligned border-black  ">Bradycardia</td>
+							<td class="center-aligned border-black"  >Min HR (per min)</td>
+							<td class="center-aligned border-black  ">Recovery</td>
+						</tr>
+							<tr class="border-black" *ngFor="let eventObj of nursingOutputData.episodeList.slice().reverse()">
+							<td class="center-aligned border-black  ">{{eventObj.creationtime | date:'hh:mm a'}}</td>
+							<td class="center-aligned border-black  ">
+								<span *ngIf="eventObj.seizures == true">Yes</span>
+								<span *ngIf="eventObj.seizures == false && eventObj.seizures != null">No</span>
+							</td>
+							<!-- <td class="center-aligned border-black" *ngIf="">
+								<span *ngIf="eventObj.symptomaticStatus == true">Yes</span>
+								<span *ngIf="eventObj.symptomaticStatus == false && eventObj.symptomaticStatus != null">No</span>
+							</td> -->
+							<td class="center-aligned border-black  ">
+								<span *ngIf="eventObj.duration_unit_seizure == 'hr'">{{eventObj.seizureDuration}} hrs</span>
+								<span *ngIf="eventObj.duration_unit_seizure == 'min'">{{eventObj.seizureDuration}} min</span>
+								<span *ngIf="eventObj.duration_unit_seizure == 'sec'">{{eventObj.seizureDuration}} sec</span>
+								<span *ngIf="eventObj.duration_unit_seizure == null">{{eventObj.seizureDuration}}</span>
+							</td>
+							<td class="center-aligned border-black border-right-print  ">{{eventObj.seizureType}}</td>
+							<td class="center-aligned border-black  ">
+								<span *ngIf="eventObj.apnea == true">Yes</span>
+								<span *ngIf="eventObj.apnea == false && eventObj.apnea != null">No</span>
+							</td>
+							<td class="center-aligned border-black  ">
+								<span *ngIf="eventObj.duration_unit_apnea == 'min'">{{eventObj.apneaDuration}} min</span>
+								<span *ngIf="eventObj.duration_unit_apnea == 'sec'">{{eventObj.apneaDuration}} sec</span>
+								<span *ngIf="eventObj.duration_unit_apnea == null">{{eventObj.apneaDuration}}</span>
+							</td>
+							<td class="center-aligned border-black  ">{{eventObj.spo2}}</td>
+							<td class="center-aligned border-black  ">
+								<span *ngIf="eventObj.bradycardia == true">Yes</span>
+								<span *ngIf="eventObj.bradycardia == false && eventObj.bradycardia != null">No</span>
+							</td>
+							<td class="center-aligned border-black  ">{{eventObj.hr}}</td>
+							<td class="center-aligned border-black  ">{{eventObj.recovery}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.bgVentilatorList != null && nursingOutputData.bgVentilatorList != 0" style="height:50px;">
+					<h1 class="bold heading">Ventilator & Blood Gas Summary</h1>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.bgVentilatorList != null && nursingOutputData.bgVentilatorList.length != 0">
+					<table class="table table-striped table-bordered shrink-table desktop-column-20">
+						<tr class="border-black">
+							<!-- Fields for Ventilator  -->
+							<td class="center-aligned border-black  ">Time</td>
+							<td class="center-aligned border-black  ">Mode</td>
+							<td class="center-aligned border-black  ">PIP</td>
+							<td class="center-aligned border-black  ">PEEP/CPAP</td>
+							<td class="center-aligned border-black  ">Press Supp</td>
+							<td class="center-aligned border-black  ">MAP</td>
+							<td class="center-aligned border-black  ">Freq / Rate</td>
+							<td class="center-aligned border-black  ">TV</td>
+							<td class="center-aligned border-black  ">MV</td>
+							<td class="center-aligned border-black  ">Ti</td>
+							<td class="center-aligned border-black  ">FiO<sub>2</sub></td>
+							<td class="center-aligned border-black  ">Amp.</td>
+							<td class="center-aligned border-right-print  ">Flow</td>
+							<!-- end of Fields for ventilator -->
+							<!-- Fields for Blood Gas  -->
+							<td class="center-aligned border-black  ">pH</td>
+							<td class="center-aligned border-black  ">PO<sub>2</sub></td>
+							<td class="center-aligned border-black  ">PCO<sub>2</sub></td>
+							<td class="center-aligned border-black  ">HCO<sub>3</sub>(Std)</td>
+							<td class="center-aligned border-black  ">BE( S )</td>
+							<td class="center-aligned border-black  ">Lact</td>
+							<!-- end of Fields for Blood Gas -->
+						</tr>
+						<tr class="border-black" *ngFor="let ventilator of nursingOutputData.bgVentilatorList">
+							<!-- Fields for Ventilator  -->
+							<td class="center-aligned  border-black  ">{{ventilator.entrydate | date:'hh:mm a'}}</td>
+							<td class="center-aligned  border-black  ">
+								<div *ngFor="let item of nursingOutputData.ventilatorModeDropDown">
+									<div *ngIf="ventilator.ventmode == item.key">{{item.value}}</div>
+								</div>
+							</td>
+							<td class="center-aligned  border-black">{{ventilator.pip}}</td>
+							<td class="center-aligned  border-black">{{ventilator.peep_cpap}}</td>
+							<td class="center-aligned  border-black">{{ventilator.pressure_supply}}</td>
+							<td class="center-aligned  border-black">{{ventilator.map}}</td>
+							<td class="center-aligned  border-black">{{ventilator.freq_rate}}</td>
+							<td class="center-aligned  border-black">{{ventilator.tidal_volume}}</td>
+							<td class="center-aligned  border-black">{{ventilator.minute_volume}}</td>
+							<td class="center-aligned  border-black">{{ventilator.ti}}</td>
+							<td class="center-aligned  border-black">{{ventilator.fio2}}</td>
+							<td class="center-aligned  border-black">{{ventilator.amplitude}}</td>
+							<td class="center-aligned border-right-print  ">{{ventilator.flow_per_min}}</td>
+							<!-- end of Fields for ventilator  -->
+							<!-- Fields for Blood Gas  -->
+							<td class="center-aligned border-black  ">{{this.round(ventilator.ph,2)}}</td>
+							<td class="center-aligned border-black  ">{{ventilator.po2}}</td>
+							<td class="center-aligned border-black  ">{{ventilator.pco2}}</td>
+							<td class="center-aligned border-black  ">{{ventilator.hco2}}</td>
+							<td class="center-aligned border-black  ">{{ventilator.be}}</td>
+							<td class="center-aligned border-black  ">{{this.round(ventilator.lactate,1)}}</td>
+							<!-- end of Fields for Blood Gas -->
+						</tr>
+					</table>
+				</div>
+	
+	
+	
+	
+				<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.etSuctionList != null && nursingOutputData.etSuctionList != 0">
+					<h1 class="bold heading">Et Suction Summary</h1>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.etSuctionList != null && nursingOutputData.etSuctionList.length != 0">
+					<table class="table table-striped table-bordered shrink-table desktop-column-20 border-black" *ngIf="nursingOutputData.etSuctionList.length != 0">
+						<tr class="border-black">
+							<td class="center-aligned border-black  ">Date</td>
+							<td class="center-aligned border-black  ">Site</td>
+							<td class="center-aligned border-black  ">Catheter Size (cm)</td>
+							<td class="center-aligned border-black  ">Length of Catheter (cm)</td>
+							<td class="center-aligned border-black  ">Saline Vol. (ml)</td>
+							<td class="center-aligned border-black  ">No. Of Attempts</td>
+							<td class="center-aligned border-black  ">Min Spo<sub>2</sub></td>
+							<td class="center-aligned border-black  ">Secretion Color</td>
+							<td class="center-aligned border-black  ">Secretion Vol. (ml)</td>
+							<td class="center-aligned border-black  ">Sent Orders</td>
+						</tr>
+						<tr class="border-black" *ngFor="let item of nursingOutputData.etSuctionList">
+							<td class="center-aligned border-black  ">{{item.orderTime | date:'hh:mm a'}}</td>
+							<td class="center-aligned border-black  ">{{item.site}}</td>
+							<td class="center-aligned border-black  ">{{item.size}}</td>
+							<td class="center-aligned border-black  ">{{item.length}}</td>
+							<td class="center-aligned border-black  ">{{item.salineVolume}}</td>
+							<td class="center-aligned border-black  ">{{item.attemptsCount}}</td>
+							<td class="center-aligned border-black  ">{{item.minSpo2}}</td>
+							<td class="center-aligned border-black  ">{{item.secretionColor}}</td>
+							<td class="center-aligned border-black  ">{{item.secretionVolume}}</td>
+							<td class="center-aligned border-black  ">{{item.labOrders}}</td>
+						</tr>
+					</table>
+				</div>
+
+
+
+
+
+
+
+				<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.medicationList != null && nursingOutputData.medicationList != 0">
+					<h1 class="bold heading">Medication Summary</h1>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.medicationList != null && nursingOutputData.medicationList.length != 0">
+					<table class="table table-striped table-bordered shrink-table desktop-column-20 border-black" *ngIf="nursingOutputData.medicationList.length != 0">
+						<tr class="border-black">
+							<td class="center-aligned border-black  ">Time</td>
+							<!-- <td class="center-aligned border-black  ">Status</td> -->
+							<td class="center-aligned border-black  ">Medicine</td>
+							<td class="center-aligned border-black  ">Dose</td>
+							<td class="center-aligned border-black  ">Mode</td>
+							<td class="center-aligned border-black  ">Route</td>
+							<td class="center-aligned border-black  ">Freq./Rate</td>
+							<td class="center-aligned border-black  ">Dilution</td>
+							<td class="center-aligned border-black  ">Type</td>
+							<td class="center-aligned border-black  ">Infusion Time</td>
+							<td class="center-aligned border-black  ">Next Dose</td>
+							<td class="center-aligned border-black  ">Day</td>
+							<td class="center-aligned border-black  ">Delivered Vol</td>
+	
+							<!-- <td class="center-aligned border-black  ">Remaining Vol</td> -->
+						</tr>
+						<tr class="border-black" *ngFor="let item of nursingOutputData.medicationList.slice().reverse()">
+							<td class="center-aligned border-black  ">{{item.given_time | date:'hh:mm a'}}</td>
+							<!-- <td class="center-aligned border-black  "><span *ngIf="!item.stop_flag">Active</span>
+								<span *ngIf="item.stop_flag">Stopped</span></td> -->
+							<td class="center-aligned border-black  ">{{item.doctorMedicine.medicinename}}</td>
+							<td class="center-aligned border-black  "><span *ngIf="item.given_dose != null && item.given_dose != 0">{{item.given_dose | number:'1.0-2'}}
+								<span *ngIf="item.doctorMedicine.medicinename == 'survanta' || item.doctorMedicine.medicinename == 'curosurf' || item.doctorMedicine.medicinename == 'neosurf'"> ml</span>
+								<span *ngIf="item.doctorMedicine.medicinename != 'survanta' && item.doctorMedicine.medicinename != 'curosurf' && item.doctorMedicine.medicinename != 'neosurf'"> mg</span></span>
+							</td>
+							<td class="center-aligned border-black  ">{{item.doctorMedicine.freq_type}}</td>
+							<td class="center-aligned border-black  ">{{item.doctorMedicine.route}}</td>
+							<td class="center-aligned border-black  ">
+								<span *ngIf="item.doctorMedicine.medicationFreqStr != null"> {{item.doctorMedicine.medicationFreqStr}}</span>
+								<span *ngIf="item.doctorMedicine.medicationFreqStr == null"> -- </span>
+								<span *ngIf="item.doctorMedicine.rate != null"> {{item.doctorMedicine.rate}}</span>
+								<span *ngIf="item.doctorMedicine.rate == null"> -- </span></td>
+							<td class="center-aligned border-black  "><span *ngIf="item.doctorMedicine.inf_volume != null">{{item.doctorMedicine.inf_volume}} ml</span></td>
+							<td class="center-aligned border-black  ">{{item.doctorMedicine.dilution_type}}</td>
+							<td class="center-aligned border-black  ">
+								<span *ngIf="item.doctorMedicine.inf_time != null">{{item.doctorMedicine.inf_time}}</span>
+								<span *ngIf="item.doctorMedicine.inf_mode != null">{{item.doctorMedicine.inf_mode}} </span>
+							</td>
+							<td class="center-aligned border-black  ">{{item.next_dose | date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned border-black  ">{{item.day_number}}</td>
+							<td class="center-aligned border-black  ">
+								<span *ngIf="item.delivered_volume != null && item.doctorMedicine.medicinename != 'Gentil' && item.doctorMedicine.medicinename != 'Tobramycin' && item.doctorMedicine.medicinename != 'Nasal saline drops' && item.doctorMedicine.sachets == null">{{item.delivered_volume}} ml</span>
+								<span *ngIf="item.delivered_volume != null && (item.doctorMedicine.medicinename == 'Gentil' || item.doctorMedicine.medicinename == 'Tobramycin' || item.doctorMedicine.medicinename == 'Nasal saline drops')">{{item.delivered_volume}} drops</span>
+								<span *ngIf="item.delivered_volume != null && item.doctorMedicine.sachets != null">{{item.delivered_volume}} sachets</span>
+							</td>
+							<!-- <td class="center-aligned border-black  "><span *ngIf="item.remaining_volume != null">{{item.remaining_volume}} ml</span></td> -->
+						</tr>
+					</table>
+				</div>
+				<!-- Code for blood Product Table for nursing output -->
+				<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.pastNursingBloodProductList != null && nursingOutputData.pastNursingBloodProductList != 0">
+					<h1 class="bold heading">Blood Product Summary</h1>
+				</div>
+				<div class="col-md-12 col-print-12" *ngIf="nursingOutputData.bloodProductList != null && nursingOutputData.bloodProductList != 0">
+					<table class="table table-striped table-bordered shrink-table desktop-column-20" *ngIf="nursingOutputData.isBloodProductTableVisible != undefined && nursingOutputData.isBloodProductTableVisible == true">
+						<tr class="border-black">
+							<td class="center-aligned border-black">Date & Time</td>
+							<td class="center-aligned border-black">Status</td>
+							<td class="center-aligned border-black">Blood Product</td>
+							<td class="center-aligned border-black">Total Vol. (ml)</td>
+							<td class="center-aligned border-black">Delivered Vol. (ml)</td>
+						</tr>
+						<tr *ngFor="let item of nursingOutputData.bloodProductList" class="border-black"
+						 [hidden]="item.nursingObj.delivered_volume == null || item.nursingObj.delivered_volume == ''">
+							<td class="center-aligned border-black">{{item.nursingObj.execution_time | date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned border-black">Active</td>
+							<td class="center-aligned border-black">{{item.blood_product}}</td>
+							<td class="center-aligned border-black">{{item.total_volume}}</td>
+							<td class="center-aligned border-black">{{item.nursingObj.delivered_volume}}</td>
+						</tr>
+					</table>
+				</div>
+				<!-- end of the code of blood product for nursing output -->
+				<!-- Code for Heplock Table for nursing output -->
+				<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.heplockList != null && nursingOutputData.heplockList != 0">
+					<h1 class="bold heading">Heplock Summary</h1>
+				</div>
+				<div class="col-md-12 col-print-12" *ngIf="nursingOutputData.heplockList.length != 0">
+					<table class="table table-striped table-bordered shrink-table desktop-column-20 border-black">
+						<tr class="border-black">
+							<td class="center-aligned border-black">Date & Time</td>
+							<td class="center-aligned border-black">Status</td>
+							<td class="center-aligned border-black">Sol.</td>
+							<td class="center-aligned border-black">Anti-Coagulent</td>
+							<td class="center-aligned border-black">Total Vol.</td>
+							<td class="center-aligned border-black">Rate</td>
+							<td class="center-aligned border-black">Delivered Vol.</td>
+						</tr>
+						<tr class="border-black" *ngFor="let item of nursingOutputData.heplockList">
+							<td class="center-aligned border-black">{{item.execution_time | date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned border-black">Active</td>
+							<td class="center-aligned border-black">{{item.solutionType}}</td>
+							<td class="center-aligned border-black">{{item.antiCoagulentType}}</td>
+							<td class="center-aligned border-black">{{item.heparinTotalVolume}} ml</td>
+							<td class="center-aligned border-black">{{item.heparinRate}}</td>
+							<td class="center-aligned border-black">{{item.deliveredVolume}} ml</td>
+						</tr>
+					</table>
+				</div>
+				<!-- end of the code of Heplock for nursing output -->
+				<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.intakeOutputList != null && nursingOutputData.intakeOutputList != 0">
+					<h1 class="bold heading">Nursing Intake-Output</h1>
+				</div>
+				<div class="col-md-12 col-print-12 table full margin-10-y" *ngIf="nursingOutputData.intakeOutputList != null && nursingOutputData.intakeOutputList != 0" style="margin-top:-20px;">
+					<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+						<span class="bold  ">Total Fluid Req. = </span><span class=" " *ngIf="nursingOutputData.doctorNutritionOrder[0] != undefined && nursingOutputData.doctorNutritionOrder[0].totalfluidMlDay != null">{{nursingOutputData.doctorNutritionOrder[0].totalfluidMlDay}} ml/kg/d</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+						<span class="bold  ">Fluid Req. in this shift = </span><span class=" " *ngIf="fluidReq != null"> {{fluidReq | number:'1.0-2'}} ml</span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+						<span class="bold visiblity-hidden">Fluid Req. = </span><span class="visiblity-hidden"><!-- 50 ml --></span>
+					</div>
+					<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+						<span class="bold visiblity-hidden">Fluid Req. = </span><span class="visiblity-hidden"><!-- 50 ml --></span>
+					</div>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.intakeOutputList.length != 0">
+					<table class="table table-striped table-bordered shrink-table desktop-column-20 border-black">
+						<tr class="border-black">
+							<!-- these are the EN parameters -->
+							<td class="center-aligned border-black  ">Time</td>
+							<td class="center-aligned border-black  ">Mode</td>
+							<td class="center-aligned border-black  ">Pr. Feed(ml)</td>
+							<td class="center-aligned border-black  ">Formula(ml)</td>
+							<td class="center-aligned border-black  ">Total Add.(ml)</td>
+							<td class="center-aligned border-right-print  ">Cumm Vol(ml)</td>
+							<!-- End of EN parameters -->
+							<!-- these are the PN parameters -->
+							<td class="center-aligned border-black  ">IVF(ml)</td>
+							<td class="center-aligned border-black  ">TPN Del. Vol(ml)</td>
+							<!-- <td class="center-aligned border-black  ">Lipid Del. Vol.</td> -->
+							<td class="center-aligned border-black  ">Ca<sup>++</sup> (ml)</td>
+							<td class="center-aligned border-right-print  ">Bolus (ml)</td>
+							<!-- End of PN parameters -->
+							<!-- these are the output summary parameters -->
+							<td class="center-aligned border-black  ">Abd Girth. (cm)</td>
+							<td class="center-aligned border-black  ">Gastric Aspirate (ml)</td>
+							<td class="center-aligned border-black  ">Urine (ml)</td>
+							<td class="center-aligned border-black  ">Cumm Urine (ml)</td>
+							<td class="center-aligned border-black  ">Stool</td>
+							<td class="center-aligned border-black  ">Vomit</td>
+							<td class="center-aligned border-black  ">Drain (ml)</td>
+							<!-- <td class="center-aligned border-black  ">Remarks</td> -->
+							<td class="center-aligned border-black  ">Cann. Site</td>
+							<!-- End of output summary parameters -->
+						</tr>
+						<tr class="border-black" *ngFor="let item of nursingOutputData.intakeOutputList">
+							<!-- these are the EN parameters -->
+							<td class="center-aligned border-black  ">
+								<!-- {{item.entry_timestamp | date:'dd-MM-yyyy'}}  -->
+								{{item.nursingEntryTime}}</td>
+							<td class="center-aligned border-black  ">{{item.route}}</td>
+							<td class="center-aligned border-black  ">
+								<div *ngIf="item.primaryFeedValue != null">
+									<div class="bold" *ngFor="let option of nursingOutputData.refFeedTypeList">
+										<span *ngIf="option.feedtypeid == item.primaryFeedType">
+											<div>{{option.feedtypename}}</div>
+											<div>{{item.primaryFeedValue}}</div>
+										</span>
+									</div>
+								</div>
+							</td>
+							<td class="center-aligned border-black  ">
+								<div *ngIf="item.formulaValue != null">
+									<div class="bold" *ngFor="let option of nursingOutputData.refFeedTypeList">
+										<span *ngIf="option.feedtypeid == item.formulaType">
+										<div>{{option.feedtypename}}</div>
+										<div>{{item.formulaValue}}</div>
+										</span>
+									</div>
+								</div>
+							</td>
+							<td class="center-aligned border-black  ">{{item.totalAdditives | number:'1.0-2'}}</td>
+							<td class="center-aligned border-right-print  ">{{item.cummulativeEn | number:'1.0-2'}}</td>
+							<!-- End of EN parameters -->
+							<!-- these are the PN parameters -->
+							<td class="center-aligned border-black  ">{{item.readymadeDeliveredFeed | number:'1.0-2'}}</td>
+							<td class="center-aligned border-black  "><span *ngIf="item.tpn_delivered != null || item.lipid_delivered != null">{{item.tpn_delivered + item.lipid_delivered | number:'1.0-2'}}</span></td>
+							<!-- <td class="center-aligned border-black  ">{{item.lipid_delivered}}</td> -->
+							<td class="center-aligned border-black  "><span *ngIf="item.calciumDeliveredFeed != undefined && item.calciumDeliveredFeed != null">{{item.calciumDeliveredFeed | number:'1.0-2'}}</span></td>
+							<td class="center-aligned border-right-print  ">{{item.bolusDeliveredFeed | number:'1.0-2'}}</td>
+							<!-- End of PN parameters -->
+							<!-- these are the output summary parameters -->
+							<td class="center-aligned border-black  ">{{item.abdomenGirth}}</td>
+							<td class="center-aligned border-black  ">{{item.gastricAspirate}}</td>
+							<td class="center-aligned border-black  ">{{item.urine | number:'1.0-2'}} <span *ngIf="item.urinePassed != null && item.urinePassed == true && item.urine == null"> Passed</span><span *ngIf="item.urinePassed != null && item.urinePassed == false && item.urine == null">Not Passed</span></td>
+							<td class="center-aligned border-black  ">{{item.cummulativeUrine | number:'1.0-2'}}</td>
+							<td class="center-aligned border-black  ">{{item.stool}}<span *ngIf="item.stoolPassed != null && item.stoolPassed == true && item.stool == null"> Passed</span><span *ngIf="item.stoolPassed != null && item.stoolPassed == false && item.stool == null">Not Passed</span></td>
+							<td class="center-aligned border-black  ">{{item.vomit}}<span *ngIf="item.vomitColor != null"> - {{item.vomitColor}}</span><span *ngIf="item.vomitPassed != null && item.vomitColor == null && item.vomit == null && item.vomitPassed == true"> Yes</span> <span *ngIf="item.vomitPassed != null && item.vomitColor == null && item.vomit == null && item.vomitPassed == false"> No</span> </td>
+							<td class="center-aligned border-black">{{item.drain}} </td>
+							<!-- <td class="center-aligned border-black  "><span *ngIf="item.enteralComment != null && item.enteralComment != ''">{{item.enteralComment}} <span *ngIf="item.parenteralComment != null && item.parenteralComment != ''">,</span></span><span *ngIf="item.parenteralComment != null && item.parenteralComment != ''"> {{item.parenteralComment}}<span *ngIf="item.outputComment != null && item.outputComment != ''" >and</span></span> <span *ngIf="item.outputComment != null && item.outputComment != ''">{{item.outputComment}}</span></td> -->
+							<td class="center-aligned border-black  "><!-- Cannula Site --></td>
+							<!-- End of output summary parameters -->
+						</tr>
+					</table>
+				</div>
+				<!-- <div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.intakeOutputList.length != 0 && isDisplayRemark == true">
+					<table class="table table-striped table-bordered headed-table desktop-column-20 border-black">
+						<tr class="border-black">
+							<td class="center-aligned border-black  ">Time</td>
+							<td class="center-aligned border-black  ">Remarks</td>
+						</tr>
+						<tr class="border-black" *ngFor="let item of nursingOutputData.intakeOutputList" [hidden]="(item.enteralComment != null || item.enteralComment != '' || item.parenteralComment != null || item.parenteralComment != '' || item.outputComment != null || item.outputComment != '')">
+							<td class="center-aligned border-black  ">{{item.nursingEntryTime}}</td>
+							<td class="center-aligned border-black  "><span *ngIf="item.enteralComment != null && item.enteralComment != ''">{{item.enteralComment}} <span *ngIf="item.parenteralComment != null && item.parenteralComment != ''">,</span></span><span *ngIf="item.parenteralComment != null && item.parenteralComment != ''"> {{item.parenteralComment}}<span *ngIf="item.outputComment != null && item.outputComment != ''" >and</span></span> <span *ngIf="item.outputComment != null && item.outputComment != ''">{{item.outputComment}}</span></td>
+						</tr>
+					</table>
+				</div> -->
+				<!-- <div *ngIf="isFlag == false">
+					<div class="col-md-12 col-print-12 table full margin-10-y">
+						<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+							<span class="bold">Total EN Feed = </span>
+							<span *ngIf="totalEn != undefined && totalEn != null">{{totalEn | number:'1.0-2'}} ml</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+							<span class="bold">Total PN Feed = </span>
+							<span *ngIf="totalPn != undefined && totalPn != null">{{totalPn | number:'1.0-2'}} ml</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+							<span class="bold">Total Medication Volume = </span><span>{{totalMedicineVol | number:'1.0-2'}} ml</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+							<span class="bold">Total Intake = </span>
+							<span *ngIf="(totalFeed != undefined && totalFeed != null) || (totalMedicineVol != 0)">
+								{{totalMedicineVol + totalFeed | number:'1.0-2'}} ml</span>
+						</div>
+					</div>
+					<div class="col-md-12 col-print-12 table full margin-10-y">
+						<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+							<span class="bold">Total Intake(ml/kg/day) = </span>
+							<span *ngIf="(totalFeed != undefined && totalFeed != null) || (totalMedicineVol != 0)">
+								{{(((totalMedicineVol + totalFeed + totalHeplockDelVolume + totalBloodDelVolume) * 24) / hours) | number:'1.0-2'}} ml/kg/d</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+							<span class="bold">Total Output = </span>
+							<span *ngIf="totalUrine != null">
+								{{(totalUrine + totalDrain + totalGastricAspirate) | number:'1.0-2'}} ml
+							</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+							<span class="bold">Wt Gain/Loss = </span>
+							<span *ngIf="childData.todayWeight != null">
+								{{((1000 * (childData.todayWeight - childData.workingWeight)) / childData.workingWeight) | number:'1.0-2'}} g/kg/d
+							</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell print-width-3">
+							<span class="bold">fluid Bal. ( I-O ) = </span>
+							<span>{{(totalMedicineVol + totalFeed) - (totalUrine + totalDrain + totalGastricAspirate)}} ml</span>
+						</div>
+					</div>
+				</div> -->
+				<div *ngIf="isFlag == true">
+					<div class="col-md-12 col-print-12 no-padding table full margin-5-y">
+	
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Total PN Feed = </span>
+							<span class="bold" *ngIf="totalPn != undefined && totalPn != null">{{ totalPn | number:'1.0-2'}} ml</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Total Bolus = </span>
+							<span class="bold" *ngIf="totalBolus != undefined && totalBolus != null">{{totalBolus | number:'1.0-2'}} ml</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Total Med Volume = </span><span class="bold">{{totalMedicineVol | number:'1.0-2'}} ml</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Total Blood Product = </span><span class="bold">{{totalBloodDelVolume | number:'1.0-2'}} ml</span>
+						</div>
+					</div>
+					<div class="col-md-12 col-print-12 no-padding table full margin-5-y">
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Total Art. Line = </span><span class="bold">{{totalHeplockDelVolume | number:'1.0-2'}} ml</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Total Intake = </span>
+							<span class="bold" *ngIf="(totalFeed != undefined && totalFeed != null) || (totalMedicineVol != 0)">
+								{{((totalMedicineVol + totalFeed + totalHeplockDelVolume + totalBloodDelVolume + totalBolus)/weight) | number:'1.0-2'}} ml/kg/d
+								({{totalMedicineVol + totalFeed + totalHeplockDelVolume + totalBloodDelVolume + totalBolus | number:'1.0-2'}} ml)
+							</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Total Output = </span>
+							<span *ngIf="totalUrine != null" class="bold">
+								{{((totalUrine + totalDrain + totalGastricAspirate)/weight) | number:'1.0-2'}} ml/kg/d
+								 ({{(totalUrine + totalDrain + totalGastricAspirate) | number:'1.0-2'}} ml)
+							</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Fluid Bal. ( I-O ) = </span>
+							<span class="bold">{{(totalMedicineVol + totalFeed) - (totalUrine + totalDrain + totalGastricAspirate)}} ml</span>
+						</div>
+					</div>
+					<div class="col-md-12 col-print-12 no-padding table full margin-5-y">
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Wt Gain/Loss = </span>
+							<span *ngIf="childObject.todayWeight != null && childObject.lastDayWeight != null" class="bold">
+								{{((100 * (childObject.todayWeight - childObject.lastDayWeight)) / childObject.lastDayWeight) | number:'1.0-2'}} %
+							</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Calorie Intake = </span>
+							<span class="bold">{{(this.energy / weight) | number:'1.0-2'}} cal/kg/day</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Protein Intake = </span>
+							<span class="bold">{{(this.protein / weight) | number:'1.0-2'}} gm/kg/day</span>
+						</div>
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Na<sup>++</sup> Intake = </span><span class="bold">{{ sodiumVolume | number:'1.0-2'}} meq/kg/day</span>
+						</div>
+					</div>
+					<div class="col-md-12 col-print-12 no-padding table full margin-5-y">
+						<div class="col-md-3 col-print-3 no-padding table-cell">
+							<span class="bold">Ca<sup>++</sup> Intake = </span><span class="bold">{{ calciumVolume | number:'1.0-2'}} mg/kg/day</span>
+						</div>
+					</div>
+				</div>
+	
+				<div class="col-md-12 col-print-12 no-padding center-aligned" *ngIf="nursingOutputData.notesList != null && nursingOutputData.notesList != 0" style="height:50px;">
+					<h1 class="bold heading">Nursing Notes</h1>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding" *ngIf="nursingOutputData.notesList != null && nursingOutputData.notesList.length != 0">
+					<table
+						class="table table-striped table-bordered shrink-table col-md-12 col-print-12 no-padding border-black" *ngIf="nursingOutputData.notesList.length !=0">
+						<tr class="border-black">
+							<td class="center-aligned border-black  ">From Time</td>
+							<td class="center-aligned border-black  ">To Time</td>
+							<td class="center-aligned border-black  ">Notes</td>
+							<td class="center-aligned border-black  ">Nurse</td>
+						</tr>
+						<tr class="border-black" *ngFor="let notes of nursingOutputData.notesList">
+							<td class="center-aligned border-black  ">{{notes.from_time | date: 'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned border-black  ">{{notes.to_time | date: 'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="left-aligned border-black  "> <div style="white-space: pre-wrap;">{{notes.nursing_notes}}</div></td>
+							<td class="center-aligned border-black  ">{{notes.loggeduser}}</td>
+						</tr>
+					</table>
+				</div>
+	
+				<!-- Code for Nursing Comments when data is Available in the table -->
+				<div class="col-md-12 col-print-12 center-aligned" *ngIf="(nursingOutputData.anthropometryList != null && nursingOutputData.anthropometryList.length > 0) || (nursingOutputData.intakeOutputList != null && nursingOutputData.intakeOutputList.length > 0)" style="height:50px;">
+					<h1 class="bold heading">Comments</h1>
+				</div>
+				<div class="col-md-12 col-print-12 no-padding" *ngIf="(nursingOutputData.anthropometryList != null && nursingOutputData.anthropometryList.length > 0) || (nursingOutputData.intakeOutputList != null && nursingOutputData.intakeOutputList.length > 0)">
+					<table class="table table-striped table-bordered shrink-table desktop-column-20 border-black">
+						<tr class="border-black">
+							<td class="center-aligned border-black  ">Time</td>
+							<td class="center-aligned border-black  ">Subject</td>
+							<td class="center-aligned border-black  ">Comments</td>
+						</tr>
+						<!-- iterate Anthropometry Obj -->
+						<tr class="border-black" *ngFor="let obj of nursingOutputData.anthropometryList">
+							<td *ngIf="obj.comments != null" class="center-aligned border-black  ">{{obj.visitdate | date:'dd-MM-yyyy'}} {{obj.visittime}}</td>
+							<td *ngIf="obj.comments != null" class="center-aligned border-black  ">Anthropometry</td>
+							<td *ngIf="obj.comments != null" class="center-aligned border-black  ">{{obj.comments}}</td>
+						</tr>
+						<!-- iterate Vital Obj -->
+						<tr class="border-black" *ngFor="let vital of nursingOutputData.vitalList">
+							<td *ngIf="vital.comments != null" class="center-aligned border-black  ">{{vital.userDate
+							| date:'dd-MM-yyyy'}} {{vital.nnVitalparameterTime}}</td>
+							<td *ngIf="vital.comments != null" class="center-aligned border-black  ">Vitals</td>
+							<td *ngIf="vital.comments != null" class="center-aligned border-black  ">{{vital.comments}}</td>
+						</tr>
+						<!-- iterate Output Obj -->
+						<tr class="border-black" *ngFor="let obj of nursingOutputData.intakeOutputList">
+							<td *ngIf="obj.outputComment != null" class="center-aligned border-black  ">{{obj.creationtime
+							| date:'dd-MM-yyyy hh:mm a' }}</td>
+							<td *ngIf="obj.outputComment != null" class="center-aligned border-black  ">Output</td>
+							<td *ngIf="obj.outputComment != null" class="center-aligned border-black  ">{{obj.outputComment}}</td>
+						</tr>
+						<!-- iterate Enteral Obj -->
+						<tr class="border-black" *ngFor="let obj of nursingOutputData.intakeOutputList">
+							<td *ngIf="obj.enteralComment != null" class="center-aligned border-black  ">{{obj.creationtime
+							| date:'dd-MM-yyyy hh:mm a' }}</td>
+							<td *ngIf="obj.enteralComment != null" class="center-aligned border-black  ">Enteral</td>
+							<td *ngIf="obj.enteralComment != null" class="center-aligned border-black  ">{{obj.enteralComment}}</td>
+						</tr>
+						<!-- iterate Parenteral Obj -->
+						<tr class="border-black" *ngFor="let obj of nursingOutputData.intakeOutputList">
+							<td *ngIf="obj.parenteralComment != null" class="center-aligned border-black  ">{{obj.creationtime
+							| date:'dd-MM-yyyy hh:mm a' }}</td>
+							<td *ngIf="obj.parenteralComment != null" class="center-aligned border-black  ">Parenteral</td>
+							<td *ngIf="obj.parenteralComment != null" class="center-aligned border-black  ">{{obj.parenteralComment}}</td>
+						</tr>
+						<!-- iterate Calcium Obj -->
+						<tr class="border-black" *ngFor="let obj of nursingOutputData.intakeOutputList">
+							<td *ngIf="obj.calciumComment != null" class="center-aligned border-black  ">{{obj.creationtime
+							| date:'dd-MM-yyyy hh:mm a' }}</td>
+							<td *ngIf="obj.calciumComment != null" class="center-aligned border-black  ">Calcium</td>
+							<td *ngIf="obj.calciumComment != null" class="center-aligned border-black  ">{{obj.calciumComment}}</td>
+						</tr>
+						<!-- iterate Iron Obj -->
+						<tr class="border-black" *ngFor="let obj of nursingOutputData.intakeOutputList">
+							<td *ngIf="obj.ironComment != null" class="center-aligned border-black  ">{{obj.creationtime
+							| date:'dd-MM-yyyy hh:mm a' }}</td>
+							<td *ngIf="obj.ironComment != null" class="center-aligned border-black  ">Iron</td>
+							<td *ngIf="obj.ironComment != null" class="center-aligned border-black  ">{{obj.ironComment}}</td>
+						</tr>
+						<!-- iterate Multi Vitamin Obj -->
+						<tr class="border-black" *ngFor="let obj of nursingOutputData.intakeOutputList">
+							<td *ngIf="obj.mvComment != null" class="center-aligned border-black  ">{{obj.creationtime
+							| date:'dd-MM-yyyy hh:mm a' }}</td>
+							<td *ngIf="obj.mvComment != null" class="center-aligned border-black  ">Multi Vitamin</td>
+							<td *ngIf="obj.mvComment != null" class="center-aligned border-black  ">{{obj.mvComment}}</td>
+						</tr>
+	
+				</table>
+				</div>
+				<div class="col-md-12 col-print-12">
+					<p>{{pupilStr}} </p>
+				</div>
+			</div>
+	</div>
+
+</div>

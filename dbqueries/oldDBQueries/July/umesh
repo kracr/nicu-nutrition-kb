@@ -1,0 +1,439 @@
+alter table apollo.nurse_shift_settings
+    add column shift1_duration varchar(10),
+    add column shift2_duration varchar(10),
+    add column shift3_duration varchar(10),
+    add column shift4_duration varchar(10);
+
+
+
+--- updated on 10th July,2020
+
+CREATE SEQUENCE apollo.questionnaire_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE apollo.questionnaire_seq
+  OWNER TO postgres;
+
+create table apollo.questionnaire_result(
+    questionnaire_id bigint not null default nextval('apollo.questionnaire_seq'::regclass),
+    uhid varchar(30) not null ,
+    submit_date varchar(30) not null ,
+    answer_1 varchar(5),
+    answer_2 varchar(5),
+    answer_3 varchar(5),
+    answer_4 varchar(5),
+    CONSTRAINT questionnaire_result_pkey PRIMARY KEY (questionnaire_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE apollo.questionnaire_result
+  OWNER TO postgres;
+
+
+
+-- Updated July, 13
+alter table apollo.baby_view_timings add column delay_time varchar(20);
+
+
+-- Updated July, 15
+alter table apollo.baby_detail add column audio_enabled boolean default true;
+
+
+drop view apollo.dashboard_finalview;
+drop view apollo.dashboarddevicedetail_final;
+drop view apollo.readmitpatient_final;
+drop view apollo.readmitpatient_raw;
+drop view apollo.dashboarddevicedetail_raw;
+
+
+create view apollo.dashboarddevicedetail_raw(uhid, babyname, baby_type, baby_number, isavailable, condition, admitdate,
+                                             admittime, gender, dateofbirth, timeofbirth, audio_enabled,birthweight, gestation, bedid,
+                                             bedno, roomid, roomname, patientlevel, pulserate, spo2, heartrate,
+                                             ecg_resprate, co2_resprate, etco2, sys_bp, dia_bp, mean_bp, comments,
+                                             admissionstatus, nbp_s, nbp_d, nbp_m, creationtime, starttime, fio2, pip,
+                                             peep, start_time, entrydate, hr_rate, skintemp, spo21, mean_bp1,
+                                             address) as
+SELECT bd.uhid,
+       bd.babyname,
+       bd.baby_type,
+       bd.baby_number,
+       rb.status                            AS isavailable,
+       rc.levelname                         AS condition,
+       bd.dateofadmission                   AS admitdate,
+       bd.timeofadmission                   AS admittime,
+       bd.gender,
+       bd.dateofbirth,
+       bd.timeofbirth,
+       bd.audio_enabled,
+       bd.birthweight,
+       CASE
+           WHEN (bd.actualgestationdays IS NULL) THEN ((bd.actualgestationweek)::text || ' Weeks'::text)
+           ELSE ((((bd.actualgestationweek)::text || ' Weeks '::text) || (bd.actualgestationdays)::text) ||
+                 ' Days'::text)
+           END                              AS gestation,
+       rb.bedid,
+       rb.bedname                           AS bedno,
+       rr.roomid,
+       rr.roomname,
+       rl.levelname                         AS patientlevel,
+       NULL::character varying(50)          AS pulserate,
+       NULL::character varying(50)          AS spo2,
+       NULL::character varying(50)          AS heartrate,
+       NULL::character varying(50)          AS ecg_resprate,
+       NULL::character varying(50)          AS co2_resprate,
+       NULL::character varying(50)          AS etco2,
+       NULL::character varying(50)          AS sys_bp,
+       NULL::character varying(50)          AS dia_bp,
+       NULL::character varying(50)          AS mean_bp,
+       bd.comments,
+       CASE
+           WHEN (bd.admissionstatus IS TRUE) THEN 'TRUE'::text
+           ELSE 'FALSE'::text
+           END                              AS admissionstatus,
+       NULL::character varying(50)          AS nbp_s,
+       NULL::character varying(50)          AS nbp_d,
+       NULL::character varying(50)          AS nbp_m,
+       NULL::timestamp without time zone    AS creationtime,
+       NULL::timestamp with time zone       AS starttime,
+       NULL::character varying(50)          AS fio2,
+       NULL::character varying(50)          AS pip,
+       NULL::character varying(50)          AS peep,
+       NULL::timestamp with time zone       AS start_time,
+       NULL::timestamp without time zone    AS entrydate,
+       NULL::real                           AS hr_rate,
+       NULL::real                           AS skintemp,
+       NULL::character varying(20)          AS spo21,
+       NULL::character varying(20)          AS mean_bp1,
+       concat((parentdetail.address)::text, ', ', (parentdetail.add_state)::text, ', ',
+              (parentdetail.add_district)::text, ', ', (parentdetail.add_city)::text, ', ', ', ',
+              (parentdetail.add_pin)::text) AS address
+FROM (((((apollo.baby_detail bd
+    JOIN apollo.ref_bed rb ON (((bd.nicubedno)::text = (rb.bedid)::text)))
+    JOIN apollo.ref_room rr ON (((bd.nicuroomno)::text = (rr.roomid)::text)))
+    LEFT JOIN apollo.ref_level rl ON (((bd.niculevelno)::text = (rl.levelid)::text)))
+    LEFT JOIN apollo.ref_criticallevel rc ON (((bd.criticalitylevel)::text = (rc.crlevelid)::text)))
+         LEFT JOIN apollo.parent_detail parentdetail ON ((((bd.uhid)::text = (parentdetail.uhid)::text) AND
+                                                          ((bd.episodeid)::text = (parentdetail.episodeid)::text))))
+WHERE (bd.admissionstatus = true)
+ORDER BY bd.creationtime DESC;
+
+alter table apollo.dashboarddevicedetail_raw
+    owner to postgres;
+
+
+create view apollo.dashboarddevicedetail_final(uhid, address, babyname, baby_type, baby_number, isavailable, condition,
+                                               messagecount, admitdate, admittime,gender, dateofbirth, timeofbirth,audio_enabled,
+                                               birthweight, gestation, bedid, bedno, roomid, roomname, patientlevel,
+                                               pulserate, spo2, heartrate, temp, ecg_resprate, co2_resprate, etco2,
+                                               sys_bp, dia_bp, mean_bp, comments, admissionstatus, nbp_s, nbp_d, nbp_m,
+                                               creationtime, starttime, fio2, pip, peep, start_time) as
+SELECT r.uhid,
+       r.address,
+       r.babyname,
+       r.baby_type,
+       r.baby_number,
+       r.isavailable,
+       r.condition,
+       c.messagecount,
+       r.admitdate,
+       r.admittime,
+       r.gender,
+       r.dateofbirth,
+       r.timeofbirth,
+       r.audio_enabled,
+       r.birthweight,
+       r.gestation,
+       r.bedid,
+       r.bedno,
+       r.roomid,
+       r.roomname,
+       r.patientlevel,
+       r.pulserate,
+       CASE
+           WHEN (r.spo2 IS NULL) THEN (r.spo21)::text
+           ELSE (r.spo2)::text
+           END    AS spo2,
+       CASE
+           WHEN (r.heartrate IS NULL) THEN r.hr_rate
+           ELSE (r.heartrate)::real
+           END    AS heartrate,
+       r.skintemp AS temp,
+       r.ecg_resprate,
+       r.co2_resprate,
+       r.etco2,
+       r.sys_bp,
+       r.dia_bp,
+       r.mean_bp1 AS mean_bp,
+       r.comments,
+       r.admissionstatus,
+       r.nbp_s,
+       r.nbp_d,
+       r.nbp_m,
+       r.creationtime,
+       r.starttime,
+       r.fio2,
+       r.pip,
+       r.peep,
+       r.start_time
+FROM (apollo.dashboarddevicedetail_raw r
+         LEFT JOIN apollo.dashboarddevicedetail_control c ON (((r.uhid)::text = (c.uhid)::text)))
+WHERE (r.admissionstatus = 'TRUE'::text)
+ORDER BY r.creationtime DESC;
+
+alter table apollo.dashboarddevicedetail_final
+    owner to postgres;
+
+create or replace view apollo.dashboard_finalview(uhid, address, baby_type, baby_number, isassessmentsubmit, episodeid, babyname,
+                                       isavailable, condition, messagecount, admitdate, admittime, gender, dateofbirth,
+                                       timeofbirth,audio_enabled, branchname, birthweight, gestation, bedid, bedno, roomid, roomname,
+                                       patientlevel, pulserate, spo2, heartrate, ecg_resprate, co2_resprate, etco2,
+                                       sys_bp, dia_bp, mean_bp, comments, admissionstatus, nbp_s, nbp_d, nbp_m,
+                                       creationtime, starttime, dayoflife, weightatadmission, lastdayweight,
+                                       currentdayweight, difference, feed_detail, diagnosis, fio2, pip, peep,
+                                       start_time, temp) as
+SELECT r.uhid,
+       r.address,
+       r.baby_type,
+       r.baby_number,
+       lv.isassessmentsubmit,
+       lv.episodeid,
+       r.babyname,
+       m.isavailable,
+       CASE
+           WHEN (r.condition IS NULL) THEN 'NA'::character varying
+           ELSE r.condition
+           END   AS condition,
+       r.messagecount,
+       r.admitdate,
+       r.admittime,
+       r.gender,
+       r.dateofbirth,
+       r.timeofbirth,
+       r.audio_enabled,
+       m.branchname,
+       r.birthweight,
+       r.gestation,
+       m.bedno   AS bedid,
+       m.bedname AS bedno,
+       m.roomid,
+       m.roomname,
+       r.patientlevel,
+       r.pulserate,
+       r.spo2,
+       r.heartrate,
+       r.ecg_resprate,
+       r.co2_resprate,
+       r.etco2,
+       r.sys_bp,
+       r.dia_bp,
+       r.mean_bp,
+       r.comments,
+       r.admissionstatus,
+       r.nbp_s,
+       r.nbp_d,
+       r.nbp_m,
+       r.creationtime,
+       r.starttime,
+       lv.dayoflife,
+       lv.weightatadmission,
+       lv.lastdayweight,
+       lv.currentdayweight,
+       lv.difference,
+       lv.feed_detail,
+       lv.diagnosis,
+       r.fio2,
+       r.pip,
+       r.peep,
+       r.start_time,
+       r.temp
+FROM ((apollo.dashboardbeddetail_master m
+    LEFT JOIN apollo.dashboarddevicedetail_final r ON ((((m.bedno)::text = (r.bedid)::text) AND
+                                                        ((r.roomid)::text = (m.roomid)::text))))
+         LEFT JOIN apollo.baby_dashboard_listview_final lv ON (((r.uhid)::text = (lv.uhid)::text)))
+ORDER BY m.bedno;
+
+alter table apollo.dashboard_finalview
+    owner to postgres;
+
+
+create view apollo.readmitpatient_raw(uhid, babyname, isavailable, condition, messagecount, admitdate, admittime,
+                                      gender, dateofbirth, timeofbirth, birthweight, gestation, bedid, bedno, roomid,
+                                      roomname, patientlevel, pulserate, spo2, heartrate, ecg_resprate, co2_resprate,
+                                      etco2, sys_bp, dia_bp, mean_bp, comments, admissionstatus, nbp_s, nbp_d, nbp_m,
+                                      creationtime) as
+SELECT r.uhid,
+       r.babyname,
+       r.isavailable,
+       r.condition,
+       c.messagecount,
+       r.admitdate,
+       r.admittime,
+       r.gender,
+       r.dateofbirth,
+       r.timeofbirth,
+       r.birthweight,
+       r.gestation,
+       r.bedid,
+       r.bedno,
+       r.roomid,
+       r.roomname,
+       r.patientlevel,
+       r.pulserate,
+       r.spo2,
+       r.heartrate,
+       r.ecg_resprate,
+       r.co2_resprate,
+       r.etco2,
+       r.sys_bp,
+       r.dia_bp,
+       r.mean_bp,
+       r.comments,
+       r.admissionstatus,
+       r.nbp_s,
+       r.nbp_d,
+       r.nbp_m,
+       r.creationtime
+FROM (apollo.dashboarddevicedetail_raw r
+         LEFT JOIN apollo.dashboarddevicedetail_control c ON (((r.uhid)::text = (c.uhid)::text)))
+ORDER BY r.admitdate DESC;
+
+alter table apollo.readmitpatient_raw
+    owner to postgres;
+
+
+create view apollo.readmitpatient_final(uhid, babyname, isavailable, condition, messagecount, admitdate, admittime,
+                                        gender, dateofbirth, timeofbirth, branchname, birthweight, gestation, bedid,
+                                        bedno, roomid, roomname, patientlevel, pulserate, spo2, heartrate, ecg_resprate,
+                                        co2_resprate, etco2, sys_bp, dia_bp, mean_bp, comments, admissionstatus, nbp_s,
+                                        nbp_d, nbp_m, creationtime) as
+SELECT r.uhid,
+       r.babyname,
+       m.isavailable,
+       CASE
+           WHEN (r.condition IS NULL) THEN 'NA'::character varying
+           ELSE r.condition
+           END   AS condition,
+       r.messagecount,
+       r.admitdate,
+       r.admittime,
+       r.gender,
+       r.dateofbirth,
+       r.timeofbirth,
+       m.branchname,
+       r.birthweight,
+       r.gestation,
+       m.bedno   AS bedid,
+       m.bedname AS bedno,
+       m.roomid,
+       m.roomname,
+       r.patientlevel,
+       r.pulserate,
+       r.spo2,
+       r.heartrate,
+       r.ecg_resprate,
+       r.co2_resprate,
+       r.etco2,
+       r.sys_bp,
+       r.dia_bp,
+       r.mean_bp,
+       r.comments,
+       r.admissionstatus,
+       r.nbp_s,
+       r.nbp_d,
+       r.nbp_m,
+       r.creationtime
+FROM (apollo.dashboardbeddetail_master m
+         LEFT JOIN apollo.readmitpatient_raw r
+                   ON ((((m.bedname)::text = (r.bedno)::text) AND ((r.roomid)::text = (m.roomid)::text))))
+ORDER BY m.bedno;
+
+alter table apollo.readmitpatient_final
+    owner to postgres;
+
+
+
+
+ -- Updated on 28th July
+
+ CREATE SEQUENCE apollo.twilio_room_seq  INCREMENT 1  MINVALUE 1  MAXVALUE 9223372036854775807  START 1  CACHE 1;
+ ALTER TABLE apollo.twilio_room_seq  OWNER TO postgres;
+
+ CREATE OR REPLACE FUNCTION apollo.twilio_room_creationtime()  RETURNS trigger AS
+ $BODY$
+ BEGIN
+ NEW.creationtime := current_timestamp;
+ NEW.modificationtime := current_timestamp;
+ RETURN NEW;
+ END;
+ $BODY$
+ LANGUAGE plpgsql VOLATILE  COST 100;
+
+ ALTER FUNCTION apollo.twilio_room_creationtime()
+ OWNER TO postgres;
+
+ CREATE OR REPLACE FUNCTION apollo.twilio_room_modificationtime()  RETURNS trigger AS
+ $BODY$
+ BEGIN
+ NEW.modificationtime := current_timestamp;
+ RETURN NEW;
+ END;
+ $BODY$
+ LANGUAGE plpgsql VOLATILE  COST 100;
+
+
+ ALTER FUNCTION apollo.twilio_room_modificationtime()
+ OWNER TO postgres;
+
+ create table apollo.twilio_room
+ (
+     roomid   bigint default nextval('apollo.twilio_room_seq'::regclass) not null
+             constraint twilio_room_pkey
+             primary key,
+     roomname varchar(50) not null,
+     username varchar(30) not null,
+     branchname  varchar(50) not null,
+     created_at timestamp NOT NULL,
+     isactive    boolean default  false,
+     expire_time timestamp,
+     creationtime timestamp NOT NULL,
+     modificationtime timestamp NOT NULL);
+
+ ALTER TABLE apollo.twilio_room OWNER TO postgres;
+
+ CREATE TRIGGER set_creationtime
+ BEFORE INSERT
+ ON apollo.twilio_room
+ FOR EACH ROW
+ EXECUTE PROCEDURE apollo.twilio_room_creationtime();
+
+ CREATE TRIGGER set_modificationtime
+ BEFORE UPDATE
+ ON apollo.twilio_room
+ FOR EACH ROW
+ EXECUTE PROCEDURE apollo.twilio_room_modificationtime();
+
+
+ -- Updated on 29th July,2020
+
+ update apollo.medicine set isactive ='false' where medid in ('MED0000000153','MED0000000019','MED0000000017','MED0000000021');
+ update apollo.medicine set medname ='Sodium Valporate' where medid  = 'MED0000000020';
+
+
+
+-- updated on 31st July
+
+alter table apollo.logindetails add column logout boolean default false;
+
+
+-- updated on 1st August
+truncate apollo.notification_email;
+
+insert into apollo.notification_email (username, user_email, branchname, isactive,email_type,is_adoption)
+values('shubham','shubham@childhealthimprints.com','Moti Nagar, Delhi',true,true,true),
+      ('anuj','anuj@childhealthimprints.com','Moti Nagar, Delhi',true,true,true),
+      ('Dr.vibhor','Dr.vibhor@childhealthimprints.com','Moti Nagar, Delhi',true,true,true),
+      ('jasleen','jasleen@childhealthimprints.com','Moti Nagar, Delhi',true,true,true);

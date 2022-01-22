@@ -1,0 +1,85 @@
+.dashboard-header{
+    display: block;overflow:auto; z-index: 100; @include makeMixin(box-shadow , 0 0 20px lighten($gray,0%)); position: relative; background-color:$white;
+.menu-toggle{
+    background: transparent;
+    background-image: url(../../../_images/sprite.png);
+    background-position: -1061px -129px;
+    background-repeat: no-repeat;
+    border: none;
+    display: none;
+    position: absolute;
+}
+}
+    /* blocks kept outside the header to decrease the level of selctors*/
+    
+.dashboard-heading{margin:30px 0px 20px 0px; font-weight: lighter; font-size: 26px;}
+
+    /* common logo for the dashboard header*/
+    .dashboard-logo{
+        display:inline-block; float:left;
+        .logo-h1-hidden{width:0px; height:0px; overflow: hidden; position: absolute;}
+         a{
+            display: block; overflow: auto; text-decoration: none; text-align:left;  padding:20px 0px;
+            .logo-items-cont{display:inline-block;}
+            .logo-pic{display: inline-block; float:left; width:60px;}
+            .logo-desc{display: inline-block; font-size: 48px; float:left; margin-top:10px; margin-left:10px;}
+        }
+    }
+
+     /* common menu on the dashboard header*/
+    .dashboard-menu{
+        display:inline-block; float: left;
+        ul{
+            list-style-type: none; display: block; margin:0; padding:0;
+            li{
+                display:inline-block;
+                a{
+                    display:block; text-decoration: none; text-align: center; padding:20px 20px; color:$darkGray;  @include makeMixin(transition , color ease-in .15s);
+                    .menu-icon{display: inline-block;position:relative; top:0px; @include makeMixin(transition , top ease-in .15s);}
+                    .menu-text{display: block; }
+                    
+                    &:hover{.menu-icon{top:5px;}}
+                    
+                    &.active{cursor: default;}
+                    &:hover , &:focus , &.active{color:$blue;}
+                    
+                    &.dashboard-link{&:hover, &:focus , &.active {.sprite-menu-icon-dashboard{background-position: -201px 0px;}}}
+                    &.discharged-patients-link{&:hover, &:focus , &.active{.sprite-menu-discharged-patients{background-position: -316px -1px;}}}
+                    &.analytics-link{&:hover, &:focus , &.active{.sprite-menu-analytics{background-position:-430px 1px;}}}
+                    &.admin-link{&:hover, &:focus , &.active{.sprite-menu-admin{background-position:-775px -120px;}}}
+                    
+                }
+            }
+        }
+    }
+    
+    .dashboard-user-info{
+        display: inline-block; float: right; padding:20px 0px; margin-top:20px;position: relative;
+        .user-pic-cont{
+            display:inline-block; width: 56px; height: 56px; border:solid 1px lighten($gray,10%); float:left; @include makeMixin(box-shadow,0 0 2px lighten($gray,13%)); padding:1px; overflow:hidden;
+            .user-pic{display: block; min-height:100%; min-width: 100%; width: 50px;}
+        }
+        .user-details{
+            display: inline-block;float: left; margin-left: 5px;
+            .user-name{margin:2px 0px; color:$blue;
+            
+            }
+            .user-designation{margin:2px 0px;}
+        }
+        .menu-hovered{display: none;position: fixed;right: 30px;background-color: #f9f9f9;min-width: 176px;box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);padding: 12px 16px;
+            ul{margin: 0px;padding: 0px;
+                li{list-style: none;text-align: center;
+                    a{font-weight: bold;color: #333;
+                    }
+                }
+            }
+        }
+        &:hover{.menu-hovered{
+               display: block; 
+            }
+        }
+    }
+   
+    
+    
+            

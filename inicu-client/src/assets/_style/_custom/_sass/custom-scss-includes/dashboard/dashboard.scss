@@ -1,0 +1,168 @@
+.dashboard-content{background-color: $dashboardBG; position: relative; z-index: 90;}
+
+.coloured-bullets-cont{
+    ul{
+        margin:0; padding: 0; display: inline-block;
+        li{
+            font-size:14px; float:left; display:inline-block; margin: 5px 10px; padding-left: 15px; position: relative; cursor: pointer;
+            &:before{content:""; position: absolute; left:0px; top:3px; background: #f00; display: inline-block; @include makeMixin(border-radius, 50%); width:10px; height:10px;}
+            
+            $red : lighten($red,30%);
+            
+            &.red-item{color:$red; &:before{background-color:$red;}}
+            &.yellow-item{color:$yellow; &:before{background-color:$yellow;}}
+            &.green-item{color:$green; &:before{background-color:$green;}}
+        }
+    }
+}
+
+.dashboard-bed-boxes-cont{margin-left: -19px; margin-right: -19px;}
+
+.dashboard-bed-box{
+    display: inline-block; float: left; padding: 15px 19px; position: relative;
+    .visible-box{
+        display: block; @include makeMixin(border-radius , 5px); background-color: $white; position: relative; overflow:hidden; min-height: 380px;
+        &.vacant{background-color: lighten($gray,10%);}
+        
+        .circular-arc{display: block;position: absolute; width:400px; height: 400px; border-style: solid; border-color:lighten($gray,15%); border-width:10px;  @include makeMixin(border-radius , 50%); z-index: 90;  left:50%; top:-230px; margin-left: -200px;
+        
+        background-color: lighten($gray,18%);
+        
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fcfefe+74,f6f8f8+100,fcfefe+100 */
+        background: #fcfefe; /* Old browsers */
+        background: -moz-linear-gradient(top, #fcfefe 74%, #f6f8f8 100%, #fcfefe 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #fcfefe 74%,#f6f8f8 100%,#fcfefe 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #fcfefe 74%,#f6f8f8 100%,#fcfefe 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfefe', endColorstr='#fcfefe',GradientType=0 ); /* IE6-9 */
+
+        }
+        
+        .all-content{display: block;position: relative; z-index: 100;}
+        
+        .head{
+            display:block; clear: both; overflow: auto; padding:10px 5px 0px 10px; min-height: 52px; position: relative;
+            .date-box{display: inline-block; float: left; font-size:13px; }
+            
+        }
+        
+        .bed-cont{
+            position: relative; margin:15px 0px; display:block;
+            .bed-box{width:140px; height:85px; display: block; margin:0 auto;}
+            .bed-no{position: absolute;bottom:0px; left:0px; right:0px; text-align:center; margin: 0; color:darken($gray,10%);}
+        }
+        
+        .uhid-cont{min-height: 40px; padding:0px 10px; clear:both; overflow: auto;}
+        
+        .bed-available{margin:20px 0px 0px 0px;}
+        
+        .uhid-box{
+            display: inline-block; position: relative; float: left; font-size: 14px;
+            .sprite{float: left;}
+            .text{float: left; margin-top: 10px;}
+        }
+        .circular-L{display: inline-block; float: right; width: 40px; height: 40px; @include makeMixin(border-radius, 50%); background-color: darken($gray,10%); color:$white; font-size: 14px; padding: 12px 10px; text-align: center; }
+        
+        .three-icons-cont{
+            $border: lighten($gray,8%);
+            display: block; overflow: auto; padding:10px 0px; margin:10px 0px 15px 0px; border-top:solid 1px $border; 
+            .three-boxes{
+                display: inline-block; width:33.33333333%; float: left; border-left: solid 1px $border; text-align: center;
+                &:first-child{border-left:none;}
+            }
+        }
+        .four-icon-container{
+            $border: lighten($gray,8%);
+            display: block; overflow: auto; padding:10px 0px; margin:10px 0px 15px 0px; border-top:solid 1px $border; 
+            .four-boxes{
+                display: inline-block; width:25%; float: left; border-left: solid 1px $border; text-align: center;
+                &:first-child{border-left:none;}
+                }
+        }
+        .bed-hr{
+            span{
+            color: #b64ab6;
+            font-size: 20px;
+            font-weight: 700;
+            }
+            &:before{
+                display: block;
+                content: '';
+                background-image: url(../../../_images/sprite.png);
+                background-position: -890px -129px;
+                height: 30px;
+                width: 30px;
+                background-repeat: no-repeat;
+                margin:0 auto;
+
+            }
+        }
+        .bed-pr{
+            span{
+                color: #60b64a;
+                font-size: 20px;
+                font-weight: 700;
+            }
+            &:before{
+                display: block;
+                content: '';
+                background-image: url(../../../_images/sprite.png);
+                background-position: -990px -129px;
+                height: 30px;
+                width: 30px;
+                background-repeat: no-repeat;
+                margin:0 auto;
+
+            }
+        }
+        .bed-spo2{
+            span{
+             color: #60b64a;
+             font-size: 20px;
+             font-weight: 700;
+            }
+            &:before{
+                display: block;
+                content: '';
+                background-image: url(../../../_images/sprite.png);
+                background-position: -930px -129px;
+                height: 30px;
+                width: 50px;
+                background-repeat: no-repeat;
+                margin:0 auto;
+
+            }
+        }
+        .bed-rr{
+            span{
+             color: #4a4ab6;
+             font-size: 20px;
+             font-weight: 700;
+            }
+            &:before{
+                display: block;
+                content: '';
+                background-image: url(../../../_images/sprite.png);
+                background-position: -1018px -129px;
+                height: 30px;
+                width: 35px;
+                background-repeat: no-repeat;
+                margin:0 auto;
+
+            }
+        }
+        .bed-baby-name{
+            width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .button{@include makeMixin(border-radius , 5px); padding-left:10px; padding-right: 10px; }
+        .add-device-button{margin-bottom: 40px;}
+    }
+}
+
+.messages-notifier{
+    display: inline-block; float: right; position: relative;
+    .sprite{top:5px; position: relative;}
+    .count{display: inline-block; position: absolute; min-width:20px; height: 20px; right: 20px; top:8px; background-color: lighten($red,20%); @include makeMixin(border-radius , 50%); color:$white; padding: 4px 5px 5px 7px;  font-size:12px; }
+}

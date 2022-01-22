@@ -1,0 +1,153 @@
+drop view rainbow.nursing_blood_gas_ventilator_final;
+drop view rainbow.nursing_blood_gas_ventilator_raw;
+
+
+create view rainbow.nursing_blood_gas_ventilator_raw
+            (ventmode, pip, peep_cpap, pressure_supply, map, freq_rate, tidal_volume, minute_volume, ti, fio2,
+             flow_per_min, no_ppm, comments, amplitude, frequency, dco2, volume_guarantee, pressure_support_type,
+             control_type, cpap_type, delivery_type, vent_desc,intubated_humidification_temp,ph, pco2, hco2, po2, be, lactate, spo2, na, k, cl,
+             glucose, ionized_calcium, regular_hco3, be_ecf, hct, sample_type, thbc, osmolarity, anion_gap,
+             sample_method, uhid, entrydate)
+as
+SELECT q.ventmode,
+       q.pip,
+       q.peep_cpap,
+       q.pressure_supply,
+       q.map,
+       q.freq_rate,
+       q.tidal_volume,
+       q.minute_volume,
+       q.ti,
+       q.fio2,
+       q.flow_per_min,
+       q.no_ppm,
+       q.comments,
+       q.amplitude,
+       q.frequency,
+       q.dco2,
+       q.volume_guarantee,
+       q.pressure_support_type,
+       q.control_type,
+       q.cpap_type,
+       q.delivery_type,
+       q.vent_desc,
+       q.intubated_humidification_temp,
+       p.ph,
+       p.pco2,
+       p.hco2,
+       p.po2,
+       p.be,
+       p.lactate,
+       p.spo2,
+       p.na,
+       p.k,
+       p.cl,
+       p.glucose,
+       p.ionized_calcium,
+       p.regular_hco3,
+       p.be_ecf,
+       p.hct,
+       p.sample_type,
+       p.thbc,
+       p.osmolarity,
+       p.anion_gap,
+       p.sample_method,
+       CASE
+           WHEN p.uhid::text = q.uhid::text THEN p.uhid
+           WHEN p.uhid IS NULL THEN q.uhid
+           WHEN q.uhid IS NULL THEN p.uhid
+           ELSE NULL::character varying
+           END AS uhid,
+       CASE
+           WHEN p.entrydate = q.entrydate THEN p.entrydate
+           WHEN p.entrydate IS NULL THEN q.entrydate
+           WHEN q.entrydate IS NULL THEN p.entrydate
+           ELSE NULL::timestamp without time zone
+           END AS entrydate
+FROM rainbow.nursing_bloodgas p
+         FULL JOIN rainbow.nursing_ventilaor q ON p.entrydate = q.entrydate
+ORDER BY (
+             CASE
+                 WHEN p.entrydate = q.entrydate THEN p.entrydate
+                 WHEN p.entrydate IS NULL THEN q.entrydate
+                 WHEN q.entrydate IS NULL THEN p.entrydate
+                 ELSE NULL::timestamp without time zone
+                 END);
+
+alter table rainbow.nursing_blood_gas_ventilator_raw
+    owner to postgres;
+
+
+create view rainbow.nursing_blood_gas_ventilator_final
+            (uniquekey, ventmode, pip, peep_cpap, pressure_supply, map, freq_rate, tidal_volume, minute_volume, ti,
+             fio2, flow_per_min, no_ppm, comments, amplitude, frequency, ph, pco2, hco2, po2, be, lactate, spo2, na, k,
+             cl, glucose, ionized_calcium, regular_hco3, be_ecf, hct, sample_type, thbc, osmolarity, anion_gap,
+             sample_method, dco2, uhid, entrydate, volume_guarantee, pressure_support_type, control_type, cpap_type,
+             delivery_type, vent_desc,intubated_humidification_temp)
+as
+SELECT concat(r.uhid, r.entrydate) AS uniquekey,
+       r.ventmode,
+       r.pip,
+       r.peep_cpap,
+       r.pressure_supply,
+       r.map,
+       r.freq_rate,
+       r.tidal_volume,
+       r.minute_volume,
+       r.ti,
+       r.fio2,
+       r.flow_per_min,
+       r.no_ppm,
+       r.comments,
+       r.amplitude,
+       r.frequency,
+       r.ph,
+       r.pco2,
+       r.hco2,
+       r.po2,
+       r.be,
+       r.lactate,
+       r.spo2,
+       r.na,
+       r.k,
+       r.cl,
+       r.glucose,
+       r.ionized_calcium,
+       r.regular_hco3,
+       r.be_ecf,
+       r.hct,
+       r.sample_type,
+       r.thbc,
+       r.osmolarity,
+       r.anion_gap,
+       r.sample_method,
+       r.dco2,
+       r.uhid,
+       r.entrydate,
+       r.volume_guarantee,
+       r.pressure_support_type,
+       r.control_type,
+       r.cpap_type,
+       r.delivery_type,
+       r.vent_desc,
+       r.intubated_humidification_temp
+FROM rainbow.nursing_blood_gas_ventilator_raw r
+ORDER BY r.entrydate;
+
+alter table rainbow.nursing_blood_gas_ventilator_final
+    owner to postgres;
+
+
+alter table rainbow.local_configurations add column time_format varchar(15);
+
+
+--------------------------------------------------------------- Added on 13th April 2020
+alter table  apollo.test_result add column template_xml text, add column template_html text;
+alter table  apollo.ref_testslist add column order_category varchar(50);
+
+--------------------------------------------------------------- Added on 15th April 2020
+alter table  apollo.test_result add column order_no varchar(50);
+
+------------- Added on 16th April
+alter table apollo.local_configurations
+	add datepicker_timeformat varchar(50);

@@ -1,0 +1,58 @@
+$gridLimit:20;
+$fixedGridWidth: 1100;
+$devices: 		"mobile", "tablet","desktop","laptop","mac";
+$resolutions:	 "","768px","992px","1200px","1900px";
+$gridingPrefix:"column";
+
+
+// generating the grid
+@each $device in $devices{
+	
+	
+	
+	@for $j from 0 to $gridLimit+1{
+		.#{$device}-column-#{$j} {
+			width : $j*5%; 
+		}
+	}
+
+	// offset grid
+
+	@for $j from 0 to $gridLimit+1 {
+		.#{$device}-offset-#{$j} {
+			margin-left : $j*5%; 
+		}
+	}
+	
+	
+
+}
+
+ 
+[class*="offset-"]{position:relative;}
+[class*="column-"]{min-height:1px;}
+
+.wrapper{
+	display:block; position:relative; overflow:auto;
+	.inner{display:block; position:relative; width:#{$fixedGridWidth}px; margin:auto; overflow:auto;}
+	.inner-fluid{display:block; position:relative; overflow:auto;}
+	&.overflow-visible{
+		overflow:visible !important;
+		.inner,.inner-fluid{overflow:visible !important;}
+	}
+}
+
+.row-5-x{margin-left: -5px; margin-right:-5px}
+.row-10-x{margin-left: -10px; margin-right:-10px}
+.row-15-x{margin-left: -15px; margin-right:-15px}
+.row-20-x{margin-left: -20px; margin-right:-20px}
+/*
+Extra small devices (phones, less than 768px)  No media query since this is the default in Bootstrap 
+
+Small devices (tablets, 768px and up)  @media (min-width: @screen-sm-min) { ... }
+
+ Medium devices (desktops, 992px and up)  @media (min-width: @screen-md-min) { ... }
+
+Large devices (large desktops, 1200px and up)  @media (min-width: @screen-lg-min) { ... }
+
+*/

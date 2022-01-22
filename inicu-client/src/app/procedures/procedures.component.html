@@ -1,0 +1,3199 @@
+<doctor-panel *ngIf="isDoctorProcedure == true"></doctor-panel>
+<div>
+	<div class="assesment-container background-color-white">
+		<div class="row table full padding-10-x padding-10-y">
+			<div class="col-md-2 peripheralCannula  no-padding-left center-aligned">
+				<input type="radio" name="procedureWhichTab"
+					id="procedureWhichTabPeripheral" [(ngModel)]="procedureWhichTab"
+					value="peripheral cannula" style="display: none">
+				<label for="procedureWhichTabPeripheral"
+					class="table full assessment-treatment-tab-box"
+					[ngClass]="{'selected-tab': procedureWhichTab =='peripheral cannula'}">Peripheral
+					Cannula</label>
+			</div>
+			<div class="col-md-2 peripheralCannula centerline no-padding-left center-aligned">
+				<input type="radio" name="procedureWhichTab"
+					id="procedureWhichTabCentral" [(ngModel)]="procedureWhichTab"
+					value="central line" style="display: none"><label
+					for="procedureWhichTabCentral"
+					class="table full assessment-treatment-tab-box"
+					[ngClass]="{'selected-tab': procedureWhichTab=='central line'}">Central
+					Line</label>
+			</div>
+			<div class="col-md-2 peripheralCannula lumbar no-padding-left center-aligned">
+				<input type="radio" name="procedureWhichTab"
+					id="procedureWhichTabLumbar" [(ngModel)]="procedureWhichTab"
+					value="lumbar puncture" style="display: none"><label
+					for="procedureWhichTabLumbar"
+					class="table full assessment-treatment-tab-box"
+					[ngClass]="{'selected-tab': procedureWhichTab=='lumbar puncture'}">Lumbar
+					Puncture</label>
+			</div>
+			<div class="col-md-1 vtap no-padding-left center-aligned">
+				<input type="radio" name="procedureWhichTab"
+					id="procedureWhichTabvtab" [(ngModel)]="procedureWhichTab"
+					value="V Tap" style="display: none"><label
+					for="procedureWhichTabvtab"
+					class="table full assessment-treatment-tab-box"
+					[ngClass]="{'selected-tab': procedureWhichTab=='V Tap'}">V-Tap</label>
+			</div>
+			<div class="col-md-2 peripheralCannula etincubation no-padding-left center-aligned">
+				<input type="radio" name="procedureWhichTab" id="procedureWhichTabET"
+					[(ngModel)]="procedureWhichTab" value="Intubation"
+					style="display: none"><label for="procedureWhichTabET"
+					class="table full assessment-treatment-tab-box"
+					[ngClass]="{'selected-tab': procedureWhichTab=='Intubation'}">ET
+					Intubation</label>
+			</div>
+			<div class="col-md-1 etsuction no-padding-left center-aligned">
+				<input type="radio" name="procedureWhichTab" id="procedureWhichTabSuction"
+					[(ngModel)]="procedureWhichTab" value="Suction"
+					style="display: none"><label for="procedureWhichTabSuction"
+					class="table full assessment-treatment-tab-box"
+					[ngClass]="{'selected-tab': procedureWhichTab=='Suction'}">ET
+				  Suction</label>
+			</div>
+			<div class="col-md-1 etsuction no-padding-left center-aligned">
+				<input type="radio" name="procedureWhichTab"
+					id="procedureWhichTabChest" [(ngModel)]="procedureWhichTab"
+					value="Chest" style="display: none"><label
+					for="procedureWhichTabChest"
+					class="table full assessment-treatment-tab-box"
+					[ngClass]="{'selected-tab': procedureWhichTab=='Chest'}">Chest
+					Tube</label>
+			</div>
+			<div class="col-md-2 etsuction no-padding-left center-aligned">
+				<input type="radio" name="procedureWhichTab"
+					id="procedureWhichTabTransfusion" [(ngModel)]="procedureWhichTab"
+					value="Transfusion" style="display: none"><label
+					for="procedureWhichTabTransfusion"
+					class="table full assessment-treatment-tab-box"
+					[ngClass]="{'selected-tab': procedureWhichTab =='Transfusion'}">Exchange Transfusion</label>
+			</div>
+
+			<div class="col-md-1 no-padding-left center-aligned">
+				<input type="radio" name="procedureWhichTab"
+					id="procedureWhichTabOthers" [(ngModel)]="procedureWhichTab"
+					value="Others" style="display: none"><label
+					for="procedureWhichTabOthers"
+					class="table full assessment-treatment-tab-box"
+					[ngClass]="{'selected-tab': procedureWhichTab=='Others'}">Others</label>
+			</div>
+		</div>
+		<div *ngIf="procedureWhichTab =='peripheral cannula'">
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-6 left-aligned no-padding">
+					<span class="light margin-5-y blue-text bold font-18">Peripheral
+						Cannula</span>
+				</div>
+				<div class="col-md-6 right-aligned">
+					<span class="button button-blue"
+						(click)="addPeripheralCannula()">Add Peripheral Cannula</span>
+				</div>
+			</div>
+			<div class="row no-padding wraping-box padding-10-y no-margin" *ngFor="let item of proceduresModel.currentPeripheralList; let i = index" [attr.data-index]="i">
+				<div class="row padding-10-x no-padding-right">
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Site</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input type="radio" name="peripheralSite+{{i}}"
+									[(ngModel)]="item.site" id="peripheralSite+{{i}}"
+									[disabled]="item.peripheral_cannula_id != null"
+									value="limb"><label
+									for="peripheralSite+{{i}}">Limb</label><input type="radio"
+									name="peripheralSite+{{i}}" [(ngModel)]="item.site"
+									[disabled]="item.peripheral_cannula_id != null"
+									id="peripheralSiteScalp+{{i}}" value="'scalp'">
+								<label for="peripheralSiteScalp+{{i}}">Scalp</label>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="item.site == 'limb'">
+						<div class="col-md-2 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Limb Site</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<select [(ngModel)]="item.limb_site"
+									[disabled]="item.peripheral_cannula_id != null"
+									class="input input-medium desktop-column-20 max-height-36 no-margin">
+									<option disabled selected hidden value>-- Select --</option>
+									<option value=null hidden>--Select--</option>
+									<option value="hand">Hand</option>
+									<option value="forearm">Forearm</option>
+									<option value="foot">Foot</option>
+									<option value="ankle">Ankle</option>
+									<option value="leg">Leg</option>
+									<option value="others">Others</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Limb Side</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="toggle-options-radio">
+									<input type="radio" name="peripheralLimbSide+{{i}}"
+										[(ngModel)]="item.limb_side"
+										[disabled]="item.peripheral_cannula_id != null"
+										id="peripheralLimbSideRight+{{i}}" value="'right'"><label
+										for="peripheralLimbSideRight+{{i}}">Right</label><input
+										type="radio" name="peripheralLimbSide+{{i}}"
+										[(ngModel)]="item.limb_side"
+										[disabled]="item.peripheral_cannula_id != null"
+										id="peripheralLimbSideLeft+{{i}}" value="'left'">
+									<label for="peripheralLimbSideLeft+{{i}}">Left</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5 right-aligned"></div>
+					<div class="col-md-1 line-height-standard center-aligned force-right"
+						*ngIf="i && item.peripheral_cannula_id == null"
+						(click)="removePeripheralCannula(i)">
+						<span class="sprite sprite-blue-minus middle-aligned"></span>
+					</div>
+					<div *ngIf="item.site == 'limb'">
+						<div class="col-md-10 padding-5-y no-padding-right"
+							*ngIf="item.limb_site == 'others'">
+							<div class="col-md-12 no-padding">
+								<span class="bold">If Others</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<input type="text" class="input input-medium col-md-12 no-padding"
+									[disabled]="item.peripheral_cannula_id != null"
+									[(ngModel)]="item.limb_site_other" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right">
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Size of Cannula</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select [(ngModel)]="item.size"
+								[disabled]="item.peripheral_cannula_id != null"
+								class="input input-medium desktop-column-20 max-height-36 no-margin">
+								<option disabled selected hidden value>-- Select --</option>
+								<option value=null hidden>--Select--</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="26">26</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-4 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Comments</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<textarea name="commentsperipheralName" class="desktop-column-20 max-height-36 set-font-size-default no-margin" [(ngModel)]="item.comments" ></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right">
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Insertion Date</span>
+						</div>
+						<div class="col-md-12 no-padding">
+					       <owl-date-time class="owl-dateTime" [(ngModel)]="item.insertion_timestamp" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right center-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="visiblity-hidden">Removal Date</span>
+						</div>
+						<div class="col-md-12 no-padding padding-top-2">
+							<span class="button button-blue" *ngIf="item.remove == false"
+								(click)="toggleRemove(i)">Remove</span><span
+								class="button button-blue-transparent" *ngIf="item.remove"
+								(click)="toggleRemove(i)">Cancel Remove</span>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="item.remove"
+					class="row padding-10-x padding-10-y no-padding-right">
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Removal Date</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime" [(ngModel)]="item.removal_timestamp" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Reason for removal</span>
+						</div>
+						<div class="col-md-12 no-padding padding-top-1">
+							<div class="toggle-options-radio">
+								<input type="radio" name="reasonRemoval+{{i}}"
+									[(ngModel)]="item.removal_reason"
+									id="reasonRemovalBlocked+{{i}}" value="'blocked'"><label
+									for="reasonRemovalBlocked+{{i}}">Blocked</label><input
+									type="radio" name="reasonRemoval+{{i}}"
+									[(ngModel)]="item.removal_reason"
+									id="reasonRemovalErythema+{{i}}" value="'erythema'">
+								<label for="reasonRemovalErythema+{{i}}">Erythema</label><input
+									type="radio" name="reasonRemoval+{{i}}"
+									[(ngModel)]="item.removal_reason"
+									id="reasonRemovalExtravasated+{{i}}"
+									value="'extravasated'"><label
+									for="reasonRemovalExtravasated+{{i}}">Extravasated</label><input
+									type="radio" name="reasonRemoval+{{i}}"
+									[(ngModel)]="item.removal_reason"
+									id="reasonRemovalDislodged+{{i}}" value="'dislodged'">
+								<label for="reasonRemovalDislodged+{{i}}">Dislodged</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row no-padding padding-10-y no-margin margin-bottom-70"></div>
+			<div id="footer">
+				<button class="button button-blue button-large"
+					(click)="saveProcedures('Peripheral Cannula')">SUBMIT</button>
+				<span class="button button-blue-transparent button-large"
+					(click)="getProcedures(childObject.uhid)"><i
+					class="refresh"></i>REFRESH</span>
+			</div>
+			<div class="row padding-10-x padding-10-y margin-bottom-70"
+				*ngIf="proceduresModel.pastPeripheralList != null && proceduresModel.pastPeripheralList.length >0" style="margin-bottom:50px !important">
+				<div class="desktop-column-20 padding-0-x force-left center-aligned">
+					<table
+						class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr>
+							<td class="center-aligned">Date</td>
+							<td class="center-aligned">Site</td>
+							<td class="center-aligned">Size</td>
+							<td class="center-aligned">Insertion Date & Time</td>
+							<td class="center-aligned">Removal Date & Time</td>
+							<td class="center-aligned">Reason of removal</td>
+						</tr>
+						<tr *ngFor="let item of proceduresModel.pastPeripheralList">
+							<td class="center-aligned">{{item.creationtime |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.site}}</td>
+							<td class="center-aligned">{{item.size}}</td>
+							<td class="center-aligned">{{item.insertion_timestamp |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.removal_timestamp |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.removal_reason}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="procedureWhichTab =='central line'">
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-6 left-aligned no-padding">
+					<span class="light margin-5-y blue-text bold font-18">Central
+						Line</span>
+				</div>
+				<div class="col-md-6 right-aligned">
+					<span class="button button-blue" (click)="addCentralLine()">Add
+						Central Line</span>
+				</div>
+			</div>
+			<div class="row no-padding wraping-box padding-10-y no-margin"
+				*ngFor="let item of proceduresModel.currentCentralLineList; let i = index" [attr.data-index]="i">
+				<div class="row padding-10-x no-padding-right">
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Type</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select [(ngModel)]="item.centralLineType"
+							(ngModelChange)="centralLineType(item)" [disabled]="item.centralLineId != null" class="input input-medium desktop-column-20 max-height-36 no-margin">
+								<option disabled selected hidden value>-- Select --</option>
+								<option value=null hidden>--Select--</option>
+								<option value="picc">PICC</option>
+								<option value="uv">UV</option>
+								<option value="ua">UA</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="Bold">Brand</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="text" class="input input-medium col-md-12 no-padding"
+								[(ngModel)]="item.brand"
+								[disabled]="item.centralLineId != null" />
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Size (french)</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select [(ngModel)]="item.size"
+								[disabled]="item.centralLineId != null"
+								class="input input-medium desktop-column-20 max-height-36 no-margin">
+								<option disabled selected hidden value>-- Select --</option>
+								<option value=null hidden>--Select--</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Comments</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<textarea name="centralLineCommentsName" class="desktop-column-20 max-height-36 set-font-size-default no-margin" [(ngModel)]="item.comments" ></textarea>
+						</div>
+					</div>
+					<div class="col-md-1 line-height-standard center-aligned">
+						<span class="sprite sprite-blue-minus middle-aligned"
+							*ngIf="i && item.centralLineId == null"
+							(click)="removeCentralLine(i)"></span>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right">
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Site of Central Line</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select [(ngModel)]="item.site"
+								[disabled]="item.centralLineId != null || item.centralLineType == 'uv' || item.centralLineType == 'ua'"
+								class="input input-medium desktop-column-20 max-height-36 no-margin">
+								<option disabled selected hidden value>-- Select --</option>
+								<option value=null hidden>--Select--</option>
+								<option value="limb">Limb</option>
+								<option value="umblical">Umblical</option>
+								<option value="femoral">Femoral</option>
+								<option value="subclavian">Subclavian</option>
+								<option value="jugular">Jugular</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right"
+						*ngIf="item.site != null && item.site != 'limb'">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Side</span>
+						</div>
+						<div class="col-md-12 no-padding padding-top-1">
+							<div class="toggle-options-radio">
+								<input type="radio" name="centralSide+{{i}}"
+									[(ngModel)]="item.side"
+									[disabled]="item.centralLineId != null"
+									id="centralSideRight+{{i}}" value="'right'"><label
+									for="centralSideRight+{{i}}">Right</label><input
+									type="radio" name="centralSide+{{i}}"
+									[(ngModel)]="item.side"
+									[disabled]="item.centralLineId != null"
+									id="centralSideLeft+{{i}}" value="'left'"><label
+									for="centralSideLeft+{{i}}">Left</label>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="item.site == 'limb'">
+						<div class="col-md-2 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Limb Site</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<select [(ngModel)]="item.limbSite"
+									[disabled]="item.centralLineId != null"
+									class="input input-medium desktop-column-20 max-height-36 no-margin">
+									<option disabled selected hidden value>-- Select --</option>
+									<option value=null hidden>--Select--</option>
+									<option value="hand">Hand</option>
+									<option value="forearm">Forearm</option>
+									<option value="foot">Foot</option>
+									<option value="ankle">Ankle</option>
+									<option value="leg">Leg</option>
+									<option value="others">Others</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Limb Side</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="toggle-options-radio">
+									<input type="radio" name="centralLimbSide+{{i}}"
+										[(ngModel)]="item.limbSide"
+										[disabled]="item.centralLineId != null"
+										id="centralLimbSideRight+{{i}}" value="right"><label
+										for="centralLimbSideRight+{{i}}">Right</label><input
+										type="radio" name="centralLimbSide+{{i}}"
+										[(ngModel)]="item.limbSide"
+										[disabled]="item.centralLineId != null"
+										id="centralLimbSideLeft+{{i}}" value="left">
+									<label for="centralLimbSideLeft+{{i}}">Left</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right"
+					*ngIf="item.site == 'limb' && item.limbSite == 'others'">
+					<div class="col-md-10">
+						<div class="col-md-12 no-padding">
+							<span class="bold">If Limb Others</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="text" [(ngModel)]="item.limbSiteOther"
+								[disabled]="item.centralLineId != null"
+								class="input input-medium col-md-12 no-padding no-margin" />
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right">
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Confirmed by X-Ray</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input type="radio" name="Confirmed+{{i}}"
+									[(ngModel)]="item.confirmXray" id="ConfirmedYes+{{i}}"
+									[value]="true"><label for="ConfirmedYes+{{i}}">Yes</label>
+								<input type="radio" name="Confirmed+{{i}}"
+									[(ngModel)]="item.confirmXray" id="ConfirmedNo+{{i}}"
+									[value]="false"><label for="ConfirmedNo+{{i}}">No</label>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="item.confirmXray">
+						<div class="col-md-2 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Position</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="toggle-options-radio">
+									<input type="radio" name="Position+{{i}}"
+										[(ngModel)]="item.centralLinePosition"
+										id="PositionYes+{{i}}" value="proper"><label
+										for="PositionYes+{{i}}">Proper</label><input type="radio"
+										name="Position+{{i}}"
+										[(ngModel)]="item.centralLinePosition"
+										id="PositionNo+{{i}}" value="improper"><label
+										for="PositionNo+{{i}}">Improper</label>
+								</div>
+							</div>
+						</div>
+						<div *ngIf="item.centralLinePosition == 'improper'">
+							<div class="col-md-2 no-padding-right">
+								<div class="col-md-12 no-padding">
+									<span class="bold">Adjusted</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<div class="toggle-options-radio">
+										<input type="radio" name="Adjusted+{{i}}"
+											[(ngModel)]="item.adjusted" id="AdjustedYes+{{i}}"
+											[value]="true"><label for="AdjustedYes+{{i}}">Yes</label>
+										<input type="radio" name="Adjusted+{{i}}"
+											[(ngModel)]="item.adjusted" id="AdjustedNo+{{i}}"
+											[value]="false"><label for="AdjustedNo+{{i}}">No</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 no-padding-right" *ngIf="item.adjusted">
+								<div class="col-md-12 no-padding">
+									<span class="bold">Comment</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<input type="text" [(ngModel)]="item.adjustComment"
+										class="input input-medium col-md-12 no-padding no-margin" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Code for Heplock -->
+				<div class="row padding-10-x padding-10-y no-padding-right">
+					<div class="col-md-2 no-padding-right">
+						<span class="bold">Type of Solution</span>
+						<div class="col-md-12 no-padding">
+							<select class="input input-medium desktop-column-20 max-height-36 no-margin" [(ngModel)]="item.solutionType" (ngModelChange)="initializeValuesHeplock(item)">
+								<option disabled selected hidden value>-- Select --</option>
+								<option value="Normal Saline">Normal Saline</option>
+								<option value="0.25 NS in DW">0.25 NS in DW</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<span class="bold">Anti-Coagulent</span>
+						<div class="col-md-12 no-padding">
+							<select class="input input-medium desktop-column-20 max-height-36 no-margin" [(ngModel)]="item.antiCoagulentType" (ngModelChange)="initializeValuesHeplock(item)">
+								<option selected value>-- Select --</option>
+								<option value="Heparin">Heparin</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<span class="bold">Brand</span>
+						<div class="col-md-12 no-padding">
+							<select class="input input-medium desktop-column-20 max-height-36 no-margin" [(ngModel)]="item.antiCoagulentBrand" (ngModelChange)="initializeValuesHeplock(item)">
+								<option selected value>-- Select --</option>
+								<option value="Heparin">Heplock</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right">
+					<div class="col-md-2 no-padding-right">
+						<span class="bold">Heparin Strength</span>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block col-md-12 no-padding">
+								<input class="input input-medium desktop-column-8" type="text" [(ngModel)]="item.heparinStrength" (ngModelChange)="calculateHeparinVolume(item)">
+								<span class="input-group-icon center-aligned desktop-column-12">Unit / ml</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<span class="bold">Dose of Heparin</span>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block col-md-12 no-padding">
+								<input class="input input-medium desktop-column-8" type="text" [(ngModel)]="item.heparinDose" (ngModelChange)="calculateHeparinVolume(item)">
+								<span class="input-group-icon center-aligned desktop-column-12">Unit / hr</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<span class="bold">Total Volume</span>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block col-md-12 no-padding">
+								<input class="input input-medium desktop-column-8" type="text" [(ngModel)]="item.heparinTotalVolume" (ngModelChange)="calculateHeparinVolume(item)">
+								<span class="input-group-icon center-aligned desktop-column-12">ml / day</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<span class="bold">Heplock Volume</span>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block col-md-12 no-padding">
+								<input class="input input-medium desktop-column-8" type="text" [(ngModel)]="item.heparinVolume" disabled>
+								<span class="input-group-icon center-aligned desktop-column-12">ml / day</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<span class="bold">Rate</span>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block col-md-12 no-padding">
+								<input class="input input-medium desktop-column-8" type="text" [(ngModel)]="item.heparinRate" disabled>
+								<span class="input-group-icon center-aligned desktop-column-12">ml / hr</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<span class="bold">Overfill Volume</span>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block col-md-12 no-padding">
+								<input class="input input-medium desktop-column-8" type="text" [(ngModel)]="item.heparinOverfillVolume">
+								<span class="input-group-icon center-aligned desktop-column-8">ml</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right">
+					<div class="col-md-3 col-lg-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Insertion Date</span>
+						</div>
+						<div class="col-md-12 no-padding">
+			        		<owl-date-time class="owl-dateTime" [(ngModel)]="item.insertion_timestamp" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+			       		</div>
+					</div>
+					<div class="col-md-2 no-padding-right center-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="visiblity-hidden">Removal Date</span>
+						</div>
+						<div class="col-md-12 no-padding padding-top-2">
+							<span class="button button-blue" *ngIf="item.remove == false"
+								(click)="toggleRemoveCentralLine(i)">Remove</span><span
+								class="button button-blue-transparent" *ngIf="item.remove"
+								(click)="toggleRemoveCentralLine(i)">Cancel
+								Remove</span>
+			       </div>
+					</div>
+				</div>
+				<div *ngIf="item.remove"
+					class="row padding-10-x padding-10-y no-padding-right">
+					<div class="col-md-3 col-lg-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Removal Date</span>
+						</div>
+						<div class="col-md-12 no-padding">
+					       <owl-date-time class="owl-dateTime" [(ngModel)]="item.removal_timestamp" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Reason for removal</span>
+						</div>
+						<div class="col-md-12 no-padding padding-top-1">
+							<div class="toggle-options-radio">
+								<input type="radio" name="reasonCenteralRemoval+{{i}}"
+									[(ngModel)]="item.removalReason"
+									id="reasonCenteralRemovalBlocked+{{i}}"
+									value="blocked"><label
+									for="reasonCenteralRemovalBlocked+{{i}}">Blocked</label><input
+									type="radio" name="reasonCenteralRemoval+{{i}}"
+									[(ngModel)]="item.removalReason"
+									id="reasonCenteralRemovalErythema+{{i}}"
+									value="erythema"><label
+									for="reasonCenteralRemovalErythema+{{i}}">Erythema</label><input
+									type="radio" name="reasonCenteralRemoval+{{i}}"
+									[(ngModel)]="item.removalReason"
+									id="reasonCenteralRemovalExtravasated+{{i}}"
+									value="extravasated"><label
+									for="reasonCenteralRemovalExtravasated+{{i}}">Extravasated</label>
+								<input type="radio" name="reasonCenteralRemoval+{{i}}"
+									[(ngModel)]="item.removalReason"
+									id="reasonCenteralRemovalDislodged+{{i}}"
+									value="dislodged"><label
+									for="reasonCenteralRemovalDislodged+{{i}}">Dislodged</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row no-padding padding-10-y no-margin margin-bottom-70"></div>
+			<div id="footer">
+				<button class="button button-blue button-large"
+					(click)="saveProcedures('Central Line')">SUBMIT</button>
+				<span class="button button-blue-transparent button-large"
+					(click)="getProcedures(childObject.uhid)"><i
+					class="refresh"></i>REFRESH</span>
+			</div>
+			<div class="row padding-10-x padding-10-y margin-bottom-70"
+				*ngIf="proceduresModel.pastCentralLineList != null && proceduresModel.pastCentralLineList.length >0" style="margin-bottom:50px !important">
+				<div class="desktop-column-20 padding-0-x force-left center-aligned">
+					<table
+						class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr>
+							<td class="center-aligned">Date</td>
+							<td class="center-aligned">Site</td>
+							<td class="center-aligned">Size</td>
+							<td class="center-aligned">Comment</td>
+							<td class="center-aligned">Insertion Date & Time</td>
+							<td class="center-aligned">Removal Date & Time</td>
+							<td class="center-aligned">Reason of removal</td>
+						</tr>
+						<tr *ngFor="let item of proceduresModel.pastCentralLineList">
+							<td class="center-aligned">{{item.creationtime |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.site}}</td>
+							<td class="center-aligned">{{item.size}}</td>
+							<td class="center-aligned">{{item.adjustComment}}</td>
+							<td class="center-aligned">{{item.insertion_timestamp |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.removal_timestamp |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.removalReason}}</td>
+
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="procedureWhichTab =='lumbar puncture'">
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Lumbar Space</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<select
+							[(ngModel)]="proceduresModel.emptyLumbarPunctureObj.lumbar_space"
+							class="input input-medium desktop-column-20 max-height-36 no-margin">
+							<option disabled selected hidden value>-- Select --</option>
+							<option value=null hidden>--Select--</option>
+							<option value="3-4">3 - 4</option>
+							<option value="4-5">4 - 5</option>
+							<option value="5-6">5 - 6</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Size</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<select
+							[(ngModel)]="proceduresModel.emptyLumbarPunctureObj.lumbar_size"
+							class="input input-medium desktop-column-20 max-height-36 no-margin">
+							<option disabled selected hidden value>-- Select --</option>
+							<option value=null hidden>--Select--</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="26">26</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-1 no-padding">
+					<span class="button order-button  middle-aligned"
+						(click)="showOrderInvestigation()">Order</span>
+				</div>
+				<div class="col-md-11">
+					<div class="col-md-12 no-padding">
+						<span class="bold selected-text"
+							*ngIf="orderSelectedText != null && orderSelectedText != ''">Selected:
+							<label class="normal-font-weight">{{orderSelectedText}}</label>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-5 col-lg-4 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">CSF</span>
+					</div>
+					<div class="col-md-12 no-padding padding-top-1">
+						<div class="toggle-options-radio">
+							<input type="radio" name="CSF"
+								[(ngModel)]="proceduresModel.emptyLumbarPunctureObj.lumbar_csf"
+								id="CSFClear" value="clear"><label for="CSFClear">Clear</label>
+							<input type="radio" name="CSF"
+								[(ngModel)]="proceduresModel.emptyLumbarPunctureObj.lumbar_csf"
+								id="CSFXanthochromic" value="xanthochromic"><label
+								for="CSFXanthochromic">Xanthochromic</label><input type="radio"
+								name="CSF"
+								[(ngModel)]="proceduresModel.emptyLumbarPunctureObj.lumbar_csf"
+								id="CSFHemorrhagic" value="hemorrhagic"><label
+								for="CSFHemorrhagic">Hemorrhagic</label><input type="radio"
+								name="CSF"
+								[(ngModel)]="proceduresModel.emptyLumbarPunctureObj.lumbar_csf"
+								id="CSFTraumatic" value="traumatic"><label
+								for="CSFTraumatic">Traumatic</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Comments</span>
+					</div>
+					<div class="col-md-12 no-padding padding-top-1">
+						<textarea name="lumbarCommentsName" class="desktop-column-20 max-height-36 set-font-size-default no-margin" [(ngModel)]="proceduresModel.emptyLumbarPunctureObj.comments" ></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-3 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Date and Time</span>
+					</div>
+					<div class="col-md-12 no-padding">
+			     <owl-date-time class="owl-dateTime" [(ngModel)]="proceduresModel.emptyLumbarPunctureObj.lumbar_timestamp" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+			   </div>
+				</div>
+			</div>
+			<div class="row no-padding padding-10-y no-margin margin-bottom-70"></div>
+			<div id="footer">
+				<button class="button button-blue button-large"
+					(click)="saveProcedures('Lumbar Puncture')">SUBMIT</button>
+				<span class="button button-blue-transparent button-large"
+					(click)="getProcedures(childObject.uhid)"><i
+					class="refresh"></i>REFRESH</span>
+			</div>
+			<div class="row padding-10-x padding-10-y margin-bottom-70"
+				*ngIf="proceduresModel.pastLumbarPunctureList != null && proceduresModel.pastLumbarPunctureList.length >0" style="margin-bottom:50px !important">
+				<div class="desktop-column-20 padding-0-x force-left center-aligned">
+					<table
+						class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr>
+							<td class="center-aligned">Date</td>
+							<td class="center-aligned">Space</td>
+							<td class="center-aligned">Size</td>
+							<td class="center-aligned">CSF</td>
+							<td class="center-aligned">Lumbar Puncture Date & Time</td>
+						</tr>
+						<tr *ngFor="let item of proceduresModel.pastLumbarPunctureList">
+							<td class="center-aligned">{{item.creationtime |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.lumbar_space}}</td>
+							<td class="center-aligned">{{item.lumbar_size}}</td>
+							<td class="center-aligned">{{item.lumbar_csf}}</td>
+							<td class="center-aligned">{{item.lumbar_timestamp |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="procedureWhichTab =='V Tap'">
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Site</span>
+					</div>
+					<div class="col-md-12 no-padding padding-top-1">
+						<div class="toggle-options-radio">
+							<input type="radio" name="vtapSite"
+								[(ngModel)]="proceduresModel.emptyVtapObj.vtap_site"
+								id="vtapSiteRight" value="right"><label
+								for="vtapSiteRight">Right</label><input type="radio"
+								name="vtapSite"
+								[(ngModel)]="proceduresModel.emptyVtapObj.vtap_site"
+								id="vtapSiteLeft" value="left"><label
+								for="vtapSiteLeft">Left</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Size</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<select [(ngModel)]="proceduresModel.emptyVtapObj.vtap_size"
+							class="input input-medium desktop-column-20 max-height-36 no-margin">
+							<option disabled selected hidden value>-- Select --</option>
+							<option value=null hidden>--Select--</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="26">26</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-1 no-padding">
+					<span class="button order-button  middle-aligned"
+						(click)="showOrderInvestigation()">Order</span>
+				</div>
+				<div class="col-md-11">
+					<div class="col-md-12 no-padding"
+						*ngIf="orderSelectedText != null && orderSelectedText != ''">
+						<span class="bold selected-text">Selected:<label
+							class="normal-font-weight">{{orderSelectedText}}</label>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-5 col-lg-4 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">CSF</span>
+					</div>
+					<div class="col-md-12 no-padding padding-top-1">
+						<div class="toggle-options-radio">
+							<input type="radio" name="vtabCSF"
+								[(ngModel)]="proceduresModel.emptyVtapObj.vtap_csf"
+								id="vtabCSFClear" value="clear"><label
+								for="vtabCSFClear">Clear</label><input type="radio" name="vtabCSF"
+								[(ngModel)]="proceduresModel.emptyVtapObj.vtap_csf"
+								id="vtabCSFXanthochromic" value="xanthochromic"><label
+								for="vtabCSFXanthochromic">Xanthochromic</label><input
+								type="radio" name="vtabCSF"
+								[(ngModel)]="proceduresModel.emptyVtapObj.vtap_csf"
+								id="vtabCSFHemorrhagic" value="hemorrhagic"><label
+								for="vtabCSFHemorrhagic">Hemorrhagic</label><input type="radio"
+								name="vtabCSF"
+								[(ngModel)]="proceduresModel.emptyVtapObj.vtap_csf"
+								id="vtabCSFTraumatic" value="traumatic"><label
+								for="vtabCSFTraumatic">Traumatic</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Comments</span>
+					</div>
+					<div class="col-md-12 no-padding padding-top-1">
+						<textarea name="firsttextAreaName" class="desktop-column-20 max-height-36 set-font-size-default no-margin" [(ngModel)]="proceduresModel.emptyVtapObj.comments" ></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-3 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Date And Time</span>
+					</div>
+					<div class="col-md-12 no-padding">
+			     <owl-date-time class="owl-dateTime" [(ngModel)]="proceduresModel.emptyVtapObj.vtap_timestamp" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+					</div>
+				</div>
+			</div>
+			<div class="row no-padding padding-10-y no-margin margin-bottom-70"></div>
+			<div id="footer">
+				<button class="button button-blue button-large"
+					(click)="saveProcedures('Vtap')">SUBMIT</button>
+				<span class="button button-blue-transparent button-large"
+					(click)="getProcedures(childObject.uhid)"><i
+					class="refresh"></i>REFRESH</span>
+			</div>
+			<div class="row padding-10-x padding-10-y margin-bottom-70"
+				*ngIf="proceduresModel.pastVtapList != null && proceduresModel.pastVtapList.length >0">
+				<div class="desktop-column-20 padding-0-x force-left center-aligned" style="margin-bottom:50px !important">
+					<table
+						class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr>
+							<td class="center-aligned">Date</td>
+							<td class="center-aligned">Site</td>
+							<td class="center-aligned">Size</td>
+							<td class="center-aligned">CSF</td>
+							<td class="center-aligned">V-Tap Date & Time</td>
+						</tr>
+						<tr *ngFor="let item of proceduresModel.pastVtapList">
+							<td class="center-aligned">{{item.creationtime |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.vtap_site}}</td>
+							<td class="center-aligned">{{item.vtap_size}}</td>
+							<td class="center-aligned">{{item.vtap_csf}}</td>
+							<td class="center-aligned">{{item.vtap_timestamp |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="procedureWhichTab =='Intubation'">
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-6 left-aligned no-padding">
+					<span class="light margin-5-y blue-text bold font-18">ET Intubation</span>
+				</div>
+			</div>
+			<div class="row no-padding wraping-box padding-10-y no-margin">
+				<div *ngIf="(proceduresModel.pastEtIntubationList == null)||(proceduresModel.pastEtIntubationList != null && proceduresModel.pastEtIntubationList.length >0 && proceduresModel.pastEtIntubationList[0].isextubation != null)">
+					<div class="row padding-10-x no-padding-right">
+						<div class="col-md-3 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Site</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="toggle-options-radio">
+									<input type="radio" name="IntubationSite"
+										[(ngModel)]="proceduresModel.currentEtIntubationObj.site"
+										id="IntubationSiteOrotracheal"
+										[disabled]="proceduresModel.currentEtIntubationObj.et_intubation_id != null"
+										value="Orotracheal"><label
+										for="IntubationSiteOrotracheal">Orotracheal</label><input
+										type="radio" name="IntubationSite"
+										[disabled]="proceduresModel.currentEtIntubationObj.et_intubation_id != null"
+										[(ngModel)]="proceduresModel.currentEtIntubationObj.site"
+										id="IntubationSiteOrotrachealNasotrachea"
+										value="Nasotracheal"><label
+										for="IntubationSiteOrotrachealNasotrachea">Nasotracheal</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Size</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<select [(ngModel)]="proceduresModel.currentEtIntubationObj.size"
+									[disabled]="proceduresModel.currentEtIntubationObj.et_intubation_id != null"
+									class="input input-medium desktop-column-20 max-height-36 no-margin">
+									<option disabled selected hidden value>-- Select --</option>
+									<option value=null hidden>--Select--</option>
+									<option value="2.5">2.5</option>
+									<option value="3">3</option>
+									<option value="3.5">3.5</option>
+									<option value="4">4</option>
+									<option value="4.5">4.5</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-3 col-lg-2 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Fixation</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="relative-input-group block">
+									<input type="text" [(ngModel)]="proceduresModel.currentEtIntubationObj.fixation"
+										[disabled]="proceduresModel.currentEtIntubationObj.et_intubation_id != null"
+										class="input input-medium desktop-column-10" /><span
+										class="input-group-icon desktop-column-10 center-aligned"
+										style="top: 0px; left: 1px">cm at Lip</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row padding-10-x padding-10-y no-padding-right">
+						<div class="col-md-2 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Confirmed by X-Ray</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="toggle-options-radio">
+									<input type="radio" name="ConfirmedPosition"
+										[(ngModel)]="proceduresModel.currentEtIntubationObj.confirmXray"
+										[disabled]="proceduresModel.currentEtIntubationObj.et_intubation_id != null"
+										id="ConfirmedPositionYes" [value]="true"><label
+										for="ConfirmedPositionYes">Yes</label><input
+										type="radio" name="ConfirmedPosition"
+										[(ngModel)]="proceduresModel.currentEtIntubationObj.confirmXray"
+										[disabled]="proceduresModel.currentEtIntubationObj.et_intubation_id != null"
+										id="ConfirmedPositionNo" [value]="false"><label
+										for="ConfirmedPositionNo">No</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Reposition at</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="relative-input-group block">
+									<input type="text" class="input input-medium desktop-column-10"
+										[ngModelOptions]="{standalone: true}"
+										[(ngModel)]="proceduresModel.currentEtIntubationObj.reposition"
+										[disabled]="proceduresModel.currentEtIntubationObj.et_intubation_id != null" /><span
+										class="input-group-icon desktop-column-10 center-aligned"
+										style="top: 0px; left: 1px">cm</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Comments</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<textarea name="etCommentsName" class="desktop-column-20 max-height-36 set-font-size-default no-margin" [(ngModel)]="proceduresModel.currentEtIntubationObj.comments" ></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row padding-10-x padding-10-y no-padding-right">
+						<div class="col-md-3 col-lg-2 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Insertion Date</span>
+							</div>
+							<div class="col-md-12 no-padding">
+				       <owl-date-time class="owl-dateTime" [(ngModel)]="proceduresModel.currentEtIntubationObj.insertion_timestamp" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+							</div>
+						</div>
+					</div>
+
+					<!--Reintubation-->
+					<div class="row padding-10-x padding-10-y no-padding-right">
+						<div class="col-md-3 col-lg-2 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Reintubation</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="toggle-options-radio">
+									<input type="radio" name="reintubation"
+										[(ngModel)]="proceduresModel.currentEtIntubationObj.isReintubation" id="reintubation"
+										(ngModelChange) = "resetEtIntubationReason()"
+										[disabled] = "proceduresModel.pastEtIntubationList == null"
+										[value] = "true" ><label for="reintubation">Yes</label>
+									<input type="radio" name="intubation"
+										[(ngModel)]="proceduresModel.currentEtIntubationObj.isReintubation" id="intubation"
+										(ngModelChange) = "resetEtIntubationReason()"
+										[value] = "false" ><label for="intubation">No</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-lg-2 no-padding-right">
+						<ng-container *ngIf="proceduresModel.currentEtIntubationObj.isReintubation == true">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Reason For Reintubation</span>
+							</div>
+							<div class="col-md-12 no-padding padding-top-0" style="margin-left:-10px;">
+								<div class="desktop-column-20 no-padding">
+									<div class="multiselect  desktop-column-20 no-padding">
+										<div class="selectBox"
+											(click)="populateMultiCheckBox('multiple-selectbox-2')"
+											id="multiple-selectbox-2">
+											<select class="no-margin">
+												<option>-- Select --</option>
+											</select>
+											<div class="overSelect"></div>
+										</div>
+										<ul id="checkboxes-2" class="multiple-select">
+											<li
+												*ngFor="let item of proceduresModel.etIntubationReasonList">
+												<ng-container *ngIf ="item.etIntubationReasonType == 'reintubation'">
+													<input type="checkbox" name="{{item.etIntubationReasonId}}" id="{{item.etIntubationReasonId}}" [(ngModel)] = "item.flag"
+													(click)="showReasonTextBox(item.etIntubationReasonId,item.etIntubationReasonType,item.etIntubationReason)"/>
+													<label for="{{item.etIntubationReasonId}}">{{item.etIntubationReason}}</label>
+												</ng-container>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</ng-container>
+						<ng-container *ngIf="proceduresModel.currentEtIntubationObj.isReintubation == false">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Reason For Intubation</span>
+							</div>
+							<div class="col-md-12 no-padding padding-top-0" style="margin-left:-10px;">
+								<div class="desktop-column-20 no-padding">
+									<div class="multiselect  desktop-column-20 no-padding">
+										<div class="selectBox"
+											(click)="populateMultiCheckBox('multiple-selectbox-2')"
+											id="multiple-selectbox-2">
+											<select class="no-margin">
+												<option>-- Select --</option>
+											</select>
+											<div class="overSelect"></div>
+										</div>
+										<ul id="checkboxes-2" class="multiple-select">
+											<li
+												*ngFor="let item of proceduresModel.etIntubationReasonList">
+												<ng-container *ngIf ="item.etIntubationReasonType == 'intubation'">
+													<input type="checkbox" name="{{item.etIntubationReasonId}}" id="{{item.etIntubationReasonId}}" [(ngModel)] = "item.flag"
+														(click)="showReasonTextBox(item.etIntubationReasonId,item.etIntubationReasonType,item.etIntubationReason)"/>
+													<label for="{{item.etIntubationReasonId}}">{{item.etIntubationReason}}</label>
+												</ng-container>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</ng-container>
+					</div>
+					<div class="col-md-3 col-lg-2 no-padding-right" *ngIf="!showPco2TextBox">
+						<div class="col-md-12 no-padding">
+							<span class="bold">PCO2</span>
+						</div>
+						<input type="text" name="pco2" [(ngModel)]="proceduresModel.currentEtIntubationObj.pco2Value" />
+					</div>
+					<div class="col-md-3 col-lg-2 no-padding-right" *ngIf="!showFio2TextBox">
+						<div class="col-md-12 no-padding">
+							<span class="bold">FIO2</span>
+						</div>
+						<input type="text" name="fio2" [(ngModel)]="proceduresModel.currentEtIntubationObj.fiO2Value" />
+					</div>
+
+					<div class="row padding-10-x padding-10-y no-padding-right" *ngIf="(reasonReintubationStr!= null && reasonReintubationStr != '') || (reasonIntubationStr!= null && reasonIntubationStr != '')">
+						<div class="col-md-12">
+							<span class="bold">Selected:</span>
+							<span  *ngIf="reasonReintubationStr!= null && reasonReintubationStr != ''">{{reasonReintubationStr}}</span>
+							<span  *ngIf="reasonIntubationStr!= null && reasonIntubationStr != ''">{{reasonIntubationStr}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right" *ngIf="proceduresModel.pastEtIntubationList != null && proceduresModel.pastEtIntubationList.length >0 && proceduresModel.pastEtIntubationList[0].isReintubation != null">
+					<div class="col-md-2 no-padding-right center-aligned">
+						<div class="col-md-12 no-padding">
+							<span class="visiblity-hidden">Extubation Date</span>
+						</div>
+						<div class="col-md-12 no-padding padding-top-2">
+							<span class="button button-blue" *ngIf="proceduresModel.currentEtIntubationObj.isextubation != true"
+							 (click)="toggleRemoveEtIntubation()" style="float:left">Extubation
+							</span>
+							<span class="button button-blue-transparent" *ngIf="proceduresModel.currentEtIntubationObj.isextubation == true"
+								(click)="toggleRemoveEtIntubation()" style="float:left">Cancel Extubation
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right" *ngIf="proceduresModel.currentEtIntubationObj.isextubation">
+					<div class="col-md-3 col-lg-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Extubation Date</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime" [(ngModel)]="proceduresModel.currentEtIntubationObj.removal_timestamp" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+						</div>
+					</div>
+					<!--<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Reason for Extubation</span>
+						</div>
+						<div class="col-md-12 no-padding padding-top-1">
+							<div class="toggle-options-radio">
+								<input type="radio" name="reasonRemoval+{{i}}"
+									[(ngModel)]="item.removalReason"
+									id="reasonRemovalBlocked+{{i}}" value="blocked"><label
+									for="reasonRemovalBlocked+{{i}}">Blocked</label><input
+									type="radio" name="reasonRemoval+{{i}}"
+									[(ngModel)]="item.removalReason"
+									id="reasonRemovalErythema+{{i}}" value="erythema">
+								<label for="reasonRemovalErythema+{{i}}">Erythema</label><input
+									type="radio" name="reasonRemoval+{{i}}"
+									[(ngModel)]="item.removalReason"
+									id="reasonRemovalExtravasated+{{i}}"
+									value="extravasated"><label
+									for="reasonRemovalExtravasated+{{i}}">Extravasated</label><input
+									type="radio" name="reasonRemoval+{{i}}"
+									[(ngModel)]="item.removalReason"
+									id="reasonRemovalDislodged+{{i}}" value="'dislodged'">
+								<label for="reasonRemovalDislodged+{{i}}">Dislodged</label>
+							</div>
+						</div>
+					</div>-->
+					<div class="col-md-3 col-lg-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Reason For Extubation</span>
+						</div>
+						<div class="col-md-12 no-padding padding-top-0" style="margin-left:-10px;">
+							<div class="desktop-column-20 no-padding">
+								<div class="multiselect  desktop-column-20 no-padding">
+									<div class="selectBox"
+										(click)="populateMultiCheckBox('multiple-selectbox-3')"
+										id="multiple-selectbox-3">
+										<select class="no-margin">
+											<option>-- Select --</option>
+										</select>
+										<div class="overSelect"></div>
+									</div>
+									<ul id="checkboxes-3" class="multiple-select">
+										<li
+											*ngFor="let item of proceduresModel.etIntubationReasonList">
+											<ng-container *ngIf ="item.etIntubationReasonType == 'extubation'">
+												<input type="checkbox" name="{{item.etIntubationReasonId}}" id="{{item.etIntubationReasonId}}" [(ngModel)] = "item.flag"
+												(click)="showReasonTextBox(item.etIntubationReasonId,item.etIntubationReasonType,item.etIntubationReason)"/>
+												<label for="{{item.etIntubationReasonId}}">{{item.etIntubationReason}}</label>
+											</ng-container>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right" *ngIf="proceduresModel.pastEtIntubationList != null && proceduresModel.pastEtIntubationList.length >0 && proceduresModel.pastEtIntubationList[0].isReintubation != null">
+					<div class="col-md-12" *ngIf="reasonExtubationStr!= null && reasonExtubationStr != ''">
+						<span class="bold" >Selected:</span>
+						<span>{{reasonExtubationStr}}</span>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="row padding-10-x padding-10-y">
+				<div class="desktop-column-20 padding-0-x force-left center-aligned">
+					<table
+						class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr>
+							<td class="center-aligned">S.No</td>
+							<td class="center-aligned">Intubation Type</td>
+							<td class="center-aligned">Note</td>
+							<td class="center-aligned">Reason</td>
+						</tr>
+						<tr *ngFor="let item of proceduresModel.pastEtIntubationTableList">
+							<td class="center-aligned">{{item.creationtime |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.site}}</td>
+							<td class="center-aligned">{{item.size}}</td>
+							<td class="center-aligned">{{item.insertion_timestamp |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+						</tr>
+					</table>
+				</div>
+			</div> -->
+			<div class="row no-padding padding-10-y no-margin margin-bottom-70"></div>
+			<div id="footer">
+				<button class="button button-blue button-large"
+					(click)="saveProcedures('ET Intubation')">SUBMIT</button>
+				<span class="button button-blue-transparent button-large"
+					(click)="getProcedures(childObject.uhid)"><i
+					class="refresh"></i>REFRESH</span>
+			</div>
+			<div class="row padding-10-x padding-10-y margin-bottom-70"
+				*ngIf="proceduresModel.pastEtIntubationList != null && proceduresModel.pastEtIntubationList.length >0" style="margin-bottom:50px !important">
+				<div class="desktop-column-20 padding-0-x force-left center-aligned">
+					<table
+						class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr>
+							<td class="center-aligned">Date</td>
+							<td class="center-aligned">Type</td>
+							<td class="center-aligned">Insertion Date & Time</td>
+							<td class="center-aligned">Reason of Insertion </td>
+							<td class="center-aligned">Removal Date & Time</td>
+							<td class="center-aligned">Reason of Removal</td>
+						</tr>
+						<tr *ngFor="let item of proceduresModel.pastEtIntubationList">
+							<td class="center-aligned">{{item.creationtime |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned" *ngIf="item.isReintubation != null && item.isReintubation == true">Reintubation</td>
+							<td class="center-aligned" *ngIf="item.isReintubation != null && item.isReintubation == false">Intubation</td>
+							<td class="center-aligned" *ngIf="item.isextubation != null && item.isextubation == true">Extubation</td>
+							<td class="center-aligned">{{item.insertion_timestamp |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned" *ngIf="item.isReintubation != null && item.isReintubation == true">{{item.reasonReintubation}}</td>
+							<td class="center-aligned" *ngIf="item.isReintubation != null && item.isReintubation == false">{{item.reasonIntubation}}</td>
+							<td class="center-aligned" *ngIf="item.isextubation != null && item.isextubation == true"></td>
+							<td class="center-aligned">{{item.removal_timestamp |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.removalReason}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="procedureWhichTab =='Suction'">
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-3 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Date And Time</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<owl-date-time class="owl-dateTime" [(ngModel)]="proceduresModel.emptyEtSuctionObj.orderTime" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="isDoctorProcedure == false">
+
+				<div *ngIf="proceduresModel.pastprocedureOtherOrdersList != null && proceduresModel.pastprocedureOtherOrdersList.length >0">
+					<div class="col-md-12 no-padding" *ngFor="let order of proceduresModel.pastprocedureOtherOrdersList">
+						<div class="col-md-12 padding-10-y no-padding-bottom" *ngIf = "order.etSuctionType != null">
+							<div class="col-md-12 margin-10-y" style="width: 100%; border: 3px solid #EBB744;background-color:#FDF7E9">
+								<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+									<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+								</div>
+								<div class="col-md-10 padding-5-y left-aligned">
+									<span>Perform ET Suction<span style="padding-left:10px" *ngIf="order.etSuctionType == 'q' && order.etSuctionType != null && order.etSuctionValue != null">
+										@{{order.etSuctionValue}} hrs</span>
+										<span style="padding-left:10px" *ngIf="order.etSuctionType != 'q' && order.etSuctionType != null">
+											SOS</span>
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-12 padding-10-y no-padding-bottom" *ngIf = "order.oralSuctionType != null">
+							<div class="col-md-12 margin-10-y" style="width: 100%; border: 3px solid #EBB744;background-color:#FDF7E9">
+								<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+									<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+								</div>
+								<div class="col-md-10 padding-5-y left-aligned">
+									<span>Perform Oral Suction<span style="padding-left:10px" *ngIf="order.oralSuctionType == 'q' && order.oralSuctionType != null && order.oralSuctionValue != null">
+										@{{order.oralSuctionValue}} hrs</span>
+										<span style="padding-left:10px" *ngIf="order.oralSuctionType != 'q' && order.oralSuctionType != null">
+											SOS</span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-2 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Site</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<select [(ngModel)]="proceduresModel.emptyEtSuctionObj.site"
+							class="input input-medium desktop-column-20 max-height-36 no-margin">
+							<option disabled selected hidden value>-- Select --</option>
+							<option value=null hidden>--Select--</option>
+							<option value="ET">ET</option>
+							<option value="Oral">Oral</option>
+							<option value="Nasal">Nasal</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-2 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Catheter Size (cm)</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<select [(ngModel)]="proceduresModel.emptyEtSuctionObj.size"
+							class="input input-medium desktop-column-20 max-height-36 no-margin">
+							<option disabled selected hidden value>-- Select --</option>
+							<option value=null hidden>--Select--</option>
+							<option value=3>3</option>
+							<option value=4>4</option>
+							<option value=5>5</option>
+							<option value=6>6</option>
+							<option value=7>7</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-3 col-lg-2 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Length of Catheter (cm)</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<select [(ngModel)]="proceduresModel.emptyEtSuctionObj.length"
+							class="input input-medium desktop-column-20 max-height-36 no-margin">
+							<option disabled selected hidden value>-- Select --</option>
+							<option value=null hidden>--Select--</option>
+							<option value=3>3</option>
+							<option value=4>4</option>
+							<option value=5>5</option>
+							<option value=6>6</option>
+							<option value=7>7</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-2 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Saline Used</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="toggle-options-radio">
+							<input type="radio" name="salineYes"
+								[(ngModel)]="proceduresModel.emptyEtSuctionObj.salineStatus" id="salineYes"
+								[value]="true"><label for="salineYes">Yes</label>
+							<input type="radio" name="salineNo"
+								[(ngModel)]="proceduresModel.emptyEtSuctionObj.salineStatus" id="salineNo"
+								[value]="false"><label for="salineNo">No</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-right" *ngIf="proceduresModel.emptyEtSuctionObj.salineStatus">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Volume(ml)</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<input type="number" [(ngModel)]="proceduresModel.emptyEtSuctionObj.salineVolume"
+							class="input input-medium col-md-12 no-padding no-margin" />
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-2 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Number of Attempts</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<input type="number" [(ngModel)]="proceduresModel.emptyEtSuctionObj.attemptsCount"
+							class="input input-medium col-md-12 no-padding no-margin" />
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-2 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Desaturation</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="toggle-options-radio">
+							<input type="radio" name="desaturationYes"
+								[(ngModel)]="proceduresModel.emptyEtSuctionObj.desaturationStatus" id="desaturationYes"
+								[value]="true"><label for="desaturationYes">Yes</label>
+							<input type="radio" name="desaturationNo"
+								[(ngModel)]="proceduresModel.emptyEtSuctionObj.desaturationStatus" id="desaturationNo"
+								[value]="false"><label for="desaturationNo">No</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-left" *ngIf="proceduresModel.emptyEtSuctionObj.desaturationStatus">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Min Spo2</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<input type="number" [(ngModel)]="proceduresModel.emptyEtSuctionObj.minSpo2"
+							class="input input-medium col-md-12 no-padding no-margin" />
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-2 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Secretions</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="toggle-options-radio">
+							<input type="radio" name="secretionsYes"
+								[(ngModel)]="proceduresModel.emptyEtSuctionObj.secretionsStatus" id="secretionsYes"
+								[value]="true"><label for="secretionsYes">Yes</label>
+							<input type="radio" name="secretionsNo"
+								[(ngModel)]="proceduresModel.emptyEtSuctionObj.secretionsStatus" id="secretionsNo"
+								[value]="false"><label for="secretionsNo">No</label>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="proceduresModel.emptyEtSuctionObj.secretionsStatus" class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Color</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<select [(ngModel)]="proceduresModel.emptyEtSuctionObj.secretionColor"
+							class="input input-medium desktop-column-20 max-height-36 no-margin">
+							<option disabled selected hidden value>-- Select --</option>
+							<option value=null hidden>--Select--</option>
+							<option value="Blood Stained">Blood Stained</option>
+							<option value="Blood">Blood</option>
+							<option value="White">White</option>
+							<option value="Yellow">Yellow</option>
+							<option value="Green">Green</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-right" *ngIf="proceduresModel.emptyEtSuctionObj.secretionsStatus">
+				 	<div class="col-md-12 no-padding">
+						<span class="bold">Volume (ml)</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<input type="number" [(ngModel)]="proceduresModel.emptyEtSuctionObj.secretionVolume"
+							class="input input-medium col-md-12 no-padding no-margin" />
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-right" *ngIf="proceduresModel.emptyEtSuctionObj.secretionsStatus">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Consistency</span>
+				 	</div>
+				 	<div class="col-md-12 no-padding">
+					 	<select class="input input-medium desktop-column-20 max-height-36 no-margin" [(ngModel)]="proceduresModel.emptyEtSuctionObj.consistency">
+						 	<option disabled selected hidden value>-- Select --</option>
+						 	<option value=null hidden>--Select--</option>
+						 	<option value="Thick">Thick</option>
+						 	<option value="Thin">Thin</option>
+					 	</select>
+				 	</div>
+			 	</div>
+			</div>
+			<div *ngIf="proceduresModel.emptyEtSuctionObj.secretionsStatus" class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-2 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Sent For Testing</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="toggle-options-radio">
+							<input type="radio" name="sentSecretionsYes"
+								[(ngModel)]="proceduresModel.emptyEtSuctionObj.sentStatus" id="sentSecretionsYes"
+								[value]="true"><label for="sentSecretionsYes">Yes</label>
+							<input type="radio" name="sentSecretionsNo"
+								[(ngModel)]="proceduresModel.emptyEtSuctionObj.sentStatus" id="sentSecretionsNo"
+								[value]="false"><label for="sentSecretionsNo">No</label>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="proceduresModel.emptyEtSuctionObj.sentStatus" class="col-md-2 table full">
+					<div class="col-md-12 no-padding">
+						<span class="visiblity-hidden">dummy</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<span class="button order-button middle-aligned"
+							(click)="showOrderInvestigation()">Order</span>
+					</div>
+				</div>
+				<div *ngIf="proceduresModel.emptyEtSuctionObj.sentStatus" class="col-md-8 table-cell">
+					<div class="col-md-12 no-padding">
+						<span class="bold selected-text"
+							*ngIf="orderSelectedText!=null && orderSelectedText!=''">Selected:
+							<label class="normal-font-weight">{{orderSelectedText}}</label>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-4 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Comments</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<input type="text" [(ngModel)]="proceduresModel.emptyEtSuctionObj.comments"
+							class="input input-medium col-md-12 no-padding no-margin" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row no-padding padding-10-y no-margin margin-bottom-70"></div>
+			<div id="footer">
+				<button class="button button-blue button-large"
+					(click)="saveProcedures('suction')">SUBMIT</button>
+				<span class="button button-blue-transparent button-large"
+					(click)="getProcedures(childObject.uhid)"><i
+					class="refresh"></i>REFRESH</span>
+			</div>
+			<div class="row padding-10-x padding-10-y margin-bottom-70"
+				*ngIf="proceduresModel.pasEtSuctionList != null && proceduresModel.pasEtSuctionList.length >0">
+				<div class="desktop-column-20 padding-0-x force-left center-aligned" style="margin-bottom:50px !important">
+					<table
+						class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr>
+							<td class="center-aligned">Date</td>
+							<td class="center-aligned">Site</td>
+							<td class="center-aligned">Catheter Size (cm)</td>
+							<td class="center-aligned">Length of Catheter (cm)</td>
+							<td class="center-aligned">Saline Vol. (ml)</td>
+							<td class="center-aligned">No. Of Attempts</td>
+							<td class="center-aligned">Min Spo2</td>
+							<td class="center-aligned">Secretion Color</td>
+							<td class="center-aligned">Secretion Vol. (ml)</td>
+							<td class="center-aligned">Sent Orders</td>
+						</tr>
+						<tr *ngFor="let item of proceduresModel.pasEtSuctionList">
+							<td class="center-aligned">{{item.orderTime |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.site}}</td>
+							<td class="center-aligned">{{item.size}}</td>
+							<td class="center-aligned">{{item.length}}</td>
+							<td class="center-aligned">{{item.salineVolume}}</td>
+							<td class="center-aligned">{{item.attemptsCount}}</td>
+							<td class="center-aligned">{{item.minSpo2}}</td>
+							<td class="center-aligned">{{item.secretionColor}}</td>
+							<td class="center-aligned">{{item.secretionVolume}}</td>
+							<td class="center-aligned">{{item.labOrders}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="procedureWhichTab =='Chest'">
+			<form>
+				<div class="row padding-10-x no-padding-right">
+					<div class="col-md-1 no-padding-left padding-20-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="rightChest" [(ngModel)]="proceduresModel.chestTube.ischesttubeRight" id="isRightChestChecked"><label for="isRightChestChecked">Right</label>
+						</div>
+					</div>
+					<div class="col-md-1 no-padding-left padding-20-y">
+						<div class="blue-round-tick setting-checkbox">
+							<input type="checkbox" name="leftChest" [(ngModel)]="proceduresModel.chestTube.ischesttubeLeft"
+								id="isLeftChestChecked"><label for="isLeftChestChecked">Left</label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Indication</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input type="radio" name="ChestTube" [value]="true" [(ngModel)]="proceduresModel.chestTube.insertedfor" id="ChestTubePneumothorax" (click)="isDoctorProcedure && GoToPneumoThorax()">
+								<label
+									for="ChestTubePneumothorax">Pneumothorax</label>
+								<input
+									type="radio" name="ChestTube" [(ngModel)]="proceduresModel.chestTube.insertedfor"
+									id="ChestTubeOther" [value]="false"><label
+									for="ChestTubeOther">Other</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left"
+						*ngIf="proceduresModel.chestTube.insertedfor != null && !(proceduresModel.chestTube.insertedfor)">
+						<div class="col-md-12 no-padding">
+							<span class="bold">if Other</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="proceduresModel.chestTube.otherindication" class="input input-medium desktop-column-20 max-height-36 no-margin" />
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Size</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select [ngModelOptions]="{standalone: true}" [(ngModel)]="proceduresModel.chestTube.size" class="input input-medium desktop-column-20 max-height-36 no-margin">
+								<option disabled selected hidden value>-- Select --</option>
+								<option value=null hidden>--Select--</option>
+								<option value="2-3">2-3</option>
+								<option value="3-4">3-4</option>
+								<option value="4-5">4-5</option>
+								<option value="5-6">5-6</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Position</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select [ngModelOptions]="{standalone: true}" [(ngModel)]="proceduresModel.chestTube.tubeposition" class="input input-medium desktop-column-20 max-height-36 no-margin">
+								<option disabled selected hidden value>-- Select --</option>
+								<option value=null hidden>--Select--</option>
+								<option value="infraclavicular">Infraclavicular</option>
+								<option value="ant. axillary">Ant. Axillary</option>
+								<option value="mid axllary">Mid Axillary</option>
+								<option value="posterior axillary">Posterior Axillary</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Size at Fixation</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block">
+								<input type="text" class="input input-medium desktop-column-5" [ngModelOptions]="{standalone: true}" [(ngModel)]="proceduresModel.chestTube.sizeatfixation"/><span
+									class="input-group-icon desktop-column-15 center-aligned"
+									style="top: 0px; left: 1px">cm / chest wall</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y na-padding-right">
+					<div class="col-md-12 no-padding">
+						<div class="col-md-5 no-padding"
+							style="border: 1px solid #eee; min-height: 50px; margin-right: 5px">
+							<div class="col-md-12 no-padding padding-5-y"
+								style="background-color: #f2f2f2">
+								<div
+									class="col-md-5 no-padding-right middle-aligned padding-5-y no-padding-bottom">
+									<span class="bold">Right</span>
+								</div>
+								<div class="col-md-7 no-padding-left right-aligned">
+									<!-- (click)="removeChestTube('right')" [disabled]=true -->
+									<span class="button button-blue" style="right: 0px;">Clear Entry</span>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding-left padding-10-y">
+								<span class="inline-block  padding-10-x tube-count"
+									*ngFor="let item of proceduresModel.pneumothorax.chestTubeObj.rightTubes; let i = index" [attr.data-index]="i"
+									[ngClass]="{'select-tube-count': rightSelectedTubeValue == i}"
+									(click)="openCloseChestTube(item,'right',i)">Tube
+									{{i+1}}</span><span class="inline-block  padding-10-x tube-count">Add</span>
+									<!-- (click)="insertChestTube('right')" [disabled]=true -->
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-12 no-padding" *ngFor="let tube of proceduresModel.pneumothorax.chestTubeObj.rightTubes; let i = index" [attr.data-index]="i">
+									<div
+										*ngIf="rightSelectedTubeValue==i">
+										<fieldset [disabled]=true>
+										<div>
+											<div class="col-md-12 no-padding padding-10-x margin-10-y"
+												style="border: 1px solid #01973A; box-shadow: 2px 3px 2px 0px #01973A; margin-top: 0px;">
+												<div class="col-md-12 padding-5-y">
+													<div class="col-md-6 no-padding-left left-aligned">
+														<span class="bold">Observation</span>
+													</div>
+													<div class="col-md-6 no-padding-left right-aligned">
+														<span class="bold">Tube {{i+1}}</span>
+													</div>
+												</div>
+												<div class="col-md-12 table full padding-5-y no-padding-top">
+													<div class="col-md-12 no-padding">
+														<div class="col-md-10 no-padding">
+															<div class="toggle-options-radio padding-top-0">
+																<input type="radio"
+																	name="PneumothoraxPastRightWork+{{i}}"
+																	id="PneumothoraxPastRightWork+{{i}}"
+																	value="Column Moving"
+																	[(ngModel)]="tube.chesttubeValue"
+																	(ngModelChange)="updateTubeStatus('observation','right')">
+																<label for="PneumothoraxPastRightWork+{{i}}">Column
+																	Moving</label><input type="radio"
+																	name="PneumothoraxPastRightBubble+{{i}}"
+																	id="PneumothoraxPastRightBubble+{{i}}"
+																	value="Bubble"
+																	[(ngModel)]="tube.chesttubeValue"
+																	(ngModelChange)="updateTubeStatus('observation','right')">
+																<label for="PneumothoraxPastRightBubble+{{i}}">Bubble</label>
+																<input type="radio"
+																	name="PneumothoraxPastRightNotWorking+{{index}}"
+																	id="PneumothoraxPastRightNotWorking+{{index}}"
+																	value="Not Working"
+																	[(ngModel)]="tube.chesttubeValue"
+																	(ngModelChange)="updateTubeStatus('observation','right')">
+																<label for="PneumothoraxPastRightNotWorking+{{index}}">Not
+																	Working</label>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div>
+													<div
+														*ngIf="tube.isTubeReadyToAdjust==true || tube.chesttubeValue=='Not Working'">
+														<div class="col-md-12 padding-5-y">
+															<span class="bold">Action</span>
+														</div>
+														<div class="col-md-12 table full padding-5-y no-padding-top">
+															<div class="col-md-12 no-padding">
+																<div class="col-md-6 no-padding">
+																	<div class="toggle-options-radio padding-top-0">
+																		<input type="radio"
+																			*ngIf="tube.chesttubeValue=='Not Working'"
+																			name="clampActionAdjustPastRight+{{i}}"
+																			id="clampActionAdjustPastRight+{{i}}"
+																			value="Readjust"
+																			[(ngModel)]="tube.chestTubeAdjustedValue"
+																			(ngModelChange)="creatingProgressNotesPneumoTemplate()">
+																		<label for="clampActionAdjustPastRight+{{i}}"
+																			*ngIf="tube.chesttubeValue=='Not Working'">Readjust</label>
+																		<input type="radio"
+																			*ngIf="tube.chesttubeValue=='Not Working' || tube.chesttubeValue=='Column Moving'"
+																			name="clampActionClampPastRight+{{i}}"
+																			id="clampActionClampPastRight+{{i}}"
+																			value="Clamp"
+																			[(ngModel)]="tube.chestTubeAdjustedValue"
+																			(ngModelChange)="creatingProgressNotesPneumoTemplate()">
+																		<label for="clampActionClampPastRight+{{i}}"
+																			*ngIf="tube.chesttubeValue=='Not Working' || tube.chesttubeValue=='Column Moving'">Clamp</label>
+																		<input type="radio"
+																			*ngIf="tube.chesttubeValue=='Not Working' || tube.chesttubeValue=='Column Moving'"
+																			name="clampActionRemovePastRight+{{i}}"
+																			id="clampActionRemovePastRight+{{i}}"
+																			value="Remove"
+																			[(ngModel)]="tube.chestTubeAdjustedValue"
+																			(ngModelChange)="creatingProgressNotesPneumoTemplate()">
+																		<label for="clampActionRemovePastRight+{{i}}"
+																			*ngIf="tube.chesttubeValue=='Not Working' || tube.chesttubeValue=='Column Moving'">Remove</label>
+																		<input type="radio"
+																			*ngIf="tube.chesttubeValue=='Column Moving' || tube.chesttubeValue=='Bubble'"
+																			name="clampActionRemovePastRight+{{i}}"
+																			id="ContinueActionRemovePastRight+{{i}}"
+																			value="Continue"
+																			[(ngModel)]="tube.chestTubeAdjustedValue"
+																			(ngModelChange)="creatingProgressNotesPneumoTemplate()">
+																		<label for="ContinueActionRemovePastRight+{{i}}"
+																			*ngIf="tube.chesttubeValue=='Column Moving' || tube.chesttubeValue=='Bubble'">Continue</label>
+																		<input type="radio"
+																			*ngIf="tube.chesttubeValue=='Not Working'"
+																			name="clampActionRemovePastRight+{{i}}"
+																			id="ChangeActionRemovePastRight+{{i}}"
+																			value="Change"
+																			[(ngModel)]="tube.chestTubeAdjustedValue"
+																			(ngModelChange)="creatingProgressNotesPneumoTemplate()">
+																		<label for="ChangeActionRemovePastRight+{{i}}"
+																			*ngIf="tube.chesttubeValue=='Not Working'">Change</label>
+																	</div>
+																</div>
+																<div class="col-md-6 no-padding"
+																	*ngIf="tube.chestTubeAdjustedValue=='Clamp' && tube.isClampReadyToAdjust">
+																	<div class="toggle-options-radio padding-top-0"><input type="radio" name="clampStatusRight+{{i}}" value="Reopen" id="reopenRight+{{i}}" [(ngModel)]="tube.clampStatus" (ngModelChange)="creatingProgressNotesPneumoTemplate()">
+																		<label for="reopenRight+{{i}}">Reopen</label><input
+																			type="radio" name="clampStatusRight+{{i}}"
+																			id="clampContinuetRight+{{i}}"
+																			value="Continue" [(ngModel)]="tube.clampStatus" (ngModelChange)="creatingProgressNotesPneumoTemplate()"><label for="clampContinuetRight+{{i}}">Continue</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</fieldset>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-5 no-padding"
+							style="border: 1px solid #eee; min-height: 50px; margin-right: 5px">
+							<div class="col-md-12 no-padding padding-5-y"
+								style="background-color: #f2f2f2">
+								<div
+									class="col-md-5 no-padding-right middle-aligned padding-5-y no-padding-bottom">
+									<span class="bold">Left</span>
+								</div>
+								<div class="col-md-7 no-padding-left right-aligned">
+									<span class="button button-blue" style="right: 0px;">Clear Entry</span>
+									<!-- (click)="removeChestTube('left')" [disabled]=true -->
+								</div>
+							</div>
+							<div class="col-md-12 no-padding-left padding-10-y">
+								<span class="inline-block  padding-10-x tube-count" *ngFor="let item of proceduresModel.pneumothorax.chestTubeObj.leftTubes; let i = index" [attr.data-index]="i" [ngClass]="{'select-tube-count': leftSelectedTubeValue == i}" (click)="openCloseChestTube(item,'left',i)">Tube
+									{{i+1}}</span><span class="inline-block  padding-10-x tube-count">Add</span>
+									<!-- (click)="insertChestTube('left')" [disabled]=true -->
+							</div>
+							<div class="col-md-12 no-padding" id="closeThis">
+								<div class="col-md-12">
+									<div>
+										<div ngFor="let tube of proceduresModel.pneumothorax.chestTubeObj.leftTubes; let i = index" [attr.data-index]="i">
+											<div class="col-md-12 no-padding padding-10-x margin-10-y"
+												style="border: 1px solid #01973A; box-shadow: 2px 3px 2px 0px #01973A; margin-top: 0px;"
+												*ngIf="leftSelectedTubeValue == i">
+											<fieldset [disabled]=true>
+												<div class="col-md-12 padding-5-y">
+													<span class="bold">Observation</span>
+												</div>
+												<div class="col-md-12 table full padding-5-y no-padding-top">
+													<div class="col-md-12 no-padding">
+														<div class="col-md-10 no-padding">
+															<div class="toggle-options-radio padding-top-0">
+																<input type="radio"
+																	name="PneumothoraxPastLeftWork+{{i}}"
+																	id="PneumothoraxPastLeftWork+{{i}}"
+																	value="Column Moving"
+																	[(ngModel)]="tube.chesttubeValue"
+																	(ngModelChange)="updateTubeStatus('observation','left')">
+																<label for="PneumothoraxPastLeftWork+{{i}}">Column
+																	Moving</label><input type="radio"
+																	name="PneumothoraxPastLeftBubble+{{i}}"
+																	id="PneumothoraxPastLeftBubble+{{i}}"
+																	value="Bubble"
+																	[(ngModel)]="tube.chesttubeValue"
+																	(ngModelChange)="updateTubeStatus('observation','left')">
+																<label for="PneumothoraxPastLeftBubble+{{i}}">Bubble</label>
+																<input type="radio"
+																	name="PneumothoraxPastLeftNotWorking+{{i}}"
+																	id="PneumothoraxPastLeftNotWorking+{{i}}"
+																	value="Not Working"
+																	[(ngModel)]="tube.chesttubeValue"
+																	(ngModelChange)="updateTubeStatus('observation','left')">
+																<label for="PneumothoraxPastLeftNotWorking+{{i}}">Not
+																	Working</label>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div>
+													<div
+														*ngIf="tube.isTubeReadyToAdjust==true || tube.chesttubeValue=='Not Working'">
+														<div class="col-md-12 padding-5-y">
+															<span class="bold">Action</span>
+														</div>
+														<div class="col-md-12 table full padding-5-y no-padding-top">
+															<div class="col-md-12 no-padding">
+																<div class="col-md-6 no-padding">
+																	<div class="toggle-options-radio padding-top-0">
+																		<input type="radio"
+																			*ngIf="tube.chesttubeValue=='Not Working'"
+																			name="clampActionAdjustPastLeft+{{i}}"
+																			id="clampActionAdjustPastLeft+{{i}}"
+																			value="Readjust"
+																			[(ngModel)]="tube.chestTubeAdjustedValue"
+																			(ngModelChange)="creatingProgressNotesPneumoTemplate()">
+																		<label for="clampActionAdjustPastLeft+{{i}}"
+																			*ngIf="tube.chesttubeValue=='Not Working'">Readjust</label>
+																		<input type="radio"
+																			*ngIf="tube.chesttubeValue=='Not Working' || tube.chesttubeValue=='Column Moving'"
+																			name="clampActionClampPastLeft+{{i}}"
+																			id="clampActionClampPastLeft+{{i}}"
+																			value="Clamp"
+																			[(ngModel)]="tube.chestTubeAdjustedValue"
+																			(ngModelChange)="creatingProgressNotesPneumoTemplate()">
+																		<label for="clampActionClampPastLeft+{{i}}"
+																			*ngIf="tube.chesttubeValue=='Not Working' || tube.chesttubeValue=='Column Moving'">Clamp</label>
+																		<input type="radio"
+																			*ngIf="tube.chesttubeValue=='Not Working' || tube.chesttubeValue=='Column Moving'"
+																			name="clampActionRemovePastLeft+{{i}}"
+																			id="clampActionRemovePastLeft+{{i}}"
+																			value="Remove"
+																			[(ngModel)]="tube.chestTubeAdjustedValue"
+																			(ngModelChange)="creatingProgressNotesPneumoTemplate()">
+																		<label for="clampActionRemovePastLeft+{{i}}"
+																			*ngIf="tube.chesttubeValue=='Not Working' || tube.chesttubeValue=='Column Moving'">Remove</label>
+																		<input type="radio"
+																			*ngIf="tube.chesttubeValue=='Bubble' || tube.chesttubeValue=='Column Moving'"
+																			name="clampActionRemovePastLeft+{{i}}"
+																			id="ContinueActionRemovePastLeft+{{i}}"
+																			value="Continue"
+																			[(ngModel)]="tube.chestTubeAdjustedValue"
+																			(ngModelChange)="creatingProgressNotesPneumoTemplate()">
+																		<label for="ContinueActionRemovePastLeft+{{i}}"
+																			*ngIf="tube.chesttubeValue=='Bubble' || tube.chesttubeValue=='Column Moving'">Continue</label>
+																		<input type="radio"
+																			*ngIf="tube.chesttubeValue=='Not Working'"
+																			name="clampActionRemovePastLeft+{{i}}"
+																			id="ChangeActionRemovePastLeft+{{i}}"
+																			value="Change"
+																			[(ngModel)]="tube.chestTubeAdjustedValue"
+																			(ngModelChange)="creatingProgressNotesPneumoTemplate()">
+																		<label for="ChangeActionRemovePastLeft+{{i}}"
+																			*ngIf="tube.chesttubeValue=='Not Working'">Change</label>
+																	</div>
+																</div>
+																<div class="col-md-6 no-padding"
+																	*ngIf="tube.chestTubeAdjustedValue=='Clamp' && tube.isClampReadyToAdjust">
+																	<div class="toggle-options-radio padding-top-0">
+																		<input type="radio" value="Reopen"
+																			name="clampStatusLeft+{{i}}"
+																			id="reopenLeft+{{i}}"
+																			[(ngModel)]="tube.clampStatus"
+																			(ngModelChange)="creatingProgressNotesPneumoTemplate()">
+																		<label for="reopenLeft+{{i}}">Reopen</label><input
+																			type="radio" name="clampStatusRight+{{i}}"
+																			id="clampContinuetLeft+{{i}}"
+																			value="Continue"
+																			[(ngModel)]="tube.clampStatus"
+																			(ngModelChange)="creatingProgressNotesPneumoTemplate()"><label
+																			for="clampContinuetLeft+{{i}}">Continue</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</fieldset>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right">
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Confirmed by X-Ray</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input type="radio" name="ChestConfirmedPosition" [value]="true"
+									[(ngModel)]="proceduresModel.chestTube.confirmedbyxray"
+									id="ChestConfirmedPositionYes"><label
+									for="ChestConfirmedPositionYes">Yes</label><input type="radio"
+									name="ChestConfirmedPosition" [value]="false"
+									[(ngModel)]="proceduresModel.chestTube.confirmedbyxray"
+									id="ChestConfirmedPositionNo"><label
+									for="ChestConfirmedPositionNo">No</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Reposition at</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block">
+								<input type="text" class="input input-medium desktop-column-10" [ngModelOptions]="{standalone: true}" [(ngModel)]="proceduresModel.chestTube.repositionat"/>
+								<span class="input-group-icon desktop-column-10 center-aligned"
+									style="top: 0px; left: 1px">cm</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Comments</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<textarea name="chestCommentsName" class="desktop-column-20 max-height-36 set-font-size-default no-margin" [(ngModel)]="proceduresModel.chestTube.comments" ></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right">
+					<div class="col-md-3 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Insertion Date And Time</span>
+						</div>
+						<owl-date-time class="owl-dateTime" [ngModelOptions]="{standalone: true}" [(ngModel)]="proceduresModel.chestTube.inserteddate" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+					</div>
+				</div>
+				<div class="row padding-10-x padding-10-y no-padding-right">
+					<div class="col-md-3 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Removal Date And Time</span>
+						</div>
+						<owl-date-time class="owl-dateTime" [ngModelOptions]="{standalone: true}" [(ngModel)]="proceduresModel.chestTube.removaldate" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+					</div>
+					<div class="col-md-3 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Reason for removal</span>
+						</div>
+						<div class="col-md-12 no-padding padding-top-1">
+							<div class="toggle-options-radio">
+								<input type="radio" name="reasonRemoval" value="blocked"
+									[(ngModel)]="proceduresModel.chestTube.reasonofremoval" id="reasonRemovalBlocked"><label for="reasonRemovalBlocked">Blocked</label>
+								<input type="radio" name="reasonRemoval" value="erythema"
+									[(ngModel)]="proceduresModel.chestTube.reasonofremoval" id="reasonRemovalErythema"><label
+									for="reasonRemovalErythema">Erythema</label><input type="radio"
+									name="reasonRemoval" value="extravasated" [(ngModel)]="proceduresModel.chestTube.reasonofremoval" id="reasonRemovalExtravasated">
+								<label for="reasonRemovalExtravasated">Extravasated</label><input
+									type="radio" name="reasonRemoval" value="dislodged" [(ngModel)]="proceduresModel.chestTube.reasonofremoval"
+									id="reasonRemovalDislodged"><label
+									for="reasonRemovalDislodged">Dislodged</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row no-padding padding-10-y no-margin margin-bottom-70"></div>
+				<div id="footer">
+					<button class="button button-blue button-large" (click)="saveProcedures('ChestTube')">SUBMIT</button>
+					<span class="button button-blue-transparent button-large">
+						<i class="refresh"></i>REFRESH</span>
+				</div>
+				</form>
+				<div class="row padding-10-x padding-10-y	">
+					<div class="desktop-column-20 padding-0-x force-left center-aligned">
+						<table
+							class="table table-striped table-bordered headed-table desktop-column-20 margin-bottom-70">
+							<tr>
+								<td class="center-aligned">Date</td>
+								<td class="center-aligned">Name of Procedure</td>
+								<td class="center-aligned">Size</td>
+								<td class="center-aligned">Intsertion Date & Time</td>
+								<td class="center-aligned">Removal Date & Time</td>
+								<td class="center-aligned">Reason of removal</td>
+							</tr>
+							<tr *ngFor="let tube of proceduresModel.pastTubesList">
+								<td class="center-aligned">{{tube.creationtime | date:'dd-MM-yyyy hh:mm a'}}</td>
+								<td class="center-aligned">Chest Tube</td>
+								<td class="center-aligned">{{tube.size}}</td>
+								<td class="center-aligned">{{tube.inserteddate| date:'dd-MM-yyyy hh:mm a'}}</td>
+								<td class="center-aligned">{{tube.removaldate| date:'dd-MM-yyyy hh:mm a'}}</td>
+								<td class="center-aligned">{{tube.reasonofremoval}}</td>
+							</tr>
+
+						</table>
+					</div>
+				</div>
+		</div>
+		<div *ngIf="(procedureWhichTab=='Transfusion') && (proceduresModel.isPlanned!=null)">
+			<div class="row padding-10-x no-padding-right margin">
+				<div class="col-md-12 no-padding">
+					<div *ngIf="proceduresModel.isPlanned.exchangetrans!=null && proceduresModel.isPlanned.exchangetrans==true">
+						<div class="col-md-2" style="margin-bottom: 40px" *ngIf="isCurrentExchange==true">
+								<span class="button button-blue button-large" (click)="showPastExchangeTransfusion()">Past Exchange
+								</span>
+						</div>
+						<div class="col-md-2" style="margin-bottom: 40px" *ngIf="isCurrentExchange!=true">
+								<span class="button button-blue button-large" (click)="showCurrentExchangeTransfusion()">Current Exchange
+								</span>
+						</div>
+						<div class="col-md-3 padding-0-x force-left margin-bottom"
+							*ngIf="isCurrentExchange==false"
+							style="margin-top: -20px;">
+								<div class="col-md-12 no-padding-left"><span>Date of Exchange</span></div>
+								<select class="input input-medium desktop-column-14" id="DateOfTransfusion"
+									[(ngModel)]="DateOfTransfusion" (ngModelChange)="fetchingExchangeTransfusionId(DateOfTransfusion)">
+									<option disabled selected hidden value>-- Select--</option>
+									<option value=null hidden>--Select--</option>
+									<option *ngFor="let date of dateListOfTransfusion">
+										{{date}}
+									</option>
+								</select>
+						</div>
+						<div class="col-md-3" *ngIf="isCurrentExchange==true"></div>
+
+						<div class="col-md-2" style="left: 42%;">
+							<span class="button button-blue button-large" (click)="exchangeTransfusionPrint()">Print
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12" *ngIf="(proceduresModel.isPlanned.exchangetrans!=null) && (proceduresModel.isPlanned.exchangetrans!=true)">
+					<div class="col-md-3 padding-0-x force-left margin-bottom" *ngIf="isCurrentExchange == false" style="margin-top: -20px;margin-left: 235px;">
+							<div class="col-md-12 no-padding-left"><span>Date of Exchange</span></div>
+							<select class="input input-medium desktop-column-14" id="DateOfTransfusion"
+								[(ngModel)]="DateOfTransfusion" (ngModelChange)="fetchingExchangeTransfusionId(DateOfTransfusion)">
+								<option disabled selected hidden value>-- Select--</option>
+								<option value=null hidden>--Select--</option>
+								<option *ngFor="let date of dateListOfTransfusion">
+									{{date}}
+								</option>
+							</select>
+					</div>
+					<div class="col-md-3" *ngIf="isCurrentExchange == true"></div>
+
+					<div class="col-md-2" style="left: 42%;">
+						<span class="button button-blue button-large" (click)="exchangeTransfusionPrint()">Print
+						</span>
+					</div>
+				</div>
+				<div *ngIf="(proceduresModel.isPlanned.exchangetrans!=null) && (proceduresModel.isPlanned.exchangetrans==true)">
+					<div class="col-md-2 weightforcal">
+						<div class="col-md-12 margin-top no-padding">
+							<span class="bold required">Weight for calculation</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block">
+								<input class="input input-medium desktop-column-10"
+								[(ngModel)]="proceduresModel.workingWeight"
+								[ngModelOptions]="{standalone: true}" type="text" disabled=""><span class="input-group-icon desktop-column-10 center-aligned" style="top: 0px; left: 1px">kg</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1 no-padding-left margin-left" *ngIf="proceduresModel.babyDetailObj.bloodgroup == null"
+						style="width: 10%;">
+						<div class="col-md-12 margin-top no-padding">
+							<span class="bold required">Baby Blood Group</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select class="input input-medium desktop-column-20" name="babyBloodGroup"
+							[(ngModel)]="proceduresModel.exchangeTransfusionObj.babyBloodGroup">
+								<option disabled selected hidden value>-- Select--</option>
+								<option value=null hidden>--Select--</option>
+								<option value="A +ve">A +ve</option>
+								<option value="A -ve">A -ve</option>
+								<option value="B +ve">B +ve</option>
+								<option value="B -ve">B -ve</option>
+								<option value="AB +ve">AB +ve</option>
+								<option value="AB -ve">AB -ve</option>
+								<option value="O +ve">O +ve</option>
+								<option value="O -ve">O -ve</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-1 no-padding-left margin-left" *ngIf="proceduresModel.babyDetailObj.bloodgroup != null"
+						style="width: 10%;">
+						<div class="col-md-12 margin-top no-padding">
+							<span class="bold required">Baby Blood Group</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="text" name="babyBloodGroup" [(ngModel)]="proceduresModel.babyDetailObj.bloodgroup" disabled style="width:100%">
+						</div>
+					</div>
+
+					<div class="col-md-2 typeforexch margin-left no-padding-right">
+						<div class="col-md-12 margin-top no-padding">
+							<span class="bold">Type of Exchange</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio">
+								<input type="radio" name="exchangeType" value="DVET"
+								[(ngModel)]="proceduresModel.exchangeTransfusionObj.exchangeType" id="exchangeTypeDvet" (ngModelChange)= "updateVolume()">
+								<label for="exchangeTypeDvet">DVET</label>
+								<input type="radio" name="exchangeType" value="SVET"
+								[(ngModel)]="proceduresModel.exchangeTransfusionObj.exchangeType" id="exchangeTypeSvet" (ngModelChange)= "updateVolume()">
+								<label for="exchangeTypeSvet">SVET</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-1  no-padding-right margin-left">
+						<div class="col-md-12 margin-top no-padding">
+							<span class="bold required">Volume</span>
+						</div>
+						<div class="col-md-12 no-padding" *ngIf="proceduresModel.exchangeTransfusionObj.exchangeType == 'DVET'">
+								<div class="relative-input-group block">
+									<input class="input input-medium desktop-column-10" type="text"
+									[(ngModel)] ="proceduresModel.exchangeTransfusionObj.volume" (ngModelChange) = "updateTotalVolume()"><span class="input-group-icon desktop-column-10 center-aligned" style="top: 0px; left: 1px">ml/kg</span>
+								</div>
+						</div>
+						<div class="col-md-12 no-padding" *ngIf="proceduresModel.exchangeTransfusionObj.exchangeType == 'SVET' ">
+								<div class="relative-input-group block">
+									<input class="input input-medium desktop-column-10" type="text"
+									 [(ngModel)] ="proceduresModel.exchangeTransfusionObj.volume" (ngModelChange) = "updateTotalVolume()">
+									<span class="input-group-icon desktop-column-10 center-aligned" style="top: 0px; left: 1px">ml/kg</span>
+								</div>
+						</div>
+					</div>
+					<div class="col-md-1 margin-left  no-padding-right" style="width:12%">
+						<div class="col-md-12 margin-top no-padding">
+							<span class="bold">Total Volume</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block">
+								<input class="input input-medium desktop-column-10" [(ngModel)] = "totalVolume"
+								type="text"  disabled="" style="width:60px;">
+								<span class="input-group-icon desktop-column-10 center-aligned" style="top: 0px; left: 1px">ml</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1 margin-left no-padding-right">
+						<div class="col-md-12 margin-top no-padding">
+							<span class="bold">Route</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select class="input input-medium desktop-column-20" name="svetRoute"
+								[(ngModel)]="proceduresModel.exchangeTransfusionObj.route" [ngModelOptions]="{standalone: true}">
+								<option disabled selected hidden value>-- Select --</option>
+								<option value=null hidden>--Select--</option>
+								<option value="Central">Central</option>
+								<option value="Peripheral">Peripheral</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-1 margin-left no-padding-right" *ngIf="proceduresModel.exchangeTransfusionObj.route == 'Central'">
+						<div class="col-md-12 margin-top no-padding">
+							<span class="bold required">Type</span>
+						</div>
+						<select class="input input-medium desktop-column-20" name="dvetRoute"
+						[(ngModel)]="proceduresModel.exchangeTransfusionObj.routeCentralType" [ngModelOptions]="{standalone: true}">
+							<option disabled selected hidden value>-- Select --</option>
+							<option value=null hidden>--Select--</option>
+							<option value="Arterio Venous">UVC</option>
+							<option value="Uvc">UAC-UVC</option>
+						</select>
+					</div>
+					<div class="col-md-1 no-padding-right margin-left" style="top: 3px;">
+						<div class="col-md-12 margin-top no-padding">
+							<span class="bold required">Aliquot</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block">
+								<input class="input input-medium desktop-column-10" type="text" name="aliquot"
+								[(ngModel)]="proceduresModel.exchangeTransfusionObj.aliquot">
+								<span class="input-group-icon desktop-column-10 center-aligned" style="top: 0px; left: 1px">ml</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 padding-10-x no-padding-right margin">
+						<div class="col-md-2 no-padding-left">
+							<div class="col-md-12 margin-top no-padding">
+								<span class="bold">Blood Product</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<select class="input input-medium desktop-column-20" name="bloodProduct"
+								[(ngModel)]="proceduresModel.exchangeTransfusionObj.bloodProduct">
+									<option disabled selected hidden value>-- Select --</option>
+									<option value=null hidden>--Select--</option>
+									<option value="Whole Blood">Whole Blood</option>
+									<option value="Packed Cell">Packed Cell</option>
+									<option value="Plasma">Plasma</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-left left-transfusion">
+							<div class="col-md-12 margin-top no-padding">
+								<span class="bold required">Date of collection</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<owl-date-time class="owl-dateTime" [(ngModel)]="proceduresModel.exchangeTransfusionObj.collectionDate"
+								dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}" [min]="child.admitDate"
+								[max]="maxDate"></owl-date-time>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-left left-transfusion">
+							<div class="col-md-12 margin-top no-padding">
+								<span class="bold required">Date of Expiry</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<owl-date-time class="owl-dateTime" [(ngModel)]="proceduresModel.exchangeTransfusionObj.expiryDate" [ngModelOptions]="{standalone: true}"
+									dateFormat='DD-MM-YYYY hh:mm A' [min]="proceduresModel.exchangeTransfusionObj.collectionDate"></owl-date-time>
+							</div>
+						</div>
+						<div class="col-md-1 no-padding-left left-transfusion">
+							<div class="col-md-12 margin-top no-padding">
+								<span class="bold">Blood Bag No.</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<input type="text" name="begno" [(ngModel)]="proceduresModel.exchangeTransfusionObj.bagNo" style="width:100%;" >
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-left left-transfusion">
+							<div class="col-md-12 margin-top no-padding">
+								<span class="bold required">Group of blood for exchange</span>
+							</div>
+							<div class="col-md-12 no-padding padding-top-1">
+								<div class="col-md-12 no-padding">
+									<div class="col-md-12 no-padding">
+										<select class="input input-medium no-margin desktop-column-20 max-height-36" id="BloodGroupABO" name="BloodGroupABO"
+										[(ngModel)]="proceduresModel.exchangeTransfusionObj.exchangeBloodGroup">
+											<option disabled selected hidden value>-- Select --</option>
+											<option value=null hidden>--Select--</option>
+											<option value="A +ve">A +ve</option>
+											<option value="A -ve">A -ve</option>
+											<option value="B +ve">B +ve</option>
+											<option value="B -ve">B -ve</option>
+											<option value="AB +ve">AB +ve</option>
+											<option value="AB -ve">AB -ve</option>
+											<option value="O +ve">O +ve</option>
+											<option value="O -ve">O -ve</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- [ngClass]="{'margin-left': proceduresModel.babyDetailObj.bloodgroup == null}" -->
+						<div class="col-md-2 no-padding-left left-transfusion">
+								<div class="col-md-12 margin-top no-padding">
+									<span class="bold">Cross Checked By</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<select class="input input-medium desktop-column-20" name="crossChecked"
+									[(ngModel)]="proceduresModel.exchangeTransfusionObj.checkedBy">
+										<option disabled selected hidden value>-- Select --</option>
+										<option value=null hidden>--Select--</option>
+										<option *ngFor='let doctorList of proceduresModel.doctorList' [value]="doctorList.key">
+											{{doctorList.value}}
+										</option>
+									</select>
+								</div>
+						</div>
+						<div class="col-md-12 padding-10-x np-padding-right margin" style="padding-left:0px;">
+							<div class="col-md-2 no-padding-left" *ngIf="proceduresModel.motherBloodGroup == null" >
+								<div class="col-md-12 margin-top no-padding">
+									<span class="bold">Mother Blood Group</span>
+								</div>
+								<div class="col-md-12 no-padding padding-top-1">
+									<div class="col-md-12 no-padding">
+										<div class="col-md-12 no-padding">
+											<select class="input input-medium no-margin desktop-column-20 max-height-36" id="BloodGroupABO" name="BloodGroupABO"
+											[(ngModel)]="proceduresModel.exchangeTransfusionObj.motherBloodGroup">
+												<option disabled selected hidden value>-- Select --</option>
+												<option value=null hidden>--Select--</option>
+												<option value="A +ve">A +ve</option>
+												<option value="A -ve">A -ve</option>
+												<option value="B +ve">B +ve</option>
+												<option value="B -ve">B -ve</option>
+												<option value="AB +ve">AB +ve</option>
+												<option value="AB -ve">AB -ve</option>
+												<option value="O +ve">O +ve</option>
+												<option value="O -ve">O -ve</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 no-padding-left" *ngIf="proceduresModel.motherBloodGroup != null" >
+									<div class="col-md-12 margin-top no-padding">
+										<span class="bold">Mother Blood Group</span>
+									</div>
+									<div class="col-md-12 no-padding padding-top-1">
+										<div class="col-md-12 no-padding">
+											<div class="col-md-12 no-padding">
+											<input type="text" name="motherBloodGroup" [(ngModel)]="proceduresModel.motherBloodGroup" disabled style="width:100%">
+											</div>
+										</div>
+									</div>
+								</div>
+
+							<div class="col-md-4 no-padding-left center-aligned" style="margin-top:20px;">
+								<div class="upload">
+									<div class="col-md-2 right-aligned no-padding" style="margin-top:-40px;">
+										<img id="bagImageid" alt="bag Image"
+											src="/assets/_images/bloodBagCircle.png"
+											class="bagImg-circle" *ngIf="bagImageObj.name == null && bagImageObj.name == undefined"/>
+										<img id="babyImageid" alt="baby Image"
+											src="{{bagImageObj.data}}"
+											class="bagImg-circle-critical-border" *ngIf="bagImageObj.name !=null && bagImageObj.name !=undefined"/>
+									</div>
+									<div class="col-md-6 no-padding">
+										<div class="upload-button button button-blue">
+											<span>Upload Bag Picture</span><input type="file"
+												(change)="readBagURL($event.target.files)" #Image accept="image/*" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12 no-padding transfusion-box">
+							<div class="col-md-1  no-padding-left padding-5-y">
+								<div class="col-md-12 no-padding">
+									<span class="bold  required">Volume Out</span>
+								</div>
+								<div class="col-md-12 no-padding">
+		  							<input type="number" name="volumeOut" [(ngModel)]="proceduresModel.exchangeTransfusionObj.volumeOut" (ngModelChange) = "updateVolumeOut()" style="width: 100%">
+								</div>
+							</div>
+							<div class="col-md-2 no-padding-left padding-5-y no-padding-bottom">
+								<div class="col-md-12 no-padding">
+									<span class="bold required">Time Out</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<owl-date-time class="owl-dateTime" [showSecondsTimer] = "true"
+									[(ngModel)]="proceduresModel.exchangeTransfusionObj.timeOut"
+									dateFormat='DD-MM-YYYY hh:mm:ss  A' [ngModelOptions]="{standalone: true}"
+									disabled=""></owl-date-time>
+								</div>
+							</div>
+							<div class="col-md-1  no-padding-left padding-5-y">
+								<div class="col-md-12 no-padding">
+									<span class="bold required">Volume In</span>
+								</div>
+								<div class="col-md-12 no-padding">
+		  							<input type="number" name="volumeIn" [(ngModel)]="proceduresModel.exchangeTransfusionObj.volumeIn"
+		  							(ngModelChange)="updateVolumeIn()" style="width: 100%">
+								</div>
+							</div>
+							<div class="col-md-2 no-padding-left padding-5-y no-padding-bottom">
+								<div class="col-md-12 no-padding">
+									<span class="bold required">Time In</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<owl-date-time class="owl-dateTime" [showSecondsTimer] = "true"
+									[(ngModel)]="proceduresModel.exchangeTransfusionObj.timeIn"
+									(ngModelChange) = "updateVolumeOut()" dateFormat='DD-MM-YYYY hh:mm:ss A'
+									[ngModelOptions]="{standalone: true}"   disabled="">
+									</owl-date-time>
+								</div>
+							</div>
+							<div class="col-md-2  no-padding-left padding-5-y">
+								<div class="col-md-12 no-padding">
+									<span class="bold">SPO2</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<input type="number" name="Spo2" [(ngModel)]="proceduresModel.exchangeTransfusionObj.spo2" >
+								</div>
+							</div>
+							<div class="col-md-2  no-padding-left padding-5-y">
+								<div class="col-md-12 no-padding">
+									<span class="bold">HR</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<input type="number" name="HR" [(ngModel)]="proceduresModel.exchangeTransfusionObj.hr">
+								</div>
+							</div>
+							<div class="col-md-2 no-padding-left padding-5-y" >
+								<div class="col-md-12 no-padding">
+									<span class="bold">Comment</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<input  class="input input-medium desktop-column-20" type="text" name="exchangeNote" 					[(ngModel)]="proceduresModel.exchangeTransfusionObj.comment">
+								</div>
+							</div>
+							<div class="col-md-12 center-aligned padding-5-y">
+								<span class="button button-blue button-large" (click)="addTransfusion(proceduresModel.exchangeTransfusionObj)">Add</span>
+								<span class="button button-blue button-large" (click)="clearTransfusion()">Clear</span>
+							</div>
+					   </div>
+					   <div class="col-md-12 padding-0-x force-left" *ngIf = "proceduresModel.exchangeTransfusionObjList.length >0 ">
+							<table class="table table-striped table-bordered headed-table desktop-column-20" *ngIf="showTransfusion">
+								<tr>
+									<td class="left-aligned"><b>Time In</b></td>
+									<td class="left-aligned"><b>Time Out</b></td>
+									<td class="left-aligned"><b>Volume In</b></td>
+									<td class="left-aligned"><b>Volume Out</b></td>
+									<td class="left-aligned"><b>SPO2</b></td>
+									<td class="left-aligned"><b>HR</b></td>
+									<td class="left-aligned"><b>Comment</b></td>
+									<td class="left-aligned"></td>
+								</tr>
+								<tr *ngFor="let item of proceduresModel.exchangeTransfusionObjList; let i = index" [attr.data-index]="i">
+								  <td class="left-aligned">{{item.timeIn | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+								  <td class="left-aligned">{{item.timeOut | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+								  <td class="left-aligned">{{item.volumeIn}}</td>
+								  <td class="left-aligned">{{item.volumeOut}}</td>
+								  <td class="left-aligned">{{item.spo2}}</td>
+								  <td class="left-aligned">{{item.hr}}</td>
+								  <td class="left-aligned">{{item.comment}}</td>
+								  <td class="center-aligned">
+										<span class="button button-blue button-large padding-5-x" (click) = "removeTransfusionFromList(i)">Delete</span>
+										<span class="button button-blue button-large padding-5-x" (click)="editTransfusionFromList(i)">Edit</span>
+								  </td>
+								</tr>
+								<div class="col-md-12 center-aligned padding-5-y" style="left: 500px;margin-top: 12px;padding-bottom: 15px;">
+									<span class="button button-blue button-large" (click)="validateExchangeTransfusion('exchangetransfusion')">SUBMIT</span>
+								</div>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12 padding-0-x force-left margin-bottom-100">
+					<h2 *ngIf="isCurrentExchange == true && proceduresModel.isPlanned.exchangetrans!=null && proceduresModel.isPlanned.exchangetrans==true">Current Exchange Transfusion</h2>
+					<h2 *ngIf="isCurrentExchange == false">Past Exchange Transfusion</h2>
+					<table class="table table-striped table-bordered headed-table desktop-column-20">
+						<tr>
+							<td class="left-aligned"><b>SNo.</b></td>
+							<td class="left-aligned"><b>Time In</b></td>
+							<td class="left-aligned"><b>Volume In</b></td>
+							<td class="left-aligned"><b>Time Out</b></td>
+							<td class="left-aligned"><b>Volume Out</b></td>
+							<td class="left-aligned"><b>SPO2</b></td>
+							<td class="left-aligned"><b>HR</b></td>
+							<td class="left-aligned"><b>Comment</b></td>
+						</tr>
+
+						<ng-container *ngIf="isCurrentExchange == false">
+							<tr *ngFor="let item of exchangeTransfusionSortedList; let i = index" [attr.data-index]="i">
+								<td class="left-aligned">{{exchangeTransfusionSortedList.length-i}}</td>
+								<td class="left-aligned">{{item.timeIn | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+							   	<td class="left-aligned">{{item.volumeIn}}</td>
+							   	<td class="left-aligned">{{item.timeOut | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+							   	<td class="left-aligned">{{item.volumeOut}}</td>
+							   	<td class="left-aligned">{{item.spo2}}</td>
+							   	<td class="left-aligned">{{item.hr}}</td>
+							   	<td class="left-aligned">{{item.comment}}</td>
+							</tr>
+								<div class="col-md-2" style="position: absolute;margin-left: 22%;margin-top: 12px;" *ngIf="exchangeTransfusionSortedList.length>0" >
+									<span>Total volumeIn :</span><span>{{getSum('pastExchangeTransfusionList','volumeIn')}}</span>
+								</div>
+								<div class="col-md-2" style="position: absolute;margin-left: 54%;margin-top: 12px;" *ngIf="exchangeTransfusionSortedList.length>0" >
+										<span>Total volumeOut :</span><span>{{getSum('pastExchangeTransfusionList','volumeOut')}}</span>
+								</div>
+						</ng-container>
+						<ng-container *ngIf="isCurrentExchange==true && proceduresModel.isPlanned.exchangetrans!=null &&
+							proceduresModel.isPlanned.exchangetrans==true && proceduresModel.currentExchangeTransfusionList != null">
+							<tr *ngFor="let item of proceduresModel.currentExchangeTransfusionList; let i = index" [attr.data-index]="i">
+								<td class="left-aligned">{{proceduresModel.currentExchangeTransfusionList.length-i}}</td>
+								<td class="left-aligned">{{item.timeIn | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+								<td class="left-aligned">{{item.volumeIn}}</td>
+								<td class="left-aligned">{{item.timeOut | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+								<td class="left-aligned">{{item.volumeOut}}</td>
+								<td class="left-aligned">{{item.spo2}}</td>
+								<td class="left-aligned">{{item.hr}}</td>
+								<td class="left-aligned">{{item.comment}}</td>
+							</tr>
+								<div class="col-md-2" style="position: absolute;margin-left: 22%;margin-top: 12px;">
+									<span>Total volumeIn :</span><span>{{getSum('currentExchangeTransfusionList','volumeIn')}}</span>
+								</div>
+								<div class="col-md-2" style="position: absolute;margin-left: 54%;margin-top: 12px;">
+										<span>Total volumeOut :</span><span>{{getSum('currentExchangeTransfusionList','volumeOut')}}</span>
+								</div>
+						</ng-container>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="procedureWhichTab =='Others'">
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-3 no-padding-right">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Order Date</span>
+					</div>
+					<div class="col-md-12 no-padding">
+								<owl-date-time class="owl-dateTime" [(ngModel)]="proceduresModel.emptyOtherObj.entrytime" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+					</div>
+				</div>
+			</div>
+
+			<div *ngIf="isDoctorProcedure == false">
+
+				<div *ngIf="proceduresModel.pastprocedureOtherOrdersList != null && proceduresModel.pastprocedureOtherOrdersList.length >0">
+					<div class="col-md-12 no-padding" *ngFor="let order of proceduresModel.pastprocedureOtherOrdersList">
+						<div class="col-md-12 padding-10-y no-padding-bottom" *ngIf = "order.chestPhysiotherapyType != null">
+							<div class="col-md-12 margin-10-y" style="width: 100%; border: 3px solid #EBB744;background-color:#FDF7E9">
+								<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+									<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+								</div>
+								<div class="col-md-10 padding-5-y left-aligned">
+									<span>Perform Chest Physiotherapy<span style="padding-left:10px" *ngIf="order.chestPhysiotherapyType == 'q' && order.chestPhysiotherapyType != null && order.chestPhysiotherapyValue != null">
+										@{{order.chestPhysiotherapyValue}} hrs</span>
+										<span style="padding-left:10px" *ngIf="order.chestPhysiotherapyType != 'q' && order.chestPhysiotherapyType != null">
+											SOS</span>
+									</span>
+								</div>
+							</div>
+							<div class="col-md-12 margin-10-y">
+								<div class="col-md-12 no-padding">
+									<span class="bold">Chest Physiotherapy</span>
+								</div>
+								<div class="desktop-column-20 padding-0-x force-left">
+									<textarea
+										class="desktop-column-20 max-height-36 set-font-size-default"
+										rows="4" [(ngModel)]="proceduresModel.emptyOtherObj.chestPhysiotherapyComments"></textarea>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-12 padding-10-y no-padding-bottom" *ngIf = "order.pulseOximeterType != null">
+							<div class="col-md-12 margin-10-y" style="width: 100%; border: 3px solid #EBB744;background-color:#FDF7E9">
+								<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+									<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+								</div>
+								<div class="col-md-10 padding-5-y left-aligned">
+									<span>Perform Resite Pulse Oximeter<span style="padding-left:10px" *ngIf="order.pulseOximeterType == 'q' && order.pulseOximeterType != null && order.pulseOximeterValue != null">
+										@{{order.pulseOximeterValue}} hrs</span>
+										<span style="padding-left:10px" *ngIf="order.pulseOximeterType != 'q' && order.pulseOximeterType != null">
+											SOS</span>
+									</span>
+								</div>
+							</div>
+							<div class="col-md-12 margin-10-y">
+								<div class="col-md-12 no-padding">
+									<span class="bold">Resite Pulse Oximeter</span>
+								</div>
+								<div class="desktop-column-20 padding-0-x force-left">
+									<textarea
+										class="desktop-column-20 max-height-36 set-font-size-default"
+										rows="4" [(ngModel)]="proceduresModel.emptyOtherObj.pulseOximeterValueComments"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="isDoctorProcedure == true">
+
+				<h3>Frequencies Of Procedures</h3>
+
+				<div class="table row full padding-10-x no-padding-top">
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom">
+						<div class="col-md-6 table full">
+							<div class="col-md-6 col-lg-4 no-padding">
+								<div class="table-cell middle-aligned">
+									<h1
+										class="no-margin system-sub-heading line-height-standard">ET Suction</h1>
+								</div>
+							</div>
+							<div class="col-md-3 table full">
+								<div class="toggle-options-radio">
+									<input type="radio" name="procedureEtSuction"
+										id="procedureEtSuctionq" value="q"
+										[(ngModel)]="proceduresModel.emptyOtherObj.etSuctionType"><label
+										for="procedureEtSuctionq">q</label><input
+										type="radio" name="procedureEtSuction"
+										id="procedureEtSuctionsos" value="SOS"
+										[(ngModel)]="proceduresModel.emptyOtherObj.etSuctionType"><label
+										for="procedureEtSuctionsos">SOS</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="relative-input-group block padding-top-1" *ngIf="proceduresModel.emptyOtherObj.etSuctionType == 'q'">
+											<select class="input input-medium desktop-column-14"
+												[(ngModel)]="proceduresModel.emptyOtherObj.etSuctionValue"
+												[ngModelOptions]="{standalone: true}">
+												<option value="" selected disabled>--Select--</option>
+												<option value="1" selected>1</option>
+												<option value="2" selected>2</option>
+												<option value="3" selected>3</option>
+												<option value="4" selected>4</option>
+												<option value="6" selected>6</option>
+											</select><span
+												class="input-group-icon desktop-column-6 center-aligned"
+												style="top: 0px; left: 1px">hr</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6 table full">
+							<div class="col-md-6 col-lg-4 no-padding">
+								<div class="table-cell middle-aligned">
+									<h1
+										class="no-margin system-sub-heading line-height-standard">Abdominal Girth</h1>
+								</div>
+							</div>
+							<div class="col-md-3 table full">
+								<div class="toggle-options-radio">
+									<input type="radio" name="procedureAbdominalGirth"
+										id="procedureAbdominalGirthq" value="q"
+										[(ngModel)]="proceduresModel.emptyOtherObj.abdominalGirthType"><label
+										for="procedureAbdominalGirthq">q</label><input
+										type="radio" name="procedureAbdominalGirth"
+										id="procedureAbdominalGirthsos" value="SOS"
+										[(ngModel)]="proceduresModel.emptyOtherObj.abdominalGirthType"><label
+										for="procedureAbdominalGirthsos">SOS</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="relative-input-group block padding-top-1" *ngIf="proceduresModel.emptyOtherObj.abdominalGirthType == 'q'">
+											<select class="input input-medium desktop-column-14"
+												[(ngModel)]="proceduresModel.emptyOtherObj.abdominalGirthValue"
+												[ngModelOptions]="{standalone: true}">
+												<option value="" selected disabled>--Select--</option>
+												<option value="1" selected>1</option>
+												<option value="2" selected>2</option>
+												<option value="3" selected>3</option>
+												<option value="4" selected>4</option>
+												<option value="6" selected>6</option>
+											</select><span
+												class="input-group-icon desktop-column-6 center-aligned"
+												style="top: 0px; left: 1px">hr</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom">
+						<div class="col-md-6 table full">
+							<div class="col-md-6 col-lg-4 no-padding">
+								<div class="table-cell middle-aligned">
+									<h1
+										class="no-margin system-sub-heading line-height-standard">Oral Suction</h1>
+								</div>
+							</div>
+							<div class="col-md-3 table full">
+								<div class="toggle-options-radio">
+									<input type="radio" name="procedureOralSuction"
+										id="procedureOralSuctionq" value="q"
+										[(ngModel)]="proceduresModel.emptyOtherObj.oralSuctionType"><label
+										for="procedureOralSuctionq">q</label><input
+										type="radio" name="procedureOralSuction"
+										id="procedureOralSuctionsos" value="SOS"
+										[(ngModel)]="proceduresModel.emptyOtherObj.oralSuctionType"><label
+										for="procedureOralSuctionsos">SOS</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="relative-input-group block padding-top-1" *ngIf="proceduresModel.emptyOtherObj.oralSuctionType == 'q'">
+											<select class="input input-medium desktop-column-14"
+												[(ngModel)]="proceduresModel.emptyOtherObj.oralSuctionValue"
+												[ngModelOptions]="{standalone: true}">
+												<option value="" selected disabled>--Select--</option>
+												<option value="1" selected>1</option>
+												<option value="2" selected>2</option>
+												<option value="3" selected>3</option>
+												<option value="4" selected>4</option>
+												<option value="6" selected>6</option>
+											</select><span
+												class="input-group-icon desktop-column-6 center-aligned"
+												style="top: 0px; left: 1px">hr</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6 table full">
+							<div class="col-md-6 col-lg-4 no-padding">
+								<div class="table-cell middle-aligned">
+									<h1
+										class="no-margin system-sub-heading line-height-standard">Stomach Aspiration</h1>
+								</div>
+							</div>
+							<div class="col-md-3 table full">
+								<div class="toggle-options-radio">
+									<input type="radio" name="procedureStomachAspiration"
+										id="procedureStomachAspirationq" value="q"
+										[(ngModel)]="proceduresModel.emptyOtherObj.stomachAspirationType"><label
+										for="procedureStomachAspirationq">q</label><input
+										type="radio" name="procedureStomachAspiration"
+										id="procedureStomachAspirationsos" value="SOS"
+										[(ngModel)]="proceduresModel.emptyOtherObj.stomachAspirationType"><label
+										for="procedureStomachAspirationsos">SOS</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="relative-input-group block padding-top-1" *ngIf="proceduresModel.emptyOtherObj.stomachAspirationType == 'q'">
+											<select class="input input-medium desktop-column-14"
+												[(ngModel)]="proceduresModel.emptyOtherObj.stomachAspirationValue"
+												[ngModelOptions]="{standalone: true}">
+												<option value="" selected disabled>--Select--</option>
+												<option value="1" selected>1</option>
+												<option value="2" selected>2</option>
+												<option value="3" selected>3</option>
+												<option value="4" selected>4</option>
+												<option value="6" selected>6</option>
+											</select><span
+												class="input-group-icon desktop-column-6 center-aligned"
+												style="top: 0px; left: 1px">hr</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom">
+						<div class="col-md-6 table full">
+							<div class="col-md-6 col-lg-4 no-padding">
+								<div class="table-cell middle-aligned">
+									<h1
+										class="no-margin system-sub-heading line-height-standard">Chest Physiotherapy</h1>
+								</div>
+							</div>
+							<div class="col-md-3 table full">
+								<div class="toggle-options-radio">
+									<input type="radio" name="procedureChestPhysiotherapy"
+										id="procedureChestPhysiotherapyq" value="q"
+										[(ngModel)]="proceduresModel.emptyOtherObj.chestPhysiotherapyType"><label
+										for="procedureChestPhysiotherapyq">q</label><input
+										type="radio" name="procedureChestPhysiotherapy"
+										id="procedureChestPhysiotherapysos" value="SOS"
+										[(ngModel)]="proceduresModel.emptyOtherObj.chestPhysiotherapyType"><label
+										for="procedureChestPhysiotherapysos">SOS</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="relative-input-group block padding-top-1" *ngIf="proceduresModel.emptyOtherObj.chestPhysiotherapyType == 'q'">
+											<select class="input input-medium desktop-column-14"
+												[(ngModel)]="proceduresModel.emptyOtherObj.chestPhysiotherapyValue"
+												[ngModelOptions]="{standalone: true}">
+												<option value="" selected disabled>--Select--</option>
+												<option value="1" selected>1</option>
+												<option value="2" selected>2</option>
+												<option value="3" selected>3</option>
+												<option value="4" selected>4</option>
+												<option value="6" selected>6</option>
+											</select><span
+												class="input-group-icon desktop-column-6 center-aligned"
+												style="top: 0px; left: 1px">hr</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6 table full">
+							<div class="col-md-6 col-lg-4 no-padding">
+								<div class="table-cell middle-aligned">
+									<h1
+										class="no-margin system-sub-heading line-height-standard">BP Measurement</h1>
+								</div>
+							</div>
+							<div class="col-md-3 table full">
+								<div class="toggle-options-radio">
+									<input type="radio" name="procedureBpMeasurement"
+										id="procedureBpMeasurementq" value="q"
+										[(ngModel)]="proceduresModel.emptyOtherObj.bpMeasurementType"><label
+										for="procedureBpMeasurementq">q</label><input
+										type="radio" name="procedureBpMeasurement"
+										id="procedureBpMeasurementsos" value="SOS"
+										[(ngModel)]="proceduresModel.emptyOtherObj.bpMeasurementType"><label
+										for="procedureBpMeasurementsos">SOS</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="relative-input-group block padding-top-1" *ngIf="proceduresModel.emptyOtherObj.bpMeasurementType == 'q'">
+											<select class="input input-medium desktop-column-14"
+												[(ngModel)]="proceduresModel.emptyOtherObj.bpMeasurementValue"
+												[ngModelOptions]="{standalone: true}">
+												<option value="" selected disabled>--Select--</option>
+												<option value="1" selected>1</option>
+												<option value="2" selected>2</option>
+												<option value="3" selected>3</option>
+												<option value="4" selected>4</option>
+												<option value="6" selected>6</option>
+											</select><span
+												class="input-group-icon desktop-column-6 center-aligned"
+												style="top: 0px; left: 1px">hr</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom">
+						<div class="col-md-6 table full">
+							<div class="col-md-6 col-lg-4 no-padding">
+								<div class="table-cell middle-aligned">
+									<h1
+										class="no-margin system-sub-heading line-height-standard">Position Change</h1>
+								</div>
+							</div>
+							<div class="col-md-3 table full">
+								<div class="toggle-options-radio">
+									<input type="radio" name="procedurePositionChange"
+										id="procedurePositionChangeq" value="q"
+										[(ngModel)]="proceduresModel.emptyOtherObj.positionChangeType"><label
+										for="procedurePositionChangeq">q</label><input
+										type="radio" name="procedurePositionChange"
+										id="procedurePositionChangesos" value="SOS"
+										[(ngModel)]="proceduresModel.emptyOtherObj.positionChangeType"><label
+										for="procedurePositionChangesos">SOS</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="relative-input-group block padding-top-1" *ngIf="proceduresModel.emptyOtherObj.positionChangeType == 'q'">
+											<select class="input input-medium desktop-column-14"
+												[(ngModel)]="proceduresModel.emptyOtherObj.positionChangeValue"
+												[ngModelOptions]="{standalone: true}">
+												<option value="" selected disabled>--Select--</option>
+												<option value="1" selected>1</option>
+												<option value="2" selected>2</option>
+												<option value="3" selected>3</option>
+												<option value="4" selected>4</option>
+												<option value="6" selected>6</option>
+											</select><span
+												class="input-group-icon desktop-column-6 center-aligned"
+												style="top: 0px; left: 1px">hr</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6 table full">
+							<div class="col-md-6 col-lg-4 no-padding">
+								<div class="table-cell middle-aligned">
+									<h1
+										class="no-margin system-sub-heading line-height-standard">CVP Measurement</h1>
+								</div>
+							</div>
+							<div class="col-md-3 table full">
+								<div class="toggle-options-radio">
+									<input type="radio" name="procedureCvpMeasurement"
+										id="procedureCvpMeasurementq" value="q"
+										[(ngModel)]="proceduresModel.emptyOtherObj.cvpMeasurementType"><label
+										for="procedureCvpMeasurementq">q</label><input
+										type="radio" name="procedureCvpMeasurement"
+										id="procedureCvpMeasurementsos" value="SOS"
+										[(ngModel)]="proceduresModel.emptyOtherObj.cvpMeasurementType"><label
+										for="procedureCvpMeasurementsos">SOS</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="relative-input-group block padding-top-1" *ngIf="proceduresModel.emptyOtherObj.cvpMeasurementType == 'q'">
+											<select class="input input-medium desktop-column-14"
+												[(ngModel)]="proceduresModel.emptyOtherObj.cvpMeasurementValue"
+												[ngModelOptions]="{standalone: true}">
+												<option value="" selected disabled>--Select--</option>
+												<option value="1" selected>1</option>
+												<option value="2" selected>2</option>
+												<option value="3" selected>3</option>
+												<option value="4" selected>4</option>
+												<option value="6" selected>6</option>
+											</select><span
+												class="input-group-icon desktop-column-6 center-aligned"
+												style="top: 0px; left: 1px">hr</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom">
+						<div class="col-md-6 table full">
+							<div class="col-md-6 col-lg-4 no-padding">
+								<div class="table-cell middle-aligned">
+									<h1
+										class="no-margin system-sub-heading line-height-standard">Resite Pulse Oximeter</h1>
+								</div>
+							</div>
+							<div class="col-md-3 table full">
+								<div class="toggle-options-radio">
+									<input type="radio" name="procedurePulseOximeter"
+										id="procedurePulseOximeterq" value="q"
+										[(ngModel)]="proceduresModel.emptyOtherObj.pulseOximeterType"><label
+										for="procedurePulseOximeterq">q</label><input
+										type="radio" name="procedurePulseOximeter"
+										id="procedurePulseOximetersos" value="SOS"
+										[(ngModel)]="proceduresModel.emptyOtherObj.pulseOximeterType"><label
+										for="procedurePulseOximetersos">SOS</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="relative-input-group block padding-top-1" *ngIf="proceduresModel.emptyOtherObj.pulseOximeterType == 'q'">
+											<select class="input input-medium desktop-column-14"
+												[(ngModel)]="proceduresModel.emptyOtherObj.pulseOximeterValue"
+												[ngModelOptions]="{standalone: true}">
+												<option value="" selected disabled>--Select--</option>
+												<option value="1" selected>1</option>
+												<option value="2" selected>2</option>
+												<option value="3" selected>3</option>
+												<option value="4" selected>4</option>
+												<option value="6" selected>6</option>
+											</select><span
+												class="input-group-icon desktop-column-6 center-aligned"
+												style="top: 0px; left: 1px">hr</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6 table full">
+							<div class="col-md-6 col-lg-4 no-padding">
+								<div class="table-cell middle-aligned">
+									<h1
+										class="no-margin system-sub-heading line-height-standard">Glucose Reagent Strip</h1>
+								</div>
+							</div>
+							<div class="col-md-3 table full">
+								<div class="toggle-options-radio">
+									<input type="radio" name="procedureGlucoseStrip"
+										id="procedureGlucoseStripq" value="q"
+										[(ngModel)]="proceduresModel.emptyOtherObj.glucoseStripType"><label
+										for="procedureGlucoseStripq">q</label><input
+										type="radio" name="procedureGlucoseStrip"
+										id="procedureGlucoseStripsos" value="SOS"
+										[(ngModel)]="proceduresModel.emptyOtherObj.glucoseStripType"><label
+										for="procedureGlucoseStripsos">SOS</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="relative-input-group block padding-top-1" *ngIf="proceduresModel.emptyOtherObj.glucoseStripType == 'q'">
+											<select class="input input-medium desktop-column-14"
+												[(ngModel)]="proceduresModel.emptyOtherObj.glucoseStripValue"
+												[ngModelOptions]="{standalone: true}">
+												<option value="" selected disabled>--Select--</option>
+												<option value="1" selected>1</option>
+												<option value="2" selected>2</option>
+												<option value="3" selected>3</option>
+												<option value="4" selected>4</option>
+												<option value="6" selected>6</option>
+											</select><span
+												class="input-group-icon desktop-column-6 center-aligned"
+												style="top: 0px; left: 1px">hr</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<!--<div class="row">
+					<div class="col-md-6 no-padding-right mb20 limit_height">
+						<div class="mb10">{{procedure}}</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="toggle-options-radio">
+									<input type="radio" [name]="procedure" id="procedureQ+{{i}}" value="q" [(ngModel)]="this[procedure[i]]"
+									(ngModelChange)="changeDocProcedure($event, i)" />
+									<label for="procedureQ+{{i}}">q</label>
+									<input type="radio" [name]="procedure" id="procedureSOS+{{i}}" value="sos" [(ngModel)]="this[procedure[i]]"
+									(ngModelChange)="changeDocProcedure($event, i)"/>
+									<label for="procedureSOS+{{i}}">SOS</label>
+								</div>
+
+
+							</div>
+							<div class="col-md-8">
+								<div class="relative-input-group block padding-top-1" *ngIf="procedureDrowdown[i]">
+											<select class="input input-medium desktop-column-14"
+												[(ngModel)]="aaa"
+												[ngModelOptions]="{standalone: true}">
+												<option value="1" selected>1</option>
+												<option value="2" selected>2</option>
+												<option value="3" selected>3</option>
+												<option value="4" selected>4</option>
+												<option value="6" selected>6</option>
+											</select><span
+												class="input-group-icon desktop-column-6 center-aligned"
+												style="top: 0px; left: 1px">hr</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>-->
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-12 no-padding-right">
+					<span class="bold">Name of Procedure</span>
+				</div>
+				<div class="col-md-12 no-padding-right">
+					<input type="text" class="input input-medium desktop-column-10"
+					[ngModelOptions]="{standalone: true}"
+						[(ngModel)]="proceduresModel.emptyOtherObj.procedurename" />
+				</div>
+			</div>
+			<div class="row padding-10-x padding-10-y no-padding-right">
+				<div class="col-md-12 no-padding-right">
+					<span class="bold">Details</span>
+				</div>
+				<div class="col-md-12 no-padding-right">
+					<div
+						class="input-group input-group-labeled col-md-12 no-padding-left right">
+						<div class="desktop-column-20 padding-0-x force-left">
+							<textarea
+								class="desktop-column-20 max-height-36 set-font-size-default"
+								rows="4" [(ngModel)]="proceduresModel.emptyOtherObj.details"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row no-padding padding-10-y no-margin margin-bottom-70"></div>
+			<div id="footer">
+				<button class="button button-blue button-large"
+					(click)="saveProcedures('Procedure Other')">SUBMIT</button>
+				<span class="button button-blue-transparent button-large"
+					(click)="getProcedures(childObject.uhid)"><i
+					class="refresh"></i>REFRESH</span>
+			</div>
+			<div class="row padding-10-x padding-10-y" *ngIf="proceduresModel.pastOtherList != null && proceduresModel.pastOtherList.length >0" style="margin-bottom:50px !important">
+				<div class="desktop-column-20 padding-0-x force-left center-aligned">
+					<table
+						class="table table-striped table-bordered headed-table desktop-column-20 margin-bottom-70">
+						<tr>
+							<td class="center-aligned">Date</td>
+							<td class="center-aligned">Name of Procedure</td>
+							<td class="center-aligned">Details</td>
+						</tr>
+						<tr *ngFor="let item of proceduresModel.pastOtherList">
+							<td class="center-aligned">{{item.creationtime |
+								date:'dd-MM-yyyy hh:mm a'}}</td>
+							<td class="center-aligned">{{item.procedurename}}</td>
+							<td class="center-aligned">{{item.details}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- below code is used to modal of order investigation -->
+<div class="overlay" id="ballardOverlay"></div>
+<div class="modal-box-lg ballard-popup" id="OrderInvestigationPopup">
+	<button class="modal-popup-close-btn"
+		(click)="closeModalOrderInvestigation()"></button>
+
+	<div class="inicu-tab-container">
+		<div class="tab-header" ng-init="tabContent = 'neuro'">
+			<div class="padding-20-x table full">
+				<div class="table-cell pull-left">
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Tests</h1>
+				</div>
+				<div class="table-cell pull-right padding-5-y">
+					<span class="button button-green  middle-aligned pull-right"
+						(click)="orderSelected()">Order</span>
+				</div>
+			</div>
+		</div>
+		<hr class="no-margin">
+		<div class="tab-content-cont full">
+			<div class="col-md-12 no-padding border-bottom-2">
+				<div class="col-md-3 no-padding border-right-2">
+					<div class="table full"
+						*ngFor="let item of proceduresModel.testsList | KeysPipe"
+						style="border-bottom: 2px solid #eeeeee">
+						<div class=" padding-20-y"
+							[ngClass]="{'highlighttab' : selectedDecease == item.key}"
+							(click)="populateTestsListByCategory(item.key)">
+							<span class="bold">{{item.key}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="table full padding-10-y left-aligned"
+						*ngFor="let testsList of listTestsByCategory">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" name="{{'testid' +testsList.testid}}"
+								id="{{'testid' + testsList.testid}}"
+								[(ngModel)]="testsList.isSelected"><label
+								for="{{'testid' + testsList.testid}}">{{testsList.testname}}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of the above code -->
+<!-- end for the code callingRequiredFieldPopup -->
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+   <span class="inicu-loader-content">
+    	<span class="inicu-adding-image"></span>
+     <span class="inicu-loading-content">{{loaderContent}}</span>
+	</span>
+</span>

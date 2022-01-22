@@ -1,0 +1,13 @@
+alter table apollo.baby_prescription add column reason text;
+
+
+//17 Sept
+alter table apollo.medicine add column assessment character varying(255);
+
+//8october
+alter table apollo.nutritional_compliance alter column feed_volume type character varying(100);
+alter table apollo.nutritional_compliance alter column feed_advancement type character varying(100);
+
+alter table apollo.baby_detail add column energy_deviation_value real;
+alter table apollo.baby_detail add column protein_deviation_value real;
+alter table apollo.baby_detail add column gestation_quartile_value real;

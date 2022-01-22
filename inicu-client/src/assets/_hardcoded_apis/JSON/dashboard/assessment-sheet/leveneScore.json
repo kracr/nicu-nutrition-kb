@@ -1,0 +1,173 @@
+{
+	"totalScore": 0,
+	"bindStatusList": [{
+			"clinicalStatus": "Consciousness",
+			"statusIndex": 1,
+			"scoreList": [{
+					"scoreValue": 1,
+					"scoreIndex": "1-1",
+					"scoreName": "Consciousnessscore",
+					"signList": [{
+						"index": 0,
+						"clinicalSign": "Irritable",
+						"dbRefId": 1,
+						"selected": false
+					}]
+				},
+				{
+					"scoreValue": 2,
+					"scoreIndex": "1-2",
+					"scoreName": "Consciousnessscore",
+					"signList": [{
+						"index": 0,
+						"clinicalSign": "Lethargy",
+						"dbRefId": 2,
+						"selected": false
+					}]
+				},
+				{
+					"scoreValue": 3,
+					"scoreIndex": "1-3",
+					"scoreName": "Consciousnessscore",
+					"signList": [{
+						"index": 0,
+						"clinicalSign": "Comatose",
+						"dbRefId": 3,
+						"selected": false
+					}]
+				}
+			]
+		},
+		{
+			"clinicalStatus": "Tone",
+			"statusIndex": 2,
+			"scoreList": [{
+					"scoreValue": 1,
+					"scoreIndex": "2-1",
+					"scoreName": "tonescore",
+					"signList": [{
+						"index": 0,
+						"clinicalSign": "Hypotonia",
+						"dbRefId": 4,
+						"selected": false
+					}]
+				},
+				{
+					"scoreValue": 2,
+					"scoreIndex": "2-2",
+					"scoreName": "tonescore",
+					"signList": [{
+						"index": 0,
+						"clinicalSign": "Marked Hypotonia",
+						"dbRefId": 5,
+						"selected": false
+					}]
+				},
+				{
+					"scoreValue": 3,
+					"scoreIndex": "2-3",
+					"scoreName": "tonescore",
+					"signList": [{
+							"index": 0,
+							"clinicalSign": "Severe Hypotonia",
+							"dbRefId": 6,
+							"selected": false
+						}
+					]
+				}
+			]
+		},
+		{
+			"clinicalStatus": "Seizures",
+			"statusIndex": 3,
+			"scoreList": [{
+					"scoreValue": 1,
+					"scoreIndex": "3-1",
+					"scoreName": "seizuresscore",
+					"signList": [{
+						"index": 0,
+						"clinicalSign": "No",
+						"dbRefId": 7,
+						"selected": false
+					}]
+				},
+				{
+					"scoreValue": 2,
+					"scoreIndex": "3-2",
+					"scoreName": "seizuresscore",
+					"signList": [{
+						"index": 0,
+						"clinicalSign": "Yes",
+						"dbRefId": 8,
+						"selected": false
+					}]
+				},
+				{
+					"scoreValue": 3,
+					"scoreIndex": "3-3",
+					"scoreName": "seizuresscore",
+					"signList": [{
+						"index": 0,
+						"clinicalSign": "Prolonged",
+						"dbRefId": 9,
+						"selected": false
+					}]
+				}
+			]
+		},
+		{
+			"clinicalStatus": "SuckingRespiration",
+			"statusIndex": 4,
+			"scoreList": [{
+					"scoreValue": 0,
+					"scoreIndex": "4-1",
+					"scoreName": "Respirationscore",
+					"signList": [{
+						"index": 0,
+						"clinicalSign": "Poor suck",
+						"dbRefId": 10,
+						"selected": false
+					}]
+				},
+				{
+					"scoreValue": 1,
+					"scoreIndex": "4-2",
+					"scoreName": "Respirationscore",
+					"signList": [{
+						"index": 0,
+						"clinicalSign": "Unable to suck",
+						"dbRefId": 11,
+						"selected": false
+					}]
+				},
+				{
+					"scoreValue": 2,
+					"scoreIndex": "4-3",
+					"scoreName": "Respirationscore",
+					"signList": [{
+							"index": 0,
+							"clinicalSign": "Unable to sustain",
+							"dbRefId": 12,
+							"selected": false
+						}
+					]
+				}
+			]
+		}
+	],
+	"scoreBindObj": {
+		"bindscoreid": null,
+		"creationtime": null,
+		"modificationtime": null,
+		"uhid": null,
+		"Consciousness": null,
+		"Consciousnessscore": null,
+		"Tone": null,
+		"tonescore": null,
+		"Seizures": null,
+		"seizuresscore": null,
+		"Sucking/Respiration": null,
+		"Respirationscore": null,
+		"bindscore": null
+	}
+}

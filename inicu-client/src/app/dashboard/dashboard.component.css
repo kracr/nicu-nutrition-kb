@@ -1,0 +1,112 @@
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+  .visible-box{
+    height: 520px !important;
+  }
+  #doctorTasksPopup{
+    width: 900px!important;
+  }
+  #nurseTasksPopup{
+    width: 920px !important;
+  }
+  .adm-date {
+    padding-right: 0px !important;
+  }
+  .modal-box-lg.showing {
+    position: absolute !important;
+    top: 40% !important;
+  }
+}
+
+.doctor-tasks-select-done {
+  background-color: #82dff5;
+}
+
+.doctor-tasks-select-undone {
+  background-color: #f0f3f0;
+}
+
+.backgroundRed{
+  background-color: #f8605b;
+  animation: heartbeat 1s infinite;
+}
+
+#doctorTasksPopup {
+  width: 1250px;
+  margin-top: 33px;
+  margin-right: 50px;
+}
+#nurseTasksPopup{
+  width: 1250px;
+  margin-top: 33px;
+}
+.dashboard-bed-box .visible-box .head {
+  display: block !important;
+  clear: both !important;
+  overflow: auto !important;
+  padding: 10px 4px 0px 10px !important;
+  min-height: 52px !important;
+  position: relative !important;
+}
+.bed-message-one-tooltip:before {
+  content: '';
+  left: 8px;
+  background-image: url(/assets/_images/up-arrow.png);
+  display: block;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: -9px;
+}
+.bed-message-one-tooltip{
+  display: none;
+  position: absolute;;
+  z-index: 999;
+  width: 300px;
+  background: #fff;
+  padding: 10px 0;
+  box-shadow: 0 0 10px #eee;
+  border-radius: 4px;
+  border: 1px solid #d3deec;
+}
+.bed-message-one-tooltip ul{
+  padding:0px;
+  margin:0px;
+}
+.bed-message-one-tooltip ul li{
+  padding:5px;
+  border-bottom: 1px solid #eee;
+  list-style: none;
+  text-align: justify;
+}
+.bed-message-one-tooltip ul li:nth-child(even){
+  background-color: #f6f6f6;
+}
+.bed-message-oen-tooltip ul li:last-child{
+  border-bottom: 0;
+}
+@keyframes heartbeat{
+  0%
+  {
+    transform: scale( .95 );
+  }
+  20%
+  {
+    transform: scale( 1 );
+  }
+  40%
+  {
+    transform: scale( .95 );
+  }
+  60%
+  {
+    transform: scale( 1 );
+  }
+  80%
+  {
+    transform: scale( .95 );
+  }
+  100%
+  {
+    transform: scale( .95 );
+  }
+}

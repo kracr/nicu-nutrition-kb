@@ -1,0 +1,9 @@
+@media print{
+  .font-size{
+    font-size: 16px;
+  }
+}
+.print-width-12 {
+    min-width: 1000px !important;
+    max-width: 1000px!important;
+}

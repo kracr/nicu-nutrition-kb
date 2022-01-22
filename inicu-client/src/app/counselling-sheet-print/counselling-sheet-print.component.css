@@ -1,0 +1,11 @@
+@page {
+    size: A4 landscape !important;
+}
+
+.headed-table tr:first-child td {
+    padding: 10px 5px !important;
+}
+
+.headed-table td {
+    padding: 10px 5px !important;
+}

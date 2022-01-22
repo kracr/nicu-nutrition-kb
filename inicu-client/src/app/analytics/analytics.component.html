@@ -1,0 +1,1714 @@
+<!-- <div class="container padding-10-y"> -->
+<div class="padding-20-x padding-10-y">
+	<div class="row no-padding">
+		<div class="col-md-1 left-aligned no-padding">
+			<h1 class="blue-text light dashboard-heading no-padding table-cell">Analytics</h1>
+		</div>
+		<div class="col-md-5">
+
+			<div class="table full padding-20-x">
+				<div class="table-row border-right">
+					<div
+						class="table-cell middle-aligned left-aligned width-15 border-right-dark">
+						<label class="center-aligned">Total Patients</label>
+					</div>
+					<div
+						class="table-cell middle-aligned left-aligned width-15 padding-left-20 border-right-dark">
+						<label class="center-aligned">Admitted</label>
+					</div>
+					<div
+						class="table-cell middle-aligned left-aligned width-15 padding-left-20 border-right-dark">
+						<label class="center-aligned">Discharged</label>
+					</div>
+				</div>
+				<div class="table-row border-right">
+					<div
+						class="table-cell middle-aligned left-aligned border-right-dark">
+						<div
+							class="usageData usageDataTotal no-padding middle-aligned inline-display"></div>
+						<div [innerText]='totalPatients'
+							class="no-padding blue-text inline-display"></div>
+					</div>
+					<div
+						class="table-cell middle-aligned left-aligned padding-left-20 border-right-dark">
+						<div class="usageData usageDataAdmitted no-padding table-cell"></div>
+						<div [innerText]='admitted'
+							class="no-padding blue-text table-cell"></div>
+					</div>
+					<div
+						class="table-cell middle-aligned left-aligned padding-left-20 border-right-dark">
+						<div class="usageData usageDataDischarged no-padding table-cell"></div>
+						<div [innerText]='discharged'
+							class="no-padding blue-text table-cell"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="col-md-6 no-padding">
+			<div class="table full pull-right">
+				<div class="table-cell">
+					<button
+						class="button button-blue-transparent background-white padding-x-5 not-active-button" (click)="systemicReport()">Systemic Report</button>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid">
+  <div class="doctor-tab-container">
+		<div class="tab-header">
+			<ul class="table full">
+				<!-- <li data-ng-class="{'active' : activeTab == 2}"
+					data-ui-sref="dashboard.fullDashboard.doctorPanel.assesmentSheetResp"><a class="tab">Assessment</a>
+				</li> -->
+		    <li [ngClass]="{'active': isUsage == 'true'}" (click)="displayPatientAnalytics('USAGE')"><a class="tab" >Usage</a></li>
+				<li [ngClass]="{'active': isOccupancy == 'true'}" (click)="displayPatientAnalytics('OCCUPANCY')"><a class="tab">Occupancy</a></li>
+		    <li [ngClass]="{'active': isQuality == 'true'}" (click)="displayPatientAnalytics('QUALITY')"> <a class="tab" >Quality</a></li>
+		    <li [ngClass]="{'active': isSinSheet == 'true'}" (click)="displayPatientAnalytics('SIN SHEET')"><a class="tab">SIN Sheet</a></li>
+				<li [ngClass]="{'active': isVital == 'true'}" (click)="displayPatientAnalytics('VITAL')"><a class="tab">Vital Tracker</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="container-fluid background-white"
+	*ngIf="isUsage == 'true'" style="margin: 0 20px;">
+<div *ngIf="usage.usageList != undefined && usage.usageList != null">
+	<div class="row padding-10-y">
+		<div class="col-md-4 no-padding-right padding-left-one">
+			<div class="col-md-7 no-padding ">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">
+						<div class="toggle-options-radio padding-top-1">
+							<input type="radio" name="Smoke" [(ngModel)]="usageToggle"
+								id="DoctorNotes" value="doctor-panel"> <label
+								for="DoctorNotes">Doctor Panel</label> <input type="radio"
+								name="Smoke" [(ngModel)]="usageToggle" id="NursingNotes"
+								value="nursing-panel"> <label for="NursingNotes">Nursing
+								Panel</label>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">
+						<div class="toggle-options-radio padding-top-1">
+							<input type="radio" name="listView" [(ngModel)]="usageOption"
+								id="listView" value="list"> <label
+								for="listView">List View</label> <input type="radio"
+								name="graphView" [(ngModel)]="usageOption" id="graphView"
+								value="graph"> <label for="graphView">Graph View</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5 left-aligned middle-aligned no-padding">
+				<div class="col-md-12 no-padding">
+					<label class="font-bold visiblity-hidden">Total Patients</label>
+				</div>
+				<div class="col-md-12 no-padding" style="line-height: 2">
+					<span class="bold" style="font-size: 17px">Total Patients: </span><span
+						*ngIf="usage.usageList.length != 0 && usage.usageList.length != -1 && usage.usageList.length != null">{{usage.usageList.length}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-1 left-aligned middle-aligned no-padding-left">
+			<div class="col-md-12">
+				<span class="visiblity-hidden">dummy</span>
+			</div>
+			<div class="col-md-12 no-padding" style="overflow: hidden">
+				<div class="search-bar">
+					<input type="text" [(ngModel)]="searchText"
+						placeholder="Name/UHID" class="no-margin" style="width: 100%">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 no-padding">
+			<div class="col-md-6 left-aligned middle-aligned no-padding">
+				<div class="col-md-12 no-padding">
+					<label class="font-bold">From</label>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" id="usageFromDate" name = "usageFromDate" [(ngModel)]="usage.fromDate"
+						dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}" [max]="maxDate"></owl-date-time>
+					<!-- <input id="usageFromDate" name="usageFromDate" type="date"
+						class="no-margin" [(ngModel)]="usage.fromDate"> -->
+				</div>
+				<div class="col-md-12 no-padding">
+					<label style="display: none" id="usageFromDateError"
+						class="col-md-12 error-labels no-padding right-aligned">From
+						Date cannot be after Current Date</label> <label style="display: none"
+						id="usageFromToDateError"
+						class="col-md-12 error-labels no-padding right-aligned">From
+						Date cannot be after To Date</label>
+				</div>
+			</div>
+			<div class="col-md-6 left-aligned middle-aligned no-padding">
+				<div class="col-md-12 no-padding">
+					<label class="font-bold">To</label>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" id="usageToDate" name = "usageToDate" [(ngModel)]="usage.toDate"
+						dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}" [max]="maxDate"></owl-date-time>
+					<!-- <input id="usageToDate" class="no-margin" name="usageToDate"
+						type="date" [(ngModel)]="usage.toDate"> -->
+				</div>
+				<div class="col-md-12 no-padding">
+					<label style="display: none" id="usageToDateError"
+						class="col-md-12 error-labels no-padding right-aligned">To
+						Date cannot be after Current Date</label>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3 no-padding middle-aligned right-aligned">
+			<div class="col-md-12 no-padding">
+				<span class="visiblity-hidden">dummy</span>
+			</div>
+			<div class="col-md-12 no-padding center-aligned">
+				<span>
+					<button class="button button-blue padding-x-5"
+						(click)="getAnalyticsUsage(usage.fromDate, usage.toDate, false)">Show</button>
+				</span> <span>
+					<button class="button button-blue padding-x-5"
+						(click)="printUsageData(usage.fromDate, usage.toDate)">Print</button>
+				</span> <span>
+					<button class="button button-blue padding-x-5"
+						(click)="getAnalyticsUsage(usage.fromDate, usage.toDate, true)">Export
+						CSV</button>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8"></div>
+	</div>
+	<div class="row padding-10-y">
+
+		<div class="col-md-12 no-padding" *ngIf="usageToggle =='doctor-panel' && usageOption == 'graph'">
+			<div class="clear overflow-auto desktop-column-20" style="overflow: hidden; text-align: center">
+				<div [chart]="docChart" style="height: 500px; width: 1238px; border-style: solid; border: 1px; overflow: hidden"></div>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding" *ngIf="usageToggle =='nursing-panel' && usageOption == 'graph'">
+			<div class="clear overflow-auto desktop-column-20" style="overflow: hidden; text-align: center">
+				<div [chart]="nurChart" style="height: 500px; width: 1238px; border-style: solid; border: 1px; overflow: hidden"></div>
+			</div>
+		</div>
+		<div class="col-md-12 analytics-usage-nursing-box" *ngIf = "usageOption == 'list'"
+			style="overflow-x: auto; padding: 5px; width: 100%; max-width: 100% !important; max-height: 100% !important;">
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20">
+				<tr>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 2px !important">UHID</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 2px !important">Baby Name</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 0px !important">DOB</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 0px !important">DOA</td>
+					<td class="center-aligned"
+						style="width: 6.2; padding: 10px 3px !important">Status</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important">LOS</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important">Criticality</td>
+					<td class="center-aligned"
+						*ngIf="usageToggle == 'doctor-panel'"
+						style="width: 6.2%; padding: 10px 3px !important">Initial
+						Assess.</td>
+					<td class="center-aligned"
+						*ngIf="usageToggle == 'doctor-panel'"
+						style="width: 6.2%; padding: 10px 0px !important">Assess.</td>
+					<td class="center-aligned"
+						*ngIf="usageToggle == 'doctor-panel'"
+						style="width: 6.2%; padding: 10px 3px !important">Stable
+						Notes</td>
+					<td class="center-aligned"
+						*ngIf="usageToggle == 'doctor-panel'"
+						style="width: 6.2%; padding: 10px 2px !important">Medication</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 0px !important"
+						*ngIf="usageToggle == 'doctor-panel'">Nutrition</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important"
+						*ngIf="usageToggle == 'doctor-panel'">Lab order</td>
+					<td class="center-aligned"
+							style="width: 6.2%; padding: 10px 3px !important"
+							*ngIf="usageToggle == 'doctor-panel'">Lab Reports</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important"
+						*ngIf="usageToggle == 'doctor-panel'">Procedures</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important"
+						*ngIf="usageToggle == 'doctor-panel'">Neonat.</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 2px !important"
+						*ngIf="usageToggle == 'doctor-panel'">Adopt. Score</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important"
+						*ngIf="usageToggle == 'doctor-panel'">Quality Score</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">Anthropometry</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">Vitals</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">Intake/Output</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">Events</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">Lab sample sent</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">Adoption Score</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">Quality Score</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 0px !important">Action</td>
+				</tr>
+				<tr *ngFor="let item of usage.usageList | NamePipe: searchText">  <!-- | filter:searchText-->
+					<td class="center-aligned" style="padding: 10px 2px !important">{{item.uhid}}</td>
+					<td class="center-aligned" style="padding: 10px 2px !important">{{item.babyName}}</td>
+					<td class="center-aligned" style="padding: 10px 0px !important">{{item.dateofbirth}}</td>
+					<td class="center-aligned" style="padding: 10px 0px !important">{{item.dateofadmission}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important">{{item.admissionStatus}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important">{{item.lengthOfStay}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important">{{item.criticality}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'doctor-panel'">{{item.initialAssessment}}</td>
+					<td class="center-aligned" style="padding: 10px 0px !important"
+						*ngIf="usageToggle == 'doctor-panel'">{{item.assessment}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'doctor-panel'">{{item.stableNotes}}</td>
+					<td class="center-aligned" style="padding: 10px 2px !important"
+						*ngIf="usageToggle == 'doctor-panel'">{{item.medication}}</td>
+					<td class="center-aligned" style="padding: 10px 0px !important"
+						*ngIf="usageToggle == 'doctor-panel'">{{item.nutrition}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'doctor-panel'">{{item.labOrder}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'doctor-panel'">{{item.labReports}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'doctor-panel'">{{item.procedure}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'doctor-panel'">{{item.neonatologist}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'doctor-panel'">{{item.doctor_adoptionScore
+						| number : '1.1-2'}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'doctor-panel'">{{item.doctor_qualityScore
+						| number : '1.1-2'}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">{{item.anthropometry}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">{{item.vitals}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">{{item.intake_output}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">{{item.events}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">{{item.sample_sent}}</td>
+					<td class="center-aligned" style="padding: 10px 2px !important"
+						*ngIf="usageToggle == 'nursing-panel'">{{item.nurse_adoptionScore
+						| number : '1.1-2'}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important"
+						*ngIf="usageToggle == 'nursing-panel'">{{item.nurse_qualityScore
+						| number : '1.1-2'}}</td>
+					<td class="center-aligned" style="padding: 10px 0px !important"><span
+						*ngIf="item.admissionStatus == 'Admit'"
+						class="button button-blue-transparent"
+						(click)="redirectDoctorPanelUsage(item.uhid)">Doctor
+							Panel</span> <span *ngIf="item.admissionStatus != 'Admit'"
+						class="button button-blue-transparent"
+						(click)="printDischargeSummaryUsage(item.uhid,item.episodeid)">Print
+							Summary</span></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	</div>
+</div>
+<div *ngIf="isQuality == 'true'">
+	<div class="container-fluid no-padding" style="margin: 0 20px;">
+		<div class="row table full padding-10-y">
+			<div class="col-md-3 middle-aligned">
+				<label
+					class="blue-text light dashboard-heading no-padding table-cell">Operational
+					Parameters</label>
+			</div>
+		</div>
+		<div class="row table full padding-10-y">
+			<div class="col-md-2"></div>
+			<div class="col-md-2 middle-aligned no-padding">
+				<div class="col-md-12 middle-aligned no-padding-left center-aligned">
+					<label class="font-bold">Gestation</label>
+				</div>
+				<div class="col-md-6 no-padding-left middle-aligned"
+					style="padding-right: 1%;">
+					<label
+						class="font-bold col-md-5 no-padding-left line-height-standard">From</label>
+					<select [(ngModel)]="qi.fromGestation"
+						(ngModelChange)="creatToRange(qi.fromGestation)"
+						class="input input-medium col-md-7 no-padding">
+						<option selected value="">Select</option>
+						<option *ngFor="let item of rangeGestFrom" value="{{item}}">{{item}}</option>
+					</select>
+				</div>
+				<div class="col-md-6 no-padding-left middle-aligned"
+					style="padding-right: 1%;">
+					<label
+						class="font-bold col-md-3 no-padding-left line-height-standard">To</label>
+					<select [(ngModel)]="qi.toGestation"
+						class="input input-medium col-md-7 no-padding">
+						<option selected value="">Select</option>
+						<option *ngFor="let item of rangeGestTo" value="{{item}}">{{item}}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-md-2 middle-aligned no-padding">
+				<div class="col-md-12 middle-aligned no-padding-left center-aligned">
+					<label class="font-bold">Birth Weight</label>
+				</div>
+				<div class="col-md-6 no-padding-left middle-aligned">
+					<label
+						class="font-bold col-md-5 no-padding-left line-height-standard">From</label>
+					<input type="number" [(ngModel)]="qi.fromWeight"
+						class="input input-medium col-md-7 no-padding">
+				</div>
+				<div class="col-md-6 no-padding-left middle-aligned">
+					<label
+						class="font-bold col-md-3 no-padding-left line-height-standard">To</label>
+					<input type="number" [(ngModel)]="qi.toWeight"
+						class="input input-medium col-md-7 no-padding">
+				</div>
+				<div class="col-md-12 no-padding">
+					<label *ngIf="showToWeightError"
+						class="col-md-12 error-labels no-padding left-aligned">To
+						weight should be greater than From weight</label>
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-2 left-aligned middle-aligned no-padding">
+				<div class="col-md-12 no-padding">
+					<label class="font-bold">From</label>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" name="qiFromDate" id="qiFromDate" type="calendar" autoClose=true placeholder="dd-mm-yyyy" [(ngModel)]="qi.fromDate" [max]="maxDate" [ngModelOptions]="{standalone: true}" dateFormat='DD-MM-YYYY'></owl-date-time>
+					<!-- <input type="date" class="no-margin" [(ngModel)]="qi.fromDate"
+						id="qiFromDate"> -->
+				</div>
+				<div class="col-md-12 no-padding">
+					<label style="display: none" id="qiFromDateError"
+						class="col-md-12 error-labels no-padding left-aligned">From
+						Date cannot be after Current Date</label> <label style="display: none"
+						id="qiFromToDateError"
+						class="col-md-12 error-labels no-padding left-aligned">From
+						Date cannot be after To Date</label>
+				</div>
+			</div>
+			<div class="col-md-2 middle-aligned left-aligned">
+				<div class="col-md-12 no-padding">
+					<label class="font-bold">To</label>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" name="qiToDate" id="qiToDate" type="calendar" autoClose=true placeholder="dd-mm-yyyy" [(ngModel)]="qi.toDate" [max]="maxDate" [ngModelOptions]="{standalone: true}" dateFormat='DD-MM-YYYY'></owl-date-time>
+					<!-- <input class="no-margin" type="date" [(ngModel)]="qi.toDate" id="qiToDate"> -->
+				</div>
+				<div class="col-md-12 no-padding">
+					<label style="display: none" id="qiToDateError"
+						class="col-md-12 error-labels no-padding left-aligned">To
+						Date cannot be after Current Date</label>
+				</div>
+			</div>
+			<div class="col-md-1 middle-aligned">
+				<label class="col-md-12 visiblity-hidden">dummy</label>
+				<button class="button button-blue padding-x-5"
+					(click)="getQISheet(qi.fromDate, qi.toDate, qi.fromGestation, qi.toGestation, qi.fromWeight, qi.toWeight)">Show</button>
+			</div>
+		</div>
+	</div>
+	<div class="background-white container-fluid"
+		style="overflow: hidden; padding: 10px 0px; margin: 0 20px; box-shadow: 0px 0px 10px #d3d3d3;">
+		<div class="col-md-12" style="margin: 0 auto; padding: 0 30px;">
+			<div class="col-md-3 no-padding" style="cursor: pointer"
+				(click)="showPatientCount()">
+				<div class="padding-x-10"
+					style="border: 1px solid #74afff; margin: 0 5px; border-radius: 5px; overflow: hidden;">
+					<div class="col-md-12 no-padding param-details">
+						<div class="col-md-12 no-padding param-details-image pull-right">
+						</div>
+						<div class="col-md-12 no-padding"
+							style="position: absolute; margin-top: 18px; font-size: 20px; color: white;">
+							<div class="center-aligned">
+								<span>{{qiList.noOfBabies}}</span>
+							</div>
+							<div class="center-aligned">
+								<span> Patient Count </span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding"
+						style="margin: 18px 0; font-size: 20px; color: #74afff;">
+						<div class="center-aligned">
+							<span> Inborn&nbsp; </span><span>{{qiList.noOfBabiesIp}}</span>
+						</div>
+						<div class="center-aligned">
+							<span> Outborn&nbsp; </span><span>{{qiList.noOfBabiesOp}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding" style="cursor: pointer"
+				(click)="showMortality()">
+				<div class="padding-x-10"
+					style="border: 1px solid #74afff; margin: 0 5px; border-radius: 5px; overflow: hidden;">
+					<div class="col-md-12 no-padding param-details">
+						<div
+							class="col-md-12 no-padding param-details-image pull-right param-details-image-two"></div>
+						<div class="col-md-12 no-padding"
+							style="position: absolute; margin-top: 18px; font-size: 20px; color: white;">
+							<div class="center-aligned">
+								<span>{{qiList.noOfMortality}}</span>
+							</div>
+							<div class="center-aligned">
+								<span> Mortality </span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding"
+						style="margin: 18px 0; font-size: 20px; color: #74afff;">
+						<div class="center-aligned">
+							<span> Inborn&nbsp; </span><span>{{qiList.noOfMortalityIp}}</span>
+						</div>
+						<div class="center-aligned">
+							<span> Outborn&nbsp; </span><span>{{qiList.noOfMortalityOp}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding">
+				<div class="padding-x-10"
+					style="border: 1px solid #74afff; margin: 0 5px; border-radius: 5px; overflow: hidden;">
+					<div class="col-md-12 no-padding param-details">
+						<div
+							class="col-md-12 no-padding param-details-image pull-right param-details-image-three"></div>
+						<div class="col-md-12 no-padding"
+							style="position: absolute; margin-top: 18px; font-size: 20px; color: white;">
+							<div class="center-aligned">
+								<span>{{qiList.noOfNurses}}</span>
+							</div>
+							<div class="center-aligned">
+								<span> Nurses </span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding"
+						style="margin: 18px 0; font-size: 20px; color: #74afff;">
+						<div class="center-aligned">
+							<span>{{qiList.noOfBabies/qiList.noOfNurses | number : '1.1-2'}}</span><!--  -->
+						</div>
+						<div class="center-aligned">
+							<span> Neonates per Nurse </span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding">
+				<div class="padding-x-10"
+					style="border: 1px solid #74afff; margin: 0 5px; border-radius: 5px; overflow: hidden;">
+					<div class="col-md-12 no-padding param-details">
+						<div
+							class="col-md-12 no-padding param-details-image pull-right param-details-image-four"></div>
+						<div class="col-md-12 no-padding"
+							style="position: absolute; margin-top: 18px; font-size: 20px; color: white;">
+							<div class="center-aligned">
+								<span>{{qiList.noOfDoctors}}</span>
+							</div>
+							<div class="center-aligned">
+								<span> Doctors </span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding"
+						style="margin: 18px 0; font-size: 20px; color: #74afff;">
+						<div class="center-aligned">
+							<span>{{qiList.noOfBabies/qiList.noOfDoctors | number :
+								'1.1-2'}}</span><!-- -->
+						</div>
+						<div class="center-aligned">
+							<span> Neonates per Doctor </span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12" style="padding: 10px"
+			*ngIf="isPatientCount">
+			<div class="col-md-3 no-padding">
+				<div class="padding-x-10 background-white margin-0"
+					style="overflow: hidden; height: 150px; border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+					<div class="row" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="qualityIndicator qualityIndicator-patientCount-1"></div>
+							</div>
+							<div class="col-md-8 no-padding">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{qiList.meanGestationWeek}}</span><span> weeks</span><span>
+										{{qiList.meanGestationDay}}</span><span> days</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Mean Gestation</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding">
+				<div class="padding-x-10 background-white margin-0"
+					style="overflow: hidden; height: 150px; border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+					<div class="row" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="qualityIndicator qualityIndicator-patientCount-2"></div>
+							</div>
+							<div class="col-md-8 no-padding" style="padding-right: 5px;">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{qiList.meanWeight | number : '1.1-2'}}</span><span>
+										gms</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Mean Weight</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding">
+				<div class="padding-x-10 background-white margin-0"
+					style="overflow: hidden; height: 150px; border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+					<div class="row full" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="qualityIndicator qualityIndicator-patientCount-3"></div>
+							</div>
+							<div class="col-md-8 no-padding">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{qiList.avgLengthOfStay | number : '1.1-2'}}</span><span><!-- | number : 2-->
+										Days</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Average Length of Stay</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding">
+				<div class="padding-x-10 background-white margin-0"
+					style="overflow: hidden; height: 150px; border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+					<div class="row full" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="qualityIndicator qualityIndicator-patientCount-4"></div>
+							</div>
+							<div class="col-md-8 no-padding">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{qiList.readmissionRate | number : '1.1-2'}}</span><span>
+										%</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Readmission Rate</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding">
+				<div class="padding-x-10 background-white margin-0"
+					style="overflow: hidden; height: 150px; border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+					<div class="row full" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="qualityIndicator qualityIndicator-patientCount-5"></div>
+							</div>
+							<div class="col-md-8 no-padding">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{qiList.bedOccupancy | number : '1.1-2'}}</span><span>
+										%</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Bed Occupancy</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12" style="padding: 10px"
+			*ngIf="isMortality">
+			<label
+				class="blue-text light dashboard-heading no-padding table-cell">Disease
+				Specific Deaths</label>
+			<div class="table full padding-20-x">
+				<div class="table-row border-right">
+					<div
+						class="table-cell middle-aligned center-aligned width-15 border-right-dark">
+						<label class="center-aligned text-lg">{{qiList.mortality_nec | number : '1.1-2'}}</label>
+						<span class="text-lg"> %</span>
+					</div>
+					<div
+						class="table-cell middle-aligned center-aligned width-15 border-right-dark">
+						<label class="center-aligned text-lg">{{qiList.mortality_bpd
+						 | number : '1.1-2'}}</label><span class="text-lg"> %</span>
+					</div>
+					<div
+						class="table-cell middle-aligned center-aligned width-15 border-right-dark">
+						<label class="center-aligned text-lg">{{qiList.mortality_retinopathy
+						 | number : '1.1-2'}}</label><span class="text-lg"> %</span>
+					</div>
+					<div
+						class="table-cell middle-aligned center-aligned width-15 border-right-dark">
+						<label class="center-aligned text-lg">{{qiList.mortality_vlbw
+						 | number : '1.1-2'}}</label><span class="text-lg"> %</span>
+					</div>
+					<div
+						class="table-cell middle-aligned center-aligned width-15 border-right-dark">
+						<label class="center-aligned text-lg">{{qiList.mortality_sepsis
+						 | number : '1.1-2'}}</label><span class="text-lg"> %</span>
+					</div>
+					<div
+						class="table-cell middle-aligned center-aligned width-15 border-right-dark">
+						<label class="center-aligned text-lg">{{qiList.mortality_ivh
+						 | number : '1.1-2'}}</label><span class="text-lg"> %</span>
+					</div>
+				</div>
+				<div class="table-row border-right">
+					<div
+						class="table-cell middle-aligned center-aligned border-right-dark">
+						<div class="no-padding grey-text history-heading">NEC</div>
+					</div>
+					<div
+						class="table-cell middle-aligned center-aligned border-right-dark">
+						<div class="no-padding grey-text history-heading">BPD</div>
+					</div>
+					<div
+						class="table-cell middle-aligned center-aligned border-right-dark">
+						<div class="no-padding grey-text history-heading">RETINOPATHY</div>
+					</div>
+					<div
+						class="table-cell middle-aligned center-aligned border-right-dark">
+						<div class="no-padding grey-text history-heading">VERY LOW
+							BIRTH WEIGHT</div>
+					</div>
+					<div
+						class="table-cell middle-aligned center-aligned border-right-dark">
+						<div class="no-padding grey-text history-heading">SEPSIS</div>
+					</div>
+					<div
+						class="table-cell middle-aligned center-aligned border-right-dark">
+						<div class="no-padding grey-text history-heading">IVH</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid"
+		style="overflow: hidden; padding: 10px 0px; margin: 0 20px;">
+		<label class="blue-text light dashboard-heading no-padding table-cell">Quality
+			Indicators</label>
+		<div class="col-md-12 no-padding" style="margin: 0 auto;">
+			<div class="col-md-3 no-padding">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="qualityIndicator"></div>
+							</div>
+							<div class="col-md-8 no-padding">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{qiList.breastFeedingRate | number : '1.1-2'}}</span><span>
+										%</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Breast Feeding Rate</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="qualityIndicator qualityIndicatorTwo"></div>
+							</div>
+							<div class="col-md-8 no-padding" style="padding-right: 5px;">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{qiList.earlyOnsetSepsisRate | number : '1.1-2'}}</span><span>
+										%</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Early Onset Sepsis Rate</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-6 no-padding">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row full" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-3 no-padding">
+								<div class="qualityIndicator qualityIndicatorThree"></div>
+							</div>
+							<div class="col-md-4 no-padding">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{qiList.clabsiRate | number : '1.1-2'}}</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>CLABSI Rate</span>
+								</div>
+							</div>
+							<div class="col-md-5 no-padding">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{qiList.centralLineUtilization | number : '1.1-2'}}</span><span>
+										%</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Central Line Utilization</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid"
+		style="overflow: hidden; padding: 10px 0px; margin: 0 20px;">
+		<div class="col-md-12 no-padding" style="margin: 0 auto;">
+			<div class="col-md-3 no-padding">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="qualityIndicator qualityIndicatorFour"></div>
+							</div>
+							<div class="col-md-8 no-padding">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{qiList.ventilatorUtilization | number : '1.1-2'}}</span><span>
+										%</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Ventilator Usage</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="qualityIndicator qualityIndicatorFive"></div>
+							</div>
+							<div class="col-md-8 no-padding" style="padding-right: 5px;">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{qiList.noOfSurgicalCases}}</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Number of Surgical Cases</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row full" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="qualityIndicator qualityIndicatorSix"></div>
+							</div>
+							<div class="col-md-8 no-padding">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{qiList.antibioticUtilization | number : '1.1-2'}}</span><span>
+										%</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Antibiotic Usage Rate</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div *ngIf="isSinSheet == 'true'">
+	<div class="container-fluid no-padding" style="margin: 0 20px;">
+		<div class="row table full padding-10-y">
+			<div class="col-md-5 no-padding"></div>
+			<div class="col-md-3 no-padding">
+				<div class="center-aligned">
+					<label
+						class="blue-text light dashboard-heading no-padding table-cell">SIN
+						SHEET {{sin.currentDate | date:'dd-MM-yyyy'}}</label>
+				</div>
+
+			</div>
+			<div class="col-md-4 no-padding"></div>
+		</div>
+	</div>
+	<div class="container-fluid" *ngIf = "sin.current.noOfBabies != null"
+		style="overflow: hidden; padding: 10px 0px; margin: 0 20px;">
+		<div class="col-md-12 no-padding" style="margin: 0 auto;">
+			<div class="col-md-3 no-padding" style="cursor: pointer"
+				(click)="showSinBabyDetails(sin.current.noOfBabies)">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="sinsheet"></div>
+							</div>
+							<div class="col-md-8 no-padding">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{sin.current.noOfBabies.count}}</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Number of Babies</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding" style="cursor: pointer"
+				(click)="showSinBabyDetails(sin.current.ivAntibiotics)">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="sinsheet sinsheetTwo"></div>
+							</div>
+							<div class="col-md-8 no-padding" style="padding-right: 5px;">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{sin.current.ivAntibiotics.count}}</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Babies on IV Antibiotics</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding" style="cursor: pointer"
+				(click)="showSinBabyDetails(sin.current.nonInvasiveVentilator)">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="sinsheet sinsheetThree"></div>
+							</div>
+							<div class="col-md-8 no-padding" style="padding-right: 5px;">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{sin.current.nonInvasiveVentilator.count}}</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Babies on Non-Invasive Ventilator</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding" style="cursor: pointer"
+				(click)="showSinBabyDetails(sin.current.totalVentilator)">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="sinsheet sinsheetFour"></div>
+							</div>
+							<div class="col-md-8 no-padding" style="padding-right: 5px;">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{sin.current.totalVentilator.count}}</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Babies on all forms of Ventilators</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding" style="margin: 10px auto;">
+			<div class="col-md-3 no-padding" style="cursor: pointer"
+				(click)="showSinBabyDetails(sin.current.centralLine)">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="sinsheet sinsheetEight"></div>
+							</div>
+							<div class="col-md-8 no-padding" style="padding-right: 5px;">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{sin.current.centralLine.count}}</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Babies on Central Catheters</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding" style="cursor: pointer"
+				(click)="showSinBabyDetails(sin.current.peripheralCannula)">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-4 no-padding">
+								<div class="sinsheet sinsheetFive"></div>
+							</div>
+							<div class="col-md-8 no-padding" style="padding-right: 5px;">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{sin.current.peripheralCannula.count}}</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Babies with Peripheral Cannula</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding" style="cursor: pointer"
+				(click)="showSinBabyDetails(sin.current.pnFeed)">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row full" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-5 no-padding">
+								<div class="sinsheet sinsheetSix"></div>
+							</div>
+							<div class="col-md-7 no-padding" style="padding-right: 5px;">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{sin.current.pnFeed.count}}</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Babies on PN</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding" style="cursor: pointer"
+				(click)="showSinBabyDetails(sin.current.ivFeed)">
+				<div class="padding-x-10 background-white"
+					style="margin: 0 5px; overflow: hidden; height: 150px; box-shadow: 0px 0px 10px #d3d3d3;">
+					<div class="row full" style="position: absolute;">
+						<div class="col-md-12">
+							<div class="col-md-6 no-padding">
+								<div class="sinsheet sinsheetSeven"></div>
+							</div>
+							<div class="col-md-6 no-padding" style="padding-right: 5px;">
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 25px; font-weight: bold; padding-top: 35px;">
+									<span>{{sin.current.ivFeed.count}}</span>
+								</div>
+								<div class="col-md-12 no-padding"
+									style="text-align: center; font-size: 20px; color: #939393; padding-top: 10px;">
+									<span>Babies on IV Fluids</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						style="border-top: 2px solid #eee; margin-top: 75px; vertical-align: middle;"></div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="container-fluid no-padding">
+		<div class="row table full padding-10-y">
+			<div class="col-md-5 middle-aligned"></div>
+			<div class="col-md-2 left-aligned middle-aligned no-padding">
+				<div class="col-md-12 no-padding">
+					<label class="font-bold">From</label>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" id="sinFromDate" name = "usageToDate" [(ngModel)]="sin.fromDate" [max]="maxDate"
+						dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}"></owl-date-time>
+					<!-- <input id="sinFromDate" name="sinFromDate" type="date"
+						class="no-margin" [(ngModel)]="sin.fromDate"> -->
+				</div>
+				<div class="col-md-12 no-padding">
+					<label style="display: none" id="sinFromDateError"
+						class="col-md-12 error-labels no-padding right-aligned">From
+						Date cannot be after Current Date</label> <label style="display: none"
+						id="sinFromToDateError"
+						class="col-md-12 error-labels no-padding right-aligned">From
+						Date cannot be after To Date</label>
+				</div>
+			</div>
+			<div class="col-md-2 middle-aligned left-aligned">
+				<div class="col-md-12 no-padding">
+					<label class="font-bold">To</label>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" id="sinToDate" name = "sinToDate" [(ngModel)]="sin.toDate"
+						dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}" [max]="maxDate"></owl-date-time>
+					<!-- <input id="sinToDate" class="no-margin" name="sinToDate"
+						type="date" [(ngModel)]="sin.toDate"> -->
+				</div>
+				<div class="col-md-12 no-padding">
+					<label style="display: none" id="sinToDateError"
+						class="col-md-12 error-labels no-padding right-aligned">To
+						Date cannot be after Current Date</label>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding middle-aligned right-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned">
+					<span>
+						<button class="button button-blue padding-x-5"
+							(click)="getSinSheetData(sin.fromDate, sin.toDate, false, false)">Show</button>
+					</span> <span>
+						<button class="button button-blue padding-x-5"
+							(click)="printSinSheetData(sin.fromDate, sin.toDate)">Print</button>
+					</span> <span>
+						<button class="button button-blue padding-x-5"
+							(click)="getSinSheetData(sin.fromDate, sin.toDate, false, true)">Export
+							CSV</button>
+					</span>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid no-padding background-white"
+		style="margin: 0 20px;">
+
+		<div class="table row full padding-10-y">
+			<div class="col-md-7 middle-aligned">
+				<label
+					class="blue-text light dashboard-heading padding-10-x no-padding-right table-cell">{{viewType}}</label>
+			</div>
+			<div
+				class="col-md-1 right-aligned pull-right padding-10-x no-padding-right">
+				<a class="sprite sprite-blue-minus middle-aligned"
+					(click)="switchTable()" *ngIf="otherTableFlag"></a> <a
+					class="sprite sprite-blue-plus middle-aligned"
+					(click)="switchTable()" *ngIf="!(otherTableFlag)"></a>
+			</div>
+			<div
+				class="col-md-2 right-aligned pull-right padding-10-x no-padding-right">
+				<div class="toggle-options-radio desktop-column-20 background-white"
+					style="border-radius: 5px">
+					<input type="radio" name="viewType" id="viewTypeGrid"
+						[(ngModel)]="sin.viewType" value="Grid"> <label
+						for="viewTypeGrid">Grid View</label> <input type="radio"
+						name="viewType" id="viewTypeGraph" value="Graph"
+						[(ngModel)]="sin.viewType"> <label for="viewTypeGraph">Graph
+						View</label>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div
+		class="container-fluid background-white no-padding-top no-padding-bottom no-padding"
+		style="overflow: hidden; margin: 0 20px;"
+		*ngIf="sin.viewType == 'Grid'">
+		<table
+			class="table table-striped table-bordered headed-table desktop-column-20"
+			id="weight_tab">
+			<tr class="header table-row weight-table-header">
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey"
+					style="min-width: 100px"><span>Date</span></td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Number of Babies</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies on IV Antibiotics</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies on non-Invasive Ventilator</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies on all forms of Ventilators</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies on Central Catheters</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies with Peripheral Cannula</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies on PN</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies on IV Fluids</span>
+				</td>
+			</tr>
+			<tr class="table-row" *ngFor="let item of sin.sinSheetList">
+				<!--(click)="getSinUHIDData(item.dataDate)"-->
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.dataDate | date:'dd-MM-yyyy'}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.noOfBabies.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.ivAntibiotics.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.nonInvasiveVentilator.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.totalVentilator.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.centralLine.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.peripheralCannula.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.pnFeed.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.ivFeed.count}}</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="container-fluid background-white"
+		style="overflow: hidden; padding: 10px 0px; margin: 0 20px;"
+		*ngIf="sin.viewType == 'Graph'">
+		<div class="clear overflow-auto desktop-column-20"
+			style="overflow: hidden; text-align: center">
+			<!--  *ngIf="interCombinedTrue"  -->
+			<div class="" style="padding-left: 2%; padding-right: 4%">
+				<div class="desktop-column-20 padding-0-x force-left"
+					style="margin-left: 0%; padding-bottom: 2%">
+					<div [chart]="chart" style="height: 500px; width: 1238px; border-style: solid; border: 1px; overflow: hidden"></div>
+				</div><!--[chart]="chart"-->
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid"
+		style="overflow: hidden; padding: 10px 0px; margin: 0 20px;"></div>
+</div>
+<div *ngIf="isOccupancy == 'true'">
+	<div class="container-fluid no-padding background-white" style="margin: 0 20px;">
+		<div class="col-md-12 no-padding">
+			<div class="col-md-3 no-padding" style="padding-left: 0%">
+				<div class="col-md-6 no-padding right-aligned"
+					style="margin-top: 4%">
+					<label><strong>Total Patients : {{totalPatientsOccupancy}}</strong></label>
+				</div>
+			</div>
+			<div class="col-md-2"></div>
+			<div class="col-md-4 no-padding">
+				<div class="col-md-6 left-aligned middle-aligned no-padding">
+					<div class="col-md-12 no-padding">
+						<label class="font-bold">From</label>
+					</div>
+					<div class="col-md-12 no-padding">
+						<owl-date-time class="owl-dateTime" name="adoptionFromDate" id="adoptionFromDate" type="calendar" autoClose=true placeholder="dd-mm-yyyy" [(ngModel)]="adoption.fromDate" [max]="maxDate" [ngModelOptions]="{standalone: true}" dateFormat='DD-MM-YYYY'></owl-date-time>
+					</div>
+					<div class="col-md-12 no-padding">
+						<label style="display: none" id="adoptionFromDateError" class="col-md-12 error-labels no-padding right-aligned">
+							From Date cannot be after Current Date
+						</label>
+						<label style="display: none" id="adoptionFromToDateError" class="col-md-12 error-labels no-padding right-aligned">
+							From Date cannot be after To Date
+						</label>
+					</div>
+				</div>
+				<div class="col-md-6 left-aligned middle-aligned no-padding">
+					<div class="col-md-12 no-padding">
+						<label class="font-bold">To</label>
+					</div>
+					<div class="col-md-12 no-padding">
+						<owl-date-time class="owl-dateTime" name="adoptionToDate" id="adoptionToDate" type="calendar" autoClose=true placeholder="dd-mm-yyyy" [(ngModel)]="adoption.toDate" [max]="maxDate" [ngModelOptions]="{standalone: true}" dateFormat='DD-MM-YYYY'></owl-date-time>
+					</div>
+					<div class="col-md-12 no-padding">
+						<label style="display: none" id="adoptionToDateError" class="col-md-12 error-labels no-padding right-aligned">
+							To Date cannot be after Current Date
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-1 no-padding middle-aligned right-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned padding-top-2">
+					<span>
+						<button class="button button-blue padding-x-10"
+							(click)="getOccupancyData(adoption.fromDate, adoption.toDate)">Show</button>
+					</span>
+				</div>
+			</div>
+			<div class="col-md-1 no-padding middle-aligned right-aligned">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="col-md-12 no-padding center-aligned padding-top-2">
+					<span>
+						<button class="button button-blue padding-x-10"
+							(click)="exportOccupancyCSV(adoption.fromDate, adoption.toDate)">Export CSV</button>
+					</span>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-3 no-padding" style="padding-left: 0%">
+					<div class="col-md-6 no-padding right-aligned"
+						style="margin-top: 4%">
+						<label><strong>Birth Weight From</strong></label>
+					</div>
+					<div class="col-md-6 no-padding" style="padding-left: 2%">
+						<input type="number" class="input input-medium col-md-12"
+						[(ngModel)]="analyticsSearch.weightFrom" name="fromWeight"/>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding" style="padding-left: 0%">
+					<div class="col-md-3 no-padding right-aligned"
+						style="margin-top: 4%">
+						<label><strong>To</strong></label>
+					</div>
+					<div class="col-md-9 no-padding" style="padding-left: 2%">
+						<input type="number" class="input input-medium col-md-12"
+						[(ngModel)]="analyticsSearch.weightTo" name="toWeight"/>
+					</div>
+				</div>
+				<div class="col-md-3 no-padding" style="padding-left: 0%">
+					<div class="col-md-6 no-padding right-aligned"
+						style="margin-top: 4%">
+						<label><strong>Gestation From</strong></label>
+					</div>
+					<div class="col-md-6 no-padding" style="padding-left: 2%">
+						<select [(ngModel)]="analyticsSearch.gestationFrom"
+							class="input input-medium col-md-7 no-padding">
+							<option selected value="">Select</option>
+							<option *ngFor="let item of rangeGestFrom" value="{{item}}">{{item}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding" style="padding-left: 0%">
+					<div class="col-md-3 no-padding right-aligned"
+						style="margin-top: 4%">
+						<label><strong>To</strong></label>
+					</div>
+					<div class="col-md-9 no-padding" style="padding-left: 2%">
+						<select [(ngModel)]="analyticsSearch.gestationTo"
+							class="input input-medium col-md-7 no-padding">
+							<option selected value="">Select</option>
+							<option *ngFor="let item of rangeGestFrom" value="{{item}}">{{item}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-3 no-padding" style="padding-left: 0%">
+					<div class="col-md-6 no-padding right-aligned"
+						style="margin-top: 4%">
+						<label><strong>Discharge Type</strong></label>
+					</div>
+					<div class="col-md-6 no-padding" style="padding-left: 2%">
+						<div class="multiselect desktop-column-20">
+							<div class="selectBox"
+								(click)="showCheckboxes('multiple-selectbox-dischargeType')"
+								id="multiple-selectbox-dischargeType">
+								<select>
+									<option>-- Select --</option>
+								</select>
+								<div class="overSelect"></div>
+							</div>
+							<ul id="checkboxes-dischargeType"
+								class="multiple-select">
+								<li *ngFor="let item of dischargeTypes"><span>
+										<input type="checkbox" id="{{item.key}}dischargeType"
+										(click)="systemValue('dischargeType',item.key)"
+										[(ngModel)]="item.flag" [value]="true"
+										[ngModelOptions]="{standalone: true}" /> <label
+										for="{{item.key}}dischargeType">{{item.value}}
+									</label>
+								</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 no-padding" style="padding-left: 0%">
+					<div class="col-md-6 no-padding right-aligned"
+						style="margin-top: 4%">
+						<label><strong>Assessments</strong></label>
+					</div>
+					<div class="col-md-6 no-padding" style="padding-left: 2%">
+						<div class="multiselect desktop-column-20">
+							<div class="selectBox"
+								(click)="showCheckboxes('multiple-selectbox-assessmentType')"
+								id="multiple-selectbox-assessmentType">
+								<select>
+									<option>-- Select --</option>
+								</select>
+								<div class="overSelect"></div>
+							</div>
+							<ul id="checkboxes-assessmentType"
+								class="multiple-select">
+								<li *ngFor="let item of assessmentTypes"><span>
+										<input type="checkbox" id="{{item.key}}assessmentType"
+										(click)="systemValue('assessmentType',item.key)"
+										[(ngModel)]="item.flag" [value]="true"
+										[ngModelOptions]="{standalone: true}" /> <label
+										for="{{item.key}}assessmentType">{{item.value}}
+									</label>
+								</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="clear overflow-auto desktop-column-20" style="overflow: hidden; text-align: center">
+					<div [chart]="analyticsChart" style="height: 500px; width: 1238px; border-style: solid; border: 1px; overflow: hidden"></div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="container-fluid background-white"
+	*ngIf="isVital == 'true'" style="margin: 0 20px;">
+<div *ngIf="vitalList != undefined && vitalList != null">
+	<div class="row padding-10-y">
+		<div class="col-md-4 no-padding-right padding-left-one">
+			<div class="col-md-7 no-padding ">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">dummy</span>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">
+						<div class="toggle-options-radio padding-top-1">
+							<input type="radio" name="SmokeVital" [(ngModel)]="vitalToggle"
+								id="Vital" value="vital-parameters"> <label
+								for="Vital">Vital</label> <input type="radio"
+								name="SmokeVital" [(ngModel)]="vitalToggle" id="Ventilator"
+								value="ventilator-parameters"> <label for="Ventilator">Ventilator</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5 left-aligned middle-aligned no-padding">
+				<div class="col-md-12 no-padding">
+					<label class="font-bold visiblity-hidden">Total Patients</label>
+				</div>
+				<div class="col-md-12 no-padding" style="line-height: 2">
+					<span class="bold" style="font-size: 17px">Total Patients: </span><span
+						*ngIf="vitalList.length != 0 && vitalList.length != -1 && vitalList.length != null">{{vitalList.length}}</span>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="col-md-1 left-aligned middle-aligned no-padding-left">
+			<div class="col-md-12">
+				<span class="visiblity-hidden">dummy</span>
+			</div>
+			<div class="col-md-12 no-padding" style="overflow: hidden">
+				<div class="search-bar">
+					<input type="text" [(ngModel)]="searchText"
+						placeholder="Name/UHID" class="no-margin" style="width: 100%">
+				</div>
+			</div>
+		</div> -->
+		<div class="col-md-4 no-padding">
+			<div class="col-md-6 left-aligned middle-aligned no-padding">
+				<div class="col-md-12 no-padding">
+					<label class="font-bold">From</label>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" id="vitalFromDate" name = "vitalFromDate" [(ngModel)]="vitalFromDate"
+						dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}" [max]="maxFromDate" [min]="minFromDate" (ngModelChange)="fromDateValidation()"></owl-date-time>
+					<!-- <input id="usageFromDate" name="usageFromDate" type="date"
+						class="no-margin" [(ngModel)]="usage.fromDate"> -->
+				</div>
+				<!-- <div class="col-md-12 no-padding">
+					<label style="display: none" id="usageFromDateError"
+						class="col-md-12 error-labels no-padding right-aligned">From
+						Date cannot be after Current Date</label> <label style="display: none"
+						id="usageFromToDateError"
+						class="col-md-12 error-labels no-padding right-aligned">From
+						Date cannot be after To Date</label>
+				</div> -->
+			</div>
+			<div class="col-md-6 left-aligned middle-aligned no-padding">
+				<div class="col-md-12 no-padding">
+					<label class="font-bold">To</label>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" id="vitalToDate" name = "vitalToDate" [(ngModel)]="vitalToDate"
+						dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}" [max]="maxToDate" [min]="minToDate" (ngModelChange)="toDateValidation()"></owl-date-time>
+					<!-- <input id="usageToDate" class="no-margin" name="usageToDate"
+						type="date" [(ngModel)]="usage.toDate"> -->
+				</div>
+				<div class="col-md-12 no-padding">
+					<!-- <label style="display: none" id="usageToDateError"
+						class="col-md-12 error-labels no-padding right-aligned">To
+						Date cannot be after Current Date</label> -->
+				</div>
+			</div>
+		</div>
+		<div class="col-md-1 middle-aligned">
+			<label class="col-md-12 visiblity-hidden">dummy</label>
+			<button class="button button-blue padding-x-5"
+				(click)="getVitalData(vitalFromDate, vitalToDate)">Show</button>
+		</div>
+		<div class="col-md-3 no-padding middle-aligned right-aligned">
+			<div class="col-md-12 no-padding">
+				<span class="visiblity-hidden">dummy</span>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8"></div>
+	</div>
+	<div class="row padding-10-y">
+		<div class="col-md-12 analytics-usage-nursing-box"
+			style="overflow-x: auto; padding: 5px; width: 100%; max-width: 100% !important; max-height: 100% !important;">
+			<table
+				class="table table-striped table-bordered headed-table desktop-column-20">
+				<tr>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 2px !important">UHID</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 2px !important">Baby Name</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 0px !important">NEO Box Name</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 0px !important">Total Data Points</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important">Data Points Received</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important">Percentage</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important" *ngIf="this.vitalToggle == 'vital-parameters'">HR Count</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important" *ngIf="this.vitalToggle == 'vital-parameters'">PR Count</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important" *ngIf="this.vitalToggle == 'vital-parameters'">SPO2 Count</td>
+					<td class="center-aligned"
+						style="width: 6.2%; padding: 10px 3px !important" *ngIf="this.vitalToggle == 'vital-parameters'">RR Count</td>
+						<td class="center-aligned"
+							style="width: 6.2%; padding: 10px 3px !important" *ngIf="this.vitalToggle == 'ventilator-parameters'">Fio2 Count</td>
+						<td class="center-aligned"
+							style="width: 6.2%; padding: 10px 3px !important" *ngIf="this.vitalToggle == 'ventilator-parameters'">PIP Count</td>
+						<td class="center-aligned"
+							style="width: 6.2%; padding: 10px 3px !important" *ngIf="this.vitalToggle == 'ventilator-parameters'">PEEP Count</td>
+
+				</tr>
+				<tr *ngFor="let item of vitalList">  <!-- | filter:searchText-->
+					<td class="center-aligned" style="padding: 10px 2px !important">{{item.uhid}}</td>
+					<td class="center-aligned" style="padding: 10px 2px !important">{{item.babyname}}</td>
+					<td class="center-aligned" style="padding: 10px 0px !important">{{item.boxName}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important">{{item.numberOfMinutes}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important" *ngIf="this.vitalToggle == 'vital-parameters'">{{item.vitalTotalCount}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important" *ngIf="this.vitalToggle == 'vital-parameters'"><span *ngIf="item.numberOfMinutes != 0">{{(item.vitalTotalCount / item.numberOfMinutes) * 100 | number:'1.0-2'}}</span></td>
+					<td class="center-aligned" style="padding: 10px 3px !important" *ngIf="this.vitalToggle == 'ventilator-parameters'">{{item.ventilatorTotalCount}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important" *ngIf="this.vitalToggle == 'ventilator-parameters'"><span *ngIf="item.numberOfMinutes != 0">{{(item.ventilatorTotalCount / item.numberOfMinutes) * 100 | number:'1.0-2'}}</span></td>
+					<td class="center-aligned" style="padding: 10px 3px !important" *ngIf="this.vitalToggle == 'vital-parameters'">{{item.hrCount}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important" *ngIf="this.vitalToggle == 'vital-parameters'">{{item.prCount}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important" *ngIf="this.vitalToggle == 'vital-parameters'">{{item.spo2Count}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important" *ngIf="this.vitalToggle == 'vital-parameters'">{{item.rrCount}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important" *ngIf="this.vitalToggle == 'ventilator-parameters'">{{item.fio2Count}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important" *ngIf="this.vitalToggle == 'ventilator-parameters'">{{item.pipCount}}</td>
+					<td class="center-aligned" style="padding: 10px 3px !important" *ngIf="this.vitalToggle == 'ventilator-parameters'">{{item.peepCount}}</td>
+
+				</tr>
+			</table>
+		</div>
+	</div>
+	</div>
+</div>
+
+<div class="overlay" id="sinOverlay"></div>
+<div class="modal-box-lg ballard-popup silverman-popup"
+	id="sinScorePopup">
+	<button class="modal-popup-close-btn" (click)="closeModalSin()"></button>
+	<div class="inicu-tab-container">
+		<div class="tab-header">
+			<div class="tab-header-menu" *ngIf = "sin.current !=null">
+				<input type="radio" id="sin" name="sin tab menu"
+					[(ngModel)]="sinTabContent" value="sin"> <label
+					for="sin">Date - {{sin.current.dataDate | date:'dd-MM-yyyy'}}</label>
+			</div>
+		</div>
+		<div class="tab-content-cont full silverman-tab-cont">
+			<div class="tab-content full downes-tab" id="Downes_tab"
+				*ngIf="sinDataList.dataList!=null">
+				<div class="table full">
+					<div class="table-row-flex head">
+						<div class="table-cell">
+							<span>UHID</span>
+						</div>
+						<div class="table-cell">
+							<span>Name</span>
+						</div>
+					</div>
+					<div class="table-row-flex" *ngFor="let obj of sinDataList.dataList">
+						<div class="table-cell">
+							<span>{{obj[0]}}</span>
+						</div>
+						<div class="table-cell">
+							<span>{{obj[1]}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+	<span class="inicu-loader-content">
+        <span class="inicu-adding-image"></span>
+		<span class="inicu-loading-content">{{loaderContent}}</span>
+	</span>
+</span>

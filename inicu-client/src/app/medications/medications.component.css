@@ -1,0 +1,54 @@
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+.doseType{
+  width: 21%;
+}
+.mode{
+  width: 12%;
+}
+.dose{
+  width: 38%;
+}
+.infusion{
+  width: 20%;
+}
+.infusiontime{
+  width: 22%;
+  margin-left: -19px;
+
+}
+.rate{
+  width: 38%;
+}
+.singledose{
+  width:30%;
+}
+.perdaydose{
+  width: 110%;
+}
+.infusiontextbox{
+  width: 42%;
+}
+.Diluent{
+  margin-left: -62px;
+  width: 12%
+}
+.overvolume{
+  margin-left: -30px;
+}
+.visibility-text{
+  -webkit-text-fill-color: black;
+  -webkit-opacity: 1;
+  background: #e6f1ff;
+}
+}
+
+.highlight-changes-done {
+  background-color: #f58788;
+}
+
+.margin-20{
+  margin-left: 20px!important;
+}
+.margin-80{
+  margin-left: -80px;
+}

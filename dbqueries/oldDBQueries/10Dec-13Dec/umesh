@@ -1,0 +1,1 @@
+INSERT INTO kdah.ref_testslist ("testid", "testcode", "testname", "assesment_category", "isactive") VALUES ('DGC1894', 'DGC1894', 'ECOCARDDIOGRAPHY', 'Others', true);

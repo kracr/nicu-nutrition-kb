@@ -1,0 +1,377 @@
+<nusring-panel></nusring-panel>
+<div *ngIf="dailyProgress.babyVisit != undefined"
+	class="background-color-white"
+	style="background-color: white !important">
+	<form (submit)="setBabyVisits()" name="babyVisit">
+		<div class="assesment-container no-padding-right padding-10-y">
+			<div class="row table full padding-10-x no-padding-right"
+				(click)="anthropometryVisible()">
+				<div class="table-cell middle-aligned">
+					<div
+						class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+						<span class="sprite sprite-action"></span>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned" style="width: 6%">
+					<h1 class="no-margin system-main-heading action-assessment-color">Execution</h1>
+				</div>
+				<div class="table-cell padding-10-x no-padding-right middle-aligned"
+					style="width: 100%">
+					<hr class="action-assessment-line">
+				</div>
+				<div class="table-cell middle-aligned">
+					<a class="sprite sprite-minus-action middle-aligned"
+						*ngIf="isAnthropometryVisible"></a> <a
+						class="sprite  sprite-plus-action middle-aligned"
+						*ngIf="!(isAnthropometryVisible)"></a>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="isAnthropometryVisible"
+			style="background-color: white !important">
+			<div class="assesment-container no-padding-right padding-10-y">
+				<div class="row table full padding-10-x no-padding-right">
+					<div class="col-md-2 date-time">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Date & Time</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime no-margin" autoClose=true [(ngModel)]="dailyProgressDate" dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}" [min]="minDate" [max]="maxDate" (ngModelChange)="calculateOtherDetails()"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-1 no-padding-left gestation">
+						<div class="col-md-12 no-padding" style="width:150px">
+							<span class="bold">Gestation at Birth</span>
+						</div>
+						<div
+							class="col-md-12 no-padding line-height-standard middle-aligned">
+							<span class="bold">{{gaWeekAtBirth}}<sup
+								*ngIf="gaDayAtBirth != null"> + {{gaDayAtBirth}}</sup></span>
+						</div>
+					</div>
+					<div class="col-md-1 no-padding-left" style="width:80px;left:25px">
+						<div class="col-md-12 no-padding">
+							<span class="bold">CGA</span>
+						</div>
+						<div
+							class="col-md-12 no-padding line-height-standard middle-aligned"
+							*ngIf="dailyProgress.birthBabyVisit != undefined">
+							<span class="bold">{{dailyProgress.babyVisit.gestationWeek}}<sup
+								*ngIf="dailyProgress.babyVisit.gestationDays != null"> +
+									{{dailyProgress.babyVisit.gestationDays}}</sup></span>
+						</div>
+					</div>
+					<div class="col-md-1 col-lg-2 dol no-padding" style="width:150px;left:25px">
+						<div class="col-md-12 no-padding">
+							<span class="bold">DOL</span>
+						</div>
+						<div
+							class="col-md-12 no-padding line-height-standard middle-aligned">
+							<span class="bold">{{ageDays}} days</span>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-4 weight no-padding-right" style="margin-left:12px">
+						<div class="col-md-3 no-padding">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Weight</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="relative-input-group block desktop-column-20"
+									*ngIf="dailyProgress.birthBabyVisit != undefined">
+									<input type="text" name="weightName"
+										class="input input-medium desktop-column-12"
+										min="500"[(ngModel)]="dailyProgress.babyVisit.currentdateweight" (ngModelChange)="weightValidate()">
+									<span class="input-group-icon center-aligned desktop-column-8">gm</span>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf="weightLabel">
+								<span class="error-labels">Weight can't be in Decimal</span>
+							</div>
+						</div>
+						<div class="col-md-6 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Head Circumference</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="relative-input-group block desktop-column-20"
+									*ngIf="dailyProgress.birthBabyVisit != undefined">
+									<input type="text" name="headName"
+										class="input input-medium desktop-column-12"
+										[(ngModel)]="dailyProgress.babyVisit.currentdateheadcircum">
+									<span class="input-group-icon center-aligned desktop-column-8">cm</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Length</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="relative-input-group block desktop-column-20"
+									*ngIf="dailyProgress.birthBabyVisit != undefined">
+									<input type="text" name="lengthName"
+										class="input input-medium desktop-column-12"
+										[(ngModel)]="dailyProgress.babyVisit.currentdateheight">
+									<span class="input-group-icon center-aligned desktop-column-8">cm</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-lg-2 weight-for-cal" style="margin-top:-16px">
+						<div class="col-md-12 no-padding-left">
+							<div class="col-md-12 no-padding" style="margin-top:15px">
+								<span class="bold" [ngClass]="{'required':true}">Weight for Calculation</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="relative-input-group block">
+									<input type="text" class="input input-medium desktop-column-10"
+										[(ngModel)]="dailyProgress.babyVisit.weightForCal"
+										[ngModelOptions]="{standalone: true}" [required]/> <span
+										class="input-group-icon desktop-column-10 center-aligned"
+										style="top: 0px; left: 1px">gm</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row table full padding-10-x no-padding-right">
+					<div class="col-md-12">
+						<div class="col-md-12 no-padding">
+							<span class="bold">Comments</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="text" name="commentName"
+								class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+								[(ngModel)]="dailyProgress.babyVisit.comments">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="assesment-container set-AssessmentSystemtEvent-background">
+			<div class="col-md-12 no-padding margin-10-y">
+				<div class="col-md-4 no-padding-left padding-10-y no-padding-bottom">
+					<h1 class="light margin-5-y blue-text anthropometry">Anthropometry Summary</h1>
+				</div>
+				<div class="col-md-2 from-date no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">From</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<owl-date-time class="owl-dateTime" name="fromDateTable" [(ngModel)]="fromDateTable" dateFormat='DD-MM-YYYY hh:mm A'
+						type="both" [min]="minDate" [max]="maxDate" autoClose=true></owl-date-time>
+					</div>
+				</div>
+				<div class="col-md-2 from-date no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">To</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<owl-date-time class="owl-dateTime" name="toDateTable" type="both" [(ngModel)]="toDateTable" dateFormat='DD-MM-YYYY hh:mm A'  [min]="minDate" [max]="maxDate" autoClose=true></owl-date-time>
+					</div>
+				</div>
+				<div class="col-md-5 col-lg-4 show-print-exportcsv no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="visiblity-hidden">To</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<button class="button button-blue margin-5-x" type="button" (click)="filterNursingAnthropometry(fromDateTable, toDateTable, 'table')">
+							SHOW</button>
+						<button class="button button-blue margin-5-x" type="button" (click)="filterNursingAnthropometry(fromDateTable, toDateTable, 'print')">
+							PRINT</button>
+						<button class="button button-blue margin-5-x" type="button" (click)="filterNursingAnthropometry(fromDateTable, toDateTable, 'csv')">
+							EXPORT CSV</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12" style="background-color: white">
+			<div class="col-md-12 right-aligned no-padding">
+				<span class="sprite sprite-blue-plus middle-aligned"
+						(click)="clickExpand()" *ngIf="!isExpand"></span>
+				<span class="sprite sprite-blue-minus middle-aligned"
+						(click)="clickExpand()" *ngIf="isExpand"></span>
+			</div>
+			<div
+				class="col-md-12 no-padding padding-5-y" style="margin-bottom:200px">
+				<table
+					class="table table-striped table-bordered headed-table desktop-column-20 margin-bottom-100"
+					*ngIf="!isExpand">
+					<tr>
+						<td class="center-aligned">Date & Time</td>
+						<td class="center-aligned">Gestation at Birth</td>
+						<td class="center-aligned">CGA</td>
+						<td class="center-aligned">DOL</td>
+						<td class="center-aligned">Weight(gm)</td>
+						<td class="center-aligned">Length(cm)</td>
+						<td class="center-aligned">Head Circumference(cm)</td>
+						<td class="center-aligned">Weight For Calculation(gm)</td>
+						<td class="center-aligned">Comments</td>
+					</tr>
+					<tr>
+						<td class="center-aligned"><span
+							*ngIf="copiedSentData != null && copiedSentData.length > 0">{{copiedSentData[0].visitdate
+								| date:'dd-MM-yyyy'}} <span
+								*ngIf="copiedSentData[0].visittime != null && copiedSentData[0].visittime != undefined && copiedSentData.length > 0">{{copiedSentData[0].visittime}}</span>
+								<span
+								*ngIf="copiedSentData[0].visittime == null || copiedSentData[0].visittime ==undefined && copiedSentData.length > 0">12:30:00</span>
+						</span></td>
+						<td class="center-aligned"><span
+							*ngIf="copiedSentData != null && copiedSentData.length > 0">{{gaWeekAtBirth}}
+								<sup *ngIf="gaDayAtBirth != null"> + {{gaDayAtBirth}}</sup>
+						</span></td>
+						<td class="center-aligned"><span
+							*ngIf="copiedSentData != null && copiedSentData.length > 0">{{copiedSentData[0].gestationWeek}}
+								<sup
+								*ngIf="copiedSentData[0].gestationDays != null && copiedSentData.length > 0">
+									+ {{copiedSentData[0].gestationDays}}</sup>
+						</span></td>
+						<td class="center-aligned"><span
+							*ngIf="copiedSentData != null && copiedSentData.length > 0">{{copiedSentData[0].currentage}}</span></td>
+						<td class="center-aligned" ><span
+							*ngIf="copiedSentData != null && copiedSentData.length > 0">{{copiedSentData[0].currentdateweight}}</span></td>
+						<td class="center-aligned" ><span
+							*ngIf="copiedSentData != null && copiedSentData.length > 0">{{copiedSentData[0].currentdateheight}}</span></td>
+						<td class="center-aligned" ><span
+							*ngIf="copiedSentData != null && copiedSentData.length > 0">{{copiedSentData[0].currentdateheadcircum}}</span></td>
+						<td class="center-aligned" ><span
+							*ngIf="copiedSentData != null && copiedSentData.length > 0">{{copiedSentData[0].weightForCal}}</span></td>
+						<td
+						(click)="openCommentsModal(copiedSentData[0].comments)"
+						class="center-aligned"><a class="blue-text">View</a></td>
+					</tr>
+					<tr>
+						<td class="center-aligned">{{dailyProgress.birthBabyVisit.visitdate
+							| date:'dd-MM-yyyy'}} <span
+							*ngIf="dailyProgress.birthBabyVisit.visittime != null && dailyProgress.birthBabyVisit.visittime != undefined">{{dailyProgress.birthBabyVisit.visittime}}</span>
+							<span
+							*ngIf="dailyProgress.birthBabyVisit.visittime == null || dailyProgress.birthBabyVisit.visittime ==undefined">12:30:00</span>
+
+						</td>
+						<td class="center-aligned">{{gaWeekAtBirth}} <sup
+							*ngIf="gaDayAtBirth != null"> + {{gaDayAtBirth}}</sup></td>
+						<td class="center-aligned"><span class="red-text">Birth</span></td>
+						<td class="center-aligned">1 Day</td>
+						<td class="center-aligned">{{dailyProgress.birthBabyVisit.currentdateweight}}</td>
+						<td class="center-aligned">{{dailyProgress.birthBabyVisit.currentdateheight}}</td>
+						<td class="center-aligned">{{dailyProgress.birthBabyVisit.currentdateheadcircum}}</td>
+						<td class="center-aligned" ><span
+							*ngIf="copiedSentData != null && copiedSentData.length > 0">{{copiedSentData[0].weightForCal}}</span></td>
+						<td
+							(click)="openCommentsModal(dailyProgress.birthBabyVisit.comments)"
+							class="center-aligned"><a class="blue-text">View</a></td>
+					</tr>
+				</table>
+				<table
+					class="table table-striped table-bordered headed-table desktop-column-20 margin-bottom-100"
+					*ngIf="isExpand">
+					<tr>
+						<td class="center-aligned">Date & Time</td>
+						<td class="center-aligned">Gestation at Birth</td>
+						<td class="center-aligned">CGA</td>
+						<td class="center-aligned">DOL</td>
+						<td class="center-aligned">Weight(gm)</td>
+						<td class="center-aligned">Length(cm)</td>
+						<td class="center-aligned">Head Circumference(cm)</td>
+						<td class="center-aligned">Weight For Calculation(gm)</td>
+						<td class="center-aligned">Comments</td>
+					</tr>
+					<tr *ngFor="let data of copiedSentData">
+						<td class="center-aligned" (click) = "populateAnthropometryObservationSheet(this.data)"><span
+							*ngIf="dailyProgress.listBabyVisit != null">{{data.visitdate
+								| date:'dd-MM-yyyy'}} <span
+								*ngIf="data.visittime != null && data.visittime != undefined">{{data.visittime}}</span>
+								<span
+								*ngIf="data.visittime == null || data.visittime ==undefined">12:30:00</span>
+						</span></td>
+						<td class="center-aligned"><span
+							*ngIf="dailyProgress.listBabyVisit != null">{{gaWeekAtBirth}}
+								<sup *ngIf="gaDayAtBirth != null"> + {{gaDayAtBirth}}</sup>
+						</span></td>
+						<td class="center-aligned"><span
+							*ngIf="dailyProgress.listBabyVisit != null">{{data.gestationWeek}}
+								<sup *ngIf="data.gestationDays != null"> +
+									{{data.gestationDays}}</sup>
+						</span></td>
+						<td class="center-aligned" (click) = "populateAnthropometryObservationSheet(this.data)"><span
+							*ngIf="dailyProgress.listBabyVisit != null">{{data.currentage}}</span></td>
+						<td class="center-aligned" (click) = "populateAnthropometryObservationSheet(this.data)"><span
+							*ngIf="dailyProgress.listBabyVisit != null">{{data.currentdateweight}}</span></td>
+						<td class="center-aligned" (click) = "populateAnthropometryObservationSheet(this.data)"><span
+							*ngIf="dailyProgress.listBabyVisit != null">{{data.currentdateheight}}</span></td>
+						<td class="center-aligned" (click) = "populateAnthropometryObservationSheet(this.data)"><span
+							*ngIf="dailyProgress.listBabyVisit != null">{{data.currentdateheadcircum}}</span></td>
+						<td class="center-aligned" (click) = "populateAnthropometryObservationSheet(this.data)"><span
+								*ngIf="dailyProgress.listBabyVisit != null">{{data.weightForCal}}</span></td>
+						<td (click)="openCommentsModal(data.comments)"
+							class="center-aligned"><a class="blue-text">View</a></td>
+					</tr>
+					<tr>
+						<td class="center-aligned">{{dailyProgress.birthBabyVisit.visitdate
+							| date:'dd-MM-yyyy'}} <span
+							*ngIf="dailyProgress.birthBabyVisit.visittime != null && dailyProgress.birthBabyVisit.visittime != undefined">{{dailyProgress.birthBabyVisit.visittime}}</span>
+							<span
+							*ngIf="dailyProgress.birthBabyVisit.visittime == null || dailyProgress.birthBabyVisit.visittime ==undefined">12:30:00</span>
+						</td>
+						<td class="center-aligned">{{gaWeekAtBirth}} <sup
+							*ngIf="gaDayAtBirth != null"> + {{gaDayAtBirth}}</sup></td>
+						<td class="center-aligned"><span class="red-text">Birth</span></td>
+						<td class="center-aligned">1 Day</td>
+						<td class="center-aligned">{{dailyProgress.birthBabyVisit.currentdateweight}}</td>
+						<td class="center-aligned">{{dailyProgress.birthBabyVisit.currentdateheight}}</td>
+						<td class="center-aligned">{{dailyProgress.birthBabyVisit.currentdateheadcircum}}</td>
+						<td class="center-aligned" ><span
+							*ngIf="copiedSentData != null && copiedSentData.length > 0">{{copiedSentData[0].weightForCal}}</span></td>
+						<td
+							(click)="openCommentsModal(dailyProgress.birthBabyVisit.comments)"
+							class="center-aligned"><a class="blue-text">View</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div>
+			<div class="col-md-12 no-padding background-color-white">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-4 no-padding"></div>
+					<div class="col-md-4 no-padding border-radius-5 center-aligned">
+						<span class="alert alert-small margin-10-x border-radius-5 "
+							[ngClass]="{ 'alert-red' : responseType !='success','alert-green' : responseType =='success' }"
+							*ngIf="vanishSubmitResponseVariable">{{responseMessage}}</span>
+					</div>
+					<div class="col-md-4 no-padding"></div>
+				</div>
+				<div id="footer">
+					<span class="inicu-loader" *ngIf="isLoaderVisible">
+						<span class="inicu-loader-content">
+							<span class="inicu-adding-image"></span>
+							<span class="inicu-loading-content">{{loaderContent}}.</span>
+						</span>
+					</span>
+					<button class="button button-blue button-large" type="submit">SUBMIT</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="overlay" id="commentsOverlay"></div>
+<div class="modal-box-lg comments-popup" id="NursingVitalsPopup">
+	<button class="modal-popup-close-btn"
+		(click)="closeModalNursingVitals()"></button>
+	<div class="inicu-tab-container">
+		<div class="tab-header">
+			<div class="padding-20-x table full">
+				<div class="table-cell pull-left">
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Comments</h1>
+				</div>
+			</div>
+		</div>
+		<div class="tab-content-cont full ivh-tabcontent">
+			<div class="col-md-12 padding-20-y">
+				<textarea
+					class="desktop-column-20 max-height-36 set-font-size-default no-margin visibility-text"
+					rows="4" [(ngModel)]="commentVitals" disabled></textarea>
+			</div>
+		</div>
+	</div>
+</div>

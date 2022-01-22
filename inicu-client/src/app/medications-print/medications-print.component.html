@@ -1,0 +1,165 @@
+<div style="margin-left: 13px;">
+  <h1 class="print-heading" style="text-align:center">Drug List ({{currentDate | date: 'dd-MM-yyyy'}})</h1>
+</div>
+<div class="col-md-12">
+  <div class="col-md-12 no-padding table full margin-10-y">
+    <div class="col-md-4 no-padding table-cell print-width-4">
+      <span class="bold">UHID :</span><span class="padding-10-x"
+        *ngIf="childData.uhid != null">{{childData.uhid}}</span>
+    </div>
+    <div class="col-md-4 no-padding table-cell print-width-4">
+      <span class="bold">Baby Name : </span><span class="padding-10-x"
+        *ngIf="childData.name != null">{{childData.name}} <span
+        *ngIf="childData.babyNumber != null">{{childData.babyNumber}}</span></span>
+    </div>
+    <div class="col-md-4 no-padding table-cell print-width-4">
+      <span class="bold">Birth Weight :</span><span class="padding-10-x"
+        *ngIf="childData.birthWeight != null">{{childData.birthWeight}}
+        gm</span>
+    </div>
+  </div>
+  <div class="col-md-12 no-padding table full margin-10-y">
+    <div class="col-md-4 no-padding table-cell print-width-4">
+      <span class="bold">Gender : </span><span class="padding-10-x"
+        *ngIf="childData.uhid != null">{{childData.gender}}</span>
+    </div>
+    <div class="col-md-4 no-padding table-cell print-width-4">
+      <span class="bold">CGA: </span> <span
+        *ngIf="childData.gestation != null"> <span
+        class="padding-10-x" *ngIf="this.gestationWeeks != null">{{this.gestationWeeks}}
+          <sup *ngIf="this.gestationDays != null"> +
+            {{this.gestationDays}}</sup>
+      </span>
+      </span>
+    </div>
+    <div class="col-md-4 no-padding table-cell print-width-4">
+      <span class="bold">DOB : </span><span class="padding-10-x"
+        *ngIf="childData.dob != null">{{childData.dob |
+        date:'dd-MM-yyyy'}}</span>
+    </div>
+  </div>
+</div>
+<div class="col-md-12 padding-0-x force-left margin-bottom-100 print-width-12">
+  <table class="table table-striped table-bordered headed-table desktop-column-20">
+    <tr>
+      <td class="center-aligned bold"><span>Order Date</span></td>
+      <td class="center-aligned bold"><span>Notes</span></td>
+      <td class="center-aligned bold"><span>Route</span></td>
+      <td class="center-aligned bold"><span>Medicine Day</span></td>
+    </tr>
+    <tr *ngFor="let item of prescription.activePrescription; let i = index" [attr.data-index]="i">
+      <td class="center-aligned table-cell border-black font-size" *ngIf="item.isactive == true"><span>{{item.medicineOrderDate | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned table-cell border-black font-size" *ngIf="item.isactive == true"><span>{{item.instruction}}</span></td>
+      <td class="center-aligned table-cell border-black font-size" *ngIf="item.isactive == true"><span>{{item.route}}</span></td>
+      <td class="center-aligned table-cell border-black font-size" *ngIf="item.isactive == true"><span>{{item.medicineDay}}</span></td>
+    </tr>
+    <tr *ngIf = "prescription.babyfeedDetailList != null && prescription.babyfeedDetailList.calsyrupTotal != null">
+      <td class="center-aligned table-cell border-black font-size"><span>{{prescription.babyfeedDetailList.entryDateTime | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>Give Calcium Syrup ({{calBrand}}) of dose {{prescription.babyfeedDetailList.calsyrupVolume}}
+        (mg/kg/day) of volume {{prescription.babyfeedDetailList.calsyrupTotal}} (ml/dose)
+        <span *ngIf = "prescription.babyfeedDetailList.calsyrupDuration != null">in every
+          {{prescription.babyfeedDetailList.calsyrupDuration}} hours.
+        </span>
+      </span>
+      </td>
+      <td class="center-aligned"><span>PO</span></td>
+      <td class="center-aligned"><span>1</span></td>
+    </tr>
+    <tr *ngIf = "prescription.babyfeedDetailList != null && prescription.babyfeedDetailList.ironTotal != null">
+      <td class="center-aligned table-cell border-black font-size"><span>{{prescription.babyfeedDetailList.entryDateTime | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>Give Iron ({{ironBrand}}) of dose {{prescription.babyfeedDetailList.ironVolume}}
+        (mg/kg/day) of volume {{prescription.babyfeedDetailList.ironTotal}} (ml/dose)
+        <span *ngIf = "prescription.babyfeedDetailList.ironDuration != null">in every
+          {{prescription.babyfeedDetailList.ironDuration}} hours.
+        </span>
+      </span>
+      </td>
+      <td class="center-aligned table-cell border-black font-size"><span>PO</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>1</span></td>
+    </tr>
+    <tr *ngIf = "prescription.babyfeedDetailList != null && prescription.babyfeedDetailList.vitaminaTotal != null">
+      <td class="center-aligned"><span>{{prescription.babyfeedDetailList.entryDateTime | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned"><span>Give Multi-Vitamin ({{multiVitaminBrand}}) of volume {{prescription.babyfeedDetailList.vitaminaTotal}} (ml/dose)
+        <span *ngIf = "prescription.babyfeedDetailList.vitaminaDuration != null">in every
+          {{prescription.babyfeedDetailList.vitaminaDuration}} hours.
+        </span>
+      </span>
+      </td>
+      <td class="center-aligned table-cell border-black font-size"><span>PO</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>1</span></td>
+    </tr>
+    <tr *ngIf = "prescription.babyfeedDetailList != null && prescription.babyfeedDetailList.vitamindTotal != null">
+      <td class="center-aligned table-cell border-black font-size"><span>{{prescription.babyfeedDetailList.entryDateTime | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>Give Vitamin D ({{vitaminDBrand}}) of volume {{prescription.babyfeedDetailList.vitamindTotal}} (ml/dose)
+        <span *ngIf = "prescription.babyfeedDetailList.vitaminDDuration != null">in every
+          {{prescription.babyfeedDetailList.vitaminDDuration}} hours.
+        </span>
+      </span>
+      </td>
+      <td class="center-aligned table-cell border-black font-size"><span>PO</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>1</span></td>
+    </tr>
+    <tr *ngIf = "prescription.babyfeedDetailList != null && prescription.babyfeedDetailList.mctTotal != null">
+      <td class="center-aligned table-cell border-black font-size"><span>{{prescription.babyfeedDetailList.entryDateTime | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>Give MCT Oil ({{mctBrand}}) {{prescription.babyfeedDetailList.mctVolume}}
+        Drops of volume {{prescription.babyfeedDetailList.mctTotal}} (ml/dose)
+        <span *ngIf = "prescription.babyfeedDetailList.mctDuration != null">in every
+          {{prescription.babyfeedDetailList.mctDuration}} hours.
+        </span>
+      </span>
+      </td>
+      <td class="center-aligned table-cell border-black font-size"><span>PO</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>1</span></td>
+    </tr>
+    <tr *ngIf = "prescription.babyfeedDetailList != null && prescription.babyfeedDetailList.sodiumTotal != null">
+      <td class="center-aligned table-cell border-black font-size"><span>{{prescription.babyfeedDetailList.entryDateTime | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>Give Sodium <span *ngIf = "prescription.babyfeedDetailList.sodiumVolume == '0.15'">(Normal Saline 0.9%)</span>
+        <span *ngIf = "prescription.babyfeedDetailList.sodiumVolume == '0.5'">(3% Sodium Concentration)</span>
+        of volume {{prescription.babyfeedDetailList.sodiumMeg}}
+        (meq/kg/day) in total volume {{prescription.babyfeedDetailList.sodiumTotal}} (ml/dose).</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>IV</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>1</span></td>
+    </tr>
+    <tr *ngIf = "prescription.babyfeedDetailList != null && prescription.babyfeedDetailList.potassiumTotal != null">
+      <td class="center-aligned table-cell border-black font-size"><span>{{prescription.babyfeedDetailList.entryDateTime | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>Give Potassium (KCL) of volume {{prescription.babyfeedDetailList.potassiumVolume}}
+        (meq/kg/day) in total volume {{prescription.babyfeedDetailList.potassiumTotal}} (ml/dose).</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>IV</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>1</span></td>
+    </tr>
+    <tr *ngIf = "prescription.babyfeedDetailList != null && prescription.babyfeedDetailList.calciumTotal != null">
+      <td class="center-aligned table-cell border-black font-size"><span>{{prescription.babyfeedDetailList.entryDateTime | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>Give Calcium ({{prescription.babyfeedDetailList.calciumConcentrationType}}) of volume {{prescription.babyfeedDetailList.calciumVolume}}
+        (ml/kg/day) in total volume {{prescription.babyfeedDetailList.calciumTotal}} (ml/dose).</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>IV</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>1</span></td>
+    </tr>
+    <tr *ngIf = "prescription.babyfeedDetailList != null && prescription.babyfeedDetailList.phosphorousTotal != null">
+      <td class="center-aligned table-cell border-black font-size"><span>{{prescription.babyfeedDetailList.entryDateTime | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>Give Phosphorus (Glycerol Phosphate) of volume {{prescription.babyfeedDetailList.phosphorousVolume}}
+        (ml/kg/day) in total volume {{prescription.babyfeedDetailList.phosphorousTotal}} (ml/dose).</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>IV</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>1</span></td>
+    </tr>
+    <tr *ngIf = "prescription.babyfeedDetailList != null && prescription.babyfeedDetailList.mviTotal != null">
+      <td class="center-aligned table-cell border-black font-size"><span>{{prescription.babyfeedDetailList.entryDateTime | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>Give Multi Vitamin Infusion of volume {{prescription.babyfeedDetailList.mviTotal}} (ml/dose).</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>IV</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>1</span></td>
+    </tr>
+    <tr *ngIf = "prescription.babyfeedDetailList != null && prescription.babyfeedDetailList.hco3Total != null">
+      <td class="center-aligned table-cell border-black font-size"><span>{{prescription.babyfeedDetailList.entryDateTime | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>Give NaHCO3 of volume {{prescription.babyfeedDetailList.hco3Volume}}
+        (ml/kg/day) in total volume {{prescription.babyfeedDetailList.hco3Total}} (ml/dose).</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>IV</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>1</span></td>
+    </tr>
+    <tr *ngIf = "prescription.babyfeedDetailList != null && prescription.babyfeedDetailList.magnesiumTotal != null">
+      <td class="center-aligned table-cell border-black font-size"><span>{{prescription.babyfeedDetailList.entryDateTime | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>Give Magnesium of volume {{prescription.babyfeedDetailList.magnesiumVolume}}
+        (meq/kg/day) in total volume {{prescription.babyfeedDetailList.magnesiumTotal}} (ml/dose).</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>IV</span></td>
+      <td class="center-aligned table-cell border-black font-size"><span>1</span></td>
+    </tr>
+  </table>
+</div>

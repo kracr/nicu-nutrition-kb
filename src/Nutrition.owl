@@ -1,0 +1,1119 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.childhealthimprints.com/NutritionalGuidelines/"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.childhealthimprints.com/NutritionalGuidelines/">
+    <Prefix name="" IRI="http://www.childhealthimprints.com/NutritionalGuidelines/"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="Testing" IRI="http://www.childhealthimprints.com/SampleOntology/Testing/"/>
+    <Declaration>
+        <Class IRI="CHO"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Calcium"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Color"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="DayOfLife"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="EnteralFeed"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="FeedType"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="FeedingMethod"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="FormulaMilk"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Group1"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Group2"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Group3"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Group4"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Group5"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Group6"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="HumanMilk"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="MilkType"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="ParenteralFeed"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Potassium"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Protein"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="SignAndSymptom"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Sodium"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Volume"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Neonate"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasFeedMilkType"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasFeedingMethod"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasSignAndSymptom"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasVomitColor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasVomitVolume"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasXRayAbdominStatus"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="bloodPresentInStool"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="bloodPresentInVomit"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="givenFeedVolume"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasAbdominalDistension"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasAbdominalTenderness"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasAbsentEndDiastolicFlow"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasApnea"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasBabyID"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasBaseAccess"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasBaseDeficitValue"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasBirthWeight"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasBleedingPerRectum"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasBloodPressure"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasCentralPeripheralDifference"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasChestCompressionDuration"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasColdPeripheries"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasCordGaspHValue"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasDiseaseNecrotizingEnterocolitis"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasFeedIntolerance"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasFeedIntoleranceSign"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasFinalEnergyRequirement"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasFinalFeedingAdvancement"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasFinalFeedingVolume"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasForitifiers"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasGastricAspirate"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasGastricAspirateAbnormalColor"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasGestationalAgeAtBirth"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasIncreasedLactate"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasInitialEnergyRequirement"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasInitialFeedingAdvancement"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasInitialFeedingVolume"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasIntraUterineGrowthRetardation"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasLactateLevel"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasLethargy"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasLongCapillaryRefillTime"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasLowBloodPressure"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasMaxFluidRequirement"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasMetabolicAcidosis"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNFeed"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNFeedingVolumeOfCalcium"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNFeedingVolumeOfPotassium"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNFinalFeedingAdvancementOfCHO"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNFinalFeedingAdvancementOfProtein"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNFinalFeedingVolumeOfCHO"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNFinalFeedingVolumeOfProtein"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNFinalFeedingVolumeOfSodium"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNInitialFeedingAdvancementOfCHO"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNInitialFeedingAdvancementOfProtein"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNInitialFeedingVolumeOfCHO"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNInitialFeedingVolumeOfProtein"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPNInitialFeedingVolumeOfSodium"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasParenteralTotalVolume"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPoorPerfusion"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPresentAbdominGirth"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPresentDayOfLife"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasPreviousAbdominGirth"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasRespiratoryDistress"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasResuscitation"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasReversedEndBloodFlow"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasRiskFactor"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasRiskFactorPresentDays"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasSkinDiscoloration"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasTechycardia"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasTemperatureInStability"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="hasVisibleBowelLoop"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="haslowPlateletCount"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="isStoolPassed"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="pressorGiven"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="vomitTimeAfterFeed"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasDayOfLife"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Abdominal"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Abnormal"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="BloodStained"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="ChestCompression"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="DarkBile"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Decrease"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="DonorBreastMilk"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="ExpressedBreastMilk"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="GastroIntestinalSurgery"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="KUB"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="MaternalBreastMilk"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="NecrotizingEnterocolitis"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Normal"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Platelets"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Pressor"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Same"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Similac19"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="SimilacSpiralCare20"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Skin"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="Vomit"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="centimeter"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="CHO"/>
+        <Class IRI="ParenteralFeed"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Calcium"/>
+        <Class IRI="ParenteralFeed"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="EnteralFeed"/>
+        <Class IRI="FeedType"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="FormulaMilk"/>
+        <Class IRI="MilkType"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Group1"/>
+        <Class IRI="#Neonate"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Group2"/>
+        <Class IRI="#Neonate"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Group3"/>
+        <Class IRI="#Neonate"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Group4"/>
+        <Class IRI="#Neonate"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Group5"/>
+        <Class IRI="#Neonate"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Group6"/>
+        <Class IRI="#Neonate"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="HumanMilk"/>
+        <Class IRI="MilkType"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="ParenteralFeed"/>
+        <Class IRI="FeedType"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Potassium"/>
+        <Class IRI="ParenteralFeed"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Protein"/>
+        <Class IRI="ParenteralFeed"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Sodium"/>
+        <Class IRI="ParenteralFeed"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Neonate"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="hasAbdominalDistension"/>
+            <Datatype abbreviatedIRI="xsd:boolean"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Neonate"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="hasChestCompressionDuration"/>
+            <Datatype abbreviatedIRI="xsd:integer"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Neonate"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="hasInitialFeedingAdvancement"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Neonate"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="hasInitialFeedingVolume"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Neonate"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="hasPNFeed"/>
+            <Datatype abbreviatedIRI="xsd:boolean"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Neonate"/>
+        <DataAllValuesFrom>
+            <DataProperty IRI="hasAbdominalTenderness"/>
+            <Datatype abbreviatedIRI="xsd:boolean"/>
+        </DataAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Neonate"/>
+        <DataAllValuesFrom>
+            <DataProperty IRI="hasFeedIntolerance"/>
+            <Datatype abbreviatedIRI="xsd:boolean"/>
+        </DataAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Neonate"/>
+        <DataAllValuesFrom>
+            <DataProperty IRI="hasGestationalAgeAtBirth"/>
+            <Datatype abbreviatedIRI="xsd:double"/>
+        </DataAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Neonate"/>
+        <DataAllValuesFrom>
+            <DataProperty IRI="hasRespiratoryDistress"/>
+            <Datatype abbreviatedIRI="xsd:boolean"/>
+        </DataAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Neonate"/>
+        <DataAllValuesFrom>
+            <DataProperty IRI="#hasDayOfLife"/>
+            <Datatype abbreviatedIRI="xsd:integer"/>
+        </DataAllValuesFrom>
+    </SubClassOf>
+    <ClassAssertion>
+        <Class IRI="HumanMilk"/>
+        <NamedIndividual IRI="DonorBreastMilk"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="HumanMilk"/>
+        <NamedIndividual IRI="ExpressedBreastMilk"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="HumanMilk"/>
+        <NamedIndividual IRI="MaternalBreastMilk"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="FormulaMilk"/>
+        <NamedIndividual IRI="Similac19"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="FormulaMilk"/>
+        <NamedIndividual IRI="SimilacSpiralCare20"/>
+    </ClassAssertion>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="hasFeedMilkType"/>
+        <Class IRI="#Neonate"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="hasFeedingMethod"/>
+        <Class IRI="#Neonate"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="hasSignAndSymptom"/>
+        <Class IRI="#Neonate"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="hasVomitColor"/>
+        <Class IRI="#Neonate"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="hasVomitVolume"/>
+        <Class IRI="#Neonate"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="hasXRayAbdominStatus"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="hasFeedMilkType"/>
+        <Class IRI="MilkType"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="hasFeedingMethod"/>
+        <Class IRI="FeedingMethod"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="hasSignAndSymptom"/>
+        <Class IRI="SignAndSymptom"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="hasVomitColor"/>
+        <Class IRI="Color"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="hasVomitVolume"/>
+        <Class IRI="Volume"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="hasXRayAbdominStatus"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </ObjectPropertyRange>
+    <DataPropertyDomain>
+        <DataProperty IRI="bloodPresentInStool"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="givenFeedVolume"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasAbdominalDistension"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasAbdominalTenderness"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasAbsentEndDiastolicFlow"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasApnea"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasBabyID"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasBaseAccess"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasBaseDeficitValue"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasBirthWeight"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasBleedingPerRectum"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasBloodPressure"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasCentralPeripheralDifference"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasChestCompressionDuration"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasColdPeripheries"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasDiseaseNecrotizingEnterocolitis"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasFeedIntolerance"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasFinalEnergyRequirement"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasFinalFeedingAdvancement"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasFinalFeedingVolume"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasForitifiers"/>
+        <Class IRI="FeedType"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasGastricAspirate"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasGastricAspirateAbnormalColor"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasGestationalAgeAtBirth"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasIncreasedLactate"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasInitialEnergyRequirement"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasInitialFeedingAdvancement"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasInitialFeedingVolume"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasIntraUterineGrowthRetardation"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasLactateLevel"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasLethargy"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasLongCapillaryRefillTime"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasLowBloodPressure"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasMaxFluidRequirement"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasMetabolicAcidosis"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNFeed"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNFeedingVolumeOfCalcium"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNFeedingVolumeOfPotassium"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNFinalFeedingAdvancementOfCHO"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNFinalFeedingAdvancementOfProtein"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNFinalFeedingVolumeOfCHO"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNFinalFeedingVolumeOfProtein"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNFinalFeedingVolumeOfSodium"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNInitialFeedingAdvancementOfCHO"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNInitialFeedingAdvancementOfProtein"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNInitialFeedingVolumeOfCHO"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNInitialFeedingVolumeOfProtein"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPNInitialFeedingVolumeOfSodium"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasParenteralTotalVolume"/>
+        <Class IRI="ParenteralFeed"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPoorPerfusion"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPresentAbdominGirth"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPresentDayOfLife"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasPreviousAbdominGirth"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasRespiratoryDistress"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasResuscitation"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasReversedEndBloodFlow"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasRiskFactor"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasRiskFactorPresentDays"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasSkinDiscoloration"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasTechycardia"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="hasTemperatureInStability"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="haslowPlateletCount"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="isStoolPassed"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="pressorGiven"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="vomitTimeAfterFeed"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#hasDayOfLife"/>
+        <Class IRI="#Neonate"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="bloodPresentInStool"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="bloodPresentInVomit"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="givenFeedVolume"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasAbdominalDistension"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasAbdominalTenderness"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasAbsentEndDiastolicFlow"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasApnea"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasBaseAccess"/>
+        <Datatype abbreviatedIRI="xsd:decimal"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasBaseDeficitValue"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasBirthWeight"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasBleedingPerRectum"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasBloodPressure"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasCentralPeripheralDifference"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasChestCompressionDuration"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasColdPeripheries"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasCordGaspHValue"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasDiseaseNecrotizingEnterocolitis"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasFeedIntolerance"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasFeedIntoleranceSign"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasFinalEnergyRequirement"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasFinalFeedingAdvancement"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasFinalFeedingVolume"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasForitifiers"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasGastricAspirate"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasGastricAspirateAbnormalColor"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasGestationalAgeAtBirth"/>
+        <Datatype abbreviatedIRI="xsd:double"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasIncreasedLactate"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasInitialEnergyRequirement"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasInitialFeedingAdvancement"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasInitialFeedingVolume"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasIntraUterineGrowthRetardation"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasLactateLevel"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasLethargy"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasLongCapillaryRefillTime"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasLowBloodPressure"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasMaxFluidRequirement"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasMetabolicAcidosis"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNFeed"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNFeedingVolumeOfCalcium"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNFeedingVolumeOfPotassium"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNFinalFeedingAdvancementOfCHO"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNFinalFeedingAdvancementOfProtein"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNFinalFeedingVolumeOfCHO"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNFinalFeedingVolumeOfProtein"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNFinalFeedingVolumeOfSodium"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNInitialFeedingAdvancementOfCHO"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNInitialFeedingAdvancementOfProtein"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNInitialFeedingVolumeOfCHO"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNInitialFeedingVolumeOfProtein"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPNInitialFeedingVolumeOfSodium"/>
+        <Datatype abbreviatedIRI="xsd:float"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasParenteralTotalVolume"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPoorPerfusion"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPresentAbdominGirth"/>
+        <Datatype abbreviatedIRI="xsd:decimal"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPresentDayOfLife"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasPreviousAbdominGirth"/>
+        <Datatype abbreviatedIRI="xsd:decimal"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasRespiratoryDistress"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasResuscitation"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasReversedEndBloodFlow"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasRiskFactor"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasRiskFactorPresentDays"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasSkinDiscoloration"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasTechycardia"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasTemperatureInStability"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="hasVisibleBowelLoop"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="haslowPlateletCount"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="isStoolPassed"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="pressorGiven"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="vomitTimeAfterFeed"/>
+        <Datatype abbreviatedIRI="xsd:dateTime"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#hasDayOfLife"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

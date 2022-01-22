@@ -1,0 +1,68 @@
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+.weightforcalculation{
+  width: 19%;
+}
+.totalfluidlimit{
+  width: 20%;
+  margin-left: 25px;
+}
+.fluid{
+  width: 14%;
+}
+.pershift{
+  width: 36%;
+}
+.potassium{
+  padding-left: 0px;
+}
+.feedMethodOther{
+  width: 28%;
+}
+.dateandtime{
+  width: 20%;
+}
+.feedentrytype{
+  position: relative;
+  margin-left: -12px;
+}
+.nutrition-print{
+  position: absolute;
+  right: 20px;
+  bottom: 100px
+}
+.margin-top{
+  margin-top: 35px;
+}
+.gir{
+  width: 28%;
+}
+.weight-for-cal{
+  width: 19%;
+}
+.duration{
+  width: 80px!important;
+}
+.total-fluid-limit{
+  width: 19%;
+  margin-left: 8px;
+}
+.fluid-limit-input{
+  width: 60px;
+}
+.total-fluid{
+  margin-left: -32px
+}
+.date-time-feed{
+  margin-left: -35px;
+  width: 20%;
+}
+.feed-entry-type{
+  margin-left: -22px
+}
+.total-fluid-input{
+  width: 40px;
+}
+.higher-dextrose{
+  width: 43%;
+}
+}

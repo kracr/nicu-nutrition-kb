@@ -1,0 +1,791 @@
+					
+					<div
+						class="col-md-12 set-AssessmentSystemtEvent-background no-padding" *ngIf="false">
+						<div class="col-md-3 no-padding"></div>
+						<div class="col-md-2 no-padding"></div>
+						<div class="col-md-7 no-padding table full">
+							<div class="col-md-12 no-padding padding-10-y">
+								<div class="col-md-2 no-padding-right right-aligned"></div>
+								<div class="col-md-4 no-padding-right">
+									<div class="col-md-12 no-padding">
+										<span class="bold">From <span class="font-size-11">(
+												Time : 24 hrs format )</span></span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="col-md-9 no-padding">
+											<owl-date-time class="owl-dateTime" dateFormat='DD-MM-YYYY hh:mm A'></owl-date-time>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 no-padding-right">
+									<div class="col-md-12 no-padding">
+										<span class="bold">To <span class="font-size-11">(
+												Time : 24 hrs format ) </span></span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="col-md-9 no-padding">
+											<owl-date-time class="owl-dateTime"
+												dateFormat='DD-MM-YYYY hh:mm A'></owl-date-time>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2 no-padding-right left-aligned">
+									<div class="col-md-12 no-padding">
+										<label class="visiblity-hidden"><strong>To
+												Time</strong></label>
+									</div>
+									<div class="col-md-12 no-padding padding-top-2">
+										<span class="button button-blue">Print</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding"></div>
+					</div>
+					<div class="no-padding assesment-container">
+						<div class="padding-10-x"
+							*ngIf="nursingIntakeOutputData.babyFeedObj == null || nursingIntakeOutputData.babyFeedObj.babyfeedid == null">
+							<h1 align="center">No feed instruction provided from doctor
+								for today.</h1>
+						</div>
+						<div class="row table full padding-10-x no-padding-right"
+							*ngIf="nursingIntakeOutputData.babyFeedObj != null
+			&& nursingIntakeOutputData.babyFeedObj.babyfeedid != null">
+							<div class="table-cell middle-aligned" style="width: 10%">
+								<h1 class="assessment-heading no-margin font-size-16">Enteral
+									Order</h1>
+							</div>
+							<div
+								class="table-cell padding-10-x no-padding-right middle-aligned"
+								style="width: 100%">
+								<hr class="hrline-color-jaundice">
+							</div>
+							<div class="table-cell middle-aligned">
+								<a class="sprite sprite-blue-minus middle-aligned"
+									(click)="enteralOrderVisible()" *ngIf="isenteralOrderVisible"></a>
+								<a class="sprite sprite-blue-plus middle-aligned"
+									(click)="enteralOrderVisible()"
+									*ngIf="!(isenteralOrderVisible)"></a>
+							</div>
+						</div>
+						<div *ngIf="isenteralOrderVisible">
+							<div
+								class="row table full padding-10-x no-padding-right padding-10-y">
+								<div class=" col-md-8 no-padding table full"
+									style="border: 1px solid #eeeeee; box-shadow: 5px 5px 10px #eeeeee">
+									<div class="padding-10-y padding-10-x">
+										<span class="bold"
+											*ngIf="nursingIntakeOutputData.babyFeedObj.isenternalgiven == null">
+											No Enternal Order. </span> <span class="bold"
+											*ngIf="nursingIntakeOutputData.babyFeedObj.isenternalgiven == false">
+											NPO </span> <span class="bold"
+											*ngIf="nursingIntakeOutputData.babyFeedObj.isenternalgiven == true">
+											{{nursingIntakeOutputData.babyFeedObj.feedvolume}} (ml/feed)
+											by {{nursingIntakeOutputData.feedMethodStr}}, {{primaryFeed}}
+											every {{nursingIntakeOutputData.babyFeedObj.feedduration}}
+											hours (Give {{formulaType}} if {{primaryFeed}} volume is not
+											sufficient). </span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row table full padding-10-x no-padding-right"
+							*ngIf="nursingIntakeOutputData.babyFeedObj != null
+			&& nursingIntakeOutputData.babyFeedObj.babyfeedid != null">
+							<div class="table-cell middle-aligned" style="width: 13%">
+								<h1 class="assessment-heading no-margin font-size-16">Parenteral
+									Order</h1>
+							</div>
+							<div
+								class="table-cell padding-10-x no-padding-right middle-aligned"
+								style="width: 100%">
+								<hr class="hrline-color-jaundice">
+							</div>
+							<div class="table-cell middle-aligned">
+								<a class="sprite sprite-blue-minus middle-aligned"
+									(click)="parenteralOrderVisible()"
+									*ngIf="isparenteralOrderVisible"></a> <a
+									class="sprite sprite-blue-plus middle-aligned"
+									(click)="parenteralOrderVisible()"
+									*ngIf="!(isparenteralOrderVisible)"></a>
+							</div>
+						</div>
+						<div *ngIf="isparenteralOrderVisible">
+							<div
+								*ngIf="nursingIntakeOutputData.babyFeedObj.isparentalgiven == null || nursingIntakeOutputData.babyFeedObj.isparentalgiven == false">
+								<div
+									class="row table full padding-10-x no-padding-right padding-10-y ">
+									<div class="col-md-3 no-padding-left">
+										<span class="bold">No Parental Order.</span>
+									</div>
+								</div>
+
+							</div>
+							<div
+								*ngIf="nursingIntakeOutputData.babyFeedObj.isparentalgiven == true">
+								<div
+									class="row table full padding-10-x no-padding-right padding-10-y ">
+									<div class="col-md-3 no-padding-left">
+										<span class="bold"><span class="blue-text">Fluid
+												Type : </span><span>Lipid Solution</span></span>
+									</div>
+								</div>
+								<div
+									class="row table full padding-10-x no-padding-right padding-10-y">
+									<div class=" col-md-8 no-padding table full"
+										style="border: 1px solid #eeeeee; box-shadow: 5px 5px 10px #eeeeee">
+										<div class="padding-10-y padding-10-x">
+											<span class="bold"> Lipids :
+												{{nursingIntakeOutputData.babyFeedObj.lipidTotal}} ml @
+												{{nursingIntakeOutputData.babyFeedObj.lipidTotal/24 |
+												number:'1.0-1'}} ml/hr </span>
+										</div>
+									</div>
+								</div>
+								<div
+									class="row table full padding-10-x no-padding-right padding-10-y ">
+									<div class="col-md-3 no-padding-left">
+										<span class="bold"><span class="blue-text">Fluid
+												Type : </span><span>Dextrose, Amino Acid & others</span></span>
+									</div>
+								</div>
+								<div
+									class="row table full padding-10-x no-padding-right padding-10-y">
+									<div class=" col-md-8 no-padding table full"
+										style="border: 1px solid #eeeeee; box-shadow: 5px 5px 10px #eeeeee">
+										<div class="padding-10-y padding-10-x">
+											<span class="bold"
+												*ngIf="nursingIntakeOutputData.babyFeedObj.aminoacidTotal != null && nursingIntakeOutputData.babyFeedObj.aminoacidTotal != ''">
+												Amino Acid =
+												{{nursingIntakeOutputData.babyFeedObj.aminoacidTotal}} ml <br>
+											</span> <span class="bold"
+												*ngIf="nursingIntakeOutputData.babyFeedObj.dextroseVolumemlperday != null && nursingIntakeOutputData.babyFeedObj.dextroseVolumemlperday != ''">
+												GIR Value = {{nursingIntakeOutputData.babyFeedObj.girvalue}}
+												mg/kg/min<br> Dextrose
+												{{nursingIntakeOutputData.babyFeedObj.currentDextroseConcentration
+												| number:'1.0-2'}} % =
+												{{nursingIntakeOutputData.babyFeedObj.dextroseVolumemlperday}}
+												ml <br> Low Concentration
+												{{nursingIntakeOutputData.babyFeedObj.dextroseConcLow}} % =
+												{{nursingIntakeOutputData.babyFeedObj.dextroseConcLowvolume}}
+												ml<br> High Concentration
+												{{nursingIntakeOutputData.babyFeedObj.dextroseConcHigh}} % =
+												{{nursingIntakeOutputData.babyFeedObj.dextroseConcHighvolume}}
+												ml<br>
+											</span>
+										</div>
+										<div class="padding-10-y padding-10-x">
+											<span class="blue-text bold"
+												*ngIf="(nursingIntakeOutputData.babyFeedObj.sodiumTotal != null && nursingIntakeOutputData.babyFeedObj.sodiumTotal != '')
+						|| (nursingIntakeOutputData.babyFeedObj.potassiumTotal != null && nursingIntakeOutputData.babyFeedObj.potassiumTotal != '')
+						|| (nursingIntakeOutputData.babyFeedObj.calciumTotal != null && nursingIntakeOutputData.babyFeedObj.calciumTotal != '')
+						|| (nursingIntakeOutputData.babyFeedObj.phosphorousTotal != null && nursingIntakeOutputData.babyFeedObj.phosphorousTotal != '')
+						|| (nursingIntakeOutputData.babyFeedObj.mviTotal != null && nursingIntakeOutputData.babyFeedObj.mviTotal != '')
+						|| (nursingIntakeOutputData.babyFeedObj.hco3Total != null && nursingIntakeOutputData.babyFeedObj.hco3Total != '')
+						|| (nursingIntakeOutputData.babyFeedObj.magnesiumTotal != null && nursingIntakeOutputData.babyFeedObj.magnesiumTotal != '')">Additive</span>
+										</div>
+										<div class="padding-20-x"
+											style="padding-left: 40px !important">
+											<span class="bold"
+												*ngIf="nursingIntakeOutputData.babyFeedObj.sodiumTotal != null && nursingIntakeOutputData.babyFeedObj.sodiumTotal != ''">
+												NaCl = {{nursingIntakeOutputData.babyFeedObj.sodiumTotal}}
+												ml <br>
+											</span><span class="bold"
+												*ngIf="nursingIntakeOutputData.babyFeedObj.potassiumTotal != null && nursingIntakeOutputData.babyFeedObj.potassiumTotal != ''">
+												KCl = {{nursingIntakeOutputData.babyFeedObj.potassiumTotal}}
+												ml <br>
+											</span><span class="bold"
+												*ngIf="nursingIntakeOutputData.babyFeedObj.calciumTotal != null && nursingIntakeOutputData.babyFeedObj.calciumTotal != ''">
+												Calcium =
+												{{nursingIntakeOutputData.babyFeedObj.calciumTotal}} ml <br>
+											</span><span class="bold"
+												*ngIf="nursingIntakeOutputData.babyFeedObj.phosphorousTotal != null && nursingIntakeOutputData.babyFeedObj.phosphorousTotal != ''">
+												Phosphorus =
+												{{nursingIntakeOutputData.babyFeedObj.phosphorousTotal}} ml
+												<br>
+											</span><span class="bold"
+												*ngIf="nursingIntakeOutputData.babyFeedObj.mviTotal != null && nursingIntakeOutputData.babyFeedObj.mviTotal != ''">
+												Multi Vitamin Infusion =
+												{{nursingIntakeOutputData.babyFeedObj.mviTotal}} ml <br>
+											</span><span class="bold"
+												*ngIf="nursingIntakeOutputData.babyFeedObj.hco3Total != null && nursingIntakeOutputData.babyFeedObj.hco3Total != ''">
+												NaHCO3 = {{nursingIntakeOutputData.babyFeedObj.hco3Total}}
+												ml <br>
+											</span><span class="bold"
+												*ngIf="nursingIntakeOutputData.babyFeedObj.magnesiumTotal != null && nursingIntakeOutputData.babyFeedObj.magnesiumTotal != ''">
+												Magnesium =
+												{{nursingIntakeOutputData.babyFeedObj.magnesiumTotal}} ml <br>
+											</span>
+										</div>
+										<div
+											*ngIf="nursingIntakeOutputData.babyFeedObj.isReadymadeSolutionGiven">
+											<div class="padding-10-y padding-10-x">
+												<span class="bold blue-text">Ready Made Solution:
+													{{nursingIntakeOutputData.babyFeedObj.readymadeFluidType}}</span>
+											</div>
+											<div class="padding-10-y padding-10-x">
+												<span class="bold"> Total
+													{{nursingIntakeOutputData.babyFeedObj.readymadeTotalFluidVolume}}
+													(ml/day), give @
+													{{nursingIntakeOutputData.babyFeedObj.readymadeFluidRate}}
+													ml/hr. </span>
+											</div>
+										</div>
+										<div class="padding-10-y padding-10-x">
+											<span class="bold blue-text">Total Fluid Mix</span>
+										</div>
+										<div class="padding-10-y padding-10-x">
+											<span class="bold"> Total
+												{{(nursingIntakeOutputData.babyFeedObj.totalparenteralAdditivevolume
+												+ nursingIntakeOutputData.babyFeedObj.aminoacidTotal +
+												nursingIntakeOutputData.babyFeedObj.dextroseVolumemlperday +
+												nursingIntakeOutputData.babyFeedObj.readymadeTotalFluidVolume)
+												| number:'1.0-2'}} (ml/day), give @
+												{{(nursingIntakeOutputData.babyFeedObj.totalparenteralAdditivevolume
+												+ nursingIntakeOutputData.babyFeedObj.aminoacidTotal +
+												nursingIntakeOutputData.babyFeedObj.dextroseVolumemlperday +
+												nursingIntakeOutputData.babyFeedObj.readymadeTotalFluidVolume)/24
+												| number:'1.0-2'}} ml/hr.<br> <span
+												*ngIf="nursingIntakeOutputData.babyFeedObj.osmolarity">Osmolarity
+													= {{nursingIntakeOutputData.babyFeedObj.osmolarity |
+													number:'1.0-2'}}</span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row no-padding-top padding-10-x">
+							<div
+								class="desktop-column-20 padding-0-x force-left center-aligned">
+								<hr class="no-margin">
+							</div>
+						</div>
+						<div class="row no-padding-top padding-10-x">
+							<div class="col-md-6 no-padding"></div>
+							<div class="col-md-6 no-padding padding-10-y right-aligned">
+								<div class="blue-round-tick setting-checkbox">
+									<input type="checkbox" name="isEnteralChecked"
+										[disabled]="enteralDisabled" [(ngModel)]="Enteral"
+										value="true" id="isEnteralChecked"> <label
+										for="isEnteralChecked"><span class="enteral-color"
+										style="font-size: 14px">Enteral</span></label>
+								</div>
+								<div class="blue-round-tick setting-checkbox">
+									<input type="checkbox" name="isParenteralChecked"
+										[disabled]="parenteralDisabled" [(ngModel)]="Parenteral"
+										value="true" id="isParenteralChecked"> <label
+										for="isParenteralChecked"><span
+										class="parenteral-color" style="font-size: 14px">Parenteral</span></label>
+								</div>
+								<div class="blue-round-tick setting-checkbox">
+									<input type="checkbox" name="isOutputChecked"
+										[(ngModel)]="Output" id="isOutputChecked" value="true">
+									<label for="isOutputChecked"><span class="output-color"
+										style="font-size: 14px">Output</span></label>
+								</div>
+								<div class="blue-round-tick setting-checkbox">
+									<input type="checkbox" name="isOtherChecked"
+										[(ngModel)]="Others" value="true" id="isOtherChecked">
+									<label for="isOtherChecked"><span
+										class="medication-color" style="font-size: 14px">Other</span></label>
+								</div>
+							</div>
+						</div>
+						<div class="row no-padding-top padding-10-x">
+							<div
+								class="desktop-column-20 padding-0-x force-left padding-5-y margin-bottom-70">
+								<table
+									class="table table-striped table-bordered headed-table desktop-column-20">
+									<tr>
+										<td *ngIf="Enteral || Parenteral || Output || Medication"
+											class="center-aligned">Time</td>
+										<!-- below is for the Enteral -->
+										<td class="center-aligned enteral-color" *ngIf="Enteral">
+											<div>Feed Type</div>
+											<div>Volume (ml)</div>
+										</td>
+										<td class="center-aligned enteral-color" *ngIf="Enteral">Total
+											Volume (ml/feed)</td>
+										<!-- end for the Enteral -->
+										<!-- below is for the Parenteral -->
+										<td *ngIf="Parenteral" class="center-aligned parenteral-color">Lipid
+											Volume (ml)</td>
+										<td *ngIf="Parenteral" class="center-aligned parenteral-color">TPN/Ready
+											Made Volume (ml)</td>
+										<!-- end for the Parenteral -->
+										<!-- below is for the Output -->
+										<td *ngIf="Output" class="center-aligned output-color">Abdomen
+											Girth (cm)</td>
+										<td *ngIf="Output" class="center-aligned output-color">Gastric
+											Aspirate (ml)</td>
+										<td *ngIf="Output" class="center-aligned output-color">Urine(ml)</td>
+										<td *ngIf="Output" class="center-aligned output-color">Stool</td>
+										<td *ngIf="Output" class="center-aligned output-color">Vomit</td>
+										<td *ngIf="Output" class="center-aligned output-color">Drain(ml)</td>
+										<!-- End of the Output -->
+										<!-- below is for the Medication -->
+										<td *ngIf="Others" class="center-aligned medication-color">Other</td>
+										<!-- End of the Medication -->
+									</tr>
+									<tr
+										*ngFor="let item of nursingIntakeOutputData.currentNursingIntakeList">
+										<td *ngIf="Enteral || Parenteral || Output || Medication"
+											class="left-aligned">
+											<div class="table full">
+												<div class="table-cell">
+													<select name="entryHrName"
+														class="input input-medium desktop-column-20 max-height-36"
+														[(ngModel)]="item.entryHr">
+														<!-- data-ng-options="item for item in nursingIntakeOutputData.hours" -->
+														<option disabled selected hidden value>Select</option>
+														<option *ngFor="let item of nursingIntakeOutputData.hours"
+															[value]="item">{{item}}</option>
+													</select>
+												</div>
+												<div class="table-cell">
+													<select name="entryMinName"
+														class="input input-medium desktop-column-20 max-height-36"
+														[(ngModel)]="item.entryMin">
+														<!-- data-ng-options="item for item in nursingIntakeOutputData.minutes" -->
+														<option disabled selected hidden value>Select</option>
+														<option
+															*ngFor="let item of nursingIntakeOutputData.minutes"
+															[value]="item">{{item}}</option>
+													</select>
+												</div>
+											</div>
+											<div class="table full">
+												<div class="toggle-options-radio col-md-6 padding-10-x">
+													<input type="radio" name="nursingTimeMedian+{{$index}}"
+														[(ngModel)]="item.entryMer"
+														id="nursingTimeMedianAm+{{$index}}" value="'AM'">
+													<label for="nursingTimeMedianAm+{{$index}}">AM</label> <input
+														type="radio" name="nursingTimeMedian+{{$index}}"
+														[(ngModel)]="item.entryMer"
+														id="nursingTimeMedianPm+{{$index}}" value="'PM'">
+													<label for="nursingTimeMedianPm+{{$index}}">PM</label>
+												</div>
+											</div>
+											<div class="table full" *ngIf="Enteral">
+												<select name="routeIntakeName"
+													class="input input-medium desktop-column-20 max-height-36"
+													[(ngModel)]="item.route">
+													<option value="Tube Feed" selected>Tube Feed</option>
+													<option value="Breast Feed">Breast Feed</option>
+													<option value="Paladai">Paladai</option>
+												</select>
+											</div>
+										</td>
+										<!-- below is for the Enteral -->
+										<td class="left-aligned" *ngIf="Enteral">
+											<div class="table full padding-10-y">
+												<div class="table full">
+													<span class="enteral-color">Primary</span>
+												</div>
+												<div class="table full" *ngIf="!(isEditPrimary == $index)">
+													<div class="table-cell middle-aligned">
+														<span class="bold">{{item.selectedPrimaryFeedType}}</span>
+													</div>
+													<div class="table-cell">
+														<i class="inline-block sprite sprite-edit"
+															(click)="editPrimary($index)"></i>
+													</div>
+												</div>
+												<div class="table full" *ngIf="isEditPrimary == $index">
+													<select name="primaryFeedTypeName"
+														[(ngModel)]="item.primaryFeedType"
+														(ngModelChange)="feedType(item)"
+														class="input input-medium desktop-column-20 max-height-36">
+														<option
+															*ngFor="let option of nursingIntakeOutputData.refFeedTypeList"
+															value="{{option.feedtypeid}}"><span
+																*ngIf="option.feedtype == true">{{option.feedtypename}}</span></option>
+													</select>
+												</div>
+												<div class="table full">
+													<input type="text" name="primaryFeedName"
+														class="input input-medium desktop-column-20"
+														[disabled]="item.primaryFeedType == null"
+														[(ngModel)]="item.primaryFeedValue"
+														(keyup)="calActualFeed(item)">
+												</div>
+											</div>
+											<div class="table full padding-10-y">
+												<div class="table full">
+													<span class="enteral-color">Formula</span>
+												</div>
+												<div class="table full">
+													<select name="formulaTypeName"
+														[(ngModel)]="item.formulaType"
+														class="input input-medium desktop-column-20 max-height-36">
+														<option
+															*ngFor="let option of nursingIntakeOutputData.refFeedTypeList"
+															value="{{option.feedtypeid}}"><span
+																*ngIf="option.feedtype == false">{{option.feedtypename}}</span></option>
+													</select>
+												</div>
+												<div class="table full">
+													<input type="text" name="primaryFormulaName"
+														class="input input-medium desktop-column-20"
+														[disabled]="item.formulaType == null"
+														[(ngModel)]="item.formulaValue"
+														(keyup)="calActualFeed(item)">
+												</div>
+											</div>
+										</td>
+										<td class="left-aligned" *ngIf="Enteral">
+											<div class="table full padding-5-y">
+												<div class="table full">
+													<span class="bold">{{nursingIntakeOutputData.babyFeedObj.feedvolume}}
+														ml/feed</span>
+												</div>
+											</div>
+											<div class="table full padding-5-y">
+												<div class="table full">
+													<span class="enteral-color">Actual</span>
+												</div>
+												<div class="table full">
+													<input type="text" name="primaryActualFeedName"
+														class="input input-medium desktop-column-20"
+														disabled
+											[(ngModel)]="item.actualFeed">
+												</div>
+											</div>
+										</td>
+										<!-- end for the Enteral -->
+										<!-- below is for the Parenteral -->
+										<td *ngIf="Parenteral" class="left-aligned">
+											<div class="table full padding-5-y">
+												<span class="parenteral-color">Total Balance</span> <input
+													type="text" name="lipidVolName"
+													class="input input-medium desktop-column-20"
+													[(ngModel)]="item.lipid_total_volume" disabled>
+											</div>
+											<div class="table full padding-5-y">
+												<span class="parenteral-color">Delivered</span> <input
+													type="text" name="lipidRemName"
+													class="input input-medium desktop-column-20"
+													[(ngModel)]="item.lipid_delivered"
+													(keyup)="lipidRemCal(item)">
+											</div>
+											<div class="table full padding-5-y">
+												<span class="parenteral-color">Remaining</span> <input
+													type="text" name="lipidLeftName"
+													class="input input-medium desktop-column-20"
+													[(ngModel)]="item.lipid_remaining" disabled>
+											</div>
+										</td>
+										<td *ngIf="Parenteral" class="left-aligned">
+											<div class="table full padding-5-y">
+												<span class="parenteral-color">Total Balance</span> <input
+													type="text" name="lipidTotalVolName"
+													class="input input-medium desktop-column-20"
+													[(ngModel)]="item.tpn_total_volume" disabled>
+											</div>
+											<div class="table full padding-5-y">
+												<span class="parenteral-color">Delivered</span> <input
+													type="text" name="tpnFeedName"
+													class="input input-medium desktop-column-20"
+													[(ngModel)]="item.tpn_delivered" (keyup)="tpnRemCal(item)">
+											</div>
+											<div class="table full padding-5-y">
+												<span class="parenteral-color">Remaining</span> <input
+													type="text" name="tpnRemName"
+													class="input input-medium desktop-column-20"
+													[(ngModel)]="item.tpn_remaining" disabled>
+											</div>
+										</td>
+										<!-- end for the Parenteral -->
+										<!-- below is for the Output -->
+										<td *ngIf="Output" class="left-aligned"><input
+											type="text" name="abdomenGirthName"
+											class="input input-medium desktop-column-20"
+											[(ngModel)]="item.abdomenGirth" (keyup)="saveFlag(item)"></td>
+										<td *ngIf="Output" class="left-aligned"><input
+											type="text" name="gastricAspirateName"
+											class="input input-medium desktop-column-20"
+											[(ngModel)]="item.gastricAspirate" (keyup)="saveFlag(item)"></td>
+										<td *ngIf="Output" class="left-aligned"><input
+											type="text" name="urineAspirateName"
+											class="input input-medium desktop-column-20"
+											[(ngModel)]="item.urine" (ngModelChange)="saveFlag(item)"></td>
+										<td *ngIf="Output" class="left-aligned"><select
+											name="itemStoolName"
+											class="input input-medium desktop-column-20 max-height-36"
+											[(ngModel)]="item.stool" (ngModelChange)="saveFlag(item)">
+												<option value=null hidden>--Select--</option>
+												<option value="none">none</option>
+												<option value="small">small</option>
+												<option value="medium">medium</option>
+												<option value="large">large</option>
+												<option value="blood">blood</option>
+										</select></td>
+										<td *ngIf="Output" class="left-aligned"><select
+											name="itemVomitName"
+											class="input input-medium desktop-column-20 max-height-36"
+											[(ngModel)]="item.vomit" (keyup)="saveFlag(item)">
+												<option value=null hidden>--Select--</option>
+												<option value="none">none</option>
+												<option value="small">small</option>
+												<option value="large">large</option>
+										</select></td>
+										<td *ngIf="Output" class="left-aligned"><input
+											name="itemDrainName" type="text"
+											class="input input-medium desktop-column-20"
+											[(ngModel)]="item.drain" (keyup)="saveFlag(item)"></td>
+										<!-- End of the Output -->
+										<td *ngIf="Others" class="left-aligned"><input
+											name="itemOthersName" type="text"
+											class="input input-medium desktop-column-20"
+											[(ngModel)]="item.others" (keyup)="saveFlag(item)"></td>
+										<!-- below is for the Medication -->
+										<td *ngIf="Medication" class="left-aligned"
+											style="min-width: 500px">
+											<div class="table full">
+												<div class="table-cell">
+													<div class="table-cell padding-10-x">
+														<span class=" medication-color right-aligned">Diazoxide</span>
+													</div>
+													<div class="table-cell" style="min-width: 150px">
+														<div class="table-cell">
+															<select name="itemStoolDiazoxideName"
+																class="input input-medium desktop-column-20 max-height-36"
+																style="width: 50px">
+																<!-- data-ng-options="item for item in statusJaundice.dropDowns.hours" -->
+																<option disabled selected hidden value>HH</option>
+																<option
+																	*ngFor="let item of statusJaundice.dropDowns.hours"
+																	[value]="item">{{item}}</option>
+															</select>
+														</div>
+														<div class="table-cell">
+															<select name="itemDiazoxideName"
+																class="input input-medium desktop-column-20 max-height-36"
+																style="width: 50px">
+																<!-- data-ng-options="item for item in statusJaundice.dropDowns.hours" -->
+																<option disabled selected hidden value>HH</option>
+																<option
+																	*ngFor="let item of statusJaundice.dropDowns.hours"
+																	[value]="item">{{item}}</option>
+															</select>
+														</div>
+														<div class="table-cell">
+															<select name="DiazoxideName"
+																class="input input-medium desktop-column-20 max-height-36"
+																style="width: 50px">
+																<!-- data-ng-options="item for item in statusJaundice.dropDowns.hours" -->
+																<option disabled selected hidden value>HH</option>
+																<option
+																	*ngFor="let item of statusJaundice.dropDowns.hours"
+																	[value]="item">{{item}}</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+										</td>
+										<!-- End of the Medication -->
+									</tr>
+								</table>
+							</div>
+						</div>
+						<!-- past iteration -->
+						<div *ngIf="nursingIntakeOutputData.pastNursingIntakeList != undefined">
+							<div class="row no-padding-top padding-10-x"
+								style="margin-bottom: 60px;"
+								*ngIf="nursingIntakeOutputData.pastNursingIntakeList.length > 0">
+								<div class="desktop-column-20 padding-0-x padding-5-y"
+									style="overflow-x: scroll; max-width: 1175px;">
+									<table
+										class="table table-striped table-bordered headed-table desktop-column-20">
+										<tr>
+											<td *ngIf="Enteral || Parenteral || Output || Medication"
+												class="center-aligned">Time</td>
+											<td class="center-aligned enteral-color" *ngIf="Enteral">Route</td>
+											<!-- below is for the Enteral -->
+											<td class="center-aligned enteral-color" *ngIf="Enteral">
+												<div>Primary Feed (ml)</div>
+											</td>
+											<td class="center-aligned enteral-color" *ngIf="Enteral">
+												<div>Formula Feed (ml)</div>
+											</td>
+											<td class="center-aligned enteral-color" *ngIf="Enteral">Total
+												Volume (ml/feed)</td>
+											<!-- end for the Enteral -->
+											<!-- below is for the Parenteral -->
+											<td *ngIf="Parenteral" class="center-aligned parenteral-color">Lipid
+												Total Balance (ml)</td>
+											<td *ngIf="Parenteral" class="center-aligned parenteral-color">Lipid
+												Delivered (ml)</td>
+											<td *ngIf="Parenteral" class="center-aligned parenteral-color">Lipid
+												Remaining (ml)</td>
+											<td *ngIf="Parenteral" class="center-aligned parenteral-color">TPN/Ready
+												Made Total Balance (ml)</td>
+											<td *ngIf="Parenteral" class="center-aligned parenteral-color">TPN/Ready
+												Made Delivered (ml)</td>
+											<td *ngIf="Parenteral" class="center-aligned parenteral-color">TPN/Ready
+												Made Remaining (ml)</td>
+											<!-- end for the Parenteral -->
+											<!-- below is for the Output -->
+											<td *ngIf="Output" class="center-aligned output-color">Abdomen
+												Girth (cm)</td>
+											<td *ngIf="Output" class="center-aligned output-color">Gastric
+												Aspirate (ml)</td>
+											<td *ngIf="Output" class="center-aligned output-color">Urine(ml)</td>
+											<td *ngIf="Output" class="center-aligned output-color">Stool</td>
+											<td *ngIf="Output" class="center-aligned output-color">Vomit</td>
+											<td *ngIf="Output" class="center-aligned output-color">Drain(ml)</td>
+											<!-- End of the Output -->
+											<!-- below is for the Medication -->
+											<td *ngIf="Others" class="center-aligned medication-color">Other</td>
+											<!-- End of the Medication -->
+										</tr>
+										<tr
+											*ngFor="let item of nursingIntakeOutputData.pastNursingIntakeList">
+											<td *ngIf="Enteral || Parenteral || Output || Medication"
+												class="center-aligned" style="min-width: 100px">
+												<div class="table full" style="padding: 0 5px;">
+													<span>{{item.nursingEntryTime}}</span>
+												</div>
+
+											</td>
+											<td *ngIf="Enteral" class="center-aligned"
+												style="min-width: 100px">
+												<div class="table full" *ngIf="Enteral">{{item.route}}</div>
+											</td>
+											<!-- below is for the Enteral -->
+											<td class="center-aligned" *ngIf="Enteral">
+												<div class="table full padding-10-y">
+													<div class="table full">
+														<div class="bold"
+															*ngFor="let option of nursingIntakeOutputData.refFeedTypeList">
+															<span *ngIf="option.feedtypeid == item.primaryFeedType">
+																<div>{{option.feedtypename}}</div>
+																<div>{{item.primaryFeedValue}}</div>
+															</span>
+														</div>
+													</div>
+												</div>
+											</td>
+											<td class="center-aligned" *ngIf="Enteral">
+												<div class="table full padding-10-y">
+													<div class="table full">
+														<div class="bold"
+															*ngFor="let option of nursingIntakeOutputData.refFeedTypeList">
+															<span *ngIf="option.feedtypeid == item.formulaType">
+																<div>{{option.feedtypename}}</div>
+																<div>{{item.formulaValue}}</div>
+															</span>
+														</div>
+													</div>
+												</div>
+											</td>
+											<td class="center-aligned" *ngIf="Enteral">
+												<div class="table full padding-5-y">{{item.actualFeed}}</div>
+											</td>
+											<!-- end for the Enteral -->
+											<!-- below is for the Parenteral -->
+											<td *ngIf="Parenteral" class="center-aligned">
+												<div class="table full padding-5-y">{{item.lipid_total_volume}}
+
+												</div>
+											</td>
+											<td *ngIf="Parenteral" class="center-aligned">
+												<div class="table full padding-5-y">{{item.lipid_delivered}}
+												</div>
+											</td>
+											<td *ngIf="Parenteral" class="center-aligned">
+												<div class="table full padding-5-y">{{item.lipid_remaining}}
+												</div>
+											</td>
+											<td *ngIf="Parenteral" class="center-aligned">
+												<div class="table full padding-5-y">{{item.tpn_total_volume}}
+												</div>
+											</td>
+											<td *ngIf="Parenteral" class="center-aligned">
+												<div class="table full padding-5-y">{{item.tpn_delivered}}
+												</div>
+											</td>
+											<td *ngIf="Parenteral" class="center-aligned">
+												<div class="table full padding-5-y">{{item.tpn_remaining}}
+												</div>
+											</td>
+											<!-- end for the Parenteral -->
+											<!-- below is for the Output -->
+											<td *ngIf="Output" class="center-aligned">{{item.abdomenGirth}}</td>
+											<td *ngIf="Output" class="center-aligned">{{item.gastricAspirate}}</td>
+											<td *ngIf="Output" class="center-aligned">{{item.urine}}</td>
+											<td *ngIf="Output" class="center-aligned"
+												style="min-width: 100px"><span>{{item.stool}}</span></td>
+											<td *ngIf="Output" class="center-aligned"
+												style="min-width: 100px"><span>{{item.vomit}}</span></td>
+											<td *ngIf="Output" class="center-aligned">{{item.drain}}</td>
+											<!-- End of the Output -->
+											<td *ngIf="Others" class="center-aligned">{{item.others}}</td>
+										</tr>
+										<tr>
+											<td *ngIf="Enteral || Parenteral || Output || Medication"
+												class="center-aligned background-color-white"
+												style="min-width: 100px">Total</td>
+											<!-- below is for the Enteral -->
+											<td class="center-aligned background-color-white"
+												*ngIf="Enteral"><span class="bold"></span></td>
+											<td *ngIf="Enteral"
+												class="center-aligned background-color-white"><span
+												class="bold">{{primaryFeedTotal}}</span></td>
+											<td *ngIf="Enteral"
+												class="center-aligned background-color-white"><span
+												class="bold">{{formulaTotal}}</span></td>
+											<td class="center-aligned background-color-white"
+												*ngIf="Enteral"><span class="bold">{{feedTotal}}</span></td>
+											<!-- end for the Enteral -->
+											<!-- below is for the Parenteral -->
+											<td *ngIf="Parenteral"
+												class="center-aligned background-color-white"></td>
+											<td *ngIf="Parenteral"
+												class="center-aligned background-color-white"><span
+												class="bold">{{lipidDelivered}}</span></td>
+											<td *ngIf="Parenteral"
+												class="center-aligned background-color-white"></td>
+											<td *ngIf="Parenteral"
+												class="center-aligned background-color-white"></td>
+											<td *ngIf="Parenteral"
+												class="center-aligned background-color-white"><span
+												class="bold">{{tpnDelivered}}</span></td>
+											<td *ngIf="Parenteral"
+												class="center-aligned background-color-white"></td>
+											<!-- end for the Parenteral -->
+											<!-- below is for the Output -->
+											<td *ngIf="Output"
+												class="center-aligned background-color-white"><span
+												class="bold"></span></td>
+											<td *ngIf="Output"
+												class="center-aligned background-color-white"><span
+												class="bold">{{gastricTotal}}</span></td>
+											<td *ngIf="Output"
+												class="center-aligned background-color-white"><span
+												class="bold">{{urineTotal}}</span></td>
+											<td *ngIf="Output"
+												class="center-aligned background-color-white"
+												style="min-width: 100px"><span class="bold"></span></td>
+											<td *ngIf="Output"
+												class="center-aligned background-color-white"
+												style="min-width: 100px"><span class="bold"></span></td>
+											<td *ngIf="Output"
+												class="center-aligned background-color-white"><span
+												class="bold">{{drainTotal}}</span></td>
+											<!-- End of the Output -->
+											<td *ngIf="Others"
+												class="center-aligned background-color-white"><span
+												class="bold"></span></td>
+											<!-- below is for the Medication -->
+											<td *ngIf="Medication"
+												class="center-aligned background-color-white"
+												style="min-width: 500px"></td>
+											<!-- End of the Medication -->
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>

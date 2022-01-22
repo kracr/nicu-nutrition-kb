@@ -1,0 +1,27 @@
+// extendable classes
+
+.transition{@include transition(all .3s);}
+
+.borderBox{@include boxSizing(border-box);}
+.contentBox{@include boxSizing(content-box);}
+.contentBox{@include boxSizing(padding-box);}
+
+.circle{@include borderRadius(50%);}
+.no-radius{@include borderRadius(0 !important);}
+
+.borderRadius-20{@include borderRadius(20px);}
+.borderRadius-10{@include borderRadius(10px);}
+.borderRadius-5{@include borderRadius(5px);}
+.borderRadius-3{@include borderRadius(3px);}
+
+
+.bottomRadius{@include borderRadius(0px 0px 5px 5px);}
+.leftRadius{@include borderRadius(5px 0px 0px 5px);}
+.topRadius{@include borderRadius(5px 5px 0px 0px);}
+.rightRadius{@include borderRadius(0px 5px 5px 0px);}
+
+
+.noShadow{@include boxShadow(none !important);}
+
+
+

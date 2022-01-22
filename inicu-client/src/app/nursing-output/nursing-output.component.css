@@ -1,0 +1,12 @@
+.border-right-print {
+	border-right: 3px Solid black !important;
+
+}
+
+.headed-table td {
+		padding: 5px 7px !important;
+		
+}
+.headed-table tr:first-child td {
+	padding: 10px 7px !important;
+}

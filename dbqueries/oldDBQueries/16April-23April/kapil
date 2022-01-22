@@ -1,0 +1,19 @@
+-- View: apollo.vw_respiratory_usage_final
+
+DROP VIEW apollo.vw_respiratory_usage_final;
+
+CREATE OR REPLACE VIEW apollo.vw_respiratory_usage_final
+ AS
+ SELECT vw_respiratory_usage_raw.uhid,
+    vw_respiratory_usage_raw.creationtime,
+    vw_respiratory_usage_raw.eventid,
+    vw_respiratory_usage_raw.eventname,
+    vw_respiratory_usage_raw.rs_vent_type,
+    vw_respiratory_usage_raw.isactive,
+    vw_respiratory_usage_raw.endtime,
+    ceil((date_part('epoch'::text, vw_respiratory_usage_raw.endtime) - date_part('epoch'::text, vw_respiratory_usage_raw.creationtime)) / 3600::double precision) AS differenceinhrs,
+    ceil((date_part('epoch'::text, vw_respiratory_usage_raw.endtime) - date_part('epoch'::text, vw_respiratory_usage_raw.creationtime)) / 60::double precision) AS differenceinmins
+   FROM apollo.vw_respiratory_usage_raw;
+
+ALTER TABLE apollo.vw_respiratory_usage_final
+    OWNER TO postgres;

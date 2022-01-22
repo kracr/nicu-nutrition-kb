@@ -1,0 +1,1 @@
+Alter table kdah.sa_jaundice alter column riskfactor type character varying(700);

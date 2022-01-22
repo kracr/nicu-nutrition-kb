@@ -1,0 +1,5 @@
+alter table kdah.babyfeed_detail
+	add skip_feed boolean;
+
+alter table kdah.nursing_intake_output
+	add is_feed_skipped boolean;

@@ -1,0 +1,115 @@
+<div class="admin-panel-cont no-margin-top" style="margin-top:0px">
+	<div class="col-md-12">
+		<span class="button button-blue" style="margin-top:-25px;position: absolute;" (click)="createPanelModal('create panel')">Create Panel</span>
+	</div>
+	<div class="col-md-12 padding-20-x left-aligned" style="padding:0px!important">
+		<ng-container *ngIf="savePanelData != null && savePanelData != undefined && savePanelData.length>0" >
+			<div class="col-md-4 panel-box selected-panel-box">
+				<div class="col-md-12 selected-panel" [ngClass]="{'active': selectedIndex == i, 'list-group-item': true}" *ngFor="let item of savePanelData;let i = index" [attr.data-index]="i">
+					<div class="col-md-9"  (click)="populatePanelListByCategory(i,item.pannelName)" style="cursor:default;margin-top: 5px;height: 30px;"><span>{{item.pannelName}}</span></div>
+					<div class="col-md-3" style="padding:0px;"><span style="float:right"><button class="inline-block sprite sprite-edit" (click)="editInvestigationPanel(item.pannelName)"></button><button class="inline-block sprite sprite-delete" style="top:2px;" (click)="deleteInvestigationPanelModal(item.pannelName)"></button></span></div>
+				</div>
+			</div>
+		</ng-container>
+		<div class="col-md-4 panel-box selected-panel-box"  *ngIf="panelListByCategory !=null && panelListByCategory != undefined && panelListByCategory.length>0">
+			<div class="col-md-12" style="border: 1px solid #eeeeee;height: 40px;">
+				<span style="position: relative;top: 7px;float: left;font-size: 20px"><b>Investigations</b></span>
+			</div>
+			<div class="col-md-12 selected-panel" *ngFor="let item of panelListByCategory" style="padding-top:5px;padding-bottom:5px;" >
+				<input type="checkbox"/><span style="padding-left:15px;">{{item.testName}}</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- below code is used to create investigation panel -->
+<div class="overlay" id="createPanelModalOverlay"></div>
+<div class="modal-box-lg ballard-popup"
+	id="createPanelModal" style="width:600px">
+	<button class="modal-popup-close-btn"
+		(click)="closePanelModal()"></button>
+
+	<div class="inicu-tab-container">
+		<div class="tab-header">
+			<div class="padding-20-x table full">
+				<div class="table-cell pull-left" style="margin-left:8px;">
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Create Panel</h1>
+				</div>
+				<div class="table-cell pull-left" style="margin-left: 270px;position: relative;margin-top: 12px;">
+					<span
+						class="no-margin font-size-16 left-aligned padding-10-y">Name</span>
+				</div>
+				<div class="table-cell pull-right padding-5-y" style="margin-right:260px;position:relative">
+					<input type="text" class="input input-medium desktop-column-20" [(ngModel)]="panelName" placeholder="Type Panel Name"  style="border-radius:50px;">
+				</div>
+				<div class="table-cell pull-right padding-5-y" *ngIf="userInfoMessage != ''" >
+					<span style="position: relative;right: -355px;bottom: 24px;">{{userInfoMessage}}</span>
+				</div>
+			</div>
+		</div>
+		<hr class="no-margin">
+		<div class="tab-content-cont full" style="height:380px">
+			<div class="row padding-10-y border-bottom-2">
+				<div class="col-md-5" style="width:50%">
+					<div class="col-md-12 padding-20-x left-aligned" style="width:107%;">
+						<input type="text" class="input input-medium desktop-column-20" 
+							 [(ngModel)]="searchPanelName" placeholder="Search Test Name" style="border-radius:50px;">
+						<img src="/assets/_images/search.png" style="position: absolute;bottom: 4px;right: 20px;"/>	
+					</div>
+					<div class="col-md-12 padding-20-x left-aligned panel-box" style="padding:10px;">
+						<div class="col-md-12" *ngFor="let item of investigationData.vendorLists | SearchPanel:searchPanelName" >
+							<input class="checkbox" type="checkbox" name="panel" [(ngModel)]="item.flag" (change)="onCheckInvestigationPanel($event,item.testname,item.testid)">
+							<span>{{item.testname}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5" style="margin-top: 40px;padding: 0px;padding-right: 25px;width: 50%">
+					<div class="left-aligned panel-box">
+						<div class="col-md-12" style="border: 1px solid #eeeeee;height: 40px;">
+							<span style="position: relative;top: 7px;float: left;">Selected</span>
+						</div>
+						<ng-container *ngIf="selectedPanelList != null && selectedPanelList.length>0">
+							<div class="col-md-12" *ngFor="let item of selectedPanelList">
+								<input type="checkbox" name="selectedPanel"/>
+								<span style="float:left">&#x25CF;  {{item.testname}}</span> 
+							</div>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-12 padding-10-y center-aligned" *ngIf="!isUpdateButtonVisible">
+				<button class="button button-blue" [disabled]="selectedPanelList.length == 0 ||  panelName == null || panelName == ''" (click)="restrictToSaveMultiplePanel('save')">Save</button>
+			</div>
+			<div class="col-md-12 padding-10-y center-aligned" *ngIf="isUpdateButtonVisible">
+				<button class="button button-blue" [disabled]="selectedPanelList.length == 0 ||  panelName == null || panelName == ''" (click)="restrictToSaveMultiplePanel('update')">Update</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+<!-- end of the above code -->
+
+<!--below code used for create delete investigation panel-->
+
+<div class="overlay" id="deletePanelModalOverlay"></div>
+<div class="modal-box-lg ballard-popup"
+	id="deletePanelModal" style="width:600px">
+	<button class="modal-popup-close-btn"
+		(click)="closeInvestigationPanelModal()"></button>
+
+	<div class="inicu-tab-container">
+		<div class="tab-header">
+			<div class="padding-20-x table full">
+				<div class="col-md-12" style="position: relative;left: 23%;">
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Are you sure you want to delete this panel?</h1>
+				</div>
+				<div class="col-md-12" style="margin-top:30px;margin-bottom:30px;">
+					<span class="button button-blue" (click)="deleteInvestigationPanel()">Yes</span>                	<span class="button button-blue" (click)="closeInvestigationPanelModal()">No</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,15 @@
+input,select,textarea{
+    border-color:lighten($gray,6%); color:darken($gray, 20%) !important;
+    &:focus{border-color:$blue;}
+}
+
+.blue-bordered-white-button{display: inline-block; padding: 6px  60px 4px 60px; font-size: 12px;  border-style: solid; border-color: $blue; border-width: 1px; height: auto; background-color: $white; @include makeMixin(border-radius , 15px); color:$blue;}
+
+.input-group-labeled{
+    display:table;
+    .input-cont{display:table-cell; float:none; position:relative;}
+    .label-cont{
+        display: table-cell;  position:relative; float:none; vertical-align:middle; border-color:lighten($gray,6%); border-style:solid; border-width:1px 0px 1px 1px; color:darken($gray, 20%);
+        .label{font-size:14px;}
+    }
+}

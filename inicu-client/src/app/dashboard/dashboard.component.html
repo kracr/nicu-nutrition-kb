@@ -1,0 +1,1554 @@
+<section class="wrapper-fluid dashboard-content">
+	<div class="row">
+		<div class="margin-10-top col-md-12">
+			<div class="table full">
+				<div class="table-cell">
+					<h1 class="blue-text light dashboard-heading inline-block">Dashboard</h1>
+					<div class="inline-block margin-20-x margin-10-y"
+						style="margin-top: 5px; vertical-align: middle;">
+						<a class="sprite  inline-block dashboard-tab-button"
+							[ngClass]="{'sprite-dashboard-cardview-tab-active': isListVisible == true,'sprite-dashboard-cardview-tab': isListVisible == false }"
+							(click)="cardView()"></a> <a
+							class="sprite inline-block dashboard-tab-button"
+							(click)="listView()"
+							[ngClass]="{'sprite-dashboard-listview-tab': isListVisible == true,'sprite-dashboard-listview-tab-active inline-block': isListVisible == false }"></a>
+					</div>
+					<!--  <div class="inline-block margin-20-x">
+                    	<button class="button button-blue button-small force-right margin-10-top" click="callingRequiredFieldPopup()">test button</button>
+                    </div> -->
+				</div>
+				<div class="table-cell">
+					<div class="search-bar">
+						<input type="text" [(ngModel)]="searchText"
+							placeholder="Name/UHID">
+					</div>
+				</div>
+				<div class="table-cell">
+					<img src="assets/_images/doctorTask.png" style="height: 30px; width:30px" (click)="openDoctorTasks()">
+				</div>
+				<div class="table-cell">
+					<img src="assets/_images/nurseTask.png" style="height: 30px; width:30px" (click)="openNurseTasks()">
+				</div>
+				<div class="table-cell" *ngIf="isListVisible == false">
+            <a class="button button-blue button-small force-right margin-10-top" (click)="printCouncellingSheet()">Print</a>
+        </div>
+				<div class="table-cell">
+					<span
+						class="button button-blue button-small force-right margin-10-top"
+						(click)="OpenWeightTrack()">Anthropometry Tracking</span>
+				</div>
+				<div class="table-cell csv-div">
+					<span
+						class="button button-blue button-small force-right margin-10-top"
+						(click)="exportCsv()">output csv report</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="table full">
+				<div class="table-cell top-aligned">
+					<span class="right-aligned padding-2-x"><strong>Room
+							No. </strong></span> <select type="text" name="babyRoomName"
+						class="input input-medium inline-block desktop-column-12"
+						[(ngModel)]="query.babyRoom" (ngModelChange)="queryFilter()">
+						<option value="" selected>ALL</option>
+						<option *ngFor="let room of roomMap">{{room.value}}</option>
+					</select>
+				</div>
+				<div class="table-cell padding-10-y">
+					<div class="margin-10-y padding-10-x">
+						<span class="bold inline-block ">Total Beds :</span> <span
+							class="blue-round-wrap">{{totalCount}}</span> <span
+							class="bold inline-block">Occupied :</span> <span
+							class="blue-round-wrap">{{occupied}}</span> <span
+							class="bold inline-block">Vacant :</span> <span
+							class="blue-round-wrap">{{vacant}}</span>
+					</div>
+				</div>
+				<div class="table-cell top-aligned">
+					<span><strong>Level </strong></span> <select type="text"
+						name="levelName" class="input input-medium desktop-column-20"
+						[(ngModel)]="query.level" (ngModelChange)="queryFilter()">
+						<option value="">ALL</option>
+						<option value="1">Level 1</option>
+						<option value="2">Level 2</option>
+						<option value="3">Level 3</option>
+					</select>
+				</div>
+				<div class="coloured-bullets-cont table-cell middle-aligned">
+					<div class="right-aligned">
+						<ul>
+							<li class="red-item" [ngClass]="{'background-color-white': query.condition == 'CRITICAL' }"><input type="radio" id="filterCritical"  value="CRITICAL"
+								[(ngModel)]="query.condition"
+								(ngModelChange)="queryFilter()" name="condition"><label
+								for="filterCritical">Critical</label> <!-- <span data-ng-click="levelClick('CRITICAL')">Critical</span></li> -->
+							<li class="yellow-item" [ngClass]="{'background-color-white': query.condition == 'SATISFACTORY' }"><input type="radio"
+								id="filterSatisfactory" value="SATISFACTORY"
+								[(ngModel)]="query.condition"
+								(ngModelChange)="queryFilter()" name="condition"><label
+								for="filterSatisfactory">Satisfactory</label> <!-- <span data-ng-click="levelClick('SATISFACTORY')">Satisfactory</span></li> -->
+							<li class="green-item" [ngClass]="{'background-color-white': query.condition == 'STABLE' }"><input type="radio" id="filterStable" value="STABLE" [(ngModel)]="query.condition" (ngModelChange)="queryFilter()"
+								 name="condition"><label
+								for="filterStable">Stable</label> <!-- <span click="levelClick('STABLE')">Stable</span></li> -->
+							<li class="purple-item"
+								[ngClass]="{'background-color-white': query.condition == 'SICK' }"><input
+								type="radio" name="condition" id="filterSick" value="SICK" [(ngModel)]="query.condition" (ngModelChange)="queryFilter()"
+								 ><label for="filterSick">Sick</label>
+							<li class="black-item"
+								[ngClass]="{'background-color-white': query.condition == 'NA' }"><input
+								type="radio" id="filterNone" value="NA" [(ngModel)]="query.condition" (ngModelChange)="queryFilter()"
+								 name="condition"><label for="filterNone">None</label>
+						</ul>
+					</div>
+				</div>
+				<div class="table-cell middle-aligned">
+					<button (click)="clearCondition()" (click)="removeFilter()"
+						class="button button-blue button-small">All</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="isListVisible == true && totalBeds.length != 0">
+		<div class="overflow-auto clear dashboard-bed-boxes-cont">
+			<div *ngFor="let bed of totalBeds | SearchUhidName:searchText">
+				<div class="dashboard-bed-box  col-lg-3 col-md-3 col-sm-4 col-xs-4"
+					style="position: relative" *ngIf="bed.isVisible">
+					 <div id="bedMessage_{{bed.bed.key}}" class="bed-message-tooltip" *ngIf="bed.notificationObject != undefined && bed.notificationObject != null" (blur)="hideTooltip(bed.bed.key,'exception')">
+						<ul>
+							<li *ngFor="let data of bed.notificationObject.meessageArr; let i = index"
+								id="{{data.uhid}}&i"><span>{{data}}</span></li>
+						</ul>
+					</div>
+					<div id="bedMessage_one{{bed.bed.key}}" class="bed-message-one-tooltip" *ngIf="bed.notificationObject != undefined && bed.notificationObject != null" (blur)="hideTooltip(bed.bed.key,'BpAndRbs')">
+						<ul>
+							<li *ngFor="let data of bed.notificationObject.meessageArrForBpAndRbs; let in = index"
+								id="{{data.uhid}}&in"><span>{{data}}</span></li>
+						</ul>
+					</div>
+					<div class="visible-box" [ngClass]="{'vacant' : bed.isvacant}">
+						<div class=""
+							[ngClass]="{'vacant-bed-dashboard' : bed.isvacant , 'circular-arc bed-circular-arc-setHeight' : !bed.isvacant}"></div>
+						<div class="all-content">
+							<div class="head center-aligned" *ngIf="bed.isvacant">
+								<button class="button button-small button-green"
+									(click)="goToAdmitPatient(bed)">ADMIT PATIENT</button>
+							</div>
+							<div class="head" *ngIf="!(bed.isvacant)">
+								<div class="col-md-2 no-padding">
+									<span class="messages-notifier" id="message_one_{{bed.bed.key}}"
+								 style="left: 0 !important"
+								 (click)="showBedMessage(bed.bed.key, bed.uhid,'BpAndRbs')"
+								 *ngIf="bed.messages!=0"> <span><img src="/assets/_images/details-icon.png" style="
+									width: 20px;height: 20px;margin-right: 5px;margin-top: 6px;
+								"></span>
+								 <span class="count">{{bed.notificationObject.countForBpAndRbs}}</span>
+									 </span>
+								</div>
+								<div class="col-md-8 no-padding">
+									<div class="col-md-12 no-padding">
+										<span class="col-md-6 no-padding-left right-aligned adm-date">Adm date :</span> <span
+											class="col-md-6 no-padding-left blue-text left-aligned">
+											<time class="blue-text">{{bed.admitDate | date: "dd MMM yyyy"}}</time>
+										</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<span class="col-md-5 left-aligned">UHID
+											:</span> <span
+											class="col-md-7 no-padding blue-text left-aligned">{{bed.uhid}}</span>
+									</div>
+								</div>
+								<div class="col-md-2 no-padding">
+									 <span class="messages-notifier" id="message_{{bed.bed.key}}"
+								style="left: 0 !important"
+								(click)="showBedMessage(bed.bed.key, bed.uhid,'exception')"
+								*ngIf="bed.messages!=0"> <span
+								class="sprite sprite-messages-icon"></span>
+								<span class="count">{{bed.notificationObject.count}}</span>
+									</span>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding padding-15-y"
+								(click)="!bed.isvacant && getChildData(bed)">
+								<div class="col-md-6 no-padding center-aligned">
+									<img class="babyImg-circle-Vacant-border"
+										src="/assets/_images/test_profile-1.png"
+										*ngIf="bed.babyImage.data == null || bed.babyImage.data == undefined || bed.babyImage.data == ''"
+										[ngClass]="{ 'babyImg-circle-critical-border' : bed.condition=='CRITICAL' ,'babyImg-circle-Stable-border' : bed.condition=='STABLE' ,'babyImg-circle-Satisfactory-border' : bed.condition=='SATISFACTORY', 'babyImg-circle-Vacant-border' : bed.isvacant, 'babyImg-circle-No-border' : bed.condition=='NA' ,'babyImg-circle-Sick-border' : bed.condition=='SICK'}">
+									<img class=""
+										*ngIf="bed.babyImage.data != null && bed.babyImage.data != undefined && bed.babyImage.data != ''"
+										src="{{bed.babyImage.data}}"
+										[ngClass]="{ 'babyImg-circle-critical-border' : bed.condition=='CRITICAL' ,'babyImg-circle-Stable-border' : bed.condition=='STABLE' ,'babyImg-circle-Satisfactory-border' : bed.condition=='SATISFACTORY', 'babyImg-circle-Vacant-border' : bed.isvacant, 'babyImg-circle-No-border' : bed.condition=='NA' ,'babyImg-circle-Sick-border' : bed.condition=='SICK'}">
+								</div>
+								<div class="col-md-6 no-padding padding-10-y">
+									<div class="col-md-12 no-padding block">
+										<span class="baby-card-grey-text">{{bed.babyType}}
+											{{bed.babyNumber}}</span>
+									</div>
+									<div class="col-md-12 no-padding block">
+										<span class="baby-card-grey-text">{{bed.bed.value}}</span>
+									</div>
+									<div class="col-md-12 no-padding block">
+										<span class="baby-card-grey-text">{{bed.room.value}}</span>
+									</div>
+								</div>
+							</div>
+							<div class="uhid-cont padding-top-1">
+								<div>
+									<div class="uhid-box padding-20-y no-padding-bottom">
+										<div class="col-md-2 no-padding padding-5-y no-padding-bottom">
+											<span class="sprite sprite-uhid-icon"></span>
+										</div>
+										<div class="col-md-8 no-padding">
+											<div
+												class="col-md-12 no-padding padding-5-y no-padding-bottom">
+												<span class="text bed-baby-name"
+													style="margin-top: 0px !important"> <span
+													class="black-text">IN</span> <span class="blue-text">{{bed.name}}</span>
+												</span>
+											</div>
+											<div class="col-md-12 no-padding">
+												<span class="text bed-baby-name"
+													style="margin-top: 0px !important"> <span
+													class="blue-text">{{bed.address}}</span>
+												</span>
+											</div>
+										</div>
+										<div class="padding-10-y">
+											<span class="circular-L">L-<span>{{bed.level}}</span></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="three-icons-cont no-padding"
+								style="margin-bottom: 0%; padding-bottom: 0%; height: 70px">
+								<span class="three-boxes" [ngClass]="{'dashboard-highlight' : (bed.whichDeviceDataVisble == 'Monitor' && bed.isvacant == false)}" style="height: 50px;margin-bottom: 0%; padding-bottom: 0%;">
+									<input type="radio" name="bed.uniqueNumber"
+									id="{{bed.uniqueNumber}}+monitor" class=" display-none"
+									[(ngModel)]="bed.whichDeviceDataVisble"
+									value="Monitor"><label for="{{bed.uniqueNumber}}+monitor" *ngIf="bed.ecg"> <img [ngClass]="{'blinktodiv' : bed.monitorException != null}" src="assets/_images/greyEcg.png" style="margin-top: 8px;width: 35px;"></label>
+									<label for="{{bed.uniqueNumber}}+monitor" *ngIf="!bed.ecg"><img [ngClass]="{'blinktodiv' : bed.monitorException != null}" src="assets/_images/blueEcg.png" style="margin-top: 8px;width: 35px;"></label>
+								</span>
+								<span class="three-boxes" [ngClass]="{'dashboard-highlight' : (bed.whichDeviceDataVisble == 'Ventilator' && bed.isvacant == false)}" style="height: 50px;margin-bottom: 0%; padding-bottom: 0%;">
+									<input type="radio" name="bed.uniqueNumber"
+									id="{{bed.uniqueNumber}}+Ventilator" class="display-none"
+									[(ngModel)]="bed.whichDeviceDataVisble"
+									value="Ventilator">
+									<label *ngIf="bed.oxygen" for="{{bed.uniqueNumber}}+Ventilator"><img [ngClass]="{'blinktodiv' : bed.ventilatorException != null}" src="assets/_images/blue-ventilator.png" style="margin-top:8px;width: 30px;">
+									</label>
+									<label *ngIf = "!bed.oxygen" for="{{bed.uniqueNumber}}+Ventilator"><img [ngClass]="{'blinktodiv' : bed.ventilatorException != null}"src="assets/_images/grey-ventilator.png"style="margin-top: 8px;width: 30px;">
+									</label>
+								</span>
+								<span class="three-boxes" [ngClass]="{'dashboard-highlight' : bed.whichDeviceDataVisble == 'Blood' && bed.isvacant == false}">
+									<input type="radio" name="bed.uniqueNumber"
+									id="{{bed.uniqueNumber}}+Blood" class="display-none"
+									[(ngModel)]="bed.whichDeviceDataVisble" value="Blood">
+									<label for="{{bed.uniqueNumber}}+Blood" class="sprite"
+									[ngClass]="{'sprite-blue-drop' : bed.blood, 'sprite-gray-drop' : !bed.blood}"></label>
+								</span>
+							</div>
+							<div class="four-icon-container no-margin-bottom" *ngIf="bed.whichDeviceDataVisble == 'Monitor'">
+								<div class="table full block">
+									<div
+										class="table-cell font-size-12 left-aligned grey-text padding-10-x">
+										<span class="red-text"
+											[ngClass]="{'white-color' : bed.deviceTime == null}"><span
+											[ngClass]="{'text-color-default': bed.isvacant}">Last
+												updated at :</span></span> <span>{{bed.deviceTime | date:'dd-MM-yyyy hh:mm a'}}</span>
+									</div>
+								</div>
+
+								<span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="fio2-head-dashboard">HR</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="fio2-content-dashboard"
+										(click)="bed.HR != null && redirectingToTrends(bed)"
+										[ngClass]="{'grey-scale' : bed.isvacant}"><span >{{bed.HR}}</span><span *ngIf="!(bed.HR)">-</span></a></span>
+								</span>
+								<span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="pip-head-dashboard">SPO2</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="pip-content-dashboard"
+										(click)="bed.SPO2 != null && redirectingToTrends(bed)"><span
+											>{{bed.SPO2}}</span> <span *ngIf="!(bed.SPO2)">-</span></a></span>
+								</span>
+								<span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="peep-head-dashboard">RR</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="peep-content-dashboard"
+										(click)="bed.RR != null && redirectingToTrends(bed)"><span
+											>{{bed.RR}}</span> <span *ngIf="!(bed.RR)">-</span></a></span>
+
+								</span>
+								<span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="fio2-head-dashboard">PR</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="fio2-content-dashboard"
+										(click)="bed.PR != null && redirectingToTrends(bed)"
+										[ngClass]="{'grey-scale' : bed.isvacant}"><span >{{bed.PR}}</span><span *ngIf="!(bed.PR)">-</span></a></span>
+								</span>
+							</div>
+							<div class="four-icon-container"
+								*ngIf="bed.whichDeviceDataVisble == 'Ventilator'">
+								<div
+									class="table-cell font-size-12 left-aligned grey-text padding-10-x">
+									<span class="red-text"
+										[ngClass]="{'white-color' : bed.ventilatorTime == null}"><span
+										[ngClass]="{'text-color-default': bed.isvacant}">Last
+											updated at :</span></span> <span>{{bed.ventilatorTime | date:'dd-MM-yyyy hh:mm a'}}</span>
+								</div>
+								<span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="fio2-head-dashboard">FiO2</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="fio2-content-dashboard"
+										(click)="bed.fio2 != null && redirectingToTrends(bed)"
+										[ngClass]="{'grey-scale' : bed.isvacant}"><span >{{bed.fio2}}</span><span *ngIf="!(bed.fio2)">-</span></a></span>
+								</span>
+								<span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="pip-head-dashboard">PIP</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="pip-content-dashboard"
+										(click)="bed.pip != null && redirectingToTrends(bed)"><span>{{bed.pip}}</span> <span *ngIf="!(bed.pip)">-</span></a></span>
+								</span>
+								<span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="peep-head-dashboard">PEEP</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="peep-content-dashboard"
+										(click)="bed.peep != null && redirectingToTrends(bed)"><span>{{bed.peep}}</span> <span *ngIf="!(bed.peep)">-</span></a></span>
+
+								</span>
+								<!-- {{bed.bed.deviceTime}} -->
+							</div>
+							<div class="four-icon-container"
+								*ngIf="bed.whichDeviceDataVisble == 'Blood'">
+								<div class="table full block">
+									<div
+										class="table-cell font-size-12 left-aligned grey-text padding-10-x">
+										<span class="red-text"
+											[ngClass]="{'white-color' : bed.deviceTime == null}"><span
+											[ngClass]="{'text-color-default': bed.isvacant}">Last
+												updated at :</span></span> <!-- <span>{{bed.deviceTime | date:'dd-MM-yyyy hh:mm a'}}</span> -->
+									</div>
+								</div>
+
+								<span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="fio2-head-dashboard">pH</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="fio2-content-dashboard"
+										(click)="bed.ph != null && redirectingToTrends(bed)"
+										[ngClass]="{'grey-scale' : bed.isvacant}"><span>{{bed.ph}}</span><span *ngIf="!(bed.ph)">-</span></a></span>
+								</span>
+								<span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="pip-head-dashboard">HCO3</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="pip-content-dashboard"
+										(click)="bed.hco3 != null && redirectingToTrends(bed)"><span>{{bed.hco3}}</span> <span *ngIf="!(bed.hco3)">-</span></a></span>
+								</span>
+								<span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="peep-head-dashboard">pCO2</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="peep-content-dashboard"
+										(click)="bed.pco2 != null && redirectingToTrends(bed)"><span>{{bed.pco2}}</span> <span *ngIf="!(bed.pco2)">-</span></a></span>
+
+								</span>
+								<span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="fio2-head-dashboard">Lactate</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="fio2-content-dashboard"
+										(click)="bed.lactate != null && redirectingToTrends(bed)"
+										[ngClass]="{'grey-scale' : bed.isvacant}"><span>{{bed.lactate}}</span><span *ngIf="!(bed.lactate)">-</span></a></span>
+								</span>
+							</div>
+							<div class="center-aligned">
+								<!-- <button (click)="getBedId(bed)"
+									class="button button-blue button-small add-device-button"
+									[disabled]="(bed.isvacant)"
+									style="margin-bottom: 38px !important">ADD DEVICE</button> -->
+									<button (click) = "getBedId(bed)"
+										class="button button-blue button-small add-device-button"
+										[disabled]="(bed.isvacant)"
+										style="margin-bottom: 38px !important">
+                    <span *ngIf = "bed.isDeviceConnected">{{bed.boxName}}</span>
+							      <span *ngIf = "!bed.isDeviceConnected">ADD DEVICE</span>
+                  </button>
+							</div>
+							<!-- <div class="four-icon-container no-margin-bottom"
+								*ngIf="bed.whichDeviceDataVisble == 'Monitor'">
+								<div class="table full block">
+									<div
+										class="table-cell font-size-12 left-aligned grey-text padding-10-x">
+										<span class="red-text"
+											[ngClass]="{'white-color' : bed.deviceTime == null}"><span
+											[ngClass]="{'text-color-default': bed.isvacant}">Last
+												updated at :</span></span> <span>{{bed.deviceTime |
+											date:'dd-MM-yyyy hh:mm a'}}</span>
+									</div>
+								</div>
+								<span class="four-boxes"> <a class="bed-hr"
+									(click)="bed.HR != null && redirectingToTrends(bed)"
+									[ngClass]="{'grey-scale' : bed.isvacant}"><span>{{bed.HR}}</span><span
+										[hidden]="bed.HR">-</span></a>
+								</span> <span class="four-boxes"> <a class="bed-spo2"
+									(click)="bed.SPO2 != null && redirectingToTrends(bed)"><span>{{bed.SPO2}}</span>
+										<span [hidden]="bed.SPO2">-</span></a>
+								</span> <span class="four-boxes"> <a class="bed-rr"
+									(click)="bed.RR != null && redirectingToTrends(bed)"><span>{{bed.RR}}</span>
+										<span [hidden]="bed.RR">-</span></a>
+								</span> <span class="four-boxes"> <a class="bed-pr"
+									(click)="bed.PR != null && redirectingToTrends(bed)"><span>{{bed.PR}}</span>
+										<span [hidden]="bed.PR">-</span></a>
+								</span>
+							</div> -->
+							<!-- <div class="four-icon-container"
+								*ngIf="bed.whichDeviceDataVisble == 'Ventilator'">
+								<div
+									class="table-cell font-size-12 left-aligned grey-text padding-10-x">
+									<span class="red-text"
+										[ngClass]="{'white-color' : bed.deviceTime == null}"><span
+										[ngClass]="{'text-color-default': bed.isvacant}">Last
+											updated at :</span></span> <span>{{bed.deviceTime | date:'dd-MM-yyyy
+										hh:mm a'}}</span>
+								</div>
+								<span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="fio2-head-dashboard">FiO2</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="fio2-content-dashboard"
+										(click)="bed.fio2 != null && redirectingToTrends(bed)"
+										[ngClass]="{'grey-scale' : bed.isvacant}"><span>{{bed.fio2}}</span>
+											<span [hidden]="bed.fio2">-</span></a></span>
+								</span> <span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="pip-head-dashboard">PIP</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="pip-content-dashboard"
+										(click)="bed.pip != null && redirectingToTrends(bed)"><span>{{bed.pip}}</span>
+											<span [hidden]="bed.pip">-</span></a></span>
+								</span> <span class="four-boxes"> <span
+									class="col-md-12 no-padding"><span
+										class="peep-head-dashboard">PEEP</span></span> <span
+									class="col-md-12 no-padding"><a
+										class="peep-content-dashboard"
+										(click)="bed.peep != null && redirectingToTrends(bed)"><span>{{bed.peep}}</span>
+											<span [hidden]="bed.peep">-</span></a></span>
+
+								</span> -->
+								<!-- {{bed.bed.deviceTime}} -->
+							<!-- </div> -->
+							<!-- <div class="four-icon-container"
+								*ngIf="bed.whichDeviceDataVisble == 'Blood'">
+								<div class="table full block">
+									<div
+										class="table-cell font-size-12 left-aligned grey-text padding-10-x">
+										<span class="red-text"
+											[ngClass]="{'white-color' : bed.deviceTime == null}"><span
+											[ngClass]="{'text-color-default': bed.isvacant}">Last
+												updated at :</span></span> <span>{{bed.deviceTime |
+											date:'dd-MM-yyyy hh:mm a'}}</span>
+									</div>
+								</div>
+								<span class="four-boxes" style="visibility: hidden"> <a
+									class="bed-hr"
+									(click)="bed.fio2 != null && redirectingToTrends(bed)"
+									[ngClass]="{'grey-scale' : bed.isvacant}"
+									style="display: hidden"><span>{{bed.fio2}}</span><span
+										[hidden]="bed.fio2">-</span></a>
+								</span> <span class="four-boxes" style="visibility: hidden"> <a
+									class="bed-spo2"
+									(click)="bed.pip != null && redirectingToTrends(bed)"
+									style="display: hidden"><span>{{bed.pip}}</span> <span
+										data-ng-hide="bed.pip">-</span></a>
+								</span> <span class="four-boxes" style="visibility: hidden"> <a
+									class="bed-rr"
+									(click)="bed.peep != null && redirectingToTrends(bed)"><span>{{bed.peep}}</span>
+										<span [hidden]="bed.peep">-</span></a>
+								</span> -->
+								<!-- {{bed.bed.deviceTime}} -->
+								<!-- <div class="center-aligned">
+									<button (click)="getBedId(bed)"
+										class="button button-blue button-small add-device-button"
+										[disabled]="((bed.birthWeight != '') || (bed.dob != '')||(bed.gender != '')||(bed.gestation != '')||(bed.timeOfBirth != ''))&&(bed.isvacant)"
+										style="margin-bottom: 38px !important">ADD DEVICE</button>
+								</div>
+							</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="isListVisible == false">
+		<table
+			class="table table-striped table-bordered headed-table desktop-column-20 "
+			data-ng-show="beds.length">
+			<colgroup>
+				<!-- <col style="max-width: 3%; width: 3%"> -->
+				<col style="max-width: 8%; width: 8%">
+				<!-- <col style="max-width: 5%; width: 5%"> -->
+				<col style="max-width: 5%; width: 5%">
+				<col style="max-width: 5%; width: 5%">
+				<col style="max-width: 5%; width: 5%">
+				<col style="max-width: 5%; width: 5%">
+				<col style="max-width: 5%; width: 5%">
+				<col style="max-width: 5%; width: 5%">
+				<col style="max-width: 5%; width: 5%">
+				<col style="max-width: 5%; width: 5%">
+				<col style="max-width: 5%; width: 5%">
+				<col style="max-width: 5%; width: 5%">
+        <col style="max-width: 5%; width: 5%">
+				<col style="max-width: 5%; width: 5%">
+				<col style="max-width: 20%; width: 22%">
+				<col style="max-width: 20%; width: 22%">
+        <col style="max-width: 5%; width: 5%">
+				<col style="max-width: 3%; width: 3%">
+			</colgroup>
+			<tr>
+				<td></td>
+				<!-- <td class="center-aligned table-cell">UHID</td> -->
+				<td class="center-aligned table-cell">Name</td>
+				<td class="center-aligned table-cell">Bed No.</td>
+				<td class="center-aligned table-cell">Date Of Admission</td>
+				<td class="center-aligned table-cell">Date Of Birth</td>
+				<td class="center-aligned table-cell">Day Of Life</td>
+				<td class="center-aligned table-cell" style="width:15%">CGA</td>
+				<td class="center-aligned table-cell">Weight at Admission</td>
+				<td class="center-aligned table-cell">Yesterday's Weight</td>
+				<td class="center-aligned table-cell">Today's Weight</td>
+				<td class="center-aligned table-cell">Weight Change</td>
+				<td class="center-aligned table-cell">Screening</td>
+        <td class="center-aligned table-cell">Intake/Output</td>
+				<td class="center-aligned table-cell">Antibiotics</td>
+				<td class="center-aligned table-cell">Vent. Mode</td>
+				<td class="center-aligned table-cell">Diagnosis</td>
+        <td class="center-aligned table-cell">Nurses</td>
+				<td class="center-aligned table-cell">Notes</td>
+			</tr>
+			<tr *ngFor="let bed of totalBeds | CounsellingSheetFilter:searchText"
+				class="bed-row" [hidden]="!(bed.isVisible)">
+				<td class="center-aligned table-cell"><span
+					class="messages-notifier"><span
+						class="sprite sprite-messages-icon"></span><span class="count">{{bed.messages}}</span></span></td>
+				<!-- <td (click)="getChildData(bed)" class="center-aligned table-cell"><span
+					class="blue-text">{{bed.uhid}}</span></td> -->
+				<td (click)="getChildData(bed)" class="center-aligned table-cell"><span
+					class="blue-text">{{bed.name}} <span *ngIf="bed.babyNumber != null">{{bed.babyNumber}}</span></span></td>
+				<td (click)="getChildData(bed)" class="center-aligned table-cell"><div
+						[ngClass]="{ 'round-wrap-red' : bed.condition=='CRITICAL' ,'round-wrap-green' : bed.condition=='STABLE' ,'round-wrap-yellow' : bed.condition=='SATISFACTORY', 'round-wrap-blue' : bed.condition=='SICK', 'round-wrap-black' : bed.condition=='NA'}">
+            <span>{{bed.bed.bedNo}}</span>
+					</div></td>
+				<td (click)="getChildData(bed)" class="center-aligned table-cell">{{bed.admitDate
+					| date:'dd-MM-yyyy'}}</td>
+				<td (click)="getChildData(bed)" class="center-aligned table-cell">{{bed.dob
+					| date:'dd-MM-yyyy'}}</td>
+				<td (click)="getChildData(bed)" class="center-aligned table-cell">{{bed.dayOfLife}}</td>
+				<td (click)="getChildData(bed)" class="center-aligned table-cell" style="overflow:hidden">{{bed.gestationWeeks}}<sup
+								*ngIf="bed.gestationDays != null">
+									+ </sup><sup>{{bed.gestationDays}}</sup>
+       			</td>
+				<td (click)="getChildData(bed)" class="center-aligned table-cell">{{bed.weightAtAdmission}}</td>
+				<td (click)="getChildData(bed)" class="center-aligned table-cell">{{bed.lastDayWeight}}</td>
+				<td (click)="getChildData(bed)" class="center-aligned table-cell">{{bed.currentDayWeight}}</td>
+				<td (click)="getChildData(bed)" class="center-aligned table-cell">
+					<i class="sprite sprite-increased" *ngIf="(bed.difference > 0) && bed.difference!=null"></i>
+					<i class="sprite sprite-decreased" *ngIf="(bed.difference*1 < 0) && bed.difference!=null"></i>
+					{{bed.difference}}</td>
+				<td (click)="getChildData(bed)" class="center-aligned table-cell"><div class="table">{{bed.ultrasoundAlert}}</div><div class="table"> <span>{{bed.ropAlert}}</span></div></td>
+				<td (click)="getChildData(bed)" class="center-aligned table-cell">{{bed.feedDetail}}</td>
+        <td (click)="getChildData(bed)" class="center-aligned table-cell">{{bed.antibioticsName}}</td>
+        <td (click)="getChildData(bed)" class="center-aligned table-cell">{{bed.ventMode}}</td>
+				<td (click)="getChildData(bed)" class="center-aligned table-cell"
+					style="overflow: hidden">{{bed.diagnosis}}</td>
+        <td (click)="getChildData(bed)" class="center-aligned table-cell" style="overflow:hidden">{{bed.nursesName}}</td>
+				<td class="center-aligned table-cell" style="overflow: hidden"><button
+						class="button button-small"
+						[ngClass]="{'button-blue': bed.notes == null, 'button-green': bed.notes != null}"
+						(click)="OpenNotesTrack(bed)">
+						<span *ngIf="bed.notes != null">View</span><span
+							*ngIf="bed.notes == null">Write</span>
+					</button></td>
+			</tr>
+		</table>
+	</div>
+</section>
+
+<div class="overlay" id="weightTrackigOverlay"></div>
+<div class="modal-box-lg" id="weightTrackigPopup" style="width: 94%">
+	<button class="modal-popup-close-btn" (click)="closeWeightTrack()"></button>
+	<div class="inicu-tab-container weigthChart-tab-container">
+		<div class="tab-header">
+			<div class="tab-header-menu col-md-12">
+				<div class="col-md-4">
+					<h1 class="blue-text no-margin inline-block">Anthropometry Tracker</h1>
+				</div>
+				<div class="col-md-4 no-padding center-aligned">
+					<h1 class="blue-text no-margin inline-block">{{currentDate | date:'dd-MM-yyyy'}}</h1>
+				</div>
+				<div class="col-md-4 table full no-padding pull-right">
+					<div class="pull-right padding-10-x">
+						<button class="button button-blue" type="submit" (click)="submitWeightTrack()">SUBMIT</button>
+					</div>
+					<div class="pull-right padding-10-x">
+						<span class="button button-blue" (click)="printAnthroprometry()">Print</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-content-cont full ivh-tabcontent">
+			<div class="tab-content full ivh-tab weightContent table"
+				id="weight_tab">
+
+				<div class="header table-row weight-table-header">
+					<div class="table-cell middle-aligned font-bold">
+						<span>UHID</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>Name</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>D.O.B</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>Bed No.</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>Age</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>GA</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>CGA</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>Birth Weight</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>Yesterday's Weight</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span class="visiblity-hidden">Weight</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>Today's</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span class="visiblity-hidden">Length</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>Weight Change</span>
+					</div>
+				</div>
+				<div class="header table-row weight-table-header">
+					<div class="table-cell middle-aligned font-bold">
+						<span class="visiblity-hidden">UHID</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span class="visiblity-hidden">Name</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span class="visiblity-hidden">Room No.</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span class="visiblity-hidden">Bed No.</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span class="visiblity-hidden">Age</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span class="visiblity-hidden">GA</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span class="visiblity-hidden">CGA</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span class="visiblity-hidden">Birth Weight</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span class="visiblity-hidden">Yesterday's Weight</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>Weight</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>Head Circumference</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span>Length</span>
+					</div>
+					<div class="table-cell middle-aligned font-bold">
+						<span class="visiblity-hidden">Weight Change</span>
+					</div>
+				</div>
+				<div class="table-row" *ngFor="let item of weightTrackingList">
+					<div class="table-cell middle-aligned border-1-grey">
+						<span>{{item.uhid}}</span>
+					</div>
+					<div class="table-cell middle-aligned border-1-grey">
+						<span>{{item.babyname}}</span>
+						<span class="padding-5-x">{{item.babyNumber}}</span>
+					</div>
+					<div class="table-cell middle-aligned border-1-grey">
+						<span>{{item.dateofbirth}}</span>
+					</div>
+					<div class="table-cell middle-aligned border-1-grey">
+						<span>{{item.bedno}}</span>
+					</div>
+					<div class="table-cell middle-aligned border-1-grey">
+						<span>{{item.age}}</span>
+					</div>
+					<div class="table-cell middle-aligned border-1-grey">
+						<span>{{item.gestationweekbylmp}}<sup
+										*ngIf="item.gestationdaysbylmp != null">
+											+ </sup><sup>{{item.gestationdaysbylmp}}</sup></span>
+					</div>
+					<div class="table-cell middle-aligned border-1-grey">
+						<span>{{item.gestationWeek}}<sup
+										*ngIf="item.gestationDays != null">
+											+ </sup><sup>{{item.gestationDays}}</sup></span>
+					</div>
+					<div class="table-cell middle-aligned border-1-grey">
+						<span>{{item.birthWeight}}</span>
+					</div>
+					<div class="table-cell middle-aligned border-1-grey">
+						<span>{{item.lastWeight}}</span>
+					</div>
+					<div class="table-cell middle-aligned resp-input-div border-1-grey">
+						<input type="text" name="todayWeightName"
+							[(ngModel)]="item.todayWeight" style="width: 80%">
+					</div>
+					<div class="table-cell middle-aligned resp-input-div border-1-grey">
+						<input type="text" name="currentdateheadcircumName"
+							[(ngModel)]="item.currentdateheadcircum" style="width: 80%">
+					</div>
+					<div class="table-cell middle-aligned resp-input-div border-1-grey">
+						<input type="text" name="currentdateheightName"
+							[(ngModel)]="item.currentdateheight" style="width: 80%">
+					</div>
+
+					<div class="table-cell middle-aligned border-1-grey">
+						<i class="sprite sprite-increased"
+							*ngIf="(item.weightIncrement == true) && item.weightChange!=null"></i>
+						<i class="sprite sprite-decreased"
+							*ngIf="(item.weightIncrement == false) && item.weightChange!=null"></i>
+						<span>{{item.weightChange}}</span><span
+							*ngIf="item.weightChange!=null">&nbsp;gms</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="overlay" id="nurseTasksOverlay"></div>
+<div class="modal-box-lg ballard-popup" id="nurseTasksPopup">
+	<button class="modal-popup-close-btn" (click)="closeNurseTasks()"></button>
+	<div class="inicu-tab-container">
+		<div class="tab-header">
+			<div class="padding-20-x table full">
+
+				<div class="table-cell pull-left">
+					<div class="search-bar" style="top: 5px">
+						<input type="text" [(ngModel)]="searchText"
+							placeholder="Name">
+					</div>
+				</div>
+				<div class="table-cell pull-left">
+					<span class="visiblity-hidden">Hide</span>
+				</div>
+				<div class="table-cell pull-left">
+					<span class="button button-green  middle-aligned pull-right" style="top: 5px"
+					(click)="refreshSearchUhid()">REFRESH</span>
+				</div>
+				<div class="table-cell pull-left">
+					<span class="visiblity-hidden">Hide</span>
+				</div>
+				<div class="table-cell pull-left">
+					<div class="toggle-options-radio padding-top-1">
+						<input type="radio" name="nurseToDoListStatus" [value]="true"
+							[(ngModel)]="isNurseToDoListStatus"
+							id="nurseToDoListStatusTrue">
+							<label for="nurseToDoListStatusTrue">Nurse's To Do List</label>
+						<input type="radio" name="nurseToDoListStatus" [value]="false"
+							[(ngModel)]="isNurseToDoListStatus"
+							id="nurseToDoListStatusFalse">
+							<label for="nurseToDoListStatusFalse">Preparation List</label>
+					</div>
+				</div>
+				<div class="table-cell pull-right padding-5-y">
+					<span class="button button-green  middle-aligned pull-right" (click)="printNurseTasks()">Print</span>
+				</div>
+				<div class="table-cell pull-right padding-5-y">
+					<span class="visiblity-hidden">Hide</span>
+				</div>
+				<div class="table-cell pull-right padding-5-y">
+					<span class="button button-green  middle-aligned pull-right" (click)="saveNurseTasks()">Save</span>
+				</div>
+			</div>
+		</div>
+		<hr class="no-margin">
+		<div class="tab-content-cont full">
+			<div class="col-md-12 no-padding border-bottom-2">
+				<div class="col-md-2 no-padding border-right-2">
+					<div class="table full padding-20-y"
+						*ngFor="let bed of nurseTasksList | SearchUhidName:searchText"
+						style="border-bottom: 2px solid #eeeeee" align="left" [ngClass]="{'highlighttab' : bed.uhid == selectedUhid}">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" name="{{'testid' + bed.uhid}}"
+								[(ngModel)]="bed.isSelected" id="{{'testid' + bed.uhid}}"
+								(click)="showToDoListNurse(bed)"> <label
+								for="{{'testid' + bed.uhid}}">{{bed.name}}</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-10">
+					<table
+						class="table table-bordered headed-table col-md-12 nursing-data-table" *ngIf="isNurseToDoListStatus == true">
+						<tr>
+							<td class="center-aligned border-black">UHID</td>
+							<td class="center-aligned border-black">Name</td>
+							<td class="center-aligned border-black">Vitals</td>
+							<td class="center-aligned border-black">Ventilators</td>
+							<td class="center-aligned border-black">Investigations</td>
+							<td class="center-aligned border-black">Medications</td>
+							<td class="center-aligned border-black">Intake</td>
+							<td class="center-aligned border-black">Output</td>
+						</tr>
+						<tr *ngFor="let data of nurseViewList">
+							<td class="center-aligned border-black" style="height:70px;width:10%">{{data.uhid}}</td>
+							<td class="center-aligned border-black" style="height:70px;width:10%">{{data.name}}</td>
+							<td class="center-aligned border-black" style="height:70px;width:5%" [ngClass]="{'doctor-tasks-select-done' : data.statusVitals == true, 'doctor-tasks-select-undone' : data.statusVitals != true}" (click)="statusVitals(data)">2 hrly</td>
+							<td class="center-aligned border-black" style="height:70px;width:5%" [ngClass]="{'doctor-tasks-select-done' : data.statusVentilator == true, 'doctor-tasks-select-undone' : data.statusVentilator != true}" (click)="statusVentilator(data)">2 hrly</td>
+							<td class="center-aligned border-black" style="height:70px;width:30%" [ngClass]="{'doctor-tasks-select-done' : data.statusInvestigations == true, 'doctor-tasks-select-undone' : data.statusInvestigations != true}" (click)="statusInvestigations(data)">{{data.investigations}}</td>
+							<td class="center-aligned border-black" style="height:70px;width:20%" [ngClass]="{'doctor-tasks-select-done' : data.statusMedications == true, 'doctor-tasks-select-undone' : data.statusMedications != true}" (click)="statusMedications(data)">{{data.medications}}</td>
+							<td class="center-aligned border-black" style="height:70px;width:10%" [ngClass]="{'doctor-tasks-select-done' : data.statusIntake == true, 'doctor-tasks-select-undone' : data.statusIntake != true}" (click)="statusIntake(data)">{{data.intake}}</td>
+							<td class="center-aligned border-black" style="height:70px;width:10%" [ngClass]="{'doctor-tasks-select-done' : data.statusOutput == true, 'doctor-tasks-select-undone' : data.statusOutput != true}" (click)="statusOutput(data)">{{data.output}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-10">
+					<table
+						class="table table-bordered headed-table col-md-12 nursing-data-table" *ngIf="isNurseToDoListStatus == false">
+						<tr>
+							<td class="center-aligned border-black">UHID</td>
+							<td class="center-aligned border-black">Name</td>
+							<td class="center-aligned border-black">Medication Order</td>
+							<td class="center-aligned border-black">Nutrition Order</td>
+						</tr>
+						<tr *ngFor="let data of nurseViewList">
+							<td class="center-aligned border-black" style="height:70px">{{data.uhid}}</td>
+							<td class="center-aligned border-black" style="height:70px">{{data.name}}</td>
+							<td class="center-aligned border-black" style="height:70px" [ngClass]="{'doctor-tasks-select-done' : data.statusPreparationMedication == true, 'doctor-tasks-select-undone' : data.statusPreparationMedication != true}" (click)="statusPreparationMedication(data)">{{data.preparationMedication}}</td>
+							<td class="center-aligned border-black" style="height:70px" [ngClass]="{'doctor-tasks-select-done' : data.statusPreparationNutrition == true, 'doctor-tasks-select-undone' : data.statusPreparationNutrition != true}" (click)="statusPreparationNutrition(data)">{{data.preparationNutrition}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="overlay" id="doctorTasksOverlay"></div>
+<div class="modal-box-lg ballard-popup" id="doctorTasksPopup">
+	<button class="modal-popup-close-btn" (click)="closeDoctorTasks()"></button>
+	<div class="inicu-tab-container">
+		<div class="tab-header">
+			<div class="padding-20-x table full">
+				<div class="table-cell pull-left" *ngIf = "viewDoctorListEnable == true">
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Doctor's To Do List</h1>
+				</div>
+				<div class="table-cell pull-left" *ngIf = "viewDoctorListEnable == false">
+					<div class="search-bar"  style="top: 5px">
+						<input type="text" [(ngModel)]="searchText"
+							placeholder="Name">
+					</div>
+				</div>
+				<div class="table-cell pull-left" *ngIf = "viewDoctorListEnable == false">
+					<span class="visiblity-hidden">Hide</span>
+				</div>
+				<div class="table-cell pull-left" *ngIf = "viewDoctorListEnable == false" style = "margin-top : 5px">
+					<span class="button button-green  middle-aligned pull-right" style="top: 5px"
+					(click)="refreshSearchUhid()">REFRESH</span>
+				</div>
+				<div class="table-cell pull-left">
+					<span class="button button-blue button-large  middle-aligned pull-right" style="top:3px;left:100px"
+					(click)="openNewDoctorTasks()">Prepare New</span>
+				</div>
+				<div class="table-cell pull-right padding-5-y" *ngIf = "viewDoctorListEnable == false">
+					<span class="button button-green  middle-aligned pull-right" (click)="viewDoctorTasks()">View</span>
+				</div>
+				<div class="table-cell pull-right padding-5-y" *ngIf = "viewDoctorListEnable == false">
+					<span class="visiblity-hidden">Hide</span>
+				</div>
+
+				<div class="table-cell pull-right padding-5-y" *ngIf = "viewDoctorListEnable == true">
+					<span class="button button-green  middle-aligned pull-right" (click)="viewDoctorTasks()">Back</span>
+				</div>
+				<div class="table-cell pull-right padding-5-y" *ngIf = "viewDoctorListEnable == true">
+					<span class="visiblity-hidden">Hide</span>
+				</div>
+				<div class="table-cell pull-right padding-5-y" *ngIf = "viewDoctorListEnable == true">
+					<span class="button button-green  middle-aligned pull-right" (click)="printDoctorTasks()">Print</span>
+				</div>
+				<div class="table-cell pull-right padding-5-y" *ngIf = "viewDoctorListEnable == true">
+					<span class="visiblity-hidden">Hide</span>
+				</div>
+				<div class="table-cell pull-right padding-5-y">
+					<span class="button button-green  middle-aligned pull-right" (click)="saveDoctorTasks()">Save</span>
+				</div>
+			</div>
+		</div>
+		<hr class="no-margin">
+		<div class="tab-content-cont full" *ngIf = "viewDoctorListEnable == false">
+			<div class="col-md-12 no-padding border-bottom-2">
+				<div class="col-md-2 no-padding border-right-2">
+					<div class="table full padding-20-y"
+						*ngFor="let bed of doctorTasksList | SearchUhidName:searchText"
+						style="border-bottom: 2px solid #eeeeee" align="left" [ngClass]="{'highlighttab' : bed.uhid == selectedUhid}">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" name="{{'testid' + bed.uhid}}"
+								[(ngModel)]="bed.isSelected" id="{{'testid' + bed.uhid}}"
+								(click)="showToDoListDoctors(bed)"> <label
+								for="{{'testid' + bed.uhid}}">{{bed.name}}</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-10">
+					<div class="table full left-aligned" *ngFor="let item of doctorTasksList">
+						<div *ngIf = "item.uhid == selectedUhid" class="col-md-6 no-padding-left">
+							<label class="input-label"><strong>Investigations</strong></label>
+							<div class="relative-input-group block desktop-column-20">
+								<input type="text" class="input input-medium desktop-column-20 " [(ngModel)]="item.investigations" [ngModelOptions]="{standalone: true}">
+							</div>
+						</div>
+						<div *ngIf = "item.uhid == selectedUhid" class="col-md-6 no-padding-left">
+							<label class="input-label"><strong>Add Med</strong></label>
+							<div class="relative-input-group block desktop-column-20">
+								<input type="text" class="input input-medium desktop-column-20 " [(ngModel)]="item.addMedicine" [ngModelOptions]="{standalone: true}">
+							</div>
+						</div>
+						<div *ngIf = "item.uhid == selectedUhid" class="col-md-6 no-padding-left">
+							<label class="input-label"><strong>Stop Med</strong></label>
+							<div class="relative-input-group block desktop-column-20">
+								<input type="text" class="input input-medium desktop-column-20 " [(ngModel)]="item.stopMedicine" [ngModelOptions]="{standalone: true}">
+							</div>
+						</div>
+						<div *ngIf = "item.uhid == selectedUhid" class="col-md-6 no-padding-left">
+							<label class="input-label"><strong>Comments</strong></label>
+							<div class="relative-input-group block desktop-column-20">
+								<input type="text" class="input input-medium desktop-column-20 " [(ngModel)]="item.comments" [ngModelOptions]="{standalone: true}">
+							</div>
+						</div>
+						<div *ngIf = "item.uhid == selectedUhid" class="col-md-6 no-padding-left">
+							<label class="input-label"><strong>Reports</strong></label>
+							<div class="relative-input-group block desktop-column-20">
+								<input type="text" class="input input-medium desktop-column-20 " [(ngModel)]="item.reports" [ngModelOptions]="{standalone: true}">
+							</div>
+						</div>
+						<div *ngIf = "item.uhid == selectedUhid" class="col-md-6 no-padding-left">
+							<label class="input-label"><strong>Feeds</strong></label>
+							<div class="relative-input-group block desktop-column-20">
+								<input type="text" class="input input-medium desktop-column-20 " [(ngModel)]="item.feeds" [ngModelOptions]="{standalone: true}">
+							</div>
+						</div>
+						<div *ngIf = "item.uhid == selectedUhid" class="col-md-6 no-padding-left">
+							<label class="input-label"><strong>Active Disease Assessment</strong></label>
+							<div class="relative-input-group block desktop-column-20">
+								<input type="text" class="input input-medium desktop-column-20 " [(ngModel)]="item.assessments" [ngModelOptions]="{standalone: true}" disabled>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-content-cont full" *ngIf = "viewDoctorListEnable == true">
+			<div class="col-md-12 no-padding border-bottom-2">
+				<div class="col-md-12">
+					<table
+	          class="table table-bordered headed-table col-md-12 nursing-data-table">
+	          <tr>
+	            <td class="center-aligned border-black">UHID</td>
+	            <td class="center-aligned border-black">Name</td>
+	            <td class="center-aligned border-black">Investigations</td>
+	            <td class="center-aligned border-black">Add Med</td>
+	            <td class="center-aligned border-black">Stop Med</td>
+							<td class="center-aligned border-black">Feeds</td>
+							<td class="center-aligned border-black">Comments</td>
+						 <td class="center-aligned border-black">Reports</td>
+						 <td class="center-aligned border-black">Active Disease Assessment</td>
+	          </tr>
+	          <tr *ngFor="let data of doctorViewList">
+	            <td class="center-aligned border-black" style="height:70px">{{data.uhid}}</td>
+	            <td class="center-aligned border-black" style="height:70px">{{data.name}}</td>
+	            <td class="center-aligned border-black" style="height:70px" [ngClass]="{'doctor-tasks-select-done' : data.statusInvestigation == true, 'doctor-tasks-select-undone' : data.statusInvestigation != true}" (click)="statusInvestigation(data)">{{data.investigations}}</td>
+	            <td class="center-aligned border-black" style="height:70px" [ngClass]="{'doctor-tasks-select-done' : data.statusAddMedicine == true, 'doctor-tasks-select-undone' : data.statusAddMedicine != true}" (click)="statusAddMedicine(data)">{{data.addMedicine}}</td>
+	            <td class="center-aligned border-black" style="height:70px" [ngClass]="{'doctor-tasks-select-done' : data.statusStopMedicine == true, 'doctor-tasks-select-undone' : data.statusStopMedicine != true}" (click)="statusStopMedicine(data)">{{data.stopMedicine}}</td>
+							<td class="center-aligned border-black" style="height:70px" [ngClass]="{'doctor-tasks-select-done' : data.statusFeeds == true, 'doctor-tasks-select-undone' : data.statusFeeds != true}" (click)="statusFeeds(data)">{{data.feeds}}</td>
+							<td class="center-aligned border-black" style="height:70px" [ngClass]="{'doctor-tasks-select-done' : data.statusComments == true, 'doctor-tasks-select-undone' : data.statusComments != true}" (click)="statusComments(data)">{{data.comments}}</td>
+						  <td class="center-aligned border-black" style="height:70px" [ngClass]="{'doctor-tasks-select-done' : data.statusReports == true, 'doctor-tasks-select-undone' : data.statusReports != true}" (click)="statusReports(data)">{{data.reports}}</td>
+						  <td class="center-aligned border-black" style="height:70px" [ngClass]="{'doctor-tasks-select-done' : data.statusAssessments == true, 'doctor-tasks-select-undone' : data.statusAssessments != true}">{{data.assessments}}</td>
+	          </tr>
+	        </table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="overlay" id="ballardOverlay"></div>
+<div class="modal-box-lg ballard-popup" id="callingRequiredPopup"
+	style="top: 70px !important">
+	<div *ngIf="mandatoryFieldObj != undefined">
+		<button class="modal-popup-close-btn"
+			(click)="closeRequiredFieldPopup()"></button>
+		<div class="inicu-tab-container">
+			<div class="tab-header">
+				<div class="padding-20-x table full">
+					<h1 class="left-aligned">Please entry Mandatory Fields</h1>
+				</div>
+			</div>
+			<div class="tab-content-cont full" style="height: 300px !important">
+				<form name="mandatoryFieldForm" (submit)="saveMandatoryData()">
+					<div class="col-md-12 no-padding padding-10-y">
+						<div class="col-md-2 no-padding-right">
+							<div class="col-md-12 no-padding left-aligned">
+								<span class="bold required">Admission Type</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="toggle-options-radio padding-top-1"
+									id="addmissiontype">
+									<input type="radio" name="addmissiontype"
+										[(ngModel)]="mandatoryFieldObj.patientType" required
+										id="typeInborn" value="In Born"> <label
+										for="typeInborn">Inborn</label> <input type="radio"
+										name="addmissiontype"
+										required
+									[(ngModel)]="mandatoryFieldObj.patientType"
+										id="typeOutborn" value="Out Born"> <label
+										for="typeOutborn">Outborn</label>
+								</div>
+                <label
+                  id="emptyAdmitType" style="display: none;"
+                  class=" error-labels col-md-12 no-padding right-aligned">Please
+  								select Admission Type</label>
+								<!-- data-ng-disabled="nonEditable" -->
+								<!-- <label id="emptyAdmitType" style="display: none"
+								data-ng-hide="mandatoryFieldForm.addmissiontype.$touched && mandatoryFieldForm.addmissiontype.$dirty"
+								class=" error-labels col-md-12 no-padding left-aligned">Please
+								select Admission Type</label> -->
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-right">
+							<div class="col-md-12 no-padding left-aligned">
+								<span class="bold required">Birth Weight(gm)</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<input name="birthWeight" type="number"
+									[(ngModel)]="mandatoryFieldObj.birthWeight"
+									class="input input-medium desktop-column-20">
+							</div>
+              <label
+                id="emptyBirthWeight" style="display: none;"
+                class=" error-labels col-md-12 no-padding right-aligned">Please
+  							enter birth weight</label>
+							<!-- <label id="emptyBirthWeight" style="display: none"
+							data-ng-hide="mandatoryFieldForm.birthWeight.$touched && mandatoryFieldForm.birthWeight.$dirty"
+							class=" error-labels col-md-12 no-padding left-aligned">Please
+							enter birth weight</label> -->
+						</div>
+						<div class="col-md-2 no-padding-right">
+							<div class="col-md-12 no-padding left-aligned">
+								<span class="bold">Date of Birth </span><span
+									class="bold required" style="font-size: 13px;">(D.O.B.)</span>
+							</div>
+							<div class="col-md-12 no-padding">
+
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="mandatoryFieldObj.dobStr" name="dob"
+									dateFormat='DD-MM-YYYY' [ngModelOptions]="{standalone: true}" [max]="currentDate"></owl-date-time>
+                <label
+                  id="emptyDob" style="display: none;"
+                  class=" error-labels col-md-12 no-padding right-aligned">Please
+  								select D.O.B.</label>
+
+
+
+								<!--(ngModelChange)="validateAdmDate()"-->
+								<!-- <label
+								id="emptyDob" style="display: none;"
+								data-ng-hide="mandatoryFieldForm.dob.$touched && mandatoryFieldForm.dob.$dirty"
+								class=" error-labels col-md-12 no-padding right-aligned">Please
+								select D.O.B.</label> -->
+							</div>
+							<!-- <label id="dobLtDoa" *ngIf="showErrorLabel== true"
+							class=" error-labels col-md-12 no-padding left-aligned">D.O.B.
+							cannot be after D.O.A.</label> -->
+						</div>
+						<div class="col-md-3 no-padding-right">
+							<div class="col-md-12 no-padding left-aligned">
+								<span class="bold">Time of Birth </span><span class="bold"
+									[ngClass]="{ 'required' : mandatoryFieldObj.patientType == 'In Born' }">(T.O.B.)</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="col-md-3 no-padding-left" style="padding-right: 5px">
+									<select id="tobhr" name="hr"
+										style="padding-right: 5px; padding-left: 5px;"
+										class="input input-medium col-md-12 force-left max-height-36 padding-5-x"
+										[(ngModel)]="mandatoryFieldTempObj.timeOfBirthHours">
+										<option selected value="">HH</option>
+										<option *ngFor="let hour of hoursListMap">{{hour.value}}</option>
+									</select>
+								</div>
+								<div class="col-md-3 no-padding-left" style="padding-right: 5px">
+									<select id="tobmin" name="min"
+										style="padding-right: 5px; padding-left: 5px;"
+										class="input input-medium col-md-12 force-left max-height-36 padding-5-x"
+										[(ngModel)]="mandatoryFieldTempObj.timeOfBirthMinutes">
+										<option disabled selected hidden value="">MM</option>
+										<option *ngFor="let hour of minutesListMap">{{hour.value}}</option>
+									</select>
+								</div>
+								<div
+									class="toggle-options-radio col-md-3 no-padding padding-top-1"
+									style="padding-right: 5px">
+									<input type="radio" name="amTob"
+										style="padding-right: 5px; padding-left: 5px;"
+										[(ngModel)]="mandatoryFieldTempObj.timeOfBirthMeridium"
+										id="tobAm" value="AM"><label for="tobAm"
+										style="padding: 0 5px;">AM</label> <input type="radio"
+										name="amTob"
+										[(ngModel)]="mandatoryFieldTempObj.timeOfBirthMeridium"
+										id="tobPm" value="PM"><label for="tobPm"
+										style="padding: 0 5px;">PM</label>
+								</div>
+                <label
+                  id="emptyHr" style="display: none;"
+                  class=" error-labels col-md-12 no-padding right-aligned">Please
+  								fill Hours, Minutes and Meridian</label>
+								<!-- <label id="emptyHr" style="display: none;"
+								data-ng-hide="(mandatoryFieldForm.hr.$touched && mandatoryFieldForm.hr.$dirty) && (mandatoryFieldForm.min.$touched && mandatoryFieldForm.min.$dirty) && (mandatoryFieldForm.mer.$touched && mandatoryFieldForm.mer.$dirty)"
+								class="col-md-12 error-labels no-padding right-aligned">Please
+								fill Hours, Minutes and Meridian</label> <label id="tobLtToa"
+								*ngIf="tobToaError"
+								class=" error-labels col-md-12 no-padding left-aligned">T.O.B
+								cannot be after T.O.A.</label> -->
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-right">
+							<div class="col-md-12 no-padding left-aligned">
+								<span class="bold required">Gender</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<select name="genderSelect" id="gender"
+									[(ngModel)]="mandatoryFieldObj.gender"
+									class="input input-medium desktop-column-20 max-height-36">
+									<option disabled selected hidden value>-- Select --</option>
+									<option value=null hidden>--Select--</option>
+									<option value="Male">Male</option>
+									<option value="Female">Female</option>
+									<option value="Unknown">Unknown</option>
+								</select>
+                <label
+                  id="emptyGender" style="display: none;"
+                  class=" error-labels col-md-12 no-padding right-aligned">Please
+  								select gender</label>
+								<!-- </select> <label id="emptyGender" style="display: none;"
+								data-ng-hide="mandatoryFieldForm.genderSelect.$touched && mandatoryFieldForm.genderSelect.$dirty"
+								class="col-md-12 no-padding right-aligned error-labels">Please
+								select gender</label> -->
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y">
+						<div class="col-md-4 no-padding-right">
+							<div class="col-md-12 no-padding left-aligned">
+								<span class="bold required">EDD By </span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="col-md-9 no-padding-left">
+									<div class="toggle-options-radio">
+										<input type="radio" name="motherEDDBy" id="motherEDDByLMP"
+											[(ngModel)]="mandatoryFieldObj.edd_by" value="lmp"><label
+											for="motherEDDByLMP">LMP</label> <input type="radio"
+											[(ngModel)]="mandatoryFieldObj.edd_by" name="motherEDDBy"
+											id="motherEDDByUSG" value="usg"><label
+											for="motherEDDByUSG">USG</label>
+                      <input type="radio"
+                      [(ngModel)]="mandatoryFieldObj.edd_by"
+                      name="motherEDDBy" id="motherEDDIVF"
+                      value="ivf"><label
+                      for="motherEDDIVF">ET Date</label>
+                      <input type="radio"
+											[(ngModel)]="mandatoryFieldObj.edd_by" name="motherEDDBy"
+											id="motherEDDnotKnown" value="notKnown"><label
+											for="motherEDDnotKnown">Not Known</label>
+									</div>
+                  <label
+                    id="emptyEdd" style="display: none;"
+                    class=" error-labels col-md-12 no-padding right-aligned">Please
+  									select any one option</label>
+                    <label class="red-text">{{messageLmp}}</label>
+  								<label class="red-text">{{mandatoryFieldObj.dobNullMessage}}</label>
+									<!-- <label class="red-text" id="emptyEdd" style="display: none"
+									data-ng-hide="mandatoryFieldForm.motherEDDBy.$touched && mandatoryFieldForm.motherEDDBy.$dirty">Please
+									select any one option</label> <label class="red-text">{{messageLmp}}</label>
+								<label class="red-text">{{mandatoryFieldObj.dobNullMessage}}</label> -->
+								</div>
+								<div *ngIf="mandatoryFieldObj.edd_by!=null"
+									class="col-md-3 no-padding line-height-standard middle-aligned left-aligned">
+									<span class="bold">based on</span>
+								</div>
+								<div class="col-md-4 no-padding line-height-standard middle-aligned center-aligned"
+								*ngIf="mandatoryFieldObj.edd_by == 'notKnown'">
+								<span class="bold">Gestation not known</span>
+							  </div>
+							</div>
+						</div>
+						<div *ngIf="mandatoryFieldObj.edd_by!=null">
+							<div *ngIf="mandatoryFieldObj.edd_by == 'lmp'">
+								<div class="col-md-2 no-padding-left">
+									<div class="col-md-12 no-padding">
+										<div class="col-md-12 no-padding left-aligned">
+											<span class="bold required">LMP </span>
+										</div>
+									</div>
+									<div class="col-md-12 no-padding">
+
+										<owl-date-time class="owl-dateTime"
+											[(ngModel)]="mandatoryFieldObj.lmpTimestampStr"
+											name="MotherlmpName" dateFormat='DD-MM-YYYY'
+											(ngModelChange)="calculateEddLmp()"
+											[required] ="mandatoryFieldObj.edd_by == 'lmp'"
+											[ngModelOptions]="{standalone: true}"></owl-date-time>
+                    <label
+                      id="emptyLmpEdd" style="display: none;"
+                      class=" error-labels col-md-12 no-padding right-aligned">Please
+  										enter LMP</label>
+
+										<!-- <label
+										style="display: none;" id="emptyLmpEdd"
+										data-ng-hide="mandatoryFieldForm.Motherlmp.$touched && mandatoryFieldForm.Motherlmp.$dirty"
+										class="col-md-12 error-labels no-padding right-aligned">Please
+										enter LMP</label> -->
+									</div>
+								</div>
+								<div class="col-md-2 no-padding-left">
+									<div class="col-md-12 no-padding">
+										<div class="col-md-12 no-padding left-aligned">
+											<span class="bold required">EDD</span>
+										</div>
+									</div>
+									<div class="col-md-12 no-padding">
+
+										<owl-date-time class="owl-dateTime"
+											[(ngModel)]="mandatoryFieldObj.eddTimestampStr"
+											name="MotherlmpEdd" dateFormat='DD-MM-YYYY'
+											[required] ="mandatoryFieldObj.edd_by == 'lmp'"
+											[ngModelOptions]="{standalone: true}"></owl-date-time>
+
+									</div>
+								</div>
+								<div class="col-md-3 no-padding-left">
+									<div class="col-md-12 no-padding left-aligned">
+										<label class="input-label required"><strong>Gestation
+												By LMP </strong></label>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="col-md-6 no-padding">
+											<div class="relative-input-group block">
+												<select id="gestlmp" name="GestationLmp"
+													disabled
+												[(ngModel)]="mandatoryFieldObj.gestationWeeks"
+													class="input input-medium desktop-column-20 max-height-36"
+													[required]="mandatoryFieldObj.edd_by == 'lmp'">
+													<option disabled selected value="">Weeks</option>
+													<option *ngFor="let hour of arrayWithRangeMap">{{hour.value}}</option>
+
+												</select>
+											</div>
+										</div>
+										<div class="col-md-6 no-padding-left no-padding-left">
+											<div class="relative-input-group block">
+												<select name="gestationDaysName"
+													disabled
+												[(ngModel)]="mandatoryFieldObj.gestationDays"
+													class="input input-medium desktop-column-20 max-height-36"
+													data-ng-required="mandatoryFieldObj.edd_by == 'lmp'">
+													<option disabled selected value>Days</option>
+													<option *ngFor="let hour of arrayWithRangeLessMap">{{hour.value}}</option>
+
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div *ngIf="mandatoryFieldObj.edd_by == 'usg'">
+								<div class="col-md-2 no-padding-left">
+									<div class="col-md-12 no-padding">
+										<div class="col-md-12 no-padding left-aligned">
+											<span class="bold required">Trimester </span>
+										</div>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="toggle-options-radio">
+											<input type="radio" name="motherTrimester1"
+												[(ngModel)]="mandatoryFieldObj.trimesterType"
+												id="motherTrimesterFirst" value="1" required><label
+												for="motherTrimesterFirst">1<sup>st</sup></label> <input
+												[(ngModel)]="mandatoryFieldObj.trimesterType" type="radio"
+												name="motherTrimester1" id="motherTrimesterSecond" value="2"
+												required><label for="motherTrimesterSecond">2<sup>nd</sup></label>
+											<input [(ngModel)]="mandatoryFieldObj.trimesterType"
+												type="radio" name="motherTrimester1"
+												id="motherTrimesterThird" value="3" required><label
+												for="motherTrimesterThird">3<sup>rd</sup></label>
+										</div>
+										<label *ngIf="mandatoryFieldObj.trimesterType == null"
+											class="col-md-12 error-labels no-padding left-aligned">Select
+											Trimester</label>
+									</div>
+								</div>
+								<div class="col-md-2 no-padding-left">
+									<div class="col-md-12 no-padding left-aligned">
+										<span class="bold required">EDD </span>
+									</div>
+									<div class="col-md-12 no-padding ">
+
+										<owl-date-time class="owl-dateTime"
+											[(ngModel)]="mandatoryFieldObj.eddTimestampStr"
+											name="motherUSGEdd" dateFormat='DD-MM-YYYY'
+											(ngModelChange)="calculateEddLmp()"
+											[required] ="mandatoryFieldObj.edd_by == 'usg'"
+											[ngModelOptions]="{standalone: true}"></owl-date-time>
+									</div>
+								</div>
+								<div class="col-md-3 no-padding-left">
+									<div class="col-md-12 no-padding left-aligned">
+										<label class="input-label required"><strong>Gestation
+												By USG </strong></label>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="col-md-6 no-padding">
+											<div class="relative-input-group block">
+												<select id="gestlmp" name="GestationUS"
+													[(ngModel)]="mandatoryFieldObj.gestationWeeks"
+													class="input input-medium desktop-column-20 max-height-36"
+													[required]="mandatoryFieldObj.edd_by == 'usg'">
+													<option selected value="">Weeks</option>
+													<option *ngFor="let hour of arrayWithRangeMap">{{hour.value}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-6 no-padding-left no-padding-left">
+											<div class="relative-input-group block">
+												<select name="GestationUSName"
+													[(ngModel)]="mandatoryFieldObj.gestationDays"
+													(ngModelChange)="populateAntenalStr()"
+													class="input input-medium desktop-column-20 max-height-36"
+													[required]="mandatoryFieldObj.edd_by == 'usg'">
+													<option selected value="">Days</option>
+													<option *ngFor="let hour of arrayWithRangeLessMap">{{hour.value}}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+              <div
+                *ngIf="mandatoryFieldObj.edd_by == 'ivf'">
+                <div class="col-md-2 no-padding-left">
+                  <div class="col-md-12 no-padding">
+                    <div class="col-md-12 no-padding">
+                      <span class="bold required">ET Date</span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 no-padding">
+                    <owl-date-time class="owl-dateTime" name="Motheredd"
+                      type="calendar" autoClose=true placeholder="dd-mm-yyyy"
+                      [(ngModel)]="mandatoryFieldObj.etTimestampStr"
+                      [required] = "mandatoryFieldObj.edd_by == 'ivf'"
+                      (ngModelChange)="calculateETLmp()" dateFormat='DD-MM-YYYY'
+                      [ngModelOptions]="{standalone: true}"></owl-date-time>
+
+                    <label
+                      id="emptyEtEdd" style="display: none;"
+                      class=" error-labels col-md-12 no-padding right-aligned">Please
+  										enter ET Date</label>
+                  </div>
+                </div>
+
+                <div class="col-md-2 no-padding-left">
+                  <div class="col-md-12 no-padding">
+                    <div class="col-md-12 no-padding">
+                      <span class="bold required">LMP </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 no-padding">
+                    <owl-date-time class="owl-dateTime" name="Motheredd"
+                      type="calendar" autoClose=true placeholder="dd-mm-yyyy"
+                      [(ngModel)]="mandatoryFieldObj.lmpTimestampStr"
+                      [required] = "mandatoryFieldObj.edd_by == 'ivf'"
+                      dateFormat='DD-MM-YYYY'
+                      [ngModelOptions]="{standalone: true}"></owl-date-time>
+                  </div>
+                </div>
+
+                <div class="col-md-2 no-padding-left">
+                  <div class="col-md-12 no-padding">
+                    <div class="col-md-12 no-padding">
+                      <span class="bold required">EDD</span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 no-padding">
+                    <owl-date-time class="owl-dateTime" name="Motheredd"
+                      type="calendar" autoClose=true placeholder="dd-mm-yyyy"
+                      [(ngModel)]="mandatoryFieldObj.eddTimestampStr"
+                      [required] = "mandatoryFieldObj.edd_by == 'ivf'"
+                      dateFormat='DD-MM-YYYY'
+                      [ngModelOptions]="{standalone: true}"></owl-date-time>
+                  </div>
+
+                </div>
+                <div class="col-md-2 no-padding-left">
+                  <div class="col-md-12 no-padding">
+                    <label class="input-label required"><strong>Gestation
+                        By ET Date </strong></label>
+                  </div>
+
+                  <div class="col-md-12 no-padding">
+										<div class="col-md-6 no-padding">
+											<div class="relative-input-group block">
+												<select id="gestlmp" name="GestationLmp"
+													disabled
+												[(ngModel)]="mandatoryFieldObj.gestationWeeks"
+													class="input input-medium desktop-column-20 max-height-36"
+													[required]="mandatoryFieldObj.edd_by == 'ivf'">
+													<option disabled selected value="">Weeks</option>
+													<option *ngFor="let hour of arrayWithRangeMap">{{hour.value}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-6 no-padding-left no-padding-left">
+											<div class="relative-input-group block">
+												<select name="gestationDaysName"
+													disabled
+												[(ngModel)]="mandatoryFieldObj.gestationDays"
+													class="input input-medium desktop-column-20 max-height-36"
+													data-ng-required="mandatoryFieldObj.edd_by == 'ivf'">
+													<option disabled selected value>Days</option>
+													<option *ngFor="let hour of arrayWithRangeLessMap">{{hour.value}}</option>
+
+												</select>
+											</div>
+										</div>
+									</div>
+                </div>
+              </div>
+
+							<div *ngIf="mandatoryFieldObj.edd_by == 'notKnown'">
+								<div class="col-md-3 no-padding-left"
+									*ngIf="mandatoryFieldObj.notknowntype==null">
+									<div class="col-md-12 no-padding">
+										<label class="input-label visiblity-hidden"><strong>Gestation
+												By</strong></label>
+									</div>
+									<div class="col-md-12 line-height-standard no-padding">
+										<label class="red-text">Please select gestation by
+											input</label>
+									</div>
+
+								</div>
+								<div class="col-md-3 no-padding">
+									<div class="col-md-12 no-padding">
+										<label class="input-label required"><strong>Gestation
+												By</strong></label>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="col-md-6 no-padding">
+											<div class="relative-input-group block">
+												<select id="gestClinical" name="gestClinical"
+													[(ngModel)]="mandatoryFieldObj.gestationWeeks"
+													class="input input-medium desktop-column-20 max-height-36">
+													<option disabled selected value="">Weeks</option>
+													<option *ngFor="let hour of arrayWithRangeMap">{{hour.value}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-6 no-padding-left no-padding-left">
+											<div class="relative-input-group block">
+												<select name="gestClinicalday"
+													[(ngModel)]="mandatoryFieldObj.gestationDays"
+													class="input input-medium desktop-column-20 max-height-36">
+													<option disabled selected value>Days</option>
+													<option *ngFor="let hour of arrayWithRangeLessMap">{{hour.value}}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+                  <label
+                    id="emptyGestation" style="display: none;"
+                    class=" error-labels col-md-12 no-padding right-aligned">Select
+  									Gestation</label>
+									<!-- <label style="display: none;" id="emptyGestation"
+									data-ng-hide="mandatoryFieldForm.gestClinical.$touched && mandatoryFieldForm.gestClinical.$dirty && mandatoryFieldForm.gestClinicalday.$touched && mandatoryFieldForm.gestClinicalday.$dirty"
+									class="col-md-12 error-labels no-padding left-aligned">Select
+									Gestation</label> -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding padding-10-y">
+						<button type="submit" class="button button-blue button-large">SUBMIT</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="overlay" id="notesOverlay"></div>
+<div class="modal-box-lg" id="notesPopup">
+    <button class="modal-popup-close-btn" (click)="closeNotesTrack()"></button>
+	<div *ngIf="tempNote != undefined && tempNote != null" class="inicu-tab-container weigthChart-tab-container">
+        <div class="tab-header" data-ng-init="tabContentWeight = 'weight'">
+            <div class="tab-header-menu">
+                <input type="radio" id="dashboardNote" name="note tab menu" value="weight"><label for="dashboardNote">Notes</label>
+            </div>
+       </div>
+		<div class="tab-content-cont full ivh-tabcontent">
+			<div class="col-md-12 padding-20-y">
+				<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin" rows="4" [(ngModel)]="tempNote.notes"></textarea>
+			</div>
+			<div class="col-md-12 center-aligned">
+				<button class="button button-blue" (click)="submitNoteData(tempNote)"> Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- end for the code callingRequiredFieldPopup -->
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+    <span class="inicu-loader-content">
+    	<span class="inicu-adding-image"></span>
+        <span class="inicu-loading-content">{{loaderContent}}</span>
+	</span>
+</span>

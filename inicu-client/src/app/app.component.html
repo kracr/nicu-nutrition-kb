@@ -1,0 +1,89 @@
+<header *ngIf="hideHeader == false" class="dashboard-header wrapper-fluid">
+  <div class="table full">
+    <div class="table-cell middle-aligned">
+      <button class="menu-toggle" (click)="toggleSideMenu('leftPanel')"
+        *ngIf="hideMenuButton"></button>
+    </div>
+    <div class="dashboard-logo table-cell">
+      <h1 class="logo-h1-hidden">iNICU</h1>
+      <a [routerLink]="['/dash/dashboard']" class="inline-block"
+        style="display: inline-block !important; vertical-align: middle;">
+        <div class="logo-items-cont">
+          <img src="/assets/_images/logo.png" class="logo-pic" alt="iNICU logo" /> <span
+            class="logo-desc font-light"> <span class="green-text">i</span><span
+            class="blue-text">NICU</span>
+          </span>
+          <p style="margin-left: 37px;font-size: 12px;color: #666666;">{{authService?.obj?.branchName}}</p>
+        </div>
+      </a>
+      <!-- <span class="inline-block branding-logo"> <img
+        data-ng-if="brandingLogoPath" data-ng-src="{{brandingLogoPath}}"
+        alt="" style="max-width: 150px; height: 70px;" />
+      </span> -->
+    </div>
+    <nav class="dashboard-menu table-cell center-aligned">
+      <ul>
+        <li><a [routerLink]="['/dash/dashboard']" click="headerTab()"
+          class="dashboard-link active"> <span
+            class="sprite menu-icon sprite-menu-icon-dashboard"></span> <span
+            class="menu-text">Dashboard</span>
+        </a></li>
+        <li><a [routerLink]="['/discharged/dischargePatients']" click="headerTab()"
+          class="discharged-patients-link"> <span
+            class="sprite menu-icon sprite-menu-discharged-patients"></span> <span
+            class="menu-text">Discharged Patients</span>
+        </a></li>
+        <li><a [routerLink]="['/ana/analytics']" class="analytics-link"> <span
+            class="sprite menu-icon sprite-menu-analytics"></span> <span
+            class="menu-text">Analytics</span>
+        </a></li>
+        <li><a [routerLink]="['/adm/admin']" click="headerTab()"
+          class="admin-link" > <span
+            class="sprite menu-icon sprite-menu-admin"></span> <span
+            class="menu-text">Admin</span>
+        </a></li>
+
+      </ul>
+    </nav>
+    <div class="dashboard-user-info table-cell right-aligned menu-hover">
+      <div class="head inline-block">
+        <span class="messages-notifier"> <span
+          class="sprite sprite-notification"></span> <span class="count">0</span>
+        </span>
+      </div>
+      <div class="inline-block">
+        <div class="user-pic-cont">
+          <img class="user-pic" />
+        </div>
+        <div class="user-details left-aligned ">
+          <p class="user-name table">
+            <span class="table-cell"></span>
+            <button class="logout-btn sprite sprite-log-out table-cell" (click)="logout()"></button>
+          </p>
+          <p class="user-designation">{{authService?.obj?.userName}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <router-outlet (activate)="changeOfRoutes()"></router-outlet>
+</div>
+
+<div id="leftPanel" *ngIf="displayMenuBar" style="pointer-events: none;">
+  <div class="both-panels-cont">
+    <!-- left-right panels row starts here-->
+    <div class="panels-row">
+      <p class="left-menu-icon-cont"><span class="sprite sprite-doctor-white left-menu-icon"></span></p>
+      <ul class="menu-list">
+        <li><input type="radio" name="panel" id="doctorButton" [(ngModel)]="whichPanel" value="Doctor"> <label for="doctorButton" style="color:white">DOCTOR PANEL</label></li>
+        <li><a>NEONATAL SCREENING</a></li>
+        <li><a>BABY ANALYTICS</a></li>
+      </ul>
+      <p class="left-menu-icon-cont"><span class="sprite sprite-nurse-white left-menu-icon"></span></p>
+      <ul class="menu-list">
+          <li><input type="radio" name="panel" id="nursingButton" [(ngModel)]="whichPanel" value="Nursing"> <label for="nursingButton" style="color:white">NURSING PANEL</label></li>
+      </ul>
+    </div>
+  </div>
+</div>

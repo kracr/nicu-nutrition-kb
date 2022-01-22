@@ -1,0 +1,53 @@
+<div class="">
+  <div class="login-box" style="margin-top:50px;">
+      <header>
+        <h1 class="logo-h1-hidden">iNICU</h1>
+          <a href="#">
+            <div class="logo-items-cont">
+                  <img src="/assets/_images/logo.png" class="logo-pic" alt="iNICU logo" />
+                  <span class="logo-desc font-light">
+                      <span class="green-text">i</span><span class="blue-text">NICU</span>
+                  </span>
+              </div>
+          </a>
+      </header>
+
+      <div data-ng-controller="loginController">
+        <p class="center-aligned welcome">Welcome !</p>
+          <div class="controls-cont">
+            <form (submit)="doLogin()">
+                  <div class="input-group desktop-column-20">
+                      <span class="input-group-icon sprite sprite-login-user"></span>
+                      <input type="text" placeholder="Username" class="input-group-text desktop-column-20 input-shadow borderRadius-20"  [(ngModel)]="authenticationData.username" required [ngModelOptions]="{standalone: true}"/>
+                  </div>
+
+                  <div class="input-group desktop-column-20">
+                      <span class="input-group-icon sprite sprite-login-password"></span>
+                      <input type="password"  placeholder="Password" class="input-group-text desktop-column-20 input-shadow borderRadius-20" [(ngModel)]="authenticationData.password" required [ngModelOptions]="{standalone: true}"/>
+                  </div>
+
+                  <div class="desktop-column-20" style="margin-top: 55px;">
+                      <span class="input-group-icon" style="z-index:  9999;top: 391px;left: 70px;position: absolute;">
+                        <img src="/assets/_images/hospital-Icon.png" style="width:  30px;">
+                      </span>
+                      <select class="desktop-column-20 input-shadow borderRadius-20" [(ngModel)]="selectedOption" name="branchname" style="top:-45px;height: 48px;margin-left: 12px;width: 360px;">
+                        <option *ngFor="let obj of options">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{obj.value}}</option>
+                      </select>
+                  </div>
+
+                  <div class="center-aligned" style = "margin-top:20px">
+                      <span class="inicu-loader" *ngIf="isLoaderVisible">
+                        <span class="inicu-loader-content">
+                          <span class="inicu-adding-image"></span>
+                          <span class="inicu-loading-content">{{loaderContent}}</span>
+                        </span>
+                      </span>
+                      <button type="submit" class="button-blue borderRadius-20 button-large login-button">Login</button>
+                  </div>
+
+                  <span class="alert alert-small margin-10-x" [ngClass]="{ 'alert-green' : formStatus.type=='success' , 'alert-red' : formStatus.type!='success' }" *ngIf="formStatus.message!=null">{{formStatus.message}}</span>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

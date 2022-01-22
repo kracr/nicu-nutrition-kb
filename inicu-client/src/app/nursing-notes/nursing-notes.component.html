@@ -1,0 +1,113 @@
+<nusring-panel></nusring-panel>
+<div class="row no-margin">
+	<div
+		class="col-md-12 background-color-white no-padding padding-10-y">
+		<div class="col-md-2 no-padding-right">
+			<div class="col-md-12 no-padding">
+				<label class="bold"><strong>From Time</strong></label>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-12 no-padding">
+			      <owl-date-time class="owl-dateTime no-margin" [(ngModel)]="fromDate" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2 no-padding-right">
+			<div class="col-md-12 no-padding">
+				<label class="bold"><strong>To Time</strong></label>
+			</div>
+			<div class="col-md-12 no-padding">
+				<div class="col-md-12 no-padding">
+			      <owl-date-time class="owl-dateTime no-margin" [(ngModel)]="toDate" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-1 no-padding-right">
+			<div class="col-md-12 no-padding">
+				<label class="visiblity-hidden"><strong>To Time</strong></label>
+			</div>
+			<div class="col-md-12 no-padding">
+				<span class="button button-blue"
+					(click)="getNursingNotes(fromDate, toDate, 'show')">Show</span>
+			</div>
+		</div>
+		<div class="col-md-12 no-padding" *ngIf="isEditShow">
+			<div class="col-md-12">
+				<div class="desktop-column-20 force-left">
+					<textarea name="nursingNotes" id="nursingNotes" rows="10" cols="80"
+						top="20px" bottom="20px" class="nursingNotes desktop-column-20"
+						[(ngModel)]="nursingNotes.currentNotes.nursing_notes"></textarea>
+				</div>
+			</div>
+			<div id="footer">
+				<span class="button button-blue" (click)="saveNursingNotes()">Save</span>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="">
+	<div class="col-md-12 no-padding set-AssessmentSystemtEvent-background">
+		<div class="col-md-12 no-padding margin-10-y">
+			<div class="col-md-6 padding-10-y no-padding-bottom">
+				<h1 class="light margin-5-y blue-text">Nursing Notes</h1>
+			</div>
+			<div class="col-md-2 no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="bold">From</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime no-margin" name="fromDateTable" [(ngModel)]="fromDateTable" dateFormat='DD-MM-YYYY hh:mm A'
+					type="both" [min]="minDate" [max]="maxDate" autoClose=true></owl-date-time>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="bold">To</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime no-margin" name="toDateTable" type="both" [(ngModel)]="toDateTable" dateFormat='DD-MM-YYYY hh:mm A'  [min]="minDate" [max]="maxDate" autoClose=true></owl-date-time>
+				</div>
+			</div>
+			<div class="col-md-2 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">To</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<button class="button button-blue margin-5-x" type="button" (click)="filterNursingNote(fromDateTable, toDateTable, 'table')">
+						SHOW</button>
+					<button class="button button-blue margin-5-x" type="button" (click)="filterNursingNote(fromDateTable, toDateTable, 'print')">
+						PRINT</button>
+					<!-- <button class="button button-blue margin-5-x" type="button" (click)="filterNursingAnthropometry(fromDateTable, toDateTable, 'csv')">
+						EXPORT CSV</button> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12 no-padding" style="margin-bottom:50px">
+		<div class="col-md-12 no-padding">
+		<table
+			class="table table-striped table-bordered headed-table col-md-12">
+			<tr>
+				<td class="center-aligned">From Time</td>
+				<td class="center-aligned">To Time</td>
+				<td class="center-aligned">Notes</td>
+				<td class="center-aligned">Nurse</td>
+			</tr>
+			<tr *ngFor="let notes of copiedSentData">
+				<td class="center-aligned">{{notes.from_time | date: 'dd-MM-yyyy hh:mm a'}}</td>
+				<td class="center-aligned">{{notes.to_time | date: 'dd-MM-yyyy hh:mm a'}}</td>
+				<td class="left-aligned"> <div style="white-space: pre-wrap;">{{notes.nursing_notes}}</div></td>
+				<td class="center-aligned">{{notes.loggeduser}}</td>
+			</tr>
+		</table>
+	</div>
+	</div>
+</div>
+<!-- code of loader -->
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+	<span class="inicu-loader-content">
+        <span class="inicu-adding-image"></span>
+		<span class="inicu-loading-content">{{loaderContent}}</span>
+	</span>
+</span>
+<!-- end of Above Code -->

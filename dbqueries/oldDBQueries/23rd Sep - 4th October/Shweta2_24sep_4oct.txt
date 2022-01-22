@@ -1,0 +1,79 @@
+
+alter table kdah.screen_miscellaneous add column current_findings text;
+
+
+DROP VIEW kdah.vw_baby_visit_csvdata;
+
+
+CREATE OR REPLACE VIEW kdah.vw_baby_visit_csvdata_raw AS  
+SELECT bv.visitid,
+    bv.uhid,
+    bd.babyname,
+    bd.dateofbirth,
+    bv.ga_at_birth,
+    (bv.gestationweek || ','::text) || bv.gestationdays AS corrected_ga,
+    bv.visitdate AS entrydate,
+    bv.visittime AS entrytime,
+    ((bv.visitdate - bd.dateofadmission))::character varying(255) AS nicuday,
+    ((bv.visitdate - bd.dateofbirth))::character varying(255) AS age,
+    bv.currentdateweight AS weight,
+    bv.currentdateheight AS height,
+    bv.currentdateheadcircum AS headcircumferrence,
+    bv.workingweight,
+    bv.weight_for_cal AS weightforcal,
+    bd.dateofadmission,
+    bv.gestationweek,
+    bv.gestationdays
+   FROM kdah.baby_visit bv,
+    kdah.baby_detail bd
+  WHERE bv.uhid::text = bd.uhid::text AND bd.admissionstatus = true
+  ORDER BY bv.visitdate;
+
+CREATE OR REPLACE VIEW kdah.vw_baby_visit_csvdata_control AS 
+SELECT b.visitid,
+    b.uhid,
+    b.babyname,
+    b.dateofbirth,
+    b.ga_at_birth,
+    b.corrected_ga,
+    b.entrydate,
+    b.entrytime,
+        CASE
+            WHEN to_number(b.nicuday::text, '99G999D9S'::text) < '0'::numeric THEN '0'::numeric
+            WHEN to_number(b.nicuday::text, '99G999D9S'::text) = '0'::numeric THEN '1'::numeric
+            ELSE to_number(b.nicuday::text, '99G999D9S'::text) + 1::numeric
+        END AS nicuday,
+    to_number(b.age::text, '99G999D9S'::text) + 1::numeric AS age,
+    b.weight,
+    b.height,
+    b.headcircumferrence,
+    b.workingweight,
+    b.weightforcal,
+    b.dateofadmission,
+    b.gestationweek,
+    b.gestationdays
+   FROM kdah.vw_baby_visit_csvdata_raw b
+  ORDER BY b.entrydate;
+
+
+CREATE OR REPLACE VIEW kdah.vw_baby_visit_csvdata AS 
+SELECT b.visitid,
+    b.uhid,
+    b.babyname,
+    b.dateofbirth,
+    b.ga_at_birth,
+    b.corrected_ga,
+    b.entrydate,
+    b.entrytime,
+    b.nicuday::character varying(255) AS nicuday,
+    b.age::character varying(255) AS age,
+    b.weight,
+    b.height,
+    b.headcircumferrence,
+    b.workingweight,
+    b.weightforcal,
+    b.dateofadmission,
+    b.gestationweek,
+    b.gestationdays
+   FROM kdah.vw_baby_visit_csvdata_control b
+  ORDER BY b.entrydate;

@@ -1,0 +1,9 @@
+CREATE OR REPLACE VIEW kdah.vw_sa_assesment_count_rule1
+ AS
+SELECT DISTINCT r.uhid,
+    btrim((((((((((((((((((((((((((((((((((((((((((r.nec || ','::text) || r.jaundice) || ','::text) || r.rds) || ','::text) || r.apnea) || ','::text) || r.pphn) || ','::text) || r.pneumothorax) || ','::text) || r.hypoglycemia) || ','::text) || r.hyperglycemia) || ','::text) || r.hypocalcemia) || ','::text) || r.hypercalcemia) || ','::text) || r.hypokalemia) || ','::text) || r.hyperkalemia) || ','::text) || r.hyponatremia) || ','::text) || r.hypernatremia) || ','::text) || r.acidosis) || ','::text) || r.iem) || ','::text) || r.sepsis) || ','::text) || r.asphyxia) || ','::text) || r.seizure) || ','::text) || r.ivh) || ','::text) || r.renal) || ','::text) || r.feed, ','::text) AS eventlist
+   , r.episodeid
+   FROM kdah.vw_sa_assesment_count_rule r;
+
+ALTER TABLE kdah.vw_sa_assesment_count_rule1
+    OWNER TO postgres;

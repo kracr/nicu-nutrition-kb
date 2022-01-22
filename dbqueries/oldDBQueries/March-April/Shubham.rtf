@@ -1,0 +1,141 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2511
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 CREATE SEQUENCE apollo.increment_feed_seq\
+  INCREMENT 1\
+  MINVALUE 1\
+  MAXVALUE 9223372036854775807\
+  START 1\
+  CACHE 1;\
+ALTER TABLE apollo.increment_feed_seq\
+  OWNER TO postgres;\
+\
+\
+CREATE OR REPLACE FUNCTION apollo.increment_feed_creationtime()\
+  RETURNS trigger AS\
+$BODY$\
+    BEGIN\
+        NEW.creationtime := current_timestamp;\
+        NEW.modificationtime := current_timestamp;\
+        RETURN NEW;\
+    END;\
+$BODY$\
+  LANGUAGE plpgsql VOLATILE\
+  COST 100;\
+ALTER FUNCTION apollo.increment_feed_creationtime()\
+  OWNER TO postgres;\
+\
+\
+\
+CREATE OR REPLACE FUNCTION apollo.increment_feed_modificationtime()\
+  RETURNS trigger AS\
+$BODY$\
+    BEGIN\
+        NEW.modificationtime := current_timestamp;\
+        RETURN NEW;\
+    END;\
+$BODY$\
+  LANGUAGE plpgsql VOLATILE\
+  COST 100;\
+ALTER FUNCTION apollo.increment_feed_modificationtime()\
+  OWNER TO postgres;\
+\
+\
+CREATE TABLE apollo.increment_feed\
+(\
+  increment_feed_id bigint NOT NULL DEFAULT nextval('apollo.increment_feed_seq'::regclass),\
+  creationtime timestamp with time zone NOT NULL,\
+  modificationtime timestamp with time zone NOT NULL,\
+  uhid character varying(50) NOT NULL,\
+  loggeduser character varying(100) NOT NULL,\
+  baby_feed_id character varying(50),\
+  gir_value real,\
+  en_feed real,\
+  pn_feed_rate real,\
+  feed_date timestamp with time zone,\
+  CONSTRAINT increment_feed_pkey PRIMARY KEY (increment_feed_id)\
+)\
+WITH (\
+  OIDS=FALSE\
+);\
+ALTER TABLE apollo.increment_feed\
+  OWNER TO postgres;\
+\
+\
+CREATE TRIGGER set_creationtime\
+  BEFORE INSERT\
+  ON apollo.increment_feed\
+  FOR EACH ROW\
+  EXECUTE PROCEDURE apollo.increment_feed_creationtime();\
+\
+CREATE TRIGGER set_modificationtime\
+  BEFORE UPDATE\
+  ON apollo.increment_feed\
+  FOR EACH ROW\
+  EXECUTE PROCEDURE apollo.increment_feed_modificationtime();\
+\
+ALTER TABLE apollo.babyfeed_detail\
+    ADD COLUMN cyclic_feed_given boolean;\
+\
+ALTER TABLE apollo.babyfeed_detail\
+    ADD COLUMN unskipped_feeds integer;\
+\
+ALTER TABLE apollo.babyfeed_detail\
+    ADD COLUMN skipped_feeds integer;\
+\
+ALTER TABLE apollo.ref_nutritioncalculator\
+    ADD COLUMN carbohydrates real;\
+\
+ALTER TABLE apollo.ref_nutritioncalculator\
+    ADD COLUMN carbohydrates real;\
+\
+ALTER TABLE apollo.discharge_notes_detail\
+    ADD COLUMN shock text;\
+	\
+ALTER TABLE apollo.discharge_notes_detail\
+    ADD COLUMN isShock boolean;\
+	\
+ALTER TABLE apollo.discharge_notes_detail\
+    ADD COLUMN prev_provisional_notes_shock text;\
+	\
+ALTER TABLE apollo.discharge_notes_detail\
+    ADD COLUMN provisional_notes_shock text;\
+\
+ALTER TABLE apollo.babyfeed_detail\
+    ADD COLUMN hco3_conc real;\
+\
+ALTER TABLE apollo.babyfeed_detail\
+    ADD COLUMN potassium_conc real;\
+\
+ALTER TABLE apollo.babyfeed_detail\
+    ADD COLUMN sodium_final_phosphorus_meg real;\
+\
+ALTER TABLE apollo.babyfeed_detail\
+    ADD COLUMN sodium_final_nahco3_meg real;\
+\
+ALTER TABLE apollo.babyfeed_detail\
+    ADD COLUMN sodium_final_meg real;\
+\
+ALTER TABLE apollo.babyfeed_detail\
+    ADD COLUMN sodium_text_message character varying(100);\
+\
+ALTER TABLE apollo.baby_prescription\
+    ADD COLUMN dopamine_volume real;\
+\
+ALTER TABLE apollo.baby_prescription\
+    ADD COLUMN dobutamine_volume real;\
+\
+UPDATE apollo.ref_testslist SET assesment_category = 'Renal' WHERE assesment_category = 'Urinary';\
+\
+ALTER TABLE apollo.ref_hospitalbranchname\
+    ADD COLUMN nutritional_type character varying(20);\
+\
+ALTER TABLE apollo.ref_hospitalbranchname\
+    ADD COLUMN report_print character varying(20)\
+\
+ALTER TABLE apollo.ref_hospitalbranchname\
+    ADD COLUMN predictions character varying(30)}

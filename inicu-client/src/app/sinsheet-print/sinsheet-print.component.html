@@ -1,0 +1,102 @@
+<div class="row">
+	<div class="col-md-12 center-aligned">
+		<span class="print-heading">SIN SHEET</span>
+	</div>
+</div>
+<div class="row table full margin-20-y">
+	<div class="table-row">
+		<div class="table-cell print-width-20 left-aligned"
+			style="padding-left: 15px">
+			<span class="print-sub-heading">From Date: </span> <span
+				class="print-content">{{sin.fromDate | date:'dd-MM-yyyy'}}</span>
+		</div>
+		<div class="table-cell print-width-20 padding-5-x right-aligned">
+			<span class="print-sub-heading">To Date: </span> <span
+				class="print-content">{{sin.toDate | date:'dd-MM-yyyy'}}</span>
+		</div>
+	</div>
+</div>
+<div class="row table full margin-20-y">
+	<div class="print-width-5"></div>
+	<div class="print-width-95">
+		<table
+			class="table table-striped table-bordered headed-table desktop-column-20"
+			style="margin-left: 10px !important" id="weight_tab">
+			<tr class="header table-row weight-table-header">
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey"
+					style="min-width: 100px"><span>Date</span></td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Number of Babies</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies on IV Antibiotics</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies on non-Invasive Ventilator</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies on all forms of Ventilators</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies on Central Catheters</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies with Peripheral Cannula</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies on PN</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned padding-10-x font-bold border-1-grey">
+					<span>Babies on IV Fluids</span>
+				</td>
+			</tr>
+			<tr class="table-row" *ngFor="let item of sinSheetList">
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.dataDate | date:'dd-MM-yyyy'}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.noOfBabies.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.ivAntibiotics.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.nonInvasiveVentilator.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.totalVentilator.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.centralLine.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.peripheralCannula.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.pnFeed.count}}</span>
+				</td>
+				<td
+					class="table-cell middle-aligned center-aligned border-1-grey padding-10-x-y">
+					<span>{{item.ivFeed.count}}</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

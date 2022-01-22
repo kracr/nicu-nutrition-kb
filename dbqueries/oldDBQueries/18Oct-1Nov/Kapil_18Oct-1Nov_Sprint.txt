@@ -1,0 +1,6 @@
+Alter table kdah.baby_detail add column hisdischargedate timestamp without time zone;
+
+Alter table kdah.baby_detail add column hisdischargestatus character varying(30);
+
+-- 07/11/2019 --
+Alter table kdah.bed_device_detail add column time_from timestamp with time zone;

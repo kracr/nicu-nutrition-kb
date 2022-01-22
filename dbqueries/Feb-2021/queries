@@ -1,0 +1,275 @@
+alter table apollo.screen_neurological add screening_type varchar(100);
+alter table apollo.screen_neurological add neuro_posture_value varchar(100);
+alter table apollo.screen_neurological add neuro_posture_score varchar(100);;
+
+alter table apollo.screen_neurological add neuro_arm_traction_score varchar(100);;
+alter table apollo.screen_neurological add neuro_arm_traction_value varchar(100);
+
+alter table apollo.screen_neurological add neuro_arm_recoil_score varchar(100);;
+alter table apollo.screen_neurological add neuro_arm_recoil_value varchar(100);
+
+alter table apollo.screen_neurological add neuro_leg_traction_score varchar(100);;
+alter table apollo.screen_neurological add neuro_leg_traction_value varchar(100);
+
+alter table apollo.screen_neurological add popliteal_angle_score varchar(100);;
+alter table apollo.screen_neurological add popliteal_angle_value varchar(100);
+
+alter table apollo.screen_neurological add head_control_1_score varchar(100);;
+alter table apollo.screen_neurological add head_control_1_value varchar(100);
+
+alter table apollo.screen_neurological add head_control_2_score varchar(100);;
+alter table apollo.screen_neurological add head_control_2_value varchar(100);
+
+alter table apollo.screen_neurological add neuro_head_lag_score varchar(100);;
+alter table apollo.screen_neurological add neuro_head_lag_value varchar(100);
+
+alter table apollo.screen_neurological add neuro_leg_recoil_score varchar(100);;
+alter table apollo.screen_neurological add neuro_leg_recoil_value varchar(100);
+
+alter table apollo.screen_neurological add ventral_suspension_score varchar(100);;
+alter table apollo.screen_neurological add ventral_suspension_value varchar(100);
+
+alter table apollo.screen_neurological add compare_flexor_tone_score varchar(100);
+	alter table apollo.screen_neurological add compare_flexor_tone_value varchar(100);
+
+	alter table apollo.screen_neurological add resting_flexor_tone_score varchar(100);
+	alter table apollo.screen_neurological add resting_flexor_tone_value varchar(100);
+
+	alter table apollo.screen_neurological add leg_tone_value varchar(100);
+	alter table apollo.screen_neurological add leg_tone_score varchar(100);
+
+	alter table apollo.screen_neurological add head_control_sitting_value varchar(100);
+	alter table apollo.screen_neurological add head_control_sitting_score varchar(100);
+
+	// Reflex items
+	alter table apollo.screen_neurological add tendon_reflex_value varchar(100);
+	alter table apollo.screen_neurological add tendon_reflex_score varchar(100);
+
+	alter table apollo.screen_neurological add suck_gag_value varchar(100);
+	alter table apollo.screen_neurological add suck_gag_score varchar(100);
+
+	alter table apollo.screen_neurological add palmar_grasp_value varchar(100);
+	alter table apollo.screen_neurological add palmar_grasp_score varchar(100);
+
+	alter table apollo.screen_neurological add plantar_grasp_score varchar(100);
+	alter table apollo.screen_neurological add plantar_grasp_value varchar(100);
+
+	alter table apollo.screen_neurological add placing_value varchar(100);
+	alter table apollo.screen_neurological add placing_score varchar(100);
+
+	alter table apollo.screen_neurological add new_moro_reflex_value varchar(100);
+	alter table apollo.screen_neurological add new_moro_reflex_score varchar(100);
+
+	// Movements
+	alter table apollo.screen_neurological add spontaneous_movement_quantity_value varchar(100);
+	alter table apollo.screen_neurological add spontaneous_movement_quantity_score varchar(100);
+
+	alter table apollo.screen_neurological add spontaneous_movement_quality_value varchar(100);
+	alter table apollo.screen_neurological add spontaneous_movement_quality_score varchar(100);
+
+	alter table apollo.screen_neurological add head_raising_score varchar(100);
+	alter table apollo.screen_neurological add head_raising_value varchar(100);
+
+	// Abnormal Signs
+	alter table apollo.screen_neurological add toe_postures_value varchar(100);
+	alter table apollo.screen_neurological add toe_postures_score varchar(100);
+
+	alter table apollo.screen_neurological add tremor_value varchar(100);
+	alter table apollo.screen_neurological add tremor_score varchar(100);
+
+	alter table apollo.screen_neurological add startle_value varchar(100);
+	alter table apollo.screen_neurological add startle_score varchar(100);
+
+	// Behavioural Signs
+
+	alter table apollo.screen_neurological add eye_apperance_value varchar(100);
+	alter table apollo.screen_neurological add eye_apperance_score varchar(100);
+
+	alter table apollo.screen_neurological add auditory_orientation_value varchar(100);
+	alter table apollo.screen_neurological add auditory_orientation_score varchar(100);
+
+	alter table apollo.screen_neurological add visual_orientation_value varchar(100);
+	alter table apollo.screen_neurological add visual_orientation_score varchar(100);
+
+	alter table apollo.screen_neurological add new_alertness_value varchar(100);
+	alter table apollo.screen_neurological add new_alertness_score varchar(100);
+
+	alter table apollo.screen_neurological add irritability_value varchar(100);
+	alter table apollo.screen_neurological add irritability_score varchar(100);
+
+	alter table apollo.screen_neurological add consolablility_value varchar(100);
+	alter table apollo.screen_neurological add consolablility_score varchar(100);
+
+	alter table apollo.screen_neurological add cry_value varchar(100);
+	alter table apollo.screen_neurological add cry_score varchar(100);
+
+alter table apollo.screen_neurological add neck_axial_tone_value varchar(100);
+alter table apollo.screen_neurological add neck_axial_tone_score varchar(100);;
+
+
+
+alter table apollo.screen_neurological add facial_apperance_rest_score varchar(10);
+alter table apollo.screen_neurological add facial_apperance_rest_asymmetry boolean;
+alter table apollo.screen_neurological add facial_apperance_rest_comments text;
+
+alter table apollo.screen_neurological add eye_movement_score varchar(10);
+alter table apollo.screen_neurological add eye_movement_asymmetry boolean;
+alter table apollo.screen_neurological add eye_movement_comments text;
+
+alter table apollo.screen_neurological add visual_response_test_score varchar(10);
+alter table apollo.screen_neurological add visual_response_test_asymmetry boolean;
+alter table apollo.screen_neurological add visual_response_test_comments text;
+
+alter table apollo.screen_neurological add sucking_swallowing_score varchar(10);
+alter table apollo.screen_neurological add sucking_swallowing_asymmetry boolean;
+alter table apollo.screen_neurological add sucking_swallowing_comments text;
+
+alter table apollo.screen_neurological add auditory_response_test_score varchar(10);
+alter table apollo.screen_neurological add auditory_response_test_asymmetry boolean;
+alter table apollo.screen_neurological add auditory_response_test_comments text;
+
+--- POSTURE
+alter table apollo.screen_neurological add head_posture_score varchar(10);
+alter table apollo.screen_neurological add head_posture_asymmetry boolean;
+alter table apollo.screen_neurological add head_posture_comments text;
+
+alter table apollo.screen_neurological add trunk_posture_score varchar(10);
+alter table apollo.screen_neurological add trunk_posture_asymmetry boolean;
+alter table apollo.screen_neurological add trunk_posture_comments text;
+
+alter table apollo.screen_neurological add arms_posture_score varchar(10);
+alter table apollo.screen_neurological add arms_posture_asymmetry boolean;
+alter table apollo.screen_neurological add arms_posture_comments text;
+
+alter table apollo.screen_neurological add hands_posture_score varchar(10);
+alter table apollo.screen_neurological add hands_posture_asymmetry boolean;
+alter table apollo.screen_neurological add hands_posture_comments text;
+
+alter table apollo.screen_neurological add legs_posture_score varchar(10);
+alter table apollo.screen_neurological add legs_posture_asymmetry boolean;
+alter table apollo.screen_neurological add legs_posture_comments text;
+
+alter table apollo.screen_neurological add feets_posture_score varchar(10);
+alter table apollo.screen_neurological add feets_posture_asymmetry boolean;
+alter table apollo.screen_neurological add feets_posture_comments text;
+
+-- MOVEMENT
+alter table apollo.screen_neurological add quantity_movement_score varchar(10);
+alter table apollo.screen_neurological add quantity_movement_asymmetry boolean;
+alter table apollo.screen_neurological add quantity_movement_comments text;
+
+alter table apollo.screen_neurological add quality_movement_score varchar(10);
+alter table apollo.screen_neurological add quality_movement_asymmetry boolean;
+alter table apollo.screen_neurological add quality_movement_comments text;
+
+-- TONE
+alter table apollo.screen_neurological add Scarfsign_tone_score varchar(10);
+alter table apollo.screen_neurological add Scarfsign_tone_asymmetry boolean;
+alter table apollo.screen_neurological add Scarfsign_tone_comments text;
+
+alter table apollo.screen_neurological add Passiveshoulder_tone_score varchar(10);
+alter table apollo.screen_neurological add Passiveshoulder_tone_asymmetry boolean;
+alter table apollo.screen_neurological add Passiveshoulder_tone_comments text;
+
+
+alter table apollo.screen_neurological add Pronation_tone_score varchar(10);
+alter table apollo.screen_neurological add Pronation_tone_asymmetry boolean;
+alter table apollo.screen_neurological add Pronation_tone_comments text;
+
+
+alter table apollo.screen_neurological add Hipadductors_tone_score varchar(10);
+alter table apollo.screen_neurological add Hipadductors_tone_asymmetry boolean;
+alter table apollo.screen_neurological add Hipadductors_tone_comments text;
+
+alter table apollo.screen_neurological add PoplitealAngle_tone_score varchar(10);
+alter table apollo.screen_neurological add PoplitealAngle_tone_asymmetry boolean;
+alter table apollo.screen_neurological add PoplitealAngle_tone_comments text;
+
+alter table apollo.screen_neurological add AnkleDorsiflexion_tone_score varchar(10);
+alter table apollo.screen_neurological add AnkleDorsiflexion_tone_asymmetry boolean;
+alter table apollo.screen_neurological add AnkleDorsiflexion_tone_comments text;
+
+alter table apollo.screen_neurological add PullToSit_tone_score varchar(10);
+alter table apollo.screen_neurological add PullToSit_tone_asymmetry boolean;
+alter table apollo.screen_neurological add PullToSit_tone_comments text;
+
+
+alter table apollo.screen_neurological add VentralSuspension_tone_score varchar(10);
+alter table apollo.screen_neurological add VentralSuspension_tone_asymmetry boolean;
+alter table apollo.screen_neurological add VentralSuspension_tone_comments text;
+
+-- REFLEX
+
+alter table apollo.screen_neurological add armProtection_reaction_score varchar(10);
+alter table apollo.screen_neurological add armProtection_reaction_asymmetry boolean;
+alter table apollo.screen_neurological add armProtection_reaction_comments text;
+
+
+alter table apollo.screen_neurological add verticalSuspension_reaction_score varchar(10);
+alter table apollo.screen_neurological add verticalSuspension_reaction_asymmetry boolean;
+alter table apollo.screen_neurological add verticalSuspension_reaction_comments text;
+
+alter table apollo.screen_neurological add lateralTilting_reaction_score varchar(10);
+alter table apollo.screen_neurological add lateralTilting_reaction_asymmetry boolean;
+alter table apollo.screen_neurological add lateralTilting_reaction_comments text;
+
+alter table apollo.screen_neurological add forwardParachute_reaction_score varchar(10);
+alter table apollo.screen_neurological add forwardParachute_reaction_asymmetry boolean;
+alter table apollo.screen_neurological add forwardParachute_reaction_comments text;
+
+
+alter table apollo.screen_neurological add tendonReflexes_reaction_score varchar(10);
+alter table apollo.screen_neurological add tendonReflexes_reaction_asymmetry boolean;
+alter table apollo.screen_neurological add tendonReflexes_reaction_comments text;
+
+
+alter table apollo.screen_neurological add headControl_value varchar(250);
+
+
+alter table apollo.screen_neurological add sitting_value varchar(250);
+alter table apollo.screen_neurological add sitting_reported_age varchar(100);
+
+
+alter table apollo.screen_neurological add voluntaryGrasp_value varchar(250);
+alter table apollo.screen_neurological add voluntaryGrasp_reported_age varchar(100);
+
+alter table apollo.screen_neurological add abilitytokick_value varchar(250);
+alter table apollo.screen_neurological add abilitytokick_reported_age varchar(100);
+
+alter table apollo.screen_neurological add crawling_value varchar(250);
+alter table apollo.screen_neurological add crawling_reported_age varchar(100);
+
+alter table apollo.screen_neurological add rolling_value varchar(250);
+alter table apollo.screen_neurological add rolling_reported_age varchar(100);
+
+
+alter table apollo.screen_neurological add standing_value varchar(250);
+alter table apollo.screen_neurological add standing_reported_age varchar(100);
+
+alter table apollo.screen_neurological add walking_value varchar(250);
+alter table apollo.screen_neurological add walking_reported_age varchar(100);
+
+alter table apollo.screen_neurological add consciousState_value varchar(250);
+alter table apollo.screen_neurological add consciousState_comments text;
+
+alter table apollo.screen_neurological add emotionalState_value varchar(250);
+alter table apollo.screen_neurological add emotionalState_comments text;
+
+alter table apollo.screen_neurological add socialOrientation_value varchar(250);
+alter table apollo.screen_neurological add socialOrientation_comments text;
+
+alter table apollo.screen_neurological add socialOrientation_comments text;
+alter table apollo.screen_neurological add hine_summary text;
+
+alter table apollo.screen_neurological add global_score varchar(50);
+alter table apollo.screen_neurological add no_of_asymmetries varchar(50);
+alter table apollo.screen_neurological add behavioural_score varchar(50);
+alter table apollo.screen_neurological add cranial_nerve_score varchar(50);
+alter table apollo.screen_neurological add total_posture_score varchar(50);
+alter table apollo.screen_neurological add total_movements_score varchar(50);
+alter table apollo.screen_neurological add total_tone_score varchar(50);
+alter table apollo.screen_neurological add total_reflexes_score varchar(50);
+
+alter table apollo.screen_neurological add hc_reading_time timestamp;
+alter table apollo.screen_neurological add head_circumference varchar(10);
+

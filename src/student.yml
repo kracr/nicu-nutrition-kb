@@ -1,0 +1,109 @@
+##queries
+
+query1: select obj from BabyDetail as obj where uhid=___uhid___
+query2: select  obj from BirthToNicu as obj  WHERE uhid= ___uhid___
+query3: select obj from NursingBloodGas as obj  WHERE uhid= ___uhid___ AND be is NOT NULL order by entrydate
+query4: Select obj from BabyPrescription as obj  WHERE uhid= ___uhid___
+query5: Select  nursingintakeobj from NursingIntakeOutput as nursingintakeobj WHERE uhid= ___uhid___ order by entry_timestamp
+query7: select feedintobj  from SaFeedIntolerance as feedintobj WHERE uhid= ___uhid___ order by assessment_time
+query8: select nursingepiobj from NursingEpisode as nursingepiobj WHERE uhid= ___uhid___ order by modificationtime 
+query9: Select saRdsobj from SaRespRds as saRdsobj WHERE uhid= ___uhid___ order by assessment_time
+query10: Select sasepsisobj from SaSepsis as sasepsisobj WHERE uhid= ___uhid___ order by assessment_time
+query11: Select testitemobj from TestItemResult as testitemobj where prn= ___prn___ AND itemname='PLATELET COUNT' AND itemvalue is not null order by resultdate
+query12: select nursingvitalobj from NursingVitalparameter as nursingvitalobj where uhid= ___uhid___ order by entrydate
+query13: select sashockobj from SaShock as sashockobj where uhid= ___uhid___ order by assessment_time
+query14: select saNecobj from SaNec as saNecobj where uhid= ___uhid___ order by assessment_time
+query15: select feedDetailobj from BabyfeedDetail as feedDetailobj where uhid= ___uhid___ AND totalparenteralvolume>0 order by entrydatetime
+query16: select AntenatalHistoryDetailobj from AntenatalHistoryDetail as AntenatalHistoryDetailobj where uhid= ___uhid___ order by modificationtime
+test: PREFIX CHIL--- <http---//www.childhealthimprints.com/NutritionalGuidelines/> PREFIX type--- <http---//www.w3.org/2001/XMLSchema> PREFIX booleanv---<http---//www.w3.org/2001/XMLSchema#boolean> PREFIX gr--- <http---//www.w3.org/1999/02/22-rdf-syntax-ns#type> SELECT  DISTINCT ?Baby ?UHID  ?type   ?DayOfLife ?FeedVolume  ?FeedAdvancement ?FinalFeedVolume  ?FinalFeedAdvancement ?CHOInitialPNVolume ?CHOFinalPNVolume ?CHOInitialPNAdvance  ?CHOFinalPNAdvance ?ProteinInitialPNVolume  ?ProteinFinalPNVolume ?ProteinInitialPNAdvance  ?ProteinFinalPNAdvance ?feedint ?PotassiumInitialPNVolume  ?PotassiumFinalPNVolume ?PotassiumInitialPNAdvance  ?PotassiumFinalPNAdvance ?SodiumInitialPNVolume  ?SodiumFinalPNVolume ?SodiumInitialPNAdvance ?SodiumFinalPNAdvance ?CalciumInitialPNVolume  ?InitialEnergy  ?FinalEnergy   ?feedint ?vomitvol ?vomitcolor ?abdtender ?abddistension ?visiblebowel ?bloodstool ?metabolic ?Apnea  ?respDistress ?Lethargy  ?plateletcount  ?skindiscolor  ?gastric  ?CFL ?central  ?techycardia  ?coldperi ?BP ?reverseendflow ?stoolpassed   ?absentdiastolic   ?resus  ?lactate  ?NEC WHERE  { {?Baby        CHIL---hasBabyID  ?UHID} OPTIONAL {?Baby        CHIL---hasDayOfLife  ?DayOfLife}. OPTIONAL { ?Baby       CHIL---hasInitialFeedingVolume   ?FeedVolume}  OPTIONAL { ?Baby       CHIL---hasInitialFeedingAdvancement   ?FeedAdvancement} OPTIONAL { ?Baby       CHIL---hasFinalFeedingVolume   ?FinalFeedVolume} OPTIONAL { ?Baby       CHIL---hasFinalFeedingAdvancement   ?FinalFeedAdvancement}    OPTIONAL { ?Baby       CHIL---hasPNInitialFeedingVolumeOfCHO   ?CHOInitialPNVolume} OPTIONAL { ?Baby       CHIL---hasPNFinalFeedingVolumeOfCHO  ?CHOFinalPNVolume}   OPTIONAL { ?Baby       CHIL---hasPNInitialFeedingAdvancementOfCHO   ?CHOInitialPNAdvance}  OPTIONAL { ?Baby       CHIL---hasPNFinalFeedingAdvancementOfCHO      ?CHOFinalPNAdvance}  OPTIONAL { ?Baby       CHIL---hasPNInitialFeedingVolumeOfProtein   ?ProteinInitialPNVolume} OPTIONAL { ?Baby       CHIL---hasPNFinalFeedingVolumeOfProtein       ?ProteinFinalPNVolume} OPTIONAL { ?Baby       CHIL---hasPNInitialFeedingAdvancementOfProtein  ?ProteinInitialPNAdvance} OPTIONAL { ?Baby       CHIL---hasPNFinalFeedingAdvancementOfProtein      ?ProteinFinalPNAdvance} OPTIONAL { ?Baby       CHIL---hasPNInitialFeedingVolumeOfSodium   ?SodiumInitialPNVolume}   OPTIONAL { ?Baby       CHIL---hasPNFinalFeedingVolumeOfSodium       ?SodiumFinalPNVolume} OPTIONAL { ?Baby       CHIL---hasPNInitialFeedingAdvancementOfSodium   ?SodiumInitialPNAdvance}  OPTIONAL { ?Baby       CHIL---hasPNFinalFeedingAdvancementOfSodium      ?SodiumFinalPNAdvance} OPTIONAL { ?Baby       CHIL---hasPNInitialFeedingVolumeOfPotassium   ?PotassiumInitialPNVolume}  OPTIONAL { ?Baby       CHIL---hasPNFeedingVolumeOfCalcium   ?CalciumInitialPNVolume} OPTIONAL { ?Baby       CHIL---hasInitialEnergyRequirement   ?InitialEnergy}  OPTIONAL { ?Baby       CHIL---hasFinalEnergyRequirement     ?FinalEneregy}  OPTIONAL { ?Baby   CHIL---hasFeedIntolerance   ?feedint} OPTIONAL { ?Baby       CHIL---hasVomitVolume   ?vomitvol}   OPTIONAL { ?Baby       CHIL---hasVomitColor   ?vomitcolor}  OPTIONAL { ?Baby       CHIL---hasAbdominalTenderness   ?abdtender} OPTIONAL { ?Baby       CHIL---hasAbdominalDistension   ?abddistension}  OPTIONAL { ?Baby       CHIL---hasVisibleBowelLoop   ?visiblebowel}  OPTIONAL { ?Baby       CHIL---bloodPresentInStool   ?bloodstool}  OPTIONAL { ?Baby       CHIL---hasMetabolicAcidosis   ?metabolic}  OPTIONAL { ?Baby       CHIL---hasApnea   ?Apnea}  OPTIONAL { ?Baby       CHIL---hasRespiratoryDistress  ?respDistress}   OPTIONAL { ?Baby       CHIL---hasLethargy   ?Lethargy}  OPTIONAL { ?Baby       CHIL---haslowPlateletCount   ?plateletcount}  OPTIONAL { ?Baby       CHIL---hasSkinDiscoloration   ?skindiscolor}  OPTIONAL { ?Baby       CHIL---hasGastricAspirateAbnormalColor   ?gastric}  OPTIONAL { ?Baby       CHIL---hasLongCapillaryRefillTime   ?CFL}  OPTIONAL { ?Baby       CHIL---hasCentralPeripheralDifference  ?central}  OPTIONAL { ?Baby       CHIL---hasBloodPressure   ?blood}  OPTIONAL { ?Baby       CHIL---hasTechycardia   ?techycardia}  OPTIONAL { ?Baby       CHIL---hasColdPeripheries   ?coldperi}  OPTIONAL { ?Baby       CHIL---hasLowBloodpressure   ?BP}  OPTIONAL { ?Baby       CHIL---hasReversedEndBloodFlow   ?reverseendflow} OPTIONAL { ?Baby       CHIL---isStoolPassed  ?stoolpassed }  OPTIONAL { ?Baby       CHIL---hasAbsentEndDiastolicFlow   ?absentdiastolic } OPTIONAL { ?Baby       CHIL---hasResuscitation   ?resus }  OPTIONAL { ?Baby       CHIL---hasIncreasedLactate  ?lactate } OPTIONAL { ?Baby       CHIL---hasDiseaseNecrotizingEnterocolitis  ?NEC } } order by ?DayOfLife
+babyDetail: Select obj from BabyDetail obj where uhid =  ___uhid___ order by creationtime
+babyQuery: select distinct(b.uhid),b.dateofadmission,b.dateofbirth,b.dischargeddate,b.timeofadmission,b.gestationweekbylmp,b.gestationdaysbylmp,b.birthweight,b.gender,b.inout_patient_status,b.baby_type,b.timeofbirth,b.episodeid from ___BasicConstants.SCHEMA_NAME___.baby_detail as b where b.uhid =  ___uhid___
+deleteType: delete from ___BasicConstants.SCHEMA_NAME___.nutritional_compliance where uhid = ___uhid___
+###Rule tracing
+RuleruleFeedintol1: Abdominal distension, Gastric aspirate abnormal color, Abnormal XRay abdominal status, vomit present
+RuleruleFeedintol2: Feed intolerance
+RuleruleRisk1: StoolNotPassed, AbdominalDistension
+RuleruleRisk2: AbsentEndDiastolicFlow
+RuleruleRisk4: Resuscitation
+RuleruleRisk5: IncreasedLactate
+RuleruleReverse: ReverseEndBloodFlow
+RuleruleNEC1: NecrotizingEnterocolitis-IA
+RuleruleNEC2: NecrotizingEnterocolitis-IB
+RuleruleNEC3: NecrotizingEnterocolitis-IIA
+RuleruleNEC4: NecrotizingEnterocolitis-IIB
+RuleruleNEC5: NecrotizingEnterocolitis-IIIA
+RuleruleNEC6: NecrotizingEnterocolitis-IIIB				      			
+RuleruleNEC: NecrotizingEnterocolitis
+Rulerulefeed1: FeedIntoleranceSign-DarkBileVomit
+Rulerulefeed2: FeedIntoleranceSign-BloodStainedVomit 
+Rulerulefeed3: FeedIntoleranceSign-LargeVomitVolume
+Ruleruleabdomin: Feed intolerance sign-AbdominalDistension
+Ruleruleskin: FeedIntoleranceSign-AbdominalTenderness
+Rulerulegastric: FeedIntoleranceSign-GastricAspirateAbnormalColor
+hasDayOfLife : model.getProperty(med, "hasDayOfLife");
+hasFeedIntolerance : model.getProperty(med, "hasFeedIntolerance");
+hasGestationalAgeAtBirth : model.getProperty(med, "hasGestationalAgeAtBirth");
+hasInitialFeedingVolume : model.getProperty(med, "hasInitialFeedingVolume");
+hasFinalFeedingVolume : model.getProperty(med, "hasFinalFeedingVolume");
+hasInitialFeedingAdvancement : model.getProperty(med, "hasInitialFeedingAdvancement");	
+hasFinalFeedingAdvancement : model.getProperty(med, "hasFinalFeedingAdvancement");
+hasRiskFactor : model.getProperty(med, "hasRiskFactor");
+givenFeedVolume : model.getProperty(med, "givenFeedVolume");
+hasCordGaspHValue : model.getProperty(med, "hasCordGaspHValue"); //
+hasBaseDeficitValue : model.getProperty(med, "hasBaseDeficitValue"); //
+pressorGiven : model.getProperty(med, "pressorGiven"); //
+Property hasChestCompressionDuration : model.getProperty(med, "hasChestCompressionDuration"); //
+Property hasVomitColor : model.getProperty(med, "hasVomitColor"); //
+Property hasVomitVolume : model.getProperty(med, "hasVomit"); //
+Property hasAbdominalDistension : model.getProperty(med, "hasAbdominalDistension");
+Property hasSkinDiscoloration : model.getProperty(med, "hasSkinDiscoloration");
+Property hasAbdominalTenderness : model.getProperty(med, "hasAbdominalTenderness");
+Property hasVisibleBowelLoop : model.getProperty(med, "hasVisibleBowelLoop");
+Property bloodPresentInStool : model.getProperty(med, "bloodPresentInStool");
+Property hasMetabolicAcidosis : model.getProperty(med, "hasMetabolicAcidosis");
+Property hasApnea : model.getProperty(med, "hasApnea");
+Property hasRespiratoryDistress : model.getProperty(med, "hasRespiratoryDistress");
+Property hasLethargy : model.getProperty(med, "hasLethargy");
+Property hasTemperatureInStability : model.getProperty(med, "hasTemperatureInStability");
+Property haslowPlateletCount : model.getProperty(med, "haslowPlateletCount");
+Property hasGastricAspirate : model.getProperty(med, "hasGastricAspirate");
+Property hasXRayAbdominStatus : model.getProperty(med, "hasX-RayAbdominStatus");
+Property hasGastricAspirateAbnormalColor : model.getProperty(med, "hasGastricAspirateAbnormalColor");
+Property hasLongCapillaryRefillTime : model.getProperty(med, "hasLongCapillaryRefillTime");
+Property hasCentralPeripheralDifference : model.getProperty(med, "hasCentralPeripheralDifference");
+Property hasTechycardia : model.getProperty(med, "hasTechycardia");
+Property hasBloodPressure : model.getProperty(med, "hasBloodPressure");
+Property hasLowBloodPressure : model.getProperty(med, "hasLowBloodPressure");
+Property hasColdPeripheries : model.getProperty(med, "hasColdPeripheries");
+Property hasFeedIntoleranceSign : model.getProperty(med, "hasFeedInttoleranceSign");
+Property hasFeedMilkType : model.getProperty(med, "hasFeedMilkType");
+Property hasFeedingMethod : model.getProperty(med, "hasFeedingMethod");
+Property hasBirthWeight : model.getProperty(med, "hasBirthWeight");
+Property hasForitifiers : model.getProperty(med, "hasForitifiers");
+Property hasPNInitialFeedingVolumeOfCHO : model.getProperty(med, "hasPNInitialFeedingVolumeOfCHO");
+Property hasPNFinalFeedingVolumeOfCHO : model.getProperty(med, "hasPNFinalFeedingVolumeOfCHO");
+Property hasPNInitialFeedingAdvancementOfCHO : model.getProperty(med,"hasPNInitialFeedingAdvancementOfCHO");
+Property hasPNFinalFeedingAdvancementOfCHO : model.getProperty(med,"hasPNFinalFeedingAdvancementOfCHO");
+Property hasPNInitialFeedingVolumeOfProtein : model.getProperty(med,"hasPNInitialFeedingVolumeOfProtein");
+Property hasPNFinalFeedingVolumeOfProtein : model.getProperty(med, "hasPNFinalFeedingVolumeOfProtein");
+Property hasPNInitialFeedingAdvancementOfProtein : model.getProperty(med,"hasPNInitialFeedingAdvancementOfProtein");
+Property hasPNFinalFeedingAdvancementOfProtein : model.getProperty(med,"hasPNFinalFeedingAdvancementOfProtein");
+Property hasPNInitialFeedingVolumeOfSodium : model.getProperty(med,"hasPNInitialFeedingVolumeOfSodium");
+Property hasPNFinalFeedingVolumeOfSodium : model.getProperty(med, "hasPNFinalFeedingVolumeOfSodium");
+Property hasPNInitialFeedingVolumeOfPotassium : model.getProperty(med,"hasPNInitialFeedingVolumeOfPotassium");
+Property hasPNFinalFeedingVolumeOfPotassium : model.getProperty(med, "hasPNFinalFeedingVolumeOfPotassium");
+Property hasPNInitialFeedingAdvancementOfPotassium : model.getProperty(med,"hasPNInitialFeedingAdvancementOfPotassium");
+Property hasPNFinalFeedingAdvancementOfPotassium : model.getProperty(med,"hasPNFinalFeedingAdvancementOfPotassium");
+Property hasPNFeedingVolumeOfCalcium : model.getProperty(med,"hasPNFeedingVolumeOfCalcium");
+Property hasFinalEnergyRequirement : model.getProperty(med,"hasFinalEnergyRequirement");
+Property hasInitialEnergyRequirement : model.getProperty(med,"hasInitialEnergyRequirement");
+Property hasParenteralTotalVolume : model.getProperty(med, "hasParenteralTotalVolume");
+Property hasParenteralFeed : model.getProperty(med, "hasParenteralFeed");
+Property hasPNFeed : model.getProperty(med, "hasPNFeed");
+Property hasReversedEndBloodFlow : model.getProperty(med, "hasReversedEndBloodFLow");
+Property hasAbsentEndDiastolicFlow : model.getProperty(med, "hasAbsentEndDiastolicFlow");
+Property isStoolPassed : model.getProperty(med, "isStoolPassed");
+Property hasResuscitation : model.getProperty(med, "hasResuscitation");
+Property hasIncreasedLactate : model.getProperty(med, "hasIncreaedLactate");
+Property hasDiseaseNecrotizingEnterocolitis : model.getProperty(med, "hasDiseaseNecrotizingEnterocolitis");
+insertType1: insert into ___BasicConstants.SCHEMA_NAME___.nutritional_compliance (uhid, dol, feed_volume,upper_feed_volume, feed_advancement, upper_feed_advancement,cho_lower_pn_feed_volume, cho_upper_pn_feed_volume, cho_lower_pn_feed_advancement, cho_upper_pn_feed_advancement,protein_lower_pn_feed_volume, protein_upper_pn_feed_volume, protein_lower_pn_feed_advancement, protein_upper_pn_feed_advancement, sodium_lower_pn_feed_volume, sodium_upper_pn_feed_volume, potassium_pn_feed_volume, calcium_pn_feed_volume, initial_energy, final_energy , details, given_feed, given_energy) VALUES ("+ "'" + uhidValue + "'," + dolValue + "," + feedVolumeValue + ","+ feedVolumeValuefinal + "," + feedIncrementValue + "," + feedIncrementValuefinal+ "," + CHOInitialPNVolume + "," + CHOFinalPNVolume + "," + CHOInitialPNAdvance+ "," + CHOFinalPNAdvance + "," + ProteinInitialPNVolume + ","+ ProteinFinalPNVolume + "," + ProteinInitialPNAdvance + "," + ProteinFinalPNAdvance+","+ SodiumInitialPNVolume + ","+ SodiumFinalPNVolume + "," + PotassiumInitialPNVolume +  ","+CalciumInitialPNVolume + "," + InitialEnergy + "," + FinalEnergy+ ",'" + trackrules + "'," + map.get("feed")+ "," + map.get("energy"))

@@ -1,0 +1,211 @@
+@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (-webkit-min-device-pixel-ratio:1){
+.vitaldateandtime{
+  padding-right: 20px;
+}
+.column-8{
+  width: 68%;
+  margin-left: -15px;
+}
+.centralTemp{
+  width: 22%;
+  margin-left: -8px
+}
+.peripheraltemp{
+  width: 25%;
+  margin-left: -8px;
+}
+.etco2{
+  width: 10%;
+}
+.cft{
+  position: absolute;
+  right: 6px;
+}
+.hr{
+  width: 12%;
+  margin-top: 0px;
+}
+.symptomatic{
+  margin-left: 20px;
+}
+.mmHg{
+  position: absolute;
+  right: 48px;
+}
+.diast{
+  width: 15%;
+}
+.leftpupil{
+  width: 20%;
+}
+.check{
+  padding-left: 25px !important;
+}
+.durationinput{
+  width: 30%;
+}
+.spo2{
+  margin-left: -48px;
+}
+.minheartrate{
+  margin-left: 15px;
+  width: 20%;
+}
+.recovery{
+  position: relative;
+  left: 32px;
+}
+.ifother{
+  width: 20%;
+}
+.lethargy{
+  width: 110%;
+}
+.rightPupilSize{
+  width: 20%;
+  position: absolute;
+  right: 5px;
+}
+.leftpupilreact{
+  width: 22%;
+}
+.duration{
+  position: relative;
+  left: 22px;
+}
+.rightPupilReact{
+  width: 23%;
+}
+.percnt{
+  margin-left: 15px;
+}
+.downscore{
+  width: 12%;
+}
+.vitalparameter{
+  margin-left: -20px;
+}
+.eventparameter{
+  margin-top: 35px;
+}
+.vital{
+  position: absolute;
+  bottom: 52px;
+  margin-bottom: 5px
+}
+.fromdate{
+  width: 22%;
+}
+.eventtodate{
+  margin-left: 162px
+}
+.abdgirth{
+  width: 12%;
+}
+.girthinput{
+  width: 42%;
+}
+.aspirateColor{
+  width: 13%;
+}
+.gastric{
+  margin-left: -18px
+}
+.urine{
+  width: 10%;
+}
+.vomitcolor{
+  width: 11%;
+}
+.typefeed{
+  width: 13%;
+  margin-top: 5px;
+}
+.dateTime{
+  width: 22%;
+}
+.sampletype{
+  margin-left: -45px;
+  width: 22%
+}
+.bloodproductsummary{
+  margin-top: 42px;
+}
+.summary{
+  position: absolute;
+  bottom: 62px;
+}
+.print{
+  margin-left: -7px;
+}
+.primary{
+  width: 21%;
+  margin-left: -15px
+}
+.feedtypename{
+  margin-left: -18px;
+  width: 21%;
+  margin-top: 2px;
+}
+.formula{
+  width: 20%;
+  margin-left: -12px
+}
+.formulaoption{
+  width: 21%;
+  margin-left: -20px;
+}
+.totalvol{
+  width: 12%;
+  position: absolute;
+  right: -5px
+}
+.formulaType{
+  width: 21%;
+}
+.fromintakeoutput{
+  width: 22%;
+}
+.eventfromdate{
+  position: absolute;
+}
+.peep{
+  width: 18%;
+}
+.map{
+  width: 12%;
+}
+.ti-sec{
+  width: 12%
+}
+/* .freqrate{
+  width: 10%;
+} */
+.flow-per-min{
+  width: 20%;
+}
+.no-ppm{
+  width: 10%;
+}
+.ventilator-summary{
+  width: 27%;
+  margin-left: -12px;
+}
+.from-ventilator{
+  width: 21%;
+  margin-left: -18px
+}
+.to-ventilator{
+  width: 21%;
+}
+.show-print-ventilator{
+  margin-left: -100px;
+  left: 85px
+}
+.visibility-text{
+	-webkit-text-fill-color: black;
+	-webkit-opacity: 1;
+	background: #e6f1ff;
+}
+
+}

@@ -1,0 +1,10 @@
+insert into kdah.ref_medtype values('TYPE0037','Nutritional Supplements');
+update kdah.medicine set medicationtype = 'TYPE0037' where medid = 'MED0000000155';
+update kdah.medicine set medicationtype = 'TYPE0037' where medid = 'MED0000000145';
+update kdah.medicine set medicationtype = 'TYPE0037' where medid = 'MED0000000065';
+update kdah.medicine set medicationtype = 'TYPE0037' where medid = 'MED0000000073';
+update kdah.medicine set medicationtype = 'TYPE0037' where medid = 'MED0000000074';
+update kdah.medicine set medicationtype = 'TYPE0037' where medid = 'MED0000000185';
+
+delete from kdah.ref_medtype where typeid = 'TYPE0036';
+delete from kdah.ref_medtype where typeid = 'TYPE0013';

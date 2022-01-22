@@ -1,0 +1,825 @@
+<div *ngIf="dischargedSummaryData != null && dischargedSummaryData != undefined">
+  <div style="background-color:white; margin-top: 3cm;margin-bottom: 5cm;font-size: 20px;margin-left: 10%;">
+    <div class="col-md-12 no-padding center-aligned">
+      <h1 class="bold" *ngIf="dischargedSummaryData.outcome !=null && dischargedSummaryData.outcome.outcomeType!=null && dischargedSummaryData.outcome.outcomeType!=''">{{dischargedSummaryData.outcome.outcomeType}} Summary</h1>
+      <h1 class="bold" *ngIf="!(dischargedSummaryData.outcome!=null && dischargedSummaryData.outcome.outcomeType!=null && dischargedSummaryData.outcome.outcomeType!='')">Discharge Summary</h1>
+    </div>
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Name :</span>
+        <span>{{dischargedSummaryData.babyDetails.babyname}} <span *ngIf="dischargedSummaryData.babyDetails.babyNumber != null">{{dischargedSummaryData.babyDetails.babyNumber}}</span></span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Age :</span>
+        <span>{{babyAge}} days/{{dischargedSummaryData.babyDetails.gender}}</span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">UHID :</span>
+        <span>{{dischargedSummaryData.babyDetails.uhid}}</span>
+      </div>
+    </div>
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">DOB / TOB :</span>
+        <span>{{dischargedSummaryData.babyDetails.dateofbirth | date: 'dd-MM-yyyy'}} <span *ngIf="timeOfBirthStr != undefined && timeOfBirthStr != null">{{timeOfBirthStr}}</span> </span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">DOA :</span>
+        <span>{{dischargedSummaryData.babyDetails.dateofadmission
+						| date: 'dd-MM-yyyy'}}</span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4" *ngIf="dischargedSummaryData.outcome != undefined &&
+        dischargedSummaryData.outcome.outcomeType != null && dischargedSummaryData.outcome.outcomeType != 'Death'" >
+        <span class="bold">DOD :</span>
+        <span>{{dischargedSummaryData.outcome.entrytime | date : 'dd - MM - yyyy'}}</span>
+      </div>
+    </div>
+    <div class="col-md-4 no-padding table-cell print-width-4" *ngIf="dischargedSummaryData.outcome.outcomeType != null
+     && dischargedSummaryData.outcome.outcomeType == 'Death'">
+      <span class="bold">Date of Death :</span>
+      <span>{{dischargedSummaryData.outcome.deathDate | date : 'dd - MM - yyyy'}}</span>
+    </div>
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">GA at Birth :</span>
+        <span *ngIf="dischargedSummaryData.birthVisit != null">{{dischargedSummaryData.birthVisit.gestationWeek}} <sup *ngIf="dischargedSummaryData.birthVisit.gestationDays != null"> + {{dischargedSummaryData.birthVisit.gestationDays}}</sup></span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">GA at Discharge :</span>
+        <span *ngIf="dischargedSummaryData.dischargeVisit != null">{{dischargedSummaryData.dischargeVisit.gestationWeek}}<sup *ngIf="dischargedSummaryData.dischargeVisit.gestationDays != null"> + {{dischargedSummaryData.dischargeVisit.gestationDays}}</sup></span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">EDD :</span>
+        <span>{{dischargedSummaryData.edd | date:'dd - MM - yyyy'}}</span>
+      </div>
+    </div>
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12 print-width-12" *ngIf="dischargedSummaryData.parenteDetail.address != null && dischargedSummaryData.parenteDetail.address != ''">
+      <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+        <span class="bold">Address :</span>
+      </div>
+      <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+        <span>{{dischargedSummaryData.parenteDetail.address}}</span>
+      </div>
+    </div>
+
+    <!--Anthropometry-->
+    <div class="col-md-12 no-padding table full margin-20-y print-width-12">
+      <h1 class="no-margin system-sub-heading blue-text"><u>Anthropometry</u> :</h1>
+    </div>
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Admission Weight :</span>
+        <span *ngIf="dischargedSummaryData.admissionVisit != null">{{dischargedSummaryData.admissionVisit.currentdateweight}} <span *ngIf="dischargedSummaryData.admissionVisit.currentdateweight != null">gm</span></span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Admission Length :</span>
+        <span *ngIf="dischargedSummaryData.admissionVisit != null">{{dischargedSummaryData.admissionVisit.currentdateheight}} <span *ngIf="dischargedSummaryData.admissionVisit.currentdateheight != null">cm</span></span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Admission HC :</span>
+        <span *ngIf="dischargedSummaryData.admissionVisit != null">{{dischargedSummaryData.admissionVisit.currentdateheadcircum}} <span *ngIf="dischargedSummaryData.admissionVisit.currentdateheadcircum != null">cm</span></span>
+      </div>
+    </div>
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.outcome.outcomeType != null
+     && dischargedSummaryData.outcome.outcomeType != 'Death'">
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Discharge Weight :</span>
+        <span *ngIf="dischargedSummaryData.dischargeVisit != null">{{dischargedSummaryData.dischargeVisit.currentdateweight}} <span *ngIf="dischargedSummaryData.dischargeVisit.currentdateweight != null">gm</span></span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Discharge Length :</span>
+        <span *ngIf="dischargedSummaryData.dischargeVisit != null">{{dischargedSummaryData.dischargeVisit.currentdateheight}} <span *ngIf="dischargedSummaryData.dischargeVisit.currentdateheight != null">cm</span></span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Discharge HC :</span>
+        <span *ngIf="dischargedSummaryData.dischargeVisit != null">{{dischargedSummaryData.dischargeVisit.currentdateheadcircum}} <span *ngIf="dischargedSummaryData.dischargeVisit.currentdateheadcircum != null">cm</span></span>
+      </div>
+    </div>
+
+    <!--Final Diagnosis-->
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12 print-width-12">
+      <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+        <h1 class="no-margin system-sub-heading blue-text"><u>Final Diagnosis</u> :</h1>
+      </div>
+      <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+        <span>{{dischargedSummaryData.finalDiagnosis}}</span>
+      </div>
+    </div>
+
+    <!--Maternal Details-->
+    <div class="col-md-12 no-padding table full margin-20-y print-width-12" *ngIf = "(dischargedSummaryData.parenteDetail.motherage != null && dischargedSummaryData.parenteDetail.motherage != '')
+			|| (dischargedSummaryData.babyAntenatalHistoryDetails.gScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.gScore != '')
+			|| (dischargedSummaryData.babyAntenatalHistoryDetails.pScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.pScore != '')
+			|| (dischargedSummaryData.babyAntenatalHistoryDetails.aScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.aScore != '')
+			|| (dischargedSummaryData.babyAntenatalHistoryDetails.lScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.lScore != '')
+			|| (dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo != null && dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo != '')
+			|| (dischargedSummaryData.parenteDetail.mother_obstetrician != null && dischargedSummaryData.parenteDetail.mother_obstetrician != '')
+      || (dischargedSummaryData.obstetricCondtiton != null && dischargedSummaryData.obstetricCondtiton != '')
+      || (dischargedSummaryData.maternalInvestigation != null && dischargedSummaryData.maternalInvestigation != '')">
+      <h1 class="no-margin system-sub-heading blue-text"><u>Maternal Details</u> :</h1>
+		</div>
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.parenteDetail.motherage != null && dischargedSummaryData.parenteDetail.motherage != ''">
+        <span class="bold">Age :</span>
+        <span>{{dischargedSummaryData.parenteDetail.motherage}}</span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "(dischargedSummaryData.babyAntenatalHistoryDetails.gScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.gScore != '')
+				|| (dischargedSummaryData.babyAntenatalHistoryDetails.pScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.pScore != '')
+				|| (dischargedSummaryData.babyAntenatalHistoryDetails.aScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.aScore != '')
+				|| (dischargedSummaryData.babyAntenatalHistoryDetails.lScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.lScore != '')">
+        <span class="bold">Parity :</span>
+        <span *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.gScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.gScore != ''">G{{dischargedSummaryData.babyAntenatalHistoryDetails.gScore}} </span>
+        <span *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.pScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.pScore != ''">P{{dischargedSummaryData.babyAntenatalHistoryDetails.pScore}} </span>
+        <span *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.aScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.aScore != ''">A{{dischargedSummaryData.babyAntenatalHistoryDetails.aScore}} </span>
+        <span *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.lScore != null && dischargedSummaryData.babyAntenatalHistoryDetails.lScore != ''">L{{dischargedSummaryData.babyAntenatalHistoryDetails.lScore}} </span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo != null && dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo != ''">
+        <span class="bold">Blood Group :</span>
+        <span>{{dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupAbo}} {{dischargedSummaryData.babyAntenatalHistoryDetails.motherBloodGroupRh}}</span>
+      </div>
+    </div>
+
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyAntenatalHistoryDetails.modeOfDelivery != null && dischargedSummaryData.babyAntenatalHistoryDetails.modeOfDelivery != ''">
+        <span class="bold">MOD :</span>
+        <span>{{dischargedSummaryData.babyAntenatalHistoryDetails.modeOfDelivery}}</span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.parenteDetail.mother_obstetrician != null && dischargedSummaryData.parenteDetail.mother_obstetrician != ''">
+        <span class="bold">Obstetrician :</span>
+        <span>{{dischargedSummaryData.parenteDetail.mother_obstetrician}}</span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+      </div>
+    </div>
+
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12" *ngIf = "dischargedSummaryData.obstetricCondtiton != null && dischargedSummaryData.obstetricCondtiton != ''">
+      <div class="col-md-12 no-padding table-cell print-width-4">
+        <div class="col-md-12 no-padding">
+          <span class="bold">Obstetric Condtiton :</span>
+          <span>{{dischargedSummaryData.obstetricCondtiton}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12" *ngIf = "dischargedSummaryData.maternalInvestigation != null && dischargedSummaryData.maternalInvestigation != ''">
+      <div class="col-md-12 no-padding table-cell print-width-4">
+        <div class="col-md-12 no-padding">
+          <span class="bold">Maternal Investigation :</span>
+          <span>{{dischargedSummaryData.maternalInvestigation}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!--Birth Details-->
+    <div class="col-md-12 no-padding table full margin-20-y print-width-12">
+      <h1 class="no-margin system-sub-heading blue-text"><u>Birth Details</u> :</h1>
+		</div>
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "(dischargedSummaryData.birthToNicuDetails.apgarOnemin != null && dischargedSummaryData.birthToNicuDetails.apgarOnemin != '')
+				|| (dischargedSummaryData.birthToNicuDetails.apgarFivemin != null && dischargedSummaryData.birthToNicuDetails.apgarFivemin != '')
+				|| (dischargedSummaryData.birthToNicuDetails.apgarTenmin != null && dischargedSummaryData.birthToNicuDetails.apgarTenmin != '')">
+        <span class="bold">Apgar Score :</span>
+        <span *ngIf = "dischargedSummaryData.birthToNicuDetails.apgarOnemin != null && dischargedSummaryData.birthToNicuDetails.apgarOnemin != ''">{{dischargedSummaryData.birthToNicuDetails.apgarOnemin}} at 1 min,</span>
+        <span *ngIf = "dischargedSummaryData.birthToNicuDetails.apgarFivemin != null && dischargedSummaryData.birthToNicuDetails.apgarFivemin != ''">{{dischargedSummaryData.birthToNicuDetails.apgarFivemin}} at 5 mins,</span>
+        <span *ngIf = "dischargedSummaryData.birthToNicuDetails.apgarTenmin != null && dischargedSummaryData.birthToNicuDetails.apgarTenmin != ''">{{dischargedSummaryData.birthToNicuDetails.apgarTenmin}} at 10 mins</span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.birthToNicuDetails.criedImmediately != null && dischargedSummaryData.birthToNicuDetails.criedImmediately != 'true'">
+        <span class="bold">Resuscitation Details :</span>
+        <span>Baby cried immediately after birth</span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+      </div>
+    </div>
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Birth Weight :</span>
+        <span *ngIf="dischargedSummaryData.birthVisit != null">{{dischargedSummaryData.birthVisit.currentdateweight}} <span *ngIf="dischargedSummaryData.birthVisit.currentdateweight != null">gm</span></span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Birth Length :</span>
+        <span *ngIf="dischargedSummaryData.birthVisit != null">{{dischargedSummaryData.birthVisit.currentdateheight}} <span *ngIf="dischargedSummaryData.birthVisit.currentdateheight != null">cm</span></span>
+      </div>
+      <div class="col-md-4 no-padding table-cell print-width-4">
+        <span class="bold">Birth HC :</span>
+        <span *ngIf="dischargedSummaryData.birthVisit != null">{{dischargedSummaryData.birthVisit.currentdateheadcircum}} <span *ngIf="dischargedSummaryData.birthVisit.currentdateheadcircum != null">cm</span></span>
+      </div>
+    </div>
+
+    <!--Status at Admission-->
+    <div class="col-md-12 no-padding table full margin-20-y print-width-12">
+      <h1 class="no-margin system-sub-heading blue-text"><u>Status at Admission</u> :</h1>
+    </div>
+
+    <!--Physical Examination-->
+    <div class="col-md-12 no-padding table full margin-20-y print-width-12">
+      <span class="bold"><u>Physical Examination</u> :</span>
+    </div>
+
+    <div *ngIf = "isPhysicalExamination != true">
+      <div class="col-md-12 no-padding table full margin-20-y print-width-12">
+        <span>Physical Examination was normal,No obvious anomaly found.</span>
+  	  </div>
+    </div>
+
+    <div *ngIf = "isPhysicalExamination == true">
+      <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+        <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyPhysicalExamData.apearance != null && dischargedSummaryData.babyPhysicalExamData.apearance != 'Active'">
+          <span class="bold">General Apearance :</span>
+          <span> {{dischargedSummaryData.babyPhysicalExamData.apearance}}</span>
+        </div>
+        <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyPhysicalExamData.head_neck != null && dischargedSummaryData.babyPhysicalExamData.head_neck == 'Abnormal'">
+          <span class="bold">Neck :</span>
+            <span> {{dischargedSummaryData.babyPhysicalExamData.head_neck}}
+            <span *ngIf="dischargedSummaryData.babyPhysicalExamData.head_neck_other != null"> ({{dischargedSummaryData.babyPhysicalExamData.head_neck_other}})</span>
+          </span>
+        </div>
+        <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyPhysicalExamData.palate != null && dischargedSummaryData.babyPhysicalExamData.palate != 'Normal'">
+          <span class="bold">Palate :</span>
+          <span> {{dischargedSummaryData.babyPhysicalExamData.palate}}</span>
+        </div>
+      </div>
+      <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+        <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyPhysicalExamData.lip != null && dischargedSummaryData.babyPhysicalExamData.lip != 'Normal'">
+          <span class="bold">Lips :</span>
+            <span> {{dischargedSummaryData.babyPhysicalExamData.lip}}
+            <span *ngIf="dischargedSummaryData.babyPhysicalExamData.lipCleftSide != null && dischargedSummaryData.babyPhysicalExamData.lipCleftSide == 'true'">(right)</span>
+            <span *ngIf="dischargedSummaryData.babyPhysicalExamData.lipCleftSide != null && dischargedSummaryData.babyPhysicalExamData.lipCleftSide == 'false'">(left)</span>
+          </span>
+        </div>
+        <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyPhysicalExamData.eyes != null && dischargedSummaryData.babyPhysicalExamData.eyes == 'Abnormal'">
+          <span class="bold">Eyes :</span>
+            <span> {{dischargedSummaryData.babyPhysicalExamData.eyes}}
+            <span *ngIf="dischargedSummaryData.babyPhysicalExamData.eyes_other != null">({{dischargedSummaryData.babyPhysicalExamData.eyes_other}})</span>
+          </span>
+        </div>
+        <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyPhysicalExamData.skin != null && dischargedSummaryData.babyPhysicalExamData.skin != 'Normal'">
+          <span class="bold">Skin :</span>
+            <span> {{dischargedSummaryData.babyPhysicalExamData.skin}}
+            <span *ngIf="dischargedSummaryData.babyPhysicalExamData.skin == 'Other'">({{dischargedSummaryData.babyPhysicalExamData.skin_other}})</span>
+          </span>
+        </div>
+      </div>
+      <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+        <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyPhysicalExamData.chest != null && dischargedSummaryData.babyPhysicalExamData.chest == 'Abnormal'">
+          <span class="bold">Chest :</span>
+            <span> {{dischargedSummaryData.babyPhysicalExamData.chest}}
+            <span *ngIf="dischargedSummaryData.babyPhysicalExamData.chest_other != null">({{dischargedSummaryData.babyPhysicalExamData.chest_other}})</span>
+          </span>
+        </div>
+        <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyPhysicalExamData.abdomen != null && dischargedSummaryData.babyPhysicalExamData.abdomen == 'Abnormal'">
+          <span class="bold">Abdomen :</span>
+            <span> {{dischargedSummaryData.babyPhysicalExamData.abdomen}}
+            <span *ngIf="dischargedSummaryData.babyPhysicalExamData.abdomen_other != null">({{dischargedSummaryData.babyPhysicalExamData.abdomen_other}})</span>
+          </span>
+        </div>
+        <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyPhysicalExamData.anal != null && dischargedSummaryData.babyPhysicalExamData.anal != 'Patent'">
+          <span class="bold">Anal Opening :</span>
+            <span> {{dischargedSummaryData.babyPhysicalExamData.anal}}
+            <span *ngIf="dischargedSummaryData.babyPhysicalExamData.anal_other != null">({{dischargedSummaryData.babyPhysicalExamData.anal_other}})</span>
+          </span>
+        </div>
+      </div>
+      <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+        <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyPhysicalExamData.genitals != null && dischargedSummaryData.babyPhysicalExamData.genitals == 'Abnormal'">
+          <span class="bold">Genitals :</span>
+            <span> {{dischargedSummaryData.babyPhysicalExamData.genitals}}
+            <span *ngIf="dischargedSummaryData.babyPhysicalExamData.genitals_other != null">({{dischargedSummaryData.babyPhysicalExamData.genitals_other}})</span>
+          </span>
+        </div>
+        <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyPhysicalExamData.reflexes != null && dischargedSummaryData.babyPhysicalExamData.reflexes == 'Abnormal'">
+          <span class="bold">Reflexes :</span>
+            <span> {{dischargedSummaryData.babyPhysicalExamData.reflexes}}
+            <span *ngIf="dischargedSummaryData.babyPhysicalExamData.reflexes_other != null">({{dischargedSummaryData.babyPhysicalExamData.reflexes_other}})</span>
+          </span>
+        </div>
+        <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babyPhysicalExamData.cong_malform != null && dischargedSummaryData.babyPhysicalExamData.cong_malform == 'Yes'">
+          <span class="bold">Apparent Congenital malformation :</span>
+            <span> {{dischargedSummaryData.babyPhysicalExamData.cong_malform}}
+            <span *ngIf="dischargedSummaryData.babyPhysicalExamData.cong_malform_other != null">({{dischargedSummaryData.babyPhysicalExamData.cong_malform_other}})</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!--Systemic Examination-->
+    <div class="col-md-12 no-padding table full margin-20-y print-width-12" *ngIf = "dischargedSummaryData.babySystemicExamData != null && dischargedSummaryData.babySystemicExamData != ''">
+		   <span class="bold"><u>Systemic Examination</u> :</span>
+    </div>
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-md-4 no-padding table-cell print-width-4" *ngIf = "dischargedSummaryData.babySystemicExamData != null && dischargedSummaryData.babySystemicExamData != ''">
+        <span>{{dischargedSummaryData.babySystemicExamData}}</span>
+      </div>
+    </div>
+
+    <!--Antenatal and Birth Details-->
+    <!-- <div class="col-sm-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="(dischargedSummaryData.dischargeNotes.antenatalDetails != null && dischargedSummaryData.dischargeNotes.antenatalDetails != '')
+         || (dischargedSummaryData.dischargeNotes.birthDetails != null && dischargedSummaryData.dischargeNotes.birthDetails != '')">
+        <h1 class="no-margin system-sub-heading blue-text">Antenatal and Birth Details</h1>
+      </div>
+    </div>
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding" *ngIf="dischargedSummaryData.dischargeNotes.antenatalDetails != null && dischargedSummaryData.dischargeNotes.antenatalDetails != ''">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Antenatal Details :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.antenatalDetails}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding" *ngIf="dischargedSummaryData.dischargeNotes.birthDetails != null && dischargedSummaryData.dischargeNotes.birthDetails != ''">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Birth Details :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.birthDetails}}
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!--Course During Hospital-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" >
+      <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="(dischargedSummaryData.dischargeNotes.stableNotes != null && dischargedSummaryData.dischargeNotes.stableNotes != '')
+				 || (dischargedSummaryData.dischargeNotes.rdsNotes != null && dischargedSummaryData.dischargeNotes.rdsNotes != '')
+ 				 || (dischargedSummaryData.dischargeNotes.apneaNotes != null && dischargedSummaryData.dischargeNotes.apneaNotes != '')
+ 				 || (dischargedSummaryData.dischargeNotes.pphnNotes != null && dischargedSummaryData.dischargeNotes.pphnNotes != '')
+ 				 || (dischargedSummaryData.dischargeNotes.pneumoNotes != null && dischargedSummaryData.dischargeNotes.pneumoNotes != '')
+				 || (dischargedSummaryData.dischargeNotes.jaundice != null && dischargedSummaryData.dischargeNotes.jaundice != '')
+				 || (dischargedSummaryData.dischargeNotes.asphyxiaNotes != null && dischargedSummaryData.dischargeNotes.asphyxiaNotes != '')
+				 || (dischargedSummaryData.dischargeNotes.seizureNotes != null && dischargedSummaryData.dischargeNotes.seizureNotes != '')
+				 || (dischargedSummaryData.dischargeNotes.sepsisNotes != null && dischargedSummaryData.dischargeNotes.sepsisNotes != '')
+				 || (dischargedSummaryData.dischargeNotes.miscellaneousNotes != null && dischargedSummaryData.dischargeNotes.miscellaneousNotes != '')">
+				<h1 class="no-margin system-sub-heading blue-text"><u>Course During Hospital</u> :</h1>
+			</div>
+    </div>
+    <!--Status at admission-->
+    <!-- <div class="col-sm-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding" *ngIf="dischargedSummaryData.dischargeNotes.statusAtAdmission != null && dischargedSummaryData.dischargeNotes.statusAtAdmission != ''">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Status at Admission :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.statusAtAdmission}}
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!--Stable Notes-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding" *ngIf="dischargedSummaryData.dischargeNotes.stableNotes != null && dischargedSummaryData.dischargeNotes.stableNotes != ''">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Stable Notes :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            <span>{{dischargedSummaryData.dischargeNotes.stableNotes}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Respiratory System-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="(dischargedSummaryData.dischargeNotes.rdsNotes != null && dischargedSummaryData.dischargeNotes.rdsNotes != '')
+			|| (dischargedSummaryData.dischargeNotes.apneaNotes != null && dischargedSummaryData.dischargeNotes.apneaNotes != '')
+			|| (dischargedSummaryData.dischargeNotes.pphnNotes != null && dischargedSummaryData.dischargeNotes.pphnNotes != '')
+			|| (dischargedSummaryData.dischargeNotes.pneumoNotes != null && dischargedSummaryData.dischargeNotes.pneumoNotes != '')">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <span class="bold"><u>Respiratory System</u> :</span>
+        </div>
+      </div>
+    </div>
+
+    <!--Rds-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.rdsNotes != null && dischargedSummaryData.dischargeNotes.rdsNotes != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Respiratory Distress :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.rdsNotes}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Apnea-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.apneaNotes != null && dischargedSummaryData.dischargeNotes.apneaNotes != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Apnea :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.apneaNotes}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Pphn-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.pphnNotes != null && dischargedSummaryData.dischargeNotes.pphnNotes != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">PPHN :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.pphnNotes}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Pneumothorax-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.pneumoNotes != null && dischargedSummaryData.dischargeNotes.pneumoNotes != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Pneumothorax :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.pneumoNotes}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Jaundice-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.jaundice != null && dischargedSummaryData.dischargeNotes.jaundice != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Jaundice :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.jaundice}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--CNS-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="(dischargedSummaryData.dischargeNotes.asphyxiaNotes != null && dischargedSummaryData.dischargeNotes.asphyxiaNotes != '')
+			|| (dischargedSummaryData.dischargeNotes.seizureNotes != null && dischargedSummaryData.dischargeNotes.seizureNotes != '')">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <span class="bold"><u>CNS</u> :</span>
+        </div>
+      </div>
+    </div>
+
+    <!--Asphyxia-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.asphyxiaNotes != null && dischargedSummaryData.dischargeNotes.asphyxiaNotes != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Asphyxia :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.asphyxiaNotes}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Seizure-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.seizureNotes != null && dischargedSummaryData.dischargeNotes.seizureNotes != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Seizure :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.seizureNotes}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Infection-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf=" (dischargedSummaryData.dischargeNotes.sepsisNotes != null && dischargedSummaryData.dischargeNotes.sepsisNotes != '')">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <span class="bold"><u>Infection</u> :</span>
+        </div>
+      </div>
+    </div>
+
+    <!--Sepsis-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.sepsisNotes != null && dischargedSummaryData.dischargeNotes.sepsisNotes != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Sepsis :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.sepsisNotes}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Miscelllaneous-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.miscellaneousNotes != null && dischargedSummaryData.dischargeNotes.miscellaneousNotes != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding padding-5-y">
+          {{dischargedSummaryData.dischargeNotes.miscellaneousNotes}}
+        </div>
+      </div>
+    </div>
+
+    <!--Growth&Nutrition-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="(dischargedSummaryData.dischargeNotes.growth != null && dischargedSummaryData.dischargeNotes.growth != '')
+       || (dischargedSummaryData.dischargeNotes.nutrition != null && dischargedSummaryData.dischargeNotes.nutrition != '')">
+      <div class="col-sm-12 no-padding table full margin-5-y print-width-12">
+        <h1 class="no-margin system-sub-heading blue-text"><u>Growth & Nutrition</u> :</h1>
+      </div>
+    </div>
+
+    <!--Growth-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.growth != null && dischargedSummaryData.dischargeNotes.growth != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Growth Summary :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y" >
+            <span>{{dischargedSummaryData.dischargeNotes.growth}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Nutrition-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.nutrition != null && dischargedSummaryData.dischargeNotes.nutrition != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Nutrition :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.nutrition}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Treatments-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="(dischargedSummaryData.dischargeNotes.procedure != null && dischargedSummaryData.dischargeNotes.procedure != '')
+    || (dischargedSummaryData.dischargeNotes.bloodProduct != null && dischargedSummaryData.dischargeNotes.bloodProduct != '')
+    || (dischargedSummaryData.dischargeNotes.vaccination != null && dischargedSummaryData.dischargeNotes.vaccination != '')">
+      <div class="col-sm-12 no-padding table full margin-5-y print-width-12">
+        <h1 class="no-margin system-sub-heading blue-text"><u>Treatments</u> :</h1>
+      </div>
+    </div>
+
+    <!--Screening-->
+    <!-- <div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.screenRop.length > 0 || dischargedSummaryData.length > 0 || dischargedSummaryData.screenNeurological.length > 0|| dischargedSummaryData.screenMetabolical.length > 0 || dischargedSummaryData.screenHearing.length > 0">
+			<div class="col-md-12">
+				<div class="col-md-12 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Screening :</span>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" *ngIf = "dischargedSummaryData.screenNeurological != null && dischargedSummaryData.screenNeurological.length > 0">
+						<span class="bold"><u>Neurological Screening</u> :</span>
+						<div  class="col-md-12 no-padding padding-5-y" *ngFor="let item of dischargedSummaryData.screenNeurological; let i = index" [attr.data-index]="i" >
+							<div class="col-md-12 no-padding">
+								<span>{{i+1}}) Screening was done on {{item.screening_time | date:'dd-MM-yyyy'}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.reports != null && item.reports != ''" style="margin-left:20px">
+								<span><span class="bold">Reports</span> - {{item.reports}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.other_comments != null && item.other_comments != ''" style="margin-left:20px">
+								<span><span class="bold">Comments</span> - {{item.other_comments}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" *ngIf = "dischargedSummaryData.screenRop != null && dischargedSummaryData.screenRop.length > 0">
+						<span class="bold"><u>ROP Screening</u> :</span>
+						<div  class="col-md-12 no-padding padding-5-y" *ngFor="let item of dischargedSummaryData.screenRop; let i = index" [attr.data-index]="i" >
+							<div class="col-md-12 no-padding">
+								<span>{{i+1}}) Screening was done on {{item.screening_time | date:'dd-MM-yyyy'}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.is_rop == null || item.is_rop == false" style="margin-left:20px">
+								<span><span class="bold">Finding :</span> - No ROP</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.is_rop != null && item.is_rop == true" style="margin-left:20px">
+								<span><span class="bold">Finding :</span> -
+								<div *ngIf = "item.is_rop_left != null && item.is_rop_left == true" style="margin-left:30px"> Left Eye : {{item.rop_left_zone}} zone, {{item.rop_left_stage}} stage, Plus Disease : <span *ngIf="item.rop_left_plus != null && item.rop_left_plus == true"> Present </span> <span *ngIf="item.rop_left_plus != null && item.rop_left_plus == false"> Absent </span></div>
+								<div *ngIf = "item.is_rop_right != null && item.is_rop_right == true" style="margin-left:30px"> Right Eye : {{item.rop_right_zone}} zone, {{item.rop_right_stage}} stage, Plus Disease : <span *ngIf="item.rop_right_plus != null && item.rop_right_plus == true"> Present </span> <span *ngIf="item.rop_right_plus != null && item.rop_right_plus == false"> Absent </span></div>
+								</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "(item.left_laser != null && item.left_laser == true) || (item.right_laser != null && item.right_laser == true)" style="margin-left:20px">
+								<span><span class="bold">Laser :</span> -
+								<div *ngIf = "item.left_laser != null && item.left_laser == true" style="margin-left:30px"> Left Eye : {{item.left_laser_date | date:'dd-MM-yyyy'}} <span *ngIf="item.left_laser_comment != null && item.left_laser_comment != ''"> ({{item.left_laser_comment}}) </span></div>
+								<div *ngIf = "item.right_laser != null && item.right_laser == true" style="margin-left:30px"> Right Eye : {{item.left_right_date | date:'dd-MM-yyyy'}} <span *ngIf="item.right_laser_comment != null && item.right_laser_comment != ''"> ({{item.right_laser_comment}}) </span></div>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" *ngIf = "dischargedSummaryData.screenHearing != null && dischargedSummaryData.screenHearing.length > 0">
+						<span class="bold"><u>Hearing Screening</u> :</span>
+						<div  class="col-md-12 no-padding padding-5-y" *ngFor="let item of dischargedSummaryData.screenHearing; let i = index" [attr.data-index]="i" >
+							<div class="col-md-12 no-padding">
+								<span>{{i+1}}) Screening was done on {{item.screening_time | date:'dd-MM-yyyy'}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.screening_test != null && (item.screening_test == 'OAE' || item.screening_test == 'Both')" style="margin-left:20px">
+								<span><span class="bold">OAE :</span> -
+								<div *ngIf = "item.oae_left != null" style="margin-left:30px"> Left Eye : {{item.oae_left}}</div>
+								<div *ngIf = "item.oae_right != null" style="margin-left:30px"> Right Eye : {{item.oae_right}}</div>
+								</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.screening_test != null && (item.screening_test == 'ABR' || item.screening_test == 'Both')" style="margin-left:20px">
+								<span><span class="bold">ABR :</span> -
+								<div *ngIf = "item.abr_left != null" style="margin-left:30px"> Left Eye : {{item.abr_left}}</div>
+								<div *ngIf = "item.abr_right != null" style="margin-left:30px"> Right Eye : {{item.abr_right}}</div>
+								</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.treatment != null && item.treatment != ''" style="margin-left:20px">
+								<span><span class="bold">Treatment</span> - {{item.treatment}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" *ngIf = "dischargedSummaryData.screenMetabolical != null && dischargedSummaryData.screenMetabolical.length > 0">
+						<span class="bold"><u>Metabolic Screening</u> :</span>
+						<div  class="col-md-12 no-padding padding-5-y" *ngFor="let item of dischargedSummaryData.screenMetabolical; let i = index" [attr.data-index]="i" >
+							<div class="col-md-12 no-padding">
+								<span>{{i+1}}) Screening was done on {{item.screening_time | date:'dd-MM-yyyy'}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.metabolic_screening != null && item.metabolic_screening != ''" style="margin-left:20px">
+								<span><span class="bold">Metabolic Screening of 6 tests</span> - {{item.metabolic_screening}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.screening_panel != null && item.screening_panel == true" style="margin-left:20px">
+								<span><span class="bold">Metabolic Screening of 123 conditions</span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding padding-5-y" *ngIf = "dischargedSummaryData.screenUsg != null && dischargedSummaryData.screenUsg.length > 0">
+						<span class="bold"><u>USG Screening</u> :</span>
+						<div  class="col-md-12 no-padding padding-5-y" *ngFor="let item of dischargedSummaryData.screenUsg; let i = index" [attr.data-index]="i" >
+							<div class="col-md-12 no-padding">
+								<span>{{i+1}}) Screening was done on {{item.screening_time | date:'dd-MM-yyyy'}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.brain_parenchyma != null && item.brain_parenchyma != ''"style="margin-left:20px">
+								<span><span class="bold">Brain Parenchyma</span> - {{item.brain_parenchyma}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.ivh_type != null && item.ivh_type != ''" style="margin-left:20px">
+								<span><span class="bold">IVH Type</span> - {{item.ivh_type}}</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf = "item.pvl_type != null && item.pvl_type != ''" style="margin-left:20px">
+								<span><span class="bold">PVL Type</span> - {{item.pvl_type}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+    <!--Blood Product-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.bloodProduct != null && dischargedSummaryData.dischargeNotes.bloodProduct != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Blood Product :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.bloodProduct}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Procedure-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.procedure != null && dischargedSummaryData.dischargeNotes.procedure != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Procedure :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.procedure}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Vaccination-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.vaccination != null && dischargedSummaryData.dischargeNotes.vaccination != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding">
+            <span class="bold">Vaccination :</span>
+          </div>
+          <div class="col-sm-12 no-padding padding-5-y">
+            {{dischargedSummaryData.dischargeNotes.vaccination}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Investigation-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="(dischargedSummaryData.dischargeNotes.screening != null && dischargedSummaryData.dischargeNotes.screening != '')">
+      <div class="col-sm-12 no-padding table full margin-5-y print-width-12">
+        <h1 class="no-margin system-sub-heading blue-text"><u>Investigations</u> :</h1>
+      </div>
+    </div>
+
+    <!--Screening-->
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.dischargeNotes.screening != null && dischargedSummaryData.dischargeNotes.screening != ''">
+      <div class="col-sm-12 no-padding">
+        <div class="col-sm-12 no-padding">
+          <span class="bold">Screening :</span>
+        </div>
+        <div class="col-sm-12 no-padding padding-5-y">
+          {{dischargedSummaryData.dischargeNotes.screening}}
+        </div>
+      </div>
+    </div>
+
+    <!--Advice on Discharge-->
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.outcome.outcomeType != null
+    && dischargedSummaryData.outcome.outcomeType != 'Death'
+    && adviceOnDischarge != null && adviceOnDischarge != ''">
+      <h1 class="no-margin system-sub-heading blue-text"><u>Advice on Discharge</u></h1>
+    </div>
+    <!-- <div class="col-md-12 no-padding table full margin-5-y print-width-12" *ngFor="let template of dischargedSummaryData.dischargeAdviceTemplates; let i = index" [attr.data-index]="i">
+      <div *ngIf="template.isselected==true">
+        <span class="padding-5-x">{{template.fixedvalue}} <span *ngIf="i !='1' && i !='5'">{{template.editedvalue}}</span>{{template.secondTempDate | date:'dd-MM-yyyy'}}{{template.sixthTempDate | date:'dd-MM-yyyy'}}
+        </span>
+      </div>
+    </div>
+    <div class="col-sm-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.prescriptionList != null">
+      <div class="col-sm-12 padding-5-y" style="margin-left: 12px;" *ngIf="isSelectedMed == true">
+        <span class="padding-5-x"> Medicine </span><br>
+        <div class="col-sm-12 padding-5-y" *ngFor="let med of dischargedSummaryData.prescriptionList; let i = index" [attr.data-index]="i">
+          <span class="padding-5-x">{{med.medicinename}} {{med.dose}} {{med.dose_unit}}/{{med.dose_unit_time}}</span>
+        </div>
+      </div>
+    </div> -->
+    <div class="col-md-12 no-padding table full margin-5-y print-width-12" *ngIf="dischargedSummaryData.outcome.outcomeType != null
+     && dischargedSummaryData.outcome.outcomeType != 'Death'
+     && dischargedSummaryData.dischargeNotes.advice != null
+     && dischargedSummaryData.dischargeNotes.advice != ''" style="margin-left:0px;white-space: pre-line;margin-top:20px;">{{adviceOnDischarge}}
+      <!-- <div class="col-sm-12 no-padding table full margin-5-y print-width-12">
+        <div class="col-sm-12 no-padding">
+          <span class="bold">To attend Nursery / Pediatric Emergency on
+            noticing danger signs like cyanosis / difficulty in breathing /
+            refusal of feeds / abnormal movement</span>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="row table full padding-10-x no-padding-right padding-5-y" style="margin-left:0px;white-space: pre-line;margin-top: -20px;" *ngIf="dischargedSummaryData.hospitalDetails != null">
+      <b>FOLLOW UP:</b>
+
+      Review with Neonatologist/Pediatrician <b>{{dischargedSummaryData.babyDetails.admittingdoctor}}</b> with prior appointment on {{dischargedSummaryData.outcome.appointmenttime | date:'dd-MM-yyyy hh:mm a'}} in OPD. [For appointment please call on {{dischargedSummaryData.hospitalDetails.helplineNumberSecond}}]
+
+      <b>{{dischargedSummaryData.babyDetails.admittingdoctor}}</b>
+      Consultant
+
+      Contact at helpline no. <b>{{dischargedSummaryData.hospitalDetails.helplineNumber}}, {{dischargedSummaryData.hospitalDetails.lactationNumber}}</b> ({{dischargedSummaryData.hospitalDetails.lactationName}}) for feeding and lactation.
+      For medical emergency of newborn, contact at helpline number <b>{{dischargedSummaryData.hospitalDetails.contactNumber}}</b>
+    </div>
+
+    <!--Lab Reports-->
+    <!-- <div class="row table full padding-10-x no-padding-right padding-5-y" *ngIf="dischargedSummaryData.testResult != null && dischargedSummaryData.testResult != ''">
+      <div class="col-md-12">
+        <div class="col-md-12 no-padding">
+          <div class="col-md-12 no-padding">
+            <h1 class="no-margin system-sub-heading blue-text"><u>Lab Reports</u> :</h1>
+          </div>
+          <div class="col-md-12 no-padding padding-5-y" *ngFor="let item of dischargedSummaryData.testResult">
+            <table class="table table-striped table-bordered headed-table desktop-column-20">
+              <tr>
+                <td class="left-aligned"></td>
+                <td class="left-aligned" *ngIf="item.dates != null && item.dates.length > 0">{{item.dates[0]}}</td>
+                <td class="left-aligned" *ngIf="item.dates != null && item.dates.length > 1">{{item.dates[1]}}</td>
+                <td class="left-aligned" *ngIf="item.dates != null && item.dates.length > 2">{{item.dates[2]}}</td>
+                <td class="left-aligned" *ngIf="item.dates != null && item.dates.length > 3">{{item.dates[3]}}</td>
+                <td class="left-aligned" *ngIf="item.dates != null && item.dates.length > 4">{{item.dates[4]}}</td>
+              </tr>
+              <tr *ngFor="let test of item.itemList">
+                <td class="left-aligned">{{test.testName}}</td>
+                <td class="left-aligned" *ngIf="test.itemResults != null && test.itemResults.length > 0">{{test.itemResults[0].itemvalue}} {{test.itemResults[0].itemunit}}</td>
+                <td class="left-aligned" *ngIf="test.itemResults != null && test.itemResults.length > 1">{{test.itemResults[1].itemvalue}} {{test.itemResults[1].itemunit}}</td>
+                <td class="left-aligned" *ngIf="test.itemResults != null && test.itemResults.length > 2">{{test.itemResults[2].itemvalue}} {{test.itemResults[2].itemunit}}</td>
+                <td class="left-aligned" *ngIf="test.itemResults != null && test.itemResults.length > 3">{{test.itemResults[3].itemvalue}} {{test.itemResults[3].itemunit}}</td>
+                <td class="left-aligned" *ngIf="test.itemResults != null && test.itemResults.length > 4">{{test.itemResults[4].itemvalue}} {{test.itemResults[4].itemunit}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

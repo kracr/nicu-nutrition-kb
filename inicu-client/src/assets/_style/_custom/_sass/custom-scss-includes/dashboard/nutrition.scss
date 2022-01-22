@@ -1,0 +1,27 @@
+.nutrition-left-side{width:77%;}
+
+.nutrition-calc-tbl{
+    .input-medium{@include makeMixin(border-radius, 2px);}
+    p{margin:0px 0; font-size:13px;}
+    .table-cell{padding:5px 10px; vertical-align: middle;}
+}
+
+.total-nutrition-val{
+    margin-top:50px;
+    .table-cell{padding:5px 3px;}
+    p{ white-space: nowrap; margin:2px 0px;}
+    .blue-text,.green-text{font-size: 13px;}
+}
+
+.trends-list-cont{
+    border-left:solid 1px lighten($gray,7%); min-height: 520px; padding:20px 0px; @include makeMixin(box-shadow, 0 0 5px lighten($gray,12%));  width:23%;
+    .view-all{padding:6px 20px 4px 20px;}
+    
+    .trends-table{margin-top: 20px;}
+    
+    .table-cell{
+        padding:3px 10px;
+        p{margin:5px 0px; font-size: 13px;}
+    }
+    .gray-text{color:lighten($black,60%);}
+}

@@ -1,0 +1,317 @@
+<nusring-panel></nusring-panel>
+<div class="col-md-12 background-color-white">
+	<div class="col-md-12 no-padding padding-10-y center-aligned">
+		<span class="light blue-text system-main-heading">Doctor's Order</span>
+	</div>
+	<div *ngIf="doctorOrder != null && doctorOrder.stableNoteList != null && doctorOrder.stableNoteList.length > 0">
+		<div class="col-md-12 no-padding" *ngFor="let order of doctorOrder.stableNoteList">
+			<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+				<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+			</div>
+			<div class="col-md-10 padding-5-y left-aligned">
+				<span>{{order.plan}}</span>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="doctorOrder != null && doctorOrder.procedureOtherList != null && doctorOrder.procedureOtherList.length > 0">
+		<div class="col-md-12 no-padding" *ngFor="let order of doctorOrder.procedureOtherList">
+			<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.etSuctionType != null">
+				<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+					<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+				</div>
+				<div class="col-md-10 padding-5-y left-aligned">
+					<span>Perform ET Suction <span style="padding-left:10px" *ngIf="order.etSuctionType == 'q' && order.etSuctionType != null && order.etSuctionValue != null">
+						@{{order.etSuctionValue}} hrs</span>
+						<span style="padding-left:10px" *ngIf="order.etSuctionType != 'q' && order.etSuctionType != null">
+							SOS</span>
+
+					</span>
+				</div>
+			</div>
+
+			<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.abdominalGirthType != null">
+				<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+					<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+				</div>
+				<div class="col-md-10 padding-5-y left-aligned">
+					<span>Perform Abdominal Girth <span style="padding-left:10px" *ngIf="order.abdominalGirthType == 'q' && order.abdominalGirthType != null && order.abdominalGirthValue != null">
+						@{{order.abdominalGirthValue}} hrs</span>
+						<span style="padding-left:10px" *ngIf="order.abdominalGirthType != 'q' && order.abdominalGirthType != null">
+							SOS</span>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.oralSuctionType != null">
+				<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+					<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+				</div>
+				<div class="col-md-10 padding-5-y left-aligned">
+					<span>Perform Oral Suction<span style="padding-left:10px" *ngIf="order.oralSuctionType == 'q' && order.oralSuctionType != null && order.oralSuctionValue != null">
+						@{{order.oralSuctionValue}} hrs</span>
+						<span style="padding-left:10px" *ngIf="order.oralSuctionType != 'q' && order.oralSuctionType != null">
+							SOS</span>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.stomachAspirationType != null">
+				<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+					<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+				</div>
+				<div class="col-md-10 padding-5-y left-aligned">
+					<span>Perform Stomach Aspiration <span style="padding-left:10px" *ngIf="order.stomachAspirationType == 'q' && order.stomachAspirationType != null && order.stomachAspirationValue != null">
+						@{{order.stomachAspirationValue}} hrs</span>
+						<span style="padding-left:10px" *ngIf="order.stomachAspirationType != 'q' && order.stomachAspirationType != null">
+							SOS</span>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.chestPhysiotherapyType != null">
+				<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+					<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+				</div>
+				<div class="col-md-10 padding-5-y left-aligned">
+					<span>Perform Chest Physiotherapy <span style="padding-left:10px" *ngIf="order.chestPhysiotherapyType == 'q' && order.chestPhysiotherapyType != null && order.chestPhysiotherapyValue != null">
+						@{{order.chestPhysiotherapyValue}} hrs</span>
+						<span style="padding-left:10px" *ngIf="order.chestPhysiotherapyType != 'q' && order.chestPhysiotherapyType != null">
+							SOS</span>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.bpMeasurementType != null">
+				<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+					<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+				</div>
+				<div class="col-md-10 padding-5-y left-aligned">
+					<span>Perform BP Measurement <span style="padding-left:10px" *ngIf="order.bpMeasurementType == 'q' && order.bpMeasurementType != null && order.bpMeasurementValue != null">
+						@{{order.bpMeasurementValue}} hrs</span>
+						<span style="padding-left:10px" *ngIf="order.bpMeasurementType != 'q' && order.bpMeasurementType != null">
+							SOS</span>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.positionChangeType != null">
+				<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+					<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+				</div>
+				<div class="col-md-10 padding-5-y left-aligned">
+					<span>Perform Position Change <span style="padding-left:10px" *ngIf="order.positionChangeType == 'q' && order.positionChangeType != null && order.positionChangeValue != null">
+						@{{order.positionChangeValue}} hrs</span>
+						<span style="padding-left:10px" *ngIf="order.positionChangeType != 'q' && order.positionChangeType != null">
+							SOS</span>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.cvpMeasurementType != null">
+				<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+					<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+				</div>
+				<div class="col-md-10 padding-5-y left-aligned">
+					<span>Perform CVP Measurement <span style="padding-left:10px" *ngIf="order.cvpMeasurementType == 'q' && order.cvpMeasurementType != null && order.cvpMeasurementValue != null">
+						@{{order.cvpMeasurementValue}} hrs</span>
+						<span style="padding-left:10px" *ngIf="order.cvpMeasurementType != 'q' && order.cvpMeasurementType != null">
+							SOS</span>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.pulseOximeterType != null">
+				<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+					<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+				</div>
+				<div class="col-md-10 padding-5-y left-aligned">
+					<span>Perform Resite Pulse Oximeter <span style="padding-left:10px" *ngIf="order.pulseOximeterType == 'q' && order.pulseOximeterType != null && order.pulseOximeterValue != null">
+						@{{order.pulseOximeterValue}} hrs</span>
+						<span style="padding-left:10px" *ngIf="order.pulseOximeterType != 'q' && order.pulseOximeterType != null">
+							SOS</span>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.glucoseStripType != null">
+				<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+					<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+				</div>
+				<div class="col-md-10 padding-5-y left-aligned">
+					<span>Perform Glucose Reagent Strip <span style="padding-left:10px" *ngIf="order.glucoseStripType == 'q' && order.glucoseStripType != null && order.glucoseStripValue != null">
+						@{{order.glucoseStripValue}} hrs</span>
+						<span style="padding-left:10px" *ngIf="order.glucoseStripType != 'q' && order.glucoseStripType != null">
+							SOS</span>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="doctorOrder == null">
+		<div class="col-md-12 no-padding-right padding-5-y left-aligned">
+			<span class="bold">No Doctor's Order </span>
+		</div>
+	</div>
+</div>
+
+<!-- model popup for Graph -->
+<div class="overlay" id="NotificationOverlay"></div>
+<div class="modal-box-lg bhutani-popup" id="NotificationPopup" style="top:20%;min-height:400px">
+	<button (click)='closeNotification()' class="modal-popup-close-btn"></button>
+	<div class="inicu-tab-container">
+		<div class="col-md-12 no-padding">
+			<div class="col-md-12 padding-10-y left-aligned">
+				<span class="light blue-text system-main-heading">Doctor's Order</span>
+			</div>
+			<div *ngIf="doctorOrder != null && doctorOrder.stableNoteList != null && doctorOrder.stableNoteList.length > 0">
+				<div class="col-md-12 no-padding" *ngFor="let order of doctorOrder.stableNoteList">
+					<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+						<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+					</div>
+					<div class="col-md-10 padding-5-y left-aligned">
+						<span>{{order.plan}}</span>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="doctorOrder != null && doctorOrder.procedureOtherList != null && doctorOrder.procedureOtherList.length > 0">
+				<div class="col-md-12 no-padding" *ngFor="let order of doctorOrder.procedureOtherList">
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.etSuctionType != null">
+						<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+							<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+						</div>
+						<div class="col-md-10 padding-5-y left-aligned">
+							<span>Perform ET Suction <span style="padding-left:10px" *ngIf="order.etSuctionType == 'q' && order.etSuctionType != null && order.etSuctionValue != null">
+								@{{order.etSuctionValue}} hrs</span>
+								<span style="padding-left:10px" *ngIf="order.etSuctionType != 'q' && order.etSuctionType != null">
+									SOS</span>
+
+							</span>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.abdominalGirthType != null">
+						<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+							<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+						</div>
+						<div class="col-md-10 padding-5-y left-aligned">
+							<span>Perform Abdominal Girth <span style="padding-left:10px" *ngIf="order.abdominalGirthType == 'q' && order.abdominalGirthType != null && order.abdominalGirthValue != null">
+								@{{order.abdominalGirthValue}} hrs</span>
+								<span style="padding-left:10px" *ngIf="order.abdominalGirthType != 'q' && order.abdominalGirthType != null">
+									SOS</span>
+							</span>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.oralSuctionType != null">
+						<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+							<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+						</div>
+						<div class="col-md-10 padding-5-y left-aligned">
+							<span>Perform Oral Suction<span style="padding-left:10px" *ngIf="order.oralSuctionType == 'q' && order.oralSuctionType != null && order.oralSuctionValue != null">
+								@{{order.oralSuctionValue}} hrs</span>
+								<span style="padding-left:10px" *ngIf="order.oralSuctionType != 'q' && order.oralSuctionType != null">
+									SOS</span>
+							</span>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.stomachAspirationType != null">
+						<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+							<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+						</div>
+						<div class="col-md-10 padding-5-y left-aligned">
+							<span>Perform Stomach Aspiration <span style="padding-left:10px" *ngIf="order.stomachAspirationType == 'q' && order.stomachAspirationType != null && order.stomachAspirationValue != null">
+								@{{order.stomachAspirationValue}} hrs</span>
+								<span style="padding-left:10px" *ngIf="order.stomachAspirationType != 'q' && order.stomachAspirationType != null">
+									SOS</span>
+							</span>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.chestPhysiotherapyType != null">
+						<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+							<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+						</div>
+						<div class="col-md-10 padding-5-y left-aligned">
+							<span>Perform Chest Physiotherapy <span style="padding-left:10px" *ngIf="order.chestPhysiotherapyType == 'q' && order.chestPhysiotherapyType != null && order.chestPhysiotherapyValue != null">
+								@{{order.chestPhysiotherapyValue}} hrs</span>
+								<span style="padding-left:10px" *ngIf="order.chestPhysiotherapyType != 'q' && order.chestPhysiotherapyType != null">
+									SOS</span>
+							</span>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.bpMeasurementType != null">
+						<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+							<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+						</div>
+						<div class="col-md-10 padding-5-y left-aligned">
+							<span>Perform BP Measurement <span style="padding-left:10px" *ngIf="order.bpMeasurementType == 'q' && order.bpMeasurementType != null && order.bpMeasurementValue != null">
+								@{{order.bpMeasurementValue}} hrs</span>
+								<span style="padding-left:10px" *ngIf="order.bpMeasurementType != 'q' && order.bpMeasurementType != null">
+									SOS</span>
+							</span>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.positionChangeType != null">
+						<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+							<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+						</div>
+						<div class="col-md-10 padding-5-y left-aligned">
+							<span>Perform Position Change <span style="padding-left:10px" *ngIf="order.positionChangeType == 'q' && order.positionChangeType != null && order.positionChangeValue != null">
+								@{{order.positionChangeValue}} hrs</span>
+								<span style="padding-left:10px" *ngIf="order.positionChangeType != 'q' && order.positionChangeType != null">
+									SOS</span>
+							</span>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.cvpMeasurementType != null">
+						<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+							<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+						</div>
+						<div class="col-md-10 padding-5-y left-aligned">
+							<span>Perform CVP Measurement <span style="padding-left:10px" *ngIf="order.cvpMeasurementType == 'q' && order.cvpMeasurementType != null && order.cvpMeasurementValue != null">
+								@{{order.cvpMeasurementValue}} hrs</span>
+								<span style="padding-left:10px" *ngIf="order.cvpMeasurementType != 'q' && order.cvpMeasurementType != null">
+									SOS</span>
+							</span>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.pulseOximeterType != null">
+						<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+							<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+						</div>
+						<div class="col-md-10 padding-5-y left-aligned">
+							<span>Perform Resite Pulse Oximeter <span style="padding-left:10px" *ngIf="order.pulseOximeterType == 'q' && order.pulseOximeterType != null && order.pulseOximeterValue != null">
+								@{{order.pulseOximeterValue}} hrs</span>
+								<span style="padding-left:10px" *ngIf="order.pulseOximeterType != 'q' && order.pulseOximeterType != null">
+									SOS</span>
+							</span>
+						</div>
+					</div>
+
+					<div class="col-md-12 no-padding padding-10-y no-padding-bottom" *ngIf = "order.glucoseStripType != null">
+						<div class="col-md-2 no-padding-right padding-5-y left-aligned">
+							<span class="bold">{{order.entrytime | date:'dd-MM-yyyy hh:mm a'}}</span>
+						</div>
+						<div class="col-md-10 padding-5-y left-aligned">
+							<span>Perform Glucose Reagent Strip <span style="padding-left:10px" *ngIf="order.glucoseStripType == 'q' && order.glucoseStripType != null && order.glucoseStripValue != null">
+								@{{order.glucoseStripValue}} hrs</span>
+								<span style="padding-left:10px" *ngIf="order.glucoseStripType != 'q' && order.glucoseStripType != null">
+									SOS</span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="doctorOrder == null">
+				<div class="col-md-12 no-padding-right padding-5-y left-aligned">
+					<span class="bold">No Doctor's Order </span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

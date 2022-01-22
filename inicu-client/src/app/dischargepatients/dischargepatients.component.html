@@ -1,0 +1,539 @@
+<div class="clear desktop-column-20 overflow-hidden">
+	<form>
+		<div
+			class="col-md-12 set-AssessmentSystemtEvent-background padding-5-y">
+			<div class="col-md-2 no-padding-left">
+				<h1 class="light margin-5-y"
+					style="color: #74afff; margin-left: 2.4%">Patient Listing</h1>
+			</div>
+			<div class="col-md-3 no-padding" style="padding-left: 0%">
+				<div class="col-md-6 no-padding right-aligned"
+					style="margin-top: 4%">
+					<label><strong>Search By UHID/Name</strong></label>
+				</div>
+				<div class="col-md-6 no-padding" style="padding-left: 2%">
+					<input type="text" name = "searchedForUhidName" class="input input-medium col-md-12"
+						placeholder="UHID/Name" [(ngModel)]="dischargedSearch.searchedForUhid" name="uhid"/>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding" style="padding-left: 0%">
+				<div class="col-md-6 no-padding right-aligned"
+					style="margin-top: 4%">
+					<label><strong>Discharged From</strong></label>
+				</div>
+				<div class="col-md-6 no-padding" style="padding-left: 2%">
+
+	          <owl-date-time class="owl-dateTime"
+            [(ngModel)]="dischargedSearch.searchedStartDate"
+            [ngModelOptions]="{standalone: true}" [max]="maxDate"
+            dateFormat='DD-MM-YYYY'></owl-date-time>
+
+				</div>
+			</div>
+			<div class="col-md-2 no-padding" style="padding-left: 0%">
+				<div class="col-md-3 no-padding right-aligned"
+					style="margin-top: 4%">
+					<label><strong>To</strong></label>
+				</div>
+				<div class="col-md-9 no-padding" style="padding-left: 2%">
+
+          <owl-date-time class="owl-dateTime"
+            [(ngModel)]="dischargedSearch.searchedEndDate"
+            [ngModelOptions]="{standalone: true}"
+            dateFormat='DD-MM-YYYY' [max]="maxDate"></owl-date-time>
+
+				</div>
+			</div>
+			<div class="col-md-2 no-padding center-aligned"
+				style="padding-left: 0%">
+				<button class="button button-blue button-large"
+					(click)="getDischargedListData()">Search</button>
+			</div>
+		</div>
+	</form>
+	<div
+		class="col-md-12 set-AssessmentSystemtEvent-background padding-5-y" style="margin-bottom:500px">
+		<table
+			class="table table-striped table-bordered headed-table col-md-12 nursing-data-table">
+			<tr>
+				<td class="center-aligned">Name</td>
+				<td class="center-aligned">UHID</td>
+				<td class="center-aligned">DOB</td>
+				<td class="center-aligned">Gender</td>
+				<td class="center-aligned">Discharged Status</td>
+				<td class="center-aligned">Discharged On</td>
+				<td class="center-aligned"></td>
+				<td class="center-aligned"></td>
+
+			</tr>
+			<tr *ngFor="let data of dischargedPatientData; let i = index">
+				<td class="center-aligned blue-text">{{data.babyname}}</td>
+				<td class="center-aligned">{{data.uhid}}</td>
+				<td class="center-aligned">{{data.dateofbirth |
+					date:'dd-MM-yyyy hh:mm a'}}</td>
+				<td class="center-aligned">{{data.gender}}</td>
+				<td class="center-aligned">{{data.dischargestatus}}</td>
+				<td class="center-aligned">{{data.dischargeddate |
+					date:'dd-MM-yyyy hh:mm a'}}</td>
+				<td class="center-aligned"><button
+						class="button button-blue-transparent button-large"
+						style="height: 35px !important; padding-top: 2% !important"
+						(click)="printDischargeSummary(this.data.uhid, this.data.episodeid, dischargedSearch.searchedStartDate, dischargedSearch.searchedEndDate)">
+						Print</button></td>
+				<td class="center-aligned"><button
+						class="button button-blue-transparent button-large"
+						style="height: 35px !important; padding-top: 2% !important"
+						(click)="readmitPatientPopup(this.data.uhid, this.data.dischargeddate,data.isbabyininicu)">Re-Admit</button></td>
+
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="overlay" id="ballardOverlay"></div>
+<div class="modal-box-lg apgar-popup" id="reAdmitPopup"
+	style="min-height: 300px; top: 100px; width: 1000px">
+  <div *ngIf="admitPatientModel != undefined && dropDownData != undefined">
+	<button (click)='closeReAdmitPopup()'
+		class="modal-popup-close-btn"></button>
+	<form>
+		<div class="inicu-tab-container">
+			<div class="row">
+				<div class="col-md-12">
+					<h1
+						class="assessment-heading no-margin left-aligned padding-20-x padding-10-y border-bottom-grey">Re-Admit
+						Patient</h1>
+				</div>
+				<div class="col-md-12 padding-10-y no-padding-bottom">
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding left-aligned">
+							<span class="bold required">PRN No. / UHID </span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input id="uhid" type="text" class="col-md-12 input input-medium"
+								name="prn" [disabled]="nonEditable"
+								[(ngModel)]="admitPatientModel.babyDetailObj.uhid"
+								maxlength="20" [disabled]="isPatientOld" />
+                <!-- <label
+								id="prnNum" style="display: none;"
+								data-ng-hide="AdmitPatient.prn.$touched && AdmitPatient.prn.$dirty"
+								class="col-md-12 no-padding right-aligned error-labels">PRN
+								No. cannot be empty</label>
+                <label id="prnExist" style="display: none;"
+								data-ng-hide="uhidInvalid == false || (AdmitPatient.motherName.$touched && AdmitPatient.motherName.$dirty)"
+								class="col-md-12 no-padding right-aligned error-labels">UHID
+								/ PRN already Exists</label> -->
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding left-aligned">
+							<span class="bold">Baby Name </span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="text" name = "babynameName" class=" col-md-12 input input-medium"
+								[(ngModel)]="admitPatientModel.babyDetailObj.babyname" />
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="col-md-12 no-padding left-aligned">
+							<span class="bold required">Gender </span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select name="genderSelect" name = "genderSelectName" id="gender"
+								[disabled]="nonEditable"
+								[(ngModel)]="admitPatientModel.babyDetailObj.gender"
+								class="input input-medium desktop-column-20 max-height-36">
+								<option disabled selected hidden value>-- Select --</option>
+								<option value=null hidden>--Select--</option>
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+								<option value="Unknown">Unknown</option>
+							</select>
+              <!-- <label id="emptyGender" style="display: none;"
+								data-ng-hide="AdmitPatient.genderSelect.$touched && AdmitPatient.genderSelect.$dirty"
+								class="col-md-12 no-padding right-aligned error-labels">Please
+								select gender</label> -->
+						</div>
+					</div>
+					<div class="col-md-2 no-padding">
+						<div class="col-md-12 no-padding left-aligned">
+							<span class="bold">Multiple pregnancies</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select id="multipleCount" name = "genderTypeName" class="desktop-column-20"
+								[disabled]="nonEditable"
+								[(ngModel)]="admitPatientModel.babyDetailObj.babyType">
+								<option value="Single" selected>Single</option>
+								<option value="Twins">Twins</option>
+								<option value="Triplets">Triplets</option>
+								<option value="Quadruplets">Quadruplets</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-1 no-padding-right"
+						*ngIf="admitPatientModel.babyDetailObj.babyType == 'Twins'">
+						<div class="col-md-12 no-padding">
+							<span class="bold visiblity-hidden">NICU</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio padding-top-1">
+								<input type="radio" name="totalPregnancyTypeTwin"
+									[disabled]="nonEditable" id="totalPregnancyTypeOneTwin"
+									value="one"
+									[(ngModel)]="admitPatientModel.babyDetailObj.babyNumber"><label
+									for="totalPregnancyTypeOneTwin">I</label> <input type="radio"
+									name="totalPregnancyTypeTwin" id="totalPregnancyTypeTwoTwin"
+									[disabled]="nonEditable" value="two"
+									[(ngModel)]="admitPatientModel.babyDetailObj.babyNumber"><label
+									for="totalPregnancyTypeTwoTwin">II</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1 no-padding-left"
+						*ngIf="admitPatientModel.babyDetailObj.babyType == 'Triplets'">
+						<div class="col-md-12 no-padding">
+							<span class="bold visiblity-hidden">NICU</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio padding-top-1">
+								<input type="radio" name="totalPregnancyTypeTrip"
+									[disabled]="nonEditable" id="totalPregnancyTypeOneTrip"
+									value="one"
+									[(ngModel)]="admitPatientModel.babyDetailObj.babyNumber"><label
+									for="totalPregnancyTypeOneTrip">I</label> <input type="radio"
+									name="totalPregnancyTypeTrip" id="totalPregnancyTypeTwoTrip"
+									[disabled]="nonEditable" value="two"
+									[(ngModel)]="admitPatientModel.babyDetailObj.babyNumber"><label
+									for="totalPregnancyTypeTwoTrip">II</label> <input type="radio"
+									name="totalPregnancyTypeTrip" id="totalPregnancyTypeThreeTrip"
+									[disabled]="nonEditable" value="three"
+									[(ngModel)]="admitPatientModel.babyDetailObj.babyNumber"><label
+									for="totalPregnancyTypeThreeTrip">III</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right"
+						*ngIf="admitPatientModel.babyDetailObj.babyType == 'Quadruplets'">
+						<div class="col-md-12 no-padding">
+							<span class="bold visiblity-hidden">NICU</span>
+						</div>
+
+						<div class="col-md-12 no-padding">
+							<div class="toggle-options-radio padding-top-1">
+								<input type="radio" name="totalPregnancyType"
+									[disabled]="nonEditable" id="totalPregnancyTypeOne"
+									value="one"
+									[(ngModel)]="admitPatientModel.babyDetailObj.babyNumber"><label
+									for="totalPregnancyTypeOne">I</label> <input type="radio"
+									name="totalPregnancyType" id="totalPregnancyTypeTwo"
+									[disabled]="nonEditable" value="two"
+									[(ngModel)]="admitPatientModel.babyDetailObj.babyNumber"><label
+									for="totalPregnancyTypeTwo">II</label> <input type="radio"
+									name="totalPregnancyType" id="totalPregnancyTypeThree"
+									[disabled]="nonEditable" value="three"
+									[(ngModel)]="admitPatientModel.babyDetailObj.babyNumber"><label
+									for="totalPregnancyTypeThree">III</label><input type="radio"
+									name="totalPregnancyType" id="totalPregnancyTypeFour"
+									[disabled]="nonEditable" value="four"
+									[(ngModel)]="admitPatientModel.babyDetailObj.babyNumber"><label
+									for="totalPregnancyTypeFour">IV</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 padding-10-y no-padding-bottom">
+					<div class="col-md-4 no-padding-right">
+						<div class="col-md-7 no-padding-left">
+							<div class="col-md-12 no-padding left-aligned">
+								<a id="focusRadio" class="focusRadio"></a> <span
+									class="bold required">Admission Type</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="toggle-options-radio padding-top-1"
+									id="addmissiontype">
+									<input type="radio" name="addmissiontype"
+										[disabled]="nonEditable"
+										[(ngModel)]="admitPatientModel.babyDetailObj.inoutPatientStatus"
+										id="typeInborn" value="In Born"> <label
+										for="typeInborn">Inborn</label> <input type="radio"
+										name="addmissiontype" [disabled]="nonEditable"
+										[(ngModel)]="admitPatientModel.babyDetailObj.inoutPatientStatus"
+										id="typeOutborn" value="Out Born"> <label
+										for="typeOutborn">Outborn</label>
+								</div>
+								<label id="emptyAdmitType" style="display: none;"
+									class=" error-labels col-md-12 no-padding left-aligned">Please
+									select Admission Type</label>
+							</div>
+						</div>
+						<div class="col-md-5 no-padding">
+							<div class="col-md-12 no-padding left-aligned">
+								<span class="bold">Neonatologist</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<select id="docres" type="text" name="resident"
+									class="input input-medium col-md-12"
+									[(ngModel)]="admitPatientModel.babyDetailObj.admittingdoctor">
+									<option value="" hidden>--Select--</option>
+                  <option *ngFor="let item of dropDownData.residentDoctors" [value]="item.key">{{item.value}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="col-md-12 no-padding left-aligned">
+							<span class="bold required">NICU Room No. </span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select id="roomNo" name = "roomNoName"
+								[(ngModel)]="admitPatientModel.babyDetailObj.nicuroomno"
+								class="input input-medium desktop-column-20 max-height-36"
+								(ngModelChange)="roomChange()">
+								<!-- <option value="" hidden></option> -->
+                <option *ngFor="let item of dropDownData.nicuRooms" [value]="item.room.key">{{item.room.value}}</option>
+							</select>
+              <label id="emptyRoomNo" style="display: none;"
+								data-ng-hide="AdmitPatient.roomNo.$touched && AdmitPatient.roomNo.$dirty"
+								class=" error-labels col-md-12 no-padding left-aligned">Please
+								select Room Number</label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding">
+						<div class="col-md-12 no-padding left-aligned">
+							<span class="bold required">NICU Bed No. </span>
+						</div>
+
+            <div *ngIf = "isBed == 'No'" class="col-md-12 no-padding">
+							<select id="bedNo" name = "nicubednoName"
+								[(ngModel)]="admitPatientModel.babyDetailObj.nicubedno"
+								class="input input-medium desktop-column-20 max-height-36">
+								<option value="" hidden></option>
+							</select>
+            </div>
+
+						<div *ngIf = "isBed == 'Yes'" class="col-md-12 no-padding">
+							<select id="bedNo" name = "nicubednoName"
+								[(ngModel)]="admitPatientModel.babyDetailObj.nicubedno"
+								class="input input-medium desktop-column-20 max-height-36">
+								<option value="" hidden></option>
+                				<option *ngFor="let item of dropDownData.nicuRooms[value].bed" [value]="item.key">{{item.value}}</option>
+							</select>
+							<label id="emptyBedNo" style="display: none;"
+							data-ng-hide="AdmitPatient.bedNo.$touched && AdmitPatient.bedNo.$dirty"
+							class=" error-labels col-md-12 no-padding left-aligned">Please
+							select Bed Number</label>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding left-aligned">
+							<span class="bold">NICU Level </span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select name = "niculevelnoName"
+								[(ngModel)]="admitPatientModel.babyDetailObj.niculevelno"
+								class="input input-medium desktop-column-20 max-height-36">
+								<option disabled selected hidden value>NICU Level</option>
+								<option value="">--Select--</option>
+								<option value="LVL01">L-1</option>
+								<option value="LVL02">L-2</option>
+								<option value="LVL03">L-3</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class=" col-md-12 padding-10-y no-padding-bottom">
+					<div class="col-md-2 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<span class="bold table-cell padding-10-x no-padding-left">Criticality</span><span
+								(click)="openCriticalityInfo()"
+								class="table-cell inline-block info-symbol padding-10-x">i</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<select name = "criticalitylevelName"
+								[(ngModel)]="admitPatientModel.babyDetailObj.criticalitylevel"
+								class="input input-medium desktop-column-20 max-height-36">
+								<option disabled selected hidden value>Criticality</option>
+								<option value="">-- Select --</option>
+								<option value="CR01">Stable</option>
+								<option value="CR02">Satisfactory</option>
+								<option value="CR04">Sick</option>
+								<option value="CR03">Critical</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding left-aligned">
+							<span class="bold required">Date of Birth (D.O.B.)</span>
+						</div>
+						<div class="col-md-12 no-padding">
+              <owl-date-time class="owl-dateTime"
+                [(ngModel)]="admitPatientModel.babyDetailObj.dobObj"
+                (ngModelChange)="calDayLife()"
+                max="{{maxDate}}" [disabled]="nonEditable"
+                [ngModelOptions]="{standalone: true}" [max]="maxDate"
+                dateFormat='DD-MM-YYYY' onkeydown="return false"></owl-date-time>
+
+							<!-- <input type="date" id="dob" name="dob"
+								[(ngModel)]="admitPatientModel.babyDetailObj.dobObj"
+								class="input input-medium desktop-column-20 datepicker"
+								(ngModelChange)="calDayLife()" max="{{maxDate}}"
+								[disabled]="nonEditable" onkeydown="return false" /> -->
+                <!-- <label
+								id="emptyDob" style="display: none;"
+								data-ng-hide="AdmitPatient.dob.$touched && AdmitPatient.dob.$dirty"
+								class=" error-labels col-md-12 no-padding right-aligned">Please
+								select D.O.B.</label> -->
+						</div>
+					</div>
+					<div class="col-md-4 no-padding-right">
+						<div class="col-md-12 no-padding left-aligned">
+							<span class="bold"
+								[ngClass]="{ 'required' : admitPatientModel.babyDetailObj.inoutPatientStatus == 'In Born' }">Time
+								of Birth (T.O.B.)</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="col-md-3 no-padding-left">
+								<select id="tobhr" name="hr"
+									class="input input-medium col-md-12 force-left max-height-36 "
+									[(ngModel)]="timeOfBirth.hours"
+									[disabled]="nonEditable"
+									(ngModelChange)="validateTobToa()">
+									<option selected value="">HH</option>
+                  <option *ngFor="let hour of  dropDownData.hours" [value]="hour">{{hour}}</option>
+								</select>
+							</div>
+							<div class="col-md-3 no-padding">
+								<select id="tobmin" name="min"
+									class="input input-medium col-md-12 force-left max-height-36"
+									[(ngModel)]="timeOfBirth.minutes"
+									[disabled]="nonEditable"
+									(ngModelChange)="validateTobToa()">
+									<option disabled selected hidden value="">MM</option>
+                  <option *ngFor="let hour of  dropDownData.minutes" [value]="hour">{{hour}}</option>
+								</select>
+							</div>
+							<div
+								class="toggle-options-radio col-md-5 no-padding-right padding-top-1">
+								<input type="radio" name="amTob" [disabled]="nonEditable"
+									(ngModelChange)="validateTobToa()"
+									[(ngModel)]="timeOfBirth.meridium" id="tobAm"
+									value="AM"> <label for="tobAm">AM</label> <input
+									type="radio" name="amTob" [(ngModel)]="timeOfBirth.meridium"
+									[disabled]="nonEditable"
+									(ngModelChange)="validateTobToa()" id="tobPm"
+									value="PM"> <label for="tobPm">PM</label>
+							</div>
+							<label id="emptyHr" style="display: none;"
+								data-ng-hide="(AdmitPatient.hr.$touched && AdmitPatient.hr.$dirty) && (AdmitPatient.min.$touched && AdmitPatient.min.$dirty) && (AdmitPatient.mer.$touched && AdmitPatient.mer.$dirty)"
+								class="col-md-12 error-labels no-padding right-aligned">Please
+								fill Hours, Minutes and Meridian</label>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="col-md-12 no-padding">
+							<span class="bold required">Day of Life / Age</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<input type="text" name = "babyDetailObjName" id="dol" class=" col-md-12 input input-medium"
+								[(ngModel)]="admitPatientModel.babyDetailObj.dayoflife"
+								disabled />
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 padding-10-y no-padding-bottom">
+					<div class="col-md-3 no-padding-right">
+						<div class="col-md-12 no-padding">
+							<div class="col-md-12 no-padding left-aligned">
+								<span class="bold required">Date of Admission (D.O.A.)</span>
+							</div>
+							<!-- <div class="col-md-12 no-padding left-aligned" *ngIf="warn">
+								<label class="input-label error-labels">{{message}}</label>
+							</div> -->
+						</div>
+						<div class="col-md-12 no-padding">
+
+
+              <owl-date-time class="owl-dateTime"
+                [(ngModel)]="admitPatientModel.babyDetailObj.doaObj"
+                (ngModelChange)="admission_Date()"
+                max="{{maxDate}}" min="{{minDate}}"
+                [ngModelOptions]="{standalone: true}" [max]="maxDate"
+                dateFormat='DD-MM-YYYY' onkeydown="return false"></owl-date-time>
+
+
+							<!-- <input type="date" id="doa" name="doa" min="{{minDate}}"
+								(ngModelChange)="admission_Date()" max="{{maxDate}}"
+								[(ngModel)]="admitPatientModel.babyDetailObj.doaObj"
+								class="input input-medium col-md-12 datepicker"
+								onkeydown="return false" /> -->
+                <!-- <label id="emptyDOA"
+								style="display: none;"
+								data-ng-hide="AdmitPatient.doa.$touched && AdmitPatient.doa.$dirty"
+								class="col-md-12 no-padding error-labels right-aligned">Please
+								select D.O.A.</label> -->
+                <label *ngIf="showErrorLabel==true"
+								class="col-md-12 no-padding error-labels right-aligned">D.O.A.
+								Can not be Before the D.O.B.</label>
+						</div>
+					</div>
+					<div class="col-md-4 no-padding-right">
+						<div class="col-md-12 no-padding left-aligned">
+							<span class="bold required">Time of Admission (T.O.A.)</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="col-md-3 no-padding-left">
+								<select id="toahr" name="hrTOA"
+									[(ngModel)]="timeOfAdmission.hours"
+									(ngModelChange)="validateTobToa()"
+									class="input input-medium col-md-12 force-left max-height-36 ">
+									<option disabled selected value="">HH</option>
+                  <option *ngFor="let hour of  dropDownData.hours" [value]="hour">{{hour}}</option>
+								</select>
+							</div>
+							<div class="col-md-3 no-padding">
+								<select id="toamin" name="minTOA"
+									[(ngModel)]="timeOfAdmission.minutes"
+									(ngModelChange)="validateTobToa()"
+									class="input input-medium col-md-12 force-left max-height-36">
+									<option disabled selected value="">MM</option>
+                  <option *ngFor="let hour of  dropDownData.minutes" [value]="hour">{{hour}}</option>
+								</select>
+							</div>
+							<div
+								class="toggle-options-radio col-md-5 no-padding-right padding-top-1">
+								<input type="radio" name="amToa"
+									(ngModelChange)="validateTobToa()"
+									[(ngModel)]="timeOfAdmission.meridium" id="toaAm"
+									value="AM"> <label for="toaAm">AM</label> <input
+									type="radio" name="amToa" (ngModelChange)="validateTobToa()"
+									[(ngModel)]="timeOfAdmission.meridium" id="toaPm"
+									value="PM"> <label for="toaPm">PM</label>
+							</div>
+							<label id="emptyToa" style="display: none;"
+								data-ng-hide="(AdmitPatient.hrTOA.$touched && AdmitPatient.hrTOA.$dirty) && (AdmitPatient.minTOA.$touched && AdmitPatient.minTOA.$dirty) && (AdmitPatient.merTOA.$touched && AdmitPatient.merTOA.$dirty)"
+								class="col-md-12 error-labels no-padding right-aligned">Please
+								fill Hours, Minutes and Meridian</label> 
+                <label *ngIf="tobToaError"
+								class="col-md-12 no-padding error-labels right-aligned">T.O.A.
+								can't be before the T.O.B.</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding center-aligned padding-20-y">
+					<input class="button button-blue padding-20-x" type="submit"
+						(click)="submitRegistrationForm()" value="Readmit"
+						style="color: #FFFFFF !important" />
+				</div>
+			</div>
+		</div>
+		<div class="row padding-10-y">
+
+			<div class="col-md-2"></div>
+		</div>
+		<div class="row padding-10-y">
+			<div class="col-md-2"></div>
+			<div class="col-md-2"></div>
+			<div class="col-md-3"></div>
+		</div>
+	</form>
+</div>
+</div>

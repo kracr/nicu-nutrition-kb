@@ -1,0 +1,256 @@
+<doctor-panel></doctor-panel>
+<div *ngIf="outcomeRecord != undefined">
+<form name="outcomeForm">
+	<div class="assesment-container no-padding-right background-color-white">
+		<div class="row table full padding-10-x no-padding-right padding-10-y">
+			<div class="col-md-4 no-padding">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">Date</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<div class="toggle-options-radio">
+						<input type="radio" name="outcomeType" required
+                            [(ngModel)]="outcomeRecord.outcomeType"
+							id="outcomeTypeDischarge" value="Discharge"> <label
+							for="outcomeTypeDischarge">Discharge</label> <input type="radio"
+							required name="outcomeType"
+							[(ngModel)]="outcomeRecord.outcomeType" id="outcomeTypeLama"
+							value="LAMA"> <label for="outcomeTypeLama">LAMA</label>
+						<input type="radio" required name="outcomeType"
+							[(ngModel)]="outcomeRecord.outcomeType" id="outcomeTypeDeath"
+							value="Death"> <label for="outcomeTypeDeath">Death</label>
+						<!--<input type="radio" required name="outcomeType"
+							[(ngModel)]="outcomeRecord.outcomeType"
+							id="outcomeTypeStepDown" value="StepDown"> <label
+							for="outcomeTypeStepDown">Step Down</label> -->
+						<input type="radio" required name="outcomeType"
+							[(ngModel)]="outcomeRecord.outcomeType"
+							id="outcomeTypeTransfer" value="Transfer"> <label
+							for="outcomeTypeTransfer">Transfer</label>
+              <input type="radio"
+							required name="outcomeType"
+							[(ngModel)]="outcomeRecord.outcomeType"
+							id="outcomeTypeDor" value="Discharge On Request"> <label
+							for="outcomeTypeDor">DOR</label>
+					</div>
+				</div>
+			</div>
+			<div class="no-padding-left" [ngClass]="{'col-md-4' : outcomeRecord.outcomeType != 'Death', 'col-md-6' : outcomeRecord.outcomeType == 'Death'}">
+				<div class="no-padding-left" [ngClass]="{'col-md-6' : outcomeRecord.outcomeType != 'Death', 'col-md-4' : outcomeRecord.outcomeType == 'Death'}">
+					<div class="col-md-12 no-padding">
+							<span class="bold required">Summary Date & Time</span>
+					</div>
+          <div>
+						<owl-date-time class="owl-dateTime" [(ngModel)]="outcomeRecord.entrytime" [ngModelOptions]="{standalone: true}" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+					</div>
+				</div>
+
+				<div class="no-padding-left" [ngClass]="{'col-md-6' : outcomeRecord.outcomeType != 'Death', 'col-md-4' : outcomeRecord.outcomeType == 'Death'}">
+					<div class="col-md-12 no-padding">
+							<span class="bold required">Appointment Date & Time</span>
+					</div>
+          <div>
+						<owl-date-time class="owl-dateTime" [(ngModel)]="outcomeRecord.appointmenttime" [ngModelOptions]="{standalone: true}" dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"></owl-date-time>
+					</div>
+				</div>
+
+				<div class="col-md-4 no-padding" *ngIf="outcomeRecord.outcomeType == 'Death'">
+					<div class="col-md-12 no-padding">
+							<span class="bold required">Death Date & Time</span>
+						</div>
+            <div>
+            <owl-date-time class="owl-dateTime" [(ngModel)]="outcomeRecord.deathDate" dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}"></owl-date-time>
+            </div>
+				</div>
+			</div>
+
+			<div class="col-md-2 no-padding" *ngIf="outcomeRecord.outcomeType != 'Death'">
+			</div>
+
+			<!--Case Summary-->
+			<div class="col-md-2 no-padding" style="margin-top:22px;">
+				<span class="button button-blue padding-40-x submit-button-color" (click) = "getDischargePrint()">Case Summary</span>
+			</div>
+		</div>
+
+		<div class="col-md-12 no-padding">
+			<div class="col-md-4 no-padding"></div>
+			<div class="col-md-4 no-padding border-radius-5">
+        <span class="alert alert-small margin-10-x border-radius-5 "
+					[ngClass] ="{ 'alert-red' : tempObject.submitType !='success','alert-green' : tempObject.submitType =='success' }"
+					*ngIf ="tempObject.submitType=='success'">{{tempObject.submitMessage}}</span>
+
+			</div>
+			<div class="col-md-4 no-padding"></div>
+		</div>
+		<div id="footer">
+			<input class="button button-blue padding-40-x submit-button-color"
+				type="submit" value="Submit" (click) = "getDischargePopup()" />
+		</div>
+	</div>
+</form>
+<!-- end for the code callingRequiredFieldPopup -->
+
+<!-- below code is for Active Medication-->
+<div class="overlay" id="MedicationDischargeOverlay"></div>
+<div class="modal-box-lg bind-popup" id="medicationDischargePopup"
+	style="width: 80%; top: 50px;" *ngIf="outcomeRecord.outcomeType != null
+	 && outcomeRecord.outcomeType != 'Death'">
+	<button class="modal-popup-close-btn" (click)="closeMedicationPopUp()"></button>
+	<div>
+		<div class="tab-content-cont full padding-10-y">
+			<div class="table">
+				<span style="color: #74afff;font-size: 20px;margin-left: 14px;">Medication Status</span>
+			</div>
+			<div class="col-md-12 padding-20-y" style="height:500px;overflow-y:scroll">
+				<div class="row padding-2-y">
+					<div class="col-md-3">
+						<span style="float: left;">Medicine Name</span>
+					</div>
+					<div class="col-md-2">
+						<span style="float: left;">Start Date | Time</span>
+					</div>
+					<div class="col-md-2">
+						<input type="checkbox" name="stop" style="width: 13px;height: auto;float: left;-webkit-appearance: checkbox;" [ngModel]="selectAll" (click)="stopAllMed(selectAll)">&nbsp;
+						<span style="float:left;">Stop All</span>
+					</div>
+				</div>
+			<div *ngFor="let medicine of dischargeMedicationList; let i = index" [attr.data-index]="i">
+				<div class="row padding-2-y" *ngIf="(medicine.isactive)">
+					<div class="col-md-3">
+						<span style="float: left;">{{medicine.medicinename}}</span>
+					</div>
+					<div class="col-md-2">
+						<span style="float: left;">{{medicine.startdate | date:'dd-MM-yyyy hh:mm a'}}</span>
+					</div>
+					<div class="col-md-1">
+						<input type="checkbox" name="stop" [ngModel]="medicine.isStopped" (ngModelChange)="setEndDate(i)" style="width: 13px;height: auto;float: left;-webkit-appearance: checkbox;" >Stop
+					</div>
+					<div class="col-md-2">
+						<owl-date-time class="owl-dateTime" [(ngModel)]="medicine.enddate" [ngModelOptions]="{standalone: true}" [max]="maxDate" (ngModelChange)="toggleIscontinue(i)"></owl-date-time>
+					</div>
+					<div class="col-md-2">
+						<span style="float: left;"><button class="btn button-blue" (click)="commentBoxEnable(i)">Continue</button></span>
+					</div>
+					<div class="col-md-2" *ngIf="medicine.isContinue">
+						<input type="text" name="free" [(ngModel)]="medicine.continueReason" style="float: left;">
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 15px">
+				<span><button class="btn button-blue" (click)="saveMedicine()">Save</button></span>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of the above code -->
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+    <span class="inicu-loader-content">
+    	<span class="inicu-adding-image"></span>
+        <span class="inicu-loading-content">{{loaderContent}}</span>
+	</span>
+</span>
+<div class="overlay" id="dischargeRejectOverlay" *ngIf ="outcomeRecord.reason != null && outcomeRecord.reason != undefined && outcomeRecord.reason != '' "></div>
+<div class="modal-box-lg bind-popup" id="CancelPopUp" style="width:400px;top:50px;margin-left:245px" *ngIf ="outcomeRecord.reason != null && outcomeRecord.reason != undefined && outcomeRecord.reason != '' ">
+ 	<div>
+		<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+		<button class="modal-popup-close-btn" (click)="cancelOkPopUp()"></button>
+		<div class="inicu-tab-container">
+			<div class="tab-content-cont full padding-10-y">
+				<span class="bold" style="font-size:17px">Baby cannot be discharged</span>
+				<div class="col-md-12 padding-20-y">
+              		<span class="center-aligned blue-text">{{outcomeRecord.reason}}</span>
+              		<span class="col-md-12 padding-20-y">Kindly make all these assessments inactive before discharging the baby.
+              		</span>
+				</div>
+			</div>
+   		</div>
+	</div>
+</div>
+
+
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+    <span class="inicu-loader-content">
+    	<span class="inicu-adding-image"></span>
+        <span class="inicu-loading-content">{{loaderContent}}</span>
+	</span>
+</span>
+<div class="overlay" id="dischargeRejectOverlay" *ngIf ="outcomeRecord.reason != null && outcomeRecord.reason != undefined && outcomeRecord.reason != '' "></div>
+<div class="modal-box-lg bind-popup" id="CancelPopUp" style="width:400px;top:50px;margin-left:245px" *ngIf ="outcomeRecord.reason != null && outcomeRecord.reason != undefined && outcomeRecord.reason != '' ">
+ 	<div>
+		<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+		<button class="modal-popup-close-btn" (click)="cancelOkPopUp()"></button>
+		<div class="inicu-tab-container">
+			<div class="tab-content-cont full padding-10-y">
+				<span class="bold" style="font-size:17px">Baby cannot be discharged</span>
+				<div class="col-md-12 padding-20-y">
+              		<span class="center-aligned blue-text">{{outcomeRecord.reason}}</span>
+              		<span class="col-md-12 padding-20-y">Kindly make all these assessments inactive before discharging the baby.
+              		</span>
+				</div>
+			</div>
+   		</div>
+	</div>
+</div>
+
+<div class="overlay" id="otherDischargeOptionOverlay" *ngIf ="outcomeRecord.reason != null && outcomeRecord.reason != undefined && outcomeRecord.reason != '' "></div>
+<div class="modal-box-lg bind-popup" id="CancelotherPopUp" style="width:400px;top:50px;margin-left:245px" *ngIf ="outcomeRecord.reason != null && outcomeRecord.reason != undefined && outcomeRecord.reason != '' ">
+ 	<div>
+		<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+		<button class="modal-popup-close-btn" (click)="cancelPopUp()"></button>
+		<div class="inicu-tab-container">
+			<div class="tab-content-cont full padding-10-y">
+				<div class="col-md-12 padding-20-y">
+					<span class="center-aligned blue-text">{{outcomeRecord.reason}}</span>
+              		<div class="col-md-12 padding-20-y">
+              			<span class="center-aligned blue-text">Do you want to make all of these assessment inactive</span>
+									</div>
+				</div>
+				<div class="col-md-12 padding-20-y">
+	            	<div class="col-md-6 center-aligned">
+	            		<span class="center-aligned button button-blue" (click)="cancelPopUp()">Yes</span>
+	            	</div>
+	            	<div class="col-md-6 center-aligned">
+	            		<span class="center-aligned button button-blue-transparent" (click)="submitDischarge()">No</span>
+	            	</div>
+	      </div>
+			</div>
+   		</div>
+	</div>
+</div>
+
+
+<!-- <script type="text/javascript">
+	$('.form_datetime').datetimepicker({
+		//language:  'fr',
+		weekStart : 1,
+		todayBtn : 1,
+		autoclose : 1,
+		todayHighlight : 1,
+		startView : 2,
+		forceParse : 0,
+		showMeridian : 1
+	});
+	$('.form_date').datetimepicker({
+		// language:  'fr',
+		weekStart : 1,
+		todayBtn : 1,
+		autoclose : 1,
+		todayHighlight : 1,
+		startView : 2,
+		minView : 2,
+		forceParse : 0
+	});
+	$('.form_time').datetimepicker({
+		// language:  'fr',
+		weekStart : 1,
+		todayBtn : 1,
+		autoclose : 1,
+		todayHighlight : 1,
+		startView : 1,
+		minView : 0,
+		maxView : 1,
+		forceParse : 0
+	});
+</script> -->

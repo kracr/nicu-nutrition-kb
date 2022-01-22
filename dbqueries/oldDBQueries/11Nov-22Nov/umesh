@@ -1,0 +1,12 @@
+
+alter table kdah.nursing_vitalparameters
+	add central_temp_source varchar(50);
+
+alter table kdah.nursing_vitalparameters
+	add peripheral_temp_source varchar(50);
+
+alter table kdah.nursing_vitalparameters
+	add central_temp_unit varchar(10);
+
+alter table kdah.nursing_vitalparameters
+	add peripheral_temp_unit varchar(10);

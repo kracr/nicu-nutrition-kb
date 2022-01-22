@@ -1,0 +1,1695 @@
+<doctor-panel></doctor-panel>
+<assessment-sheet></assessment-sheet>
+<div>
+	<div class="clear desktop-column-20">
+		<!-- <form (submit)="submitJaundice()" #form="ngForm"> -->
+		<div
+			*ngIf="statusJaundice.jaundice != null && statusJaundice.jaundice != undefined">
+			<div class="col-md-12 set-AssessmentSystemtEvent-background">
+				<div class="col-md-3 no-padding">
+					<div class="col-md-12 no-padding padding-10-y"
+						style="padding-top: 12px">
+						<div class="col-md-4 text-center padding-top-0 no-padding">
+							<div class="center-aligned">
+								<!--(click)="jaundiceScroll()" -->
+								<input type="radio" name="isJaundiceYes" id="yes"
+									class="display-none" value="Yes"
+									[(ngModel)]="statusJaundice.jaundice.jaundicestatus"
+									[ngModelOptions]="{standalone: true}"> <label for="yes"
+									class="sprite assessment-sheet-inactive"
+									[ngClass]="{ 'yes-jaundice' : statusJaundice.jaundice.jaundicestatus =='Yes'}">Active</label>
+							</div>
+						</div>
+						<div class="col-md-4  text-center padding-top-0 no-padding">
+							<div class="center-aligned">
+								<input type="radio" name="isJaundice" id="no"
+									class="display-none" value="No"
+									[(ngModel)]="statusJaundice.jaundice.jaundicestatus"
+									[ngModelOptions]="{standalone: true}"> <label for="no"
+									class="sprite assessment-sheet-inactive"
+									[ngClass]="{ 'no-jaundice' : statusJaundice.jaundice.jaundicestatus =='No'}">Passive</label>
+							</div>
+						</div>
+						<div class="col-md-4  text-center padding-top-0 no-padding">
+							<div class="center-aligned">
+								<input type="radio"
+									name="statusJaundice.jaundice.jaundicestatus" id="inactive"
+									value="Inactive"
+									[(ngModel)]="statusJaundice.jaundice.jaundicestatus"
+									class="display-none" [ngModelOptions]="{standalone: true}">
+								<label for="inactive" class="sprite assessment-sheet-inactive"
+									[ngClass]="{ 'inactive-jaundice' : statusJaundice.jaundice.jaundicestatus =='Inactive'}">Inactive</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1 col-lg-2 no-padding"></div>
+				<div class="col-md-8 col-lg-7 no-padding table full">
+					<div class="col-md-12 no-padding padding-10-y">
+						<div class="col-md-4 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">From <span class="font-size-11">(
+										Time : 24 hrs format )</span></span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="jaundiceTempObj.printFrom"
+									[min]="minDate" [max]="maxDate"
+									dateFormat='DD-MM-YYYY hh:mm A'
+									[ngModelOptions]="{standalone: true}"></owl-date-time>
+							</div>
+						</div>
+						<div class="col-md-4 no-padding-right">
+							<div class="col-md-12 no-padding">
+								<span class="bold">To <span class="font-size-11">(
+										Time : 24 hrs format )</span></span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="jaundiceTempObj.printTo"
+									[min]="minDate" [max]="maxDate"
+									dateFormat='DD-MM-YYYY hh:mm A'
+									[ngModelOptions]="{standalone: true}"></owl-date-time>
+							</div>
+						</div>
+						<div class="col-md-4 no-padding-right right-aligned">
+							<div class="col-md-12 no-padding">
+								<label class="white-color visiblity-hidden"><strong>To
+										Time</strong></label>
+							</div>
+							<div class="col-md-12 no-padding">
+								<span class="button button-blue"
+									(click)="printJaundiceData(jaundiceTempObj.printFrom,jaundiceTempObj.printTo)">Print
+									Progress Notes</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding"></div>
+			</div>
+		</div>
+		<div
+			*ngIf="statusJaundice.jaundice != null && statusJaundice.jaundice != undefined">
+			<div class="jaundiceFirst" style="background-color: white;"
+				*ngIf="statusJaundice.jaundice.jaundicestatus == 'No'">
+				<div class="assesment-container">
+					<div class="row">
+						<div
+							class="col-md-3 left-aligned no-padding-right padding-10-y center-aligned">
+							<div class="col-md-12 no-padding center-aligned">
+								<label class="bold required"><strong>Date And
+										Time of assessment</strong></label>
+							</div>
+							<div class="col-md-12 no-padding">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="statusJaundice.jaundice.assessmentTime"
+									(ngModelChange)="calculateAgeAtAssessmentManual()"
+									[min]="minDate" [max]="maxDate"
+									dateFormat='DD-MM-YYYY hh:mm A'
+									[ngModelOptions]="{standalone: true}"></owl-date-time>
+							</div>
+							<div class="col-md-12 no-padding">
+								<!-- <label id="invalidTime" style="display: none;"
+    								class="col-md-12 error-labels no-padding right-aligned"
+    								*ngIf="!jaundiceForm.timeOfAssessment.$valid">Please
+    								enter proper time format (HH:MM)</label> -->
+							</div>
+						</div>
+						<!--passive jaundice type-->
+						<div
+							class="col-md-3 col-lg-2 left-aligned no-padding-right padding-10-y center-aligned">
+							<div class="col-md-12 no-padding">
+								<label class="bold required"><strong>Jaundice
+										Entry Type</strong></label>
+							</div>
+							<div class="col-md-12 no-padding-left">
+								<fieldset [disabled]="isDisable">
+								<div class="no-padding-left toggle-options-radio">
+									<input type="radio" name="FeedEntryType"
+										[(ngModel)]="statusJaundice.jaundice.isNewEntry" id="feedNew"
+										[value]="true"> <label for="feedNew">New</label> <input
+										type="radio" name="FeedEntryType"
+										[(ngModel)]="statusJaundice.jaundice.isNewEntry" id="feedOld"
+										[value]="false"> <label for="feedOld">Update
+										Old</label>
+								</div>
+							</fieldset>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="row"></div>
+					<div class="row">
+						<div class="col-md-3 table full">
+							<div class="table-cell">
+								<h1 class="no-margin system-sub-heading">Investigation</h1>
+							</div>
+							<div class="table-cell">
+								<span class="button order-button  middle-aligned"
+									(click)="showOrderInvestigation()">Order</span>
+							</div>
+						</div>
+						<div class="col-md-9 table-cell">
+							<div class="col-md-12 no-padding">
+								<span class="bold selected-text"
+									*ngIf="orderSelectedText!=null && orderSelectedText!=''">Selected:
+									<label style="font-weight: normal; color: black !important">{{orderSelectedText}}
+								</label>
+								</span>
+
+							</div>
+							<div class="col-md-12 no-padding">
+								<span class="bold"
+									*ngIf="statusJaundice.jaundice.pastOrderInvestigationStr!=null && statusJaundice.jaundice.pastOrderInvestigationStr!=''">Past
+									Selected: <label style="font-weight: normal">{{statusJaundice.jaundice.pastOrderInvestigationStr}}</label>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="padding-10-y">
+						<div *ngIf="pastPrescriptionList != null && pastPrescriptionList.length > 0"class="col-md-12">
+							<div class="col-md-9 col-lg-19 no-padding-left">
+								<span class="bold required">Current Medications</span>
+								<div class="input-group input-group-labeled desktop-column-20">
+									<div class="desktop-column-20 padding-0-x force-left">
+										<div class="input-cont block">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-9 no-padding">
+								<table
+									class="table table-striped table-bordered headed-table desktop-column-20">
+									<tr>
+										<td class="center-aligned">Medicine Name</td>
+										<td class="center-aligned">Start Date</td>
+										<td class="center-aligned">Dose</td>
+										<td class="center-aligned">Medicine Day</td>
+									</tr>
+									<tr *ngFor="let medicine of pastPrescriptionList">
+										<td class="center-aligned"
+											*ngIf="medicine.eventname == 'Jaundice'"><span><span *ngIf="medicine.route == 'IV' || medicine.route == 'IM'">Inj. </span> <span *ngIf="medicine.route == 'PO'">Syrup </span><span *ngIf="medicine.medicationtype == 'TYPE0032'">Eye Drops </span>{{medicine.medicinename}}</span></td>
+										<td class="center-aligned"
+											*ngIf="medicine.eventname == 'Jaundice'"><span>{{medicine.medicineOrderDate | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+										<td class="center-aligned"
+											*ngIf="medicine.eventname == 'Jaundice' && medicine.cal_dose_volume != null"><span>{{medicine.cal_dose_volume}} {{medicine.dose_unit.substring(0,2)}}</span></td>
+										<td class="center-aligned"
+											*ngIf="medicine.eventname == 'Jaundice' && medicine.cal_dose_volume == null && medicine.topical_drops != null"><span>{{medicine.topical_drops}} drops</span></td>
+										<td class="center-aligned"
+											*ngIf="medicine.eventname == 'Jaundice' && medicine.cal_dose_volume == null && medicine.volume != null"><span>{{medicine.volume}} ml</span></td>
+										<td class="center-aligned"
+											*ngIf="medicine.eventname == 'Jaundice' && medicine.cal_dose_volume == null && medicine.quantity != null"><span>{{medicine.quantity}}</span></td>
+										<td class="center-aligned"
+											*ngIf="medicine.eventname == 'Jaundice' && medicine.cal_dose_volume == null && medicine.sachets != null"><span>{{medicine.sachets}} sachets</span></td>
+										<td class="center-aligned"
+											*ngIf="medicine.eventname == 'Jaundice' && medicine.cal_dose_volume == null && medicine.sachets == null && medicine.quantity == null && medicine.volume == null && medicine.topical_drops == null"><span></span></td>
+										<td class="center-aligned"
+											*ngIf="medicine.eventname == 'Jaundice'"><span>{{medicine.medicineDay}}</span></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="row padding-10-y">
+							<div class="col-md-12">
+								<div class="col-md-10 col-lg-9 no-padding-left">
+									<span class="bold required">Medications</span>
+									<div class="input-group input-group-labeled desktop-column-20">
+										<div class="desktop-column-20 padding-0-x force-left">
+											<div class="input-cont block">
+												<input type="text"
+													[(ngModel)]="statusJaundice.jaundice.medicationStr"
+													(keyup)="systemValue('others','actionType')"
+													class="desktop-column-20 input-coloured-gray input-medium assesment-select" disabled>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2 no-padding">
+									<span class="visiblity-hidden">Other</span>
+									<div class="padding-top-1">
+										<span class="button button-blue"
+											(click)="redirectToPrescription('Jaundice')">Prescribe Medications</span> <label>{{statusJaundice.jaundice.prescriptionBackMessage}}</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div
+			*ngIf="statusJaundice.jaundice != null && statusJaundice.jaundice != undefined">
+			<div class="jaundiceFirst" style="background-color: white;"
+				*ngIf="statusJaundice.jaundice.jaundicestatus == 'Inactive' ">
+				<div class="assesment-container">
+					<div class="row">
+						<div
+							class="col-md-3 left-aligned no-padding-right padding-10-y center-aligned">
+							<div class="col-md-12 no-padding center-aligned">
+								<label class="bold required"><strong>Date And
+										Time of assessment</strong></label>
+							</div>
+							<div class="col-md-12 no-padding">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="statusJaundice.jaundice.assessmentTime"
+									(ngModelChange)="calculateAgeAtAssessmentManual()"
+									[min]="minDate" [max]="maxDate"
+									dateFormat='DD-MM-YYYY hh:mm A'
+									[ngModelOptions]="{standalone: true}"></owl-date-time>
+							</div>
+							<div class="col-md-12 no-padding">
+								<!-- <label id="invalidTime" style="display: none;"
+  									class="col-md-12 error-labels no-padding right-aligned"
+  									*ngIf="!jaundiceForm.timeOfAssessment.$valid">Please
+  									enter proper time format (HH:MM)</label> -->
+							</div>
+						</div>
+						<div
+							class="col-md-3 col-lg-2 left-aligned no-padding-right padding-10-y center-aligned">
+							<div class="col-md-12 no-padding">
+								<label class="bold required"><strong>Jaundice
+										Entry Type</strong></label>
+							</div>
+							<div class="col-md-12 no-padding-left">
+							 <fieldset [disabled]="isDisable">
+								<div class="no-padding-left toggle-options-radio">
+									<input type="radio" name="FeedEntryType"
+										[(ngModel)]="statusJaundice.jaundice.isNewEntry" id="feedNew"
+										[value]="true"> <label for="feedNew">New</label> <input
+										type="radio" name="FeedEntryType"
+										[(ngModel)]="statusJaundice.jaundice.isNewEntry" id="feedOld"
+										[value]="false"> <label for="feedOld">Update
+										Old</label>
+								</div>
+							</fieldset>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div
+			*ngIf="statusJaundice.jaundice != null && statusJaundice.jaundice != undefined">
+			<div class="jaundiceFirst" style="background-color: white;"
+				*ngIf="statusJaundice.jaundice.jaundicestatus == 'Yes'">
+				<div class="assesment-container">
+					<div class="row no-padding">
+						<div class="col-md-12 no-padding">
+							<div class="col-md-9"></div>
+							<div class="col-md-3 right-aligned">
+								<!-- <span
+  									class="assessment-heading font-size-16 no-margin padding-10-x"
+  									style="font-size: 14px !important">{{ clock | date:
+  									'dd-MM-yyyy hh:mm:ss a'}}</span> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="assesment-container ass-container no-padding-right">
+					<div class="row table full padding-10-x no-padding-right"
+						(click)="clinicalSectionVisible()">
+						<div class="table-cell middle-aligned">
+							<div
+								class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+								<span class="sprite sprite-clinical-assessment"></span>
+							</div>
+						</div>
+						<div class="table-cell middle-aligned clinical-assessment" style="width: 18%">
+							<h1
+								class="no-margin system-main-heading clinical-assessment-color">Clinical
+								Assessment</h1>
+						</div>
+						<div
+							class="table-cell padding-10-x no-padding-right middle-aligned"
+							style="width: 100%">
+							<hr class="clinical-assessment-line ">
+						</div>
+						<div class="table-cell middle-aligned">
+							<a class="sprite sprite-minus-clinical middle-aligned"
+								*ngIf="isClinicalVisible"></a> <a
+								class="sprite  sprite-plus-clinical middle-aligned"
+								*ngIf="!(isClinicalVisible)"></a>
+						</div>
+					</div>
+				</div>
+				<div class="assesment-container" *ngIf="isClinicalVisible">
+					<div class="row">
+						<div class="col-md-3 col-lg-2 no-padding-right">
+							<div class="table full center-aligned">
+								<span class="bold">Age at onset</span>
+							</div>
+							<div class="table full  no-padding">
+								<div class="table-cell">
+									<div
+										class="input-group input-group-labeled desktop-column-20 no-margin">
+										<div class="desktop-column-20 padding-0-x force-left">
+											<div class="input-cont block">
+												<input type="text"
+													class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+													[(ngModel)]="statusJaundice.jaundice.ageofonset"
+													name="ageAtOnset"
+													(keyup)="ageOnSetCalculation('non meridian')"
+													pattern="/^[0-9]+$/"
+													[disabled]="statusJaundice.listJaundice!=null &&
+  											statusJaundice.listJaundice.length>0 && statusJaundice.listJaundice[0].jaundicestatus=='Yes'">
+												<!-- <label id="invalidAge" style="display: none;"
+  													class="col-md-12 error-labels no-padding right-aligned"
+  													*ngIf="!jaundiceForm.ageAtOnset.$valid">Please
+  													enter correct age format (Hours)</label> -->
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="table-cell padding-10-x middle-aligned">
+									<div class="toggle-options-radio">
+										<input type="radio" name="jaundiceAge"
+											[(ngModel)]="statusJaundice.jaundice.isageofonsetinhours"
+											id="ageHours" [value]="true"
+											(ngModelChange)="ageOnSetCalculation('meridian')"> <label
+											for="ageHours">Hours</label> <input type="radio"
+											name="jaundiceAge"
+											[(ngModel)]="statusJaundice.jaundice.isageofonsetinhours"
+											id="ageDays" [value]="false"
+											(ngModelChange)="ageOnSetCalculation('meridian')"> <label
+											for="ageDays">Days</label>
+									</div>
+
+								</div>
+								<!-- <label class="col-md-12 error-labels no-padding left-aligned"
+  									*ngIf="ageOnsetPreviousExceed"> Can't be &lt;
+  									Previous episode</label> -->
+							</div>
+						</div>
+						<div class="col-md-3 left-aligned no-padding-left">
+							<label class="bold required"><strong>Date and
+									Time of assessment</strong></label>
+							<div class="col-md-12 no-padding">
+								<owl-date-time class="owl-dateTime"
+									[(ngModel)]="statusJaundice.jaundice.assessmentTime"
+									(ngModelChange)="calculateAgeAtAssessmentManual()"
+									[min]="minDate" [max]="maxDate"
+									dateFormat='DD-MM-YYYY hh:mm A'
+									[ngModelOptions]="{standalone: true}"></owl-date-time>
+							</div>
+							<div class="col-md-12 no-padding">
+								<label id="ageatassessmentvalidinputJaundice"
+									style="display: none;"
+									class="col-md-12 error-labels no-padding left-aligned">Age
+									At Assessment should not be less than Age At Onset</label>
+							</div>
+						</div>
+						<div class="col-md-3 col-lg-2 no-padding-left">
+							<div class="table full no-padding center-aligned">
+								<span class="bold">Age at assessment</span>
+							</div>
+							<div class="table full no-padding">
+								<div class="table-cell">
+									<input type="text" name="ageOfAssessment" pattern="/^[0-9]+$/"
+										disabled
+  										[(ngModel)]="statusJaundice.jaundice.ageatassesment"
+										class="col-md-12 input-coloured-gray input-medium assesment-select">
+									<!-- <label id="invalidTime" style="display: none;"
+  										class="col-md-12 error-labels no-padding right-aligned"
+  										*ngIf="!jaundiceForm.ageOfAssessment.$valid">Please
+  										enter correct age format (Hours)</label> -->
+								</div>
+								<div class="table-cell padding-10-x top-aligned">
+									<div class="toggle-options-radio">
+										<input type="radio" name="jaundiceAgeAssessment"
+											[(ngModel)]="statusJaundice.jaundice.isageofassesmentinhours"
+											id="ageHoursAssessment" [value]="true"
+											(ngModelChange)="ageOnSetCalculation('meridiam')"> <label
+											for="ageHoursAssessment">Hours</label> <input type="radio"
+											name="jaundiceAgeAssessment"
+											[(ngModel)]="statusJaundice.jaundice.isageofassesmentinhours"
+											id="ageDaysAssessment" [value]="false"
+											(ngModelChange)="ageOnSetCalculation('meridiam')"> <label
+											for="ageDaysAssessment">Days</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 col-lg-2 left-aligned ">
+							<div class="col-md-12 no-padding">
+								<label class="bold required"><strong>Jaundice
+										Entry Type</strong></label>
+							</div>
+							<div class="col-md-12 no-padding-left">
+								<fieldset [disabled]="isDisable">
+								<div class="no-padding-left toggle-options-radio">
+									<input type="radio" name="FeedEntryType"
+										[(ngModel)]="statusJaundice.jaundice.isNewEntry" id="feedNew"
+										[value]="true"> <label for="feedNew">New</label> <input
+										type="radio" name="FeedEntryType"
+										[(ngModel)]="statusJaundice.jaundice.isNewEntry" id="feedOld"
+										[value]="false"> <label for="feedOld">Update
+										Old</label>
+								</div>
+							</fieldset>
+							</div>
+
+						</div>
+						<div class="col-md-2 jaundice-active-episode no-padding-left pull-right"
+							style="padding-right: 20px">
+							<div class="padding-10-y center-aligned"
+								style="background-color: #FDF8EA">
+								<span class="bold clinical-assessment-color system-main-heading"
+									style="line-height: 36px">{{statusJaundice.jaundice.episodeNumber}}</span><sup
+									class="clinical-assessment-color"
+									*ngIf="statusJaundice.jaundice.episodeNumber == '1' || statusJaundice.jaundice.episodeNumber == 1">st</sup><sup
+									class="clinical-assessment-color"
+									*ngIf="statusJaundice.jaundice.episodeNumber == '2' || statusJaundice.jaundice.episodeNumber == 2">nd</sup><sup
+									class="clinical-assessment-color"
+									*ngIf="statusJaundice.jaundice.episodeNumber == '3' || statusJaundice.jaundice.episodeNumber == 3">rd</sup><sup
+									class="clinical-assessment-color"
+									*ngIf="(statusJaundice.jaundice.episodeNumber != '1' && statusJaundice.jaundice.episodeNumber != 1) && (statusJaundice.jaundice.episodeNumber != '2'
+  									&& statusJaundice.jaundice.episodeNumber != 2) && (statusJaundice.jaundice.episodeNumber != '3' && statusJaundice.jaundice.episodeNumber != 3)">th</sup>
+								<span class="bold clinical-assessment-color system-main-heading">
+									Episode</span>
+							</div>
+						</div>
+					</div>
+					<div class="row padding-10-y">
+						<div class="col-md-2 riskfactor force-left table-cell no-padding-right"
+							*ngIf="statusJaundice.jaundice.gestation*1>=34">
+							<!-- col-md-3  -->
+							<label style="font-size: 13px"><strong>Risk
+									factors for Jaundice and AAP charts</strong></label>
+							<div class="desktop-column-20 no-padding">
+								<div class="multiselect  desktop-column-20 no-padding">
+									<!--  desktop-column-15 -->
+									<div class="selectBox"
+										(click)="showCheckboxes('multiple-selectbox-2')"
+										id="multiple-selectbox-2">
+										<select class="no-margin">
+											<option>-- Select --</option>
+										</select>
+										<div class="overSelect"></div>
+									</div>
+									<ul id="checkboxes-2" class="multiple-select">
+										<!-- value="item.key" [(ngModel)]="statusSepsis.sepsis.symptoms" (ngModelChange)="selectedSymptoms()" -->
+										<li *ngFor="let item of statusJaundice.dropDowns.riskFactor"><input
+											type="checkbox" id="{{item.key}}" [value]="true"
+											[(ngModel)]="item.flag"
+											(ngModelChange)="systemValue(item.key,'riskFactor')" /><label
+											for="{{item.key}}">{{item.value}}</label></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-2 riskfactor force-left table-cell no-padding-right"
+							*ngIf="statusJaundice.jaundice.gestation*1<34">
+							<!-- col-md-3  -->
+							<label style="font-size: 13px"><strong>Risk
+									Factor for Jaundice</strong></label>
+							<div class="desktop-column-20 no-padding">
+								<div class="multiselect  desktop-column-20 no-padding">
+									<!--  desktop-column-15 -->
+									<div class="selectBox"
+										(click)="showCheckboxes('multiple-selectbox-2')"
+										id="multiple-selectbox-2">
+										<select class="no-margin">
+											<option>-- Select --</option>
+										</select>
+										<div class="overSelect"></div>
+									</div>
+									<ul id="checkboxes-2" class="multiple-select">
+										<!-- value="item.key" [(ngModel)]="statusSepsis.sepsis.symptoms" (ngModelChange)="selectedSymptoms()" -->
+										<li *ngFor="let item of statusJaundice.dropDowns.riskFactor"><input
+											type="checkbox" id="{{item.key}}" [value]="true"
+											[(ngModel)]="item.flag"
+											(ngModelChange)="systemValue(item.key,'riskFactor')" /><label
+											for="{{item.key}}">{{item.value}}</label></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-3 no-padding-right table full">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Diagnosis by</span>
+								<div class="toggle-options-radio">
+									<input type="radio" name="jaundiceDiagnosis"
+										[(ngModel)]="statusJaundice.jaundice.jaundiceDiagnosisBy"
+										id="jaundiceDiagnosisClinically"
+										(ngModelChange)="creatingProgressNotesTemplate()"
+										value="clinically"> <label
+										for="jaundiceDiagnosisClinically">Clinically</label> <input
+										type="radio" name="jaundiceDiagnosis"
+										(ngModelChange)="creatingProgressNotesTemplate()"
+										[(ngModel)]="statusJaundice.jaundice.jaundiceDiagnosisBy"
+										id="jaundiceDiagnosisLabTest" value="LabTest"> <label
+										for="jaundiceDiagnosisLabTest">Lab Test</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 no-padding-right table full">
+							<div class="col-md-12 no-padding tcb">
+								<span class="bold"
+									[ngClass]="{'required' : statusJaundice.jaundice.jaundiceDiagnosisBy=='LabTest'}">TcB<span
+									class="font-size-11"> (or TSB or visually identified
+										clinical value)</span></span>
+							</div>
+							<div class="col-md-9 col-lg-8 no-padding-left">
+								<div class="relative-input-group block desktop-column-20">
+									<input type="text" class="input input-medium desktop-column-14"
+										[required]="statusJaundice.jaundice.jaundiceDiagnosisBy=='LabTest'"
+										name="TcBValue" autocomplete="off"
+										[(ngModel)]="statusJaundice.jaundice.tbcvalue"
+										(keyup)="calculatePhototherapy()"><span
+										class="input-group-icon center-aligned desktop-column-6">mg/dl</span>
+								</div>
+								<!-- <div class="col-md-12 no-padding right-aligned ng-hide"
+  									*ngIf="jaundiceForm.TcBValue.$dirty && jaundiceForm.TcBValue.$invalid">
+  									<label style="color: red; font-size: 10px">Not a valid
+  										TcB Value</label>
+  								</div> -->
+							</div>
+							<div class="col-md-1 col-lg-4 no-padding-left">
+								<div class="toggle-options-radio">
+									<input type="radio" name="tcbToggleJaundice"
+										[(ngModel)]="statusJaundice.jaundice.tcbortsb"
+										id="tcbToggleTCB" [value]="true"
+										(ngModelChange)="creatingProgressNotesTemplate()"> <label
+										for="tcbToggleTCB">TcB</label> <input type="radio"
+										name="tcbToggleJaundice"
+										(ngModelChange)="creatingProgressNotesTemplate()"
+										[(ngModel)]="statusJaundice.jaundice.tcbortsb"
+										id="tcbToggleTSB" [value]="false"> <label
+										for="tcbToggleTSB">TSB</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 transfusion"
+							*ngIf="statusJaundice.jaundice.tbcvalue!=null && statusJaundice.jaundice.tbcvalue!='' ">
+							<div class="no-padding table full">
+								<div class="inline-block">
+									<label><span class="bold">{{whatRecommended}}<span
+											style="font-size: 11px"> ( {{whichGraph}}
+												Recommendation)</span></span></label>
+								</div>
+								<div class="inline-block left-aligned padding-5-x">
+									<span class=" inline-block info-symbol padding-10-x"
+										(click)="bhutaniGraph()"> i</span>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="toggle-options-radio">
+									<input type="radio" name="Phototherapy" [disabled]=true
+										value="belowThreshold"
+										[(ngModel)]="statusJaundice.jaundice.isphotobelowthreshold"
+										id="PhototherapyBelow"> <label for="PhototherapyBelow">Below
+										Threshold</label> <input type="radio" name="Phototherapy"
+										[disabled]=true value="threshold"
+										[(ngModel)]="statusJaundice.jaundice.isphotobelowthreshold"
+										id="PhototherapyAbove"> <label for="PhototherapyAbove">Threshold</label>
+									<input type="radio" name="Phototherapy" [disabled]=true
+										value="aboveThreshold"
+										[(ngModel)]="statusJaundice.jaundice.isphotobelowthreshold"
+										id="PhototherapyAbove"> <label for="PhototherapyAbove">Above
+										Threshold</label>
+
+								</div>
+								<label style="color: red; font-size: 10px" *ngIf=false>Graph
+									Information:</label>
+							</div>
+							<div>
+								<span style="color: red">{{jaundiceTempObj.chartMessage}}</span>
+							</div>
+						</div>
+					</div>
+					<div class="row padding-10-y"
+						*ngIf="(riskStr!=null && riskStr!='') || (jaundiceTempObj.pastRiskFactorsStr!=null && jaundiceTempObj.pastRiskFactorsStr!='')">
+						<div class="col-md-12">
+							<span class="bold" *ngIf="riskStr!=null && riskStr!=''">Selected:<span
+								style="font-weight: normal">{{riskStr}}</span></span>
+						</div>
+						<div class="col-md-12">
+							<span class="bold"
+								*ngIf="jaundiceTempObj.pastRiskFactorsStr!=null && jaundiceTempObj.pastRiskFactorsStr!=''">Past
+								selected:<span style="font-weight: normal">{{jaundiceTempObj.pastRiskFactorsStr}}</span>
+							</span>
+						</div>
+					</div>
+					<div class="row padding-10-y"
+						*ngIf="scoreBindObj != null && scoreBindObj != undefined">
+						<div class="col-md-2">
+							<div class="col-md-12 no-padding-left">
+								<label><strong>Bind Score</strong></label>
+							</div>
+							<div class="col-md-12 no-padding padding-top-1">
+								<span class="button button-green  middle-aligned"
+									(click)="showBind()">Bind Score</span>
+							</div>
+						</div>
+						<div class="col-md-3 no-padding-right">
+							<label class="white-color"><strong>Other Risk
+									Factor</strong></label>
+							<div class="relative-input-group block padding-top-1">
+								<input type="text" class="input input-medium desktop-column-6"
+									[(ngModel)]="scoreBindObj.bindscore" disabled /> <span
+									class="input-group-icon desktop-column-14 center-aligned">Total
+									Bind Score</span>
+							</div>
+						</div>
+						<div class="col-md-3 riskfactor no-padding-right">
+							<label class="white-color"><strong>Other Risk
+									Factor</strong></label>
+							<div class="relative-input-group block padding-top-1">
+								<input type="text" class="input input-medium desktop-column-6"
+									[(ngModel)]="weightLoss" disabled /> <span
+									class="input-group-icon desktop-column-14 center-aligned">% weight loss since birth</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="assesment-container no-padding-right">
+					<div class="row table full padding-10-x no-padding-right"
+						(click)="actionSectionVisible()">
+						<div class="table-cell middle-aligned">
+							<div
+								class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+								<span class="sprite sprite-action"></span>
+							</div>
+						</div>
+						<div class="table-cell middle-aligned" style="width: 6%">
+							<h1 class="no-margin system-main-heading action-assessment-color">Action</h1>
+						</div>
+						<div
+							class="table-cell padding-10-x no-padding-right middle-aligned"
+							style="width: 100%">
+							<hr class="action-assessment-line">
+						</div>
+						<div class="table-cell middle-aligned">
+							<a class="sprite sprite-minus-action middle-aligned"
+								*ngIf="isActionVisible"></a> <a
+								class="sprite  sprite-plus-action middle-aligned"
+								*ngIf="!(isActionVisible)"></a>
+						</div>
+					</div>
+				</div>
+				<div class="assesment-container" *ngIf="isActionVisible">
+					<div class="row">
+						<div class="col-md-3 table full">
+							<div class="table-cell">
+								<h1 class="no-margin system-sub-heading">Investigation</h1>
+							</div>
+							<div class="table-cell">
+								<span class="button order-button  middle-aligned"
+									(click)="showOrderInvestigation()">Order</span>
+							</div>
+						</div>
+						<div class="col-md-9 table-cell">
+							<div class="col-md-12 no-padding">
+								<span class="bold selected-text"
+									*ngIf="orderSelectedText!=null && orderSelectedText!=''">Selected:
+									<label style="font-weight: normal; color: black !important">{{orderSelectedText}}
+								</label>
+								</span>
+
+							</div>
+							<div class="col-md-12 no-padding">
+								<span class="bold"
+									*ngIf="statusJaundice.jaundice.pastOrderInvestigationStr!=null && statusJaundice.jaundice.pastOrderInvestigationStr!=''">Past
+									Selected: <label style="font-weight: normal">{{statusJaundice.jaundice.pastOrderInvestigationStr}}</label>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 no-padding">
+						<select type="text" class="input input-medium col-md-12"
+							[(ngModel)]="selectedInvestigationTestID"
+							(ngModelChange)="populateJaundiceInvestigation()">
+							<option value="0" selected>ALL</option>
+							<option *ngFor="let invOrdered of investigationsOrdered"
+								value={{invOrdered.testslistid}}>{{invOrdered.testname}}
+							</option>
+							<!--  | unique: 'testslistid'  -->
+
+						</select>
+					</div>
+
+					<div class="row padding-10-x no-padding-right padding-10-y">
+						<div class="col-md-7 no-padding-left">
+							<div class="tab-content full table" id="jaundice_test">
+								<div class="header table-row jaundice-test-table-header">
+									<div class="table-cell middle-aligned font-bold">
+										<span>Test Name</span>
+									</div>
+									<div class="table-cell middle-aligned font-bold">
+										<span>Order Date</span>
+									</div>
+									<div class="table-cell middle-aligned font-bold">
+										<span>Report Recieved Time</span>
+									</div>
+									<div class="table-cell middle-aligned font-bold">
+										<span>Item Value</span>
+									</div>
+									<div class="table-cell middle-aligned font-bold">
+										<span>Normal Range</span>
+									</div>
+								</div>
+								<div class="table-row"
+									*ngFor="let testResult of jaundiceTestObjects">
+									<div class="table-cell middle-aligned border-1-grey">
+										<span>{{testResult.itemname}}</span>
+									</div>
+									<div class="table-cell middle-aligned border-1-grey">
+										<span>{{testResult.investigationorder_time}}</span>
+									</div>
+									<div class="table-cell middle-aligned border-1-grey">
+										<span>{{testResult.reportreceived_time}}</span>
+									</div>
+									<div class="table-cell middle-aligned border-1-grey">
+										<span>{{testResult.assesment_type}}</span>
+									</div>
+									<div class="table-cell middle-aligned border-1-grey">
+										<span>{{testResult.itemvalue}}</span>
+									</div>
+									<div class="table-cell middle-aligned border-1-grey">
+										<span>{{testResult.normalrange}}</span>
+									</div>
+								</div>
+							</div>
+							<!-- <div *ngIf="TableApneaFlag" class="col-md-12 no-padding"
+  								[ngClass]="{'apnea-table-scroll': respiratorySystemObj.respSystemObject.apnea.pastNursingEpisode.length > 4}"> -->
+							<div *ngIf="TableOrderJaundiceFlag" class="col-md-12 no-padding">
+								<table
+									class="table table-striped table-bordered headed-table desktop-column-20">
+									<tr>
+										<td class="center-aligned">Test Name</td>
+										<td class="center-aligned">Order Date</td>
+										<td class="center-aligned">Report Recieved Time</td>
+										<td class="center-aligned">Value</td>
+									</tr>
+
+								</table>
+							</div>
+						</div>
+						<div class="col-md-3 no-paddinf-left">
+							<div class="right-aligned table-cell">
+								<a class="sprite sprite-blue-minus middle-aligned"
+									(click)="switchOrderTableJaundice()"
+									*ngIf="TableOrderJaundiceFlag"></a> <a
+									class="sprite sprite-blue-plus middle-aligned"
+									(click)="switchOrderTableJaundice()"
+									*ngIf="!(TableOrderJaundiceFlag)"></a>
+							</div>
+						</div>
+					</div>
+					<div class="row padding-top-1 padding-10-y">
+						<div class="col-md-3 table full">
+							<div class="table-cell middle-aligned">
+								<h1 class="no-margin system-sub-heading">Treatment</h1>
+							</div>
+							<div class="table-cell">
+								<div class="toggle-options-radio"
+									*ngIf="statusJaundice.listJaundice.length > 0 && statusJaundice.listJaundice[0].actiontype!=null && statusJaundice.listJaundice[0].actiontype!=''">
+									<input type="radio" name="jaundiceTreatmentStatus"
+										id="jaundiceTreatmentStatusContinue" value="continue"
+										[(ngModel)]="jundiceTempObject.jaundiceTreatmentStatus"
+										(ngModelChange)="updateTreatment('continue')"> <label
+										for="jaundiceTreatmentStatusContinue">Continue</label> <input
+										type="radio" name="jaundiceTreatmentStatus" value="change"
+										id="jaundiceTreatmentStatusChange"
+										[(ngModel)]="jundiceTempObject.jaundiceTreatmentStatus"
+										(ngModelChange)="updateTreatment('change')"> <label
+										for="jaundiceTreatmentStatusChange">Change</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-9">
+							<div class="col-md-12 no-padding">
+								<span class="bold selected-text"
+									*ngIf="jundiceTempObject.treatmentActionSelected != null && jundiceTempObject.treatmentActionSelected!='' ">Selected:
+									<span class="selected-text" style="font-weight: normal;">{{jundiceTempObject.treatmentActionSelected}}</span>
+								</span>
+
+							</div>
+							<div class="col-md-12 no-padding">
+								<span class="bold" *ngIf="pastTreatmentActionValueStr!=''">
+									Past Selected: <label style="font-weight: normal">{{pastTreatmentActionValueStr}}</label>
+								</span>
+								<span class="bold" *ngIf="pastTreatmentActionValueStr == null || pastTreatmentActionValueStr == ''">
+									Past Selected: <label style="font-weight: normal">No treatment</label>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row padding-10-y padding-10-x"
+						*ngIf="(statusJaundice.listJaundice==null || statusJaundice.listJaundice.length==0) || (statusJaundice.listJaundice[0].actiontype==null || statusJaundice.listJaundice[0].actiontype=='') || (jundiceTempObject.jaundiceTreatmentStatus!=null && jundiceTempObject.jaundiceTreatmentStatus=='change')">
+						<div class="col-md-2 no-padding-left center-aligned">
+							<input type="radio" name="SystemTreatment"
+								id="SystemPhototherapy"
+								[(ngModel)]="jaundiceTempObj.treatmentType" value="TRE001"
+								style="display: none"> <label for="SystemPhototherapy"
+								class="table full assessment-treatment-tab-box"
+								[ngClass]="{'resp-event-box-selected': jaundiceTempObj.treatmentType=='phototherapy', 'resp-event-box-saved': statusJaundice.jaundice.actiontypeList != null && statusJaundice.jaundice.actiontypeList != undefined && statusJaundice.jaundice.actiontypeList.includes('TRE001')}">Phototherapy</label>
+						</div>
+						<div class="col-md-3 col-lg-2 no-padding-left center-aligned">
+							<input type="radio" name="SystemTreatment" id="SystemExchange"
+								[(ngModel)]="jaundiceTempObj.treatmentType" value="TRE002"
+								style="display: none"> <label for="SystemExchange"
+								class="table full assessment-treatment-tab-box"
+								[ngClass]="{'resp-event-box-selected': jaundiceTempObj.treatmentType=='exchangeTransfusion', 'resp-event-box-saved': statusJaundice.jaundice.actiontypeList != null && statusJaundice.jaundice.actiontypeList != undefined && statusJaundice.jaundice.actiontypeList.includes('TRE002')}">Exchange
+								Transfusion</label>
+						</div>
+						<div class="col-md-2 no-padding-left center-aligned">
+							<input type="radio" name="SystemTreatment" id="SystemMedications"
+								[(ngModel)]="jaundiceTempObj.treatmentType" value="medications"
+								style="display: none"> <label for="SystemMedications"
+								class="table full assessment-treatment-tab-box"
+								[ngClass]="{'resp-event-box-selected': jaundiceTempObj.treatmentType=='medications', 'resp-event-box-saved': statusJaundice.jaundice.medicationStr != undefined && statusJaundice.jaundice.medicationStr != null && statusJaundice.jaundice.medicationStr != ''}">Medications</label>
+						</div>
+						<div class="col-md-2 no-padding-left center-aligned">
+							<input type="radio" name="SystemTreatment" id="SystemOthers"
+								[(ngModel)]="jaundiceTempObj.treatmentType" value="others"
+								style="display: none"> <label for="SystemOthers"
+								class="table full assessment-treatment-tab-box"
+								[ngClass]="{'resp-event-box-selected': jaundiceTempObj.treatmentType=='others', 'resp-event-box-saved': statusJaundice.jaundice.otheractiontype != null && statusJaundice.jaundice.otheractiontype != ''}">Other</label>
+						</div>
+					</div>
+					<div class="padding-10-y">
+						<div class="row padding-10-y"
+							*ngIf="jaundiceTempObj.treatmentType=='TRE001' && jundiceTempObject.jaundiceTreatmentStatus!='continue'">
+							<div class="col-md-2 ">
+								<label class="input-label required"><strong>Phototherapy</strong></label>
+								<div class="toggle-options-radio padding-top-1">
+									<input type="radio" name="Phototherapytreatment"
+										id="PhototherapyDone" value="Start"
+										[(ngModel)]="statusJaundice.jaundice.phototherapyvalue"
+										(ngModelChange)="systemValue('TRE001','actionType')"
+										[disabled]="photoStartDisabled"> <label
+										for="PhototherapyDone"
+										[ngClass]="{'display-disabled-radio-color' : photoStartDisabled}">Start</label>
+
+									<input type="radio" name="Phototherapytreatment"
+										id="PhototherapyNotDone" value="Stop"
+										[(ngModel)]="statusJaundice.jaundice.phototherapyvalue"
+										(ngModelChange)="systemValue('TRE001','actionType')"
+										[disabled]="(statusJaundice.listJaundice==null || statusJaundice.listJaundice.length<=0)|| (statusJaundice.listJaundice.length > 0)
+  										&& (statusJaundice.listJaundice[0].phototherapyvalue==null)||photoStopDisabled||photoContinueDisabled">
+									<label for="PhototherapyNotDone"
+										[ngClass]="{'display-disabled-radio-color' : photoStopDisabled}">Stop</label>
+
+									<input type="radio" name="Phototherapytreatment"
+										id="PhototherapyBiliblanket" value="Continue"
+										[(ngModel)]="statusJaundice.jaundice.phototherapyvalue"
+										(ngModelChange)="systemValue('TRE001','actionType')"
+										[disabled]="statusJaundice.listJaundice==null || statusJaundice.listJaundice.length<=0 || (statusJaundice.listJaundice.length > 0)
+  										&& (statusJaundice.listJaundice[0].phototherapyvalue==null||photoStopDisabled )">
+									<label for="PhototherapyBiliblanket"
+										[ngClass]="{'display-disabled-radio-color' : photoStopDisabled}">Continue</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="table full">
+									<span class="visiblity-hidden">dummy</span>
+								</div>
+								<div class="table full"></div>
+							</div>
+						</div>
+						<div class="row padding-10-y"
+							*ngIf="jaundiceTempObj.treatmentType=='TRE002'  && jundiceTempObject.jaundiceTreatmentStatus!='continue'">
+							<div class="col-md-3 col-lg-2">
+								<div class="col-md-12 no-padding">
+									<label class="input-label required"><strong>Exchange
+											Transfusion</strong></label>
+									<div class="toggle-options-radio padding-top-1">
+										<input type="radio" name="Exchange"
+											[(ngModel)]="statusJaundice.jaundice.exchangetrans"
+											(ngModelChange)="systemValue('TRE002','actionType')"
+											id="exchangeDone" [value]="true"
+											[disabled]="exTransPlannedDisabled"> <label
+											for="exchangeDone"
+											[ngClass]="{'display-disabled-radio-color' : exTransPlannedDisabled}">Planned</label>
+
+										<input type="radio" name="Exchange" [value]="false"
+											[(ngModel)]="statusJaundice.jaundice.exchangetrans"
+											(ngModelChange)="systemValue('TRE002','actionType')"
+											id="exchangeNotDone"
+											[disabled]="(statusJaundice.listJaundice==null || statusJaundice.listJaundice.length<=0) && (statusJaundice.listJaundice.length > 1) &&
+                        (statusJaundice.listJaundice[0].exchangetrans==null)">
+										<label for="exchangeNotDone"
+											[ngClass]="{'display-disabled-radio-color' : exTransDoneDisabled}">Done</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="table full">
+									<span class="visiblity-hidden">dummy</span>
+								</div>
+								<div class="table full">
+									<!-- <div class="table-cell"><span class="button button-blue-transparent" (click)="clearTreatment('TRE002')"><i class="refresh"></i>Clear</span></div> -->
+								</div>
+							</div>
+						</div>
+						<div class="row padding-10-y"
+							*ngIf="jaundiceTempObj.treatmentType=='medications' && jundiceTempObject.jaundiceTreatmentStatus!='continue'">
+
+
+							<div *ngIf="pastPrescriptionList != null && pastPrescriptionList.length > 0"class="col-md-12">
+								<div class="col-md-9 col-lg-19 no-padding-left">
+									<span class="bold required">Current Medications</span>
+									<div class="input-group input-group-labeled desktop-column-20">
+										<div class="desktop-column-20 padding-0-x force-left">
+											<div class="input-cont block">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-9 no-padding">
+									<table
+										class="table table-striped table-bordered headed-table desktop-column-20">
+										<tr>
+											<td class="center-aligned">Medicine Name</td>
+											<td class="center-aligned">Start Date</td>
+											<td class="center-aligned">Dose</td>
+											<td class="center-aligned">Medicine Day</td>
+										</tr>
+										<tr *ngFor="let medicine of pastPrescriptionList">
+											<td class="center-aligned"
+												*ngIf="medicine.eventname == 'Jaundice'"><span><span *ngIf="medicine.route == 'IV' || medicine.route == 'IM'">Inj. </span> <span *ngIf="medicine.route == 'PO'">Syrup </span><span *ngIf="medicine.medicationtype == 'TYPE0032'">Eye Drops </span>{{medicine.medicinename}}</span></td>
+											<td class="center-aligned"
+												*ngIf="medicine.eventname == 'Jaundice'"><span>{{medicine.medicineOrderDate | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+											<td class="center-aligned"
+												*ngIf="medicine.eventname == 'Jaundice' && medicine.cal_dose_volume != null"><span>{{medicine.cal_dose_volume}} {{medicine.dose_unit.substring(0,2)}}</span></td>
+											<td class="center-aligned"
+												*ngIf="medicine.eventname == 'Jaundice' && medicine.cal_dose_volume == null && medicine.topical_drops != null"><span>{{medicine.topical_drops}} drops</span></td>
+											<td class="center-aligned"
+												*ngIf="medicine.eventname == 'Jaundice' && medicine.cal_dose_volume == null && medicine.volume != null"><span>{{medicine.volume}} ml</span></td>
+											<td class="center-aligned"
+												*ngIf="medicine.eventname == 'Jaundice' && medicine.cal_dose_volume == null && medicine.quantity != null"><span>{{medicine.quantity}}</span></td>
+											<td class="center-aligned"
+												*ngIf="medicine.eventname == 'Jaundice' && medicine.cal_dose_volume == null && medicine.sachets != null"><span>{{medicine.sachets}} sachets</span></td>
+											<td class="center-aligned"
+												*ngIf="medicine.eventname == 'Jaundice' && medicine.cal_dose_volume == null && medicine.sachets == null && medicine.quantity == null && medicine.volume == null && medicine.topical_drops == null"><span></span></td>
+											<td class="center-aligned"
+												*ngIf="medicine.eventname == 'Jaundice'"><span>{{medicine.medicineDay}}</span></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+
+							<div class="col-md-12">
+								<div class="col-md-9 col-lg-19 no-padding-left">
+									<span class="bold required">Medications</span>
+									<div class="input-group input-group-labeled desktop-column-20">
+										<div class="desktop-column-20 padding-0-x force-left">
+											<div class="input-cont block">
+												<input type="text"
+													[(ngModel)]="statusJaundice.jaundice.medicationStr"
+													(keyup)="systemValue('others','actionType')"
+													class="desktop-column-20 input-coloured-gray input-medium assesment-select" disabled>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2 no-padding">
+									<span class="visiblity-hidden">Other</span>
+									<div class="padding-top-1">
+										<span class="button button-blue"
+											(click)="redirectToPrescription('Jaundice')">Prescribe Medications</span> <label>{{statusJaundice.jaundice.prescriptionBackMessage}}</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row padding-10-y"
+							*ngIf="jaundiceTempObj.treatmentType=='others' && jundiceTempObject.jaundiceTreatmentStatus!='continue'">
+							<div class="col-md-12">
+								<div class="col-md-12 no-padding-left">
+									<span class="bold required">Other</span>
+									<div class="input-group input-group-labeled desktop-column-20">
+										<div class="desktop-column-20 padding-0-x force-left">
+											<div class="input-cont block">
+												<input type="text"
+													[(ngModel)]="statusJaundice.jaundice.otheractiontype"
+													(keyup)="systemValue('others','actionType')"
+													class="desktop-column-20 input-coloured-gray input-medium assesment-select">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="assesment-container no-padding-right">
+					<div class="row table full padding-10-x no-padding-right"
+						(click)="planSectionVisible()">
+						<div class="table-cell middle-aligned">
+							<div
+								class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+								<span class="sprite sprite-plan"></span>
+							</div>
+						</div>
+						<div class="table-cell middle-aligned" style="width: 5%">
+							<h1 class="no-margin system-main-heading plan-assessment-color">Plan</h1>
+						</div>
+						<div
+							class="table-cell padding-10-x no-padding-right middle-aligned"
+							style="width: 100%">
+							<hr class="plan-assessment-line">
+						</div>
+						<div class="table-cell middle-aligned">
+							<a class="sprite sprite-minus-plan middle-aligned"
+								*ngIf="isPlanVisible"></a> <a
+								class="sprite sprite-plus-plan middle-aligned"
+								*ngIf="!(isPlanVisible)"></a>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="isPlanVisible">
+					<div class="assesment-container no-padding-right">
+						<div class="row">
+							<div
+								class="col-md-1 no-padding-right center-aligned padding-top-2">
+								<h1 class="no-margin system-sub-heading"
+									style="line-height: 35px">Plan</h1>
+							</div>
+							<div class="col-md-4">
+								<label><strong>Reassess Time</strong></label>
+								<div class="desktop-column-20  table full padding-top-1">
+									<div class="table-cell top-aligned">
+										<input type="text" (keyup)="creatingProgressNotesTemplate()"
+											class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+											[(ngModel)]="statusJaundice.jaundice.actionduration">
+									</div>
+									<div class="table-cell padding-5-x">
+										<div class="toggle-options-radio"
+											[ngClass] ="{'required': statusJaundice.jaundice.actionduration != null && statusJaundice.jaundice.actionduration!=''}">
+											<input type="radio" name="actionAge"
+												[(ngModel)]="statusJaundice.jaundice.isactiondurationinhours"
+												[required]="statusJaundice.jaundice.actionduration != null && statusJaundice.jaundice.actionduration != ''"
+												id="actionMins" value="mins" (ngModelChange)="creatingProgressNotesTemplate()"> <label
+												for="actionMins">Mins</label> <input type="radio"
+												name="actionAge"
+												[required]="statusJaundice.jaundice.actionduration != null && statusJaundice.jaundice.actionduration != ''"
+												[(ngModel)]="statusJaundice.jaundice.isactiondurationinhours"
+												id="actionHours" value="hours" (ngModelChange)="creatingProgressNotesTemplate()"> <label
+												for="actionHours">Hours</label> <input type="radio"
+												name="actionAge"
+												[required]="statusJaundice.jaundice.actionduration != null && statusJaundice.jaundice.actionduration != ''"
+												[(ngModel)]="statusJaundice.jaundice.isactiondurationinhours"
+												id="actionDays" value="days" (ngModelChange)="creatingProgressNotesTemplate()"> <label
+												for="actionDays">Days</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<!--
+  								*ngIf="statusJaundice.jaundice.treatmentactionplanlist.includes('Others')" -->
+								<span class="bold">Comments (If Other)</span>
+								<div class="input-group input-group-labeled desktop-column-19">
+									<div class="desktop-column-20 padding-0-x force-left">
+										<div class="input-cont block">
+											<input type="text" (keyup)="creatingProgressNotesTemplate()"
+												class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+												[(ngModel)]="statusJaundice.jaundice.planOther">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="assesment-container no-padding-right">
+					<div class="row table full padding-10-x no-padding-right"
+						(click)="scoreSectionVisible()">
+						<div class="table-cell middle-aligned">
+							<div
+								class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+								<span class="sprite sprite-cause"></span>
+							</div>
+						</div>
+						<div class="table-cell middle-aligned" style="width: 5%">
+							<h1 class="no-margin system-main-heading cause-assessment-color">Causes</h1>
+						</div>
+						<div
+							class="table-cell padding-10-x no-padding-right middle-aligned"
+							style="width: 100%">
+							<hr class="cause-assessment-line">
+						</div>
+						<div class="table-cell middle-aligned">
+							<a class="sprite sprite-minus-cause middle-aligned"
+								*ngIf="isScoreVisible"></a> <a
+								class="sprite sprite-plus-cause middle-aligned"
+								*ngIf="!(isScoreVisible)"></a>
+						</div>
+					</div>
+				</div>
+				<div class="assesment-container" *ngIf="isScoreVisible">
+					<div class="row padding-10-y">
+						<div class="col-md-3 force-left">
+							<label><strong>Causes</strong></label>
+							<div class="multiselect desktop-column-15">
+								<div class="selectBox"
+									(click)="showCheckboxes('multiple-selectbox-4')"
+									id="multiple-selectbox-4">
+									<select>
+										<option>-- Select --</option>
+									</select>
+									<div class="overSelect"></div>
+								</div>
+								<ul id="checkboxes-4" class="multiple-select">
+									<li
+										*ngFor="let item of statusJaundice.dropDowns.causeOfJaundice"><input
+										type="checkbox" id="{{item.key}}" [value]="true"
+										[(ngModel)]="item.flag"
+										(ngModelChange)="systemValue(item.key,'causeOfJaundice')" /><label
+										for="{{item.key}}">{{item.value}}</label></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-6 table full padding-top-2">
+							<div class="col-md-12">
+								<span class="bold selected-text"
+									*ngIf="causeOfJaundiceStr!=null && causeOfJaundiceStr!=''">Selected:
+									<span style="font-weight: normal">{{causeOfJaundiceStr}}</span>
+								</span>
+							</div>
+							<div class="desktop-column-14">
+								<span class="bold"
+									*ngIf="jaundiceTempObj.pastCauseOfJaundice!=null && jaundiceTempObj.pastCauseOfJaundice!=''">Past
+									selected:<span style="font-weight: normal">{{jaundiceTempObj.pastCauseOfJaundice}}</span>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row table full no-padding-right padding-10-y">
+						<div class="col-md-2 no-padding-right"
+							*ngIf="statusJaundice.jaundice.causeofjaundiceList != null && statusJaundice.jaundice.causeofjaundiceList.includes('JAU0006')">
+							<span class="bold required">Other </span>
+							<div class="relative-input-group block padding-top-1">
+								<input type="text" required="required"
+									(keyup)="creatingProgressNotesTemplate()"
+									[(ngModel)]="statusJaundice.jaundice.otherCause"
+									class="col-md-12 input input-medium" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="assesment-container no-padding-right">
+					<div class="row table full padding-10-x no-padding-right"
+						(click)="progressNotesSectionVisible()">
+						<div class="table-cell middle-aligned">
+							<div
+								class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+								<span class="sprite sprite-progress"></span>
+							</div>
+						</div>
+						<div class="table-cell middle-aligned" style="width: 14%">
+							<h1
+								class="no-margin system-main-heading progress-assessment-color">Progress
+								Notes</h1>
+						</div>
+						<div
+							class="table-cell padding-10-x no-padding-right middle-aligned"
+							style="width: 100%">
+							<hr class="progress-assessment-line">
+						</div>
+						<div class="table-cell middle-aligned">
+							<a class="sprite sprite-minus-progress middle-aligned"
+								*ngIf="isProgressNotesVisible"></a> <a
+								class="sprite sprite-plus-progress middle-aligned"
+								*ngIf="!(isProgressNotesVisible)"></a>
+						</div>
+					</div>
+				</div>
+				<div class="assesment-container" *ngIf="isProgressNotesVisible">
+					<div class="row padding-10-y">
+						<div class="col-md-2 table full no-padding-right">
+							<span class="bold">Associated Event</span> <select
+								name="AssociatedSelect" id="Associated"
+								class="input input-medium desktop-column-20 max-height-36"
+								[(ngModel)]="statusJaundice.jaundice.associatedevent">
+								<!--data-ng-options="item[1] as item[1] for item in statusJaundice.associatedEvents"-->
+								<option selected value="">-- Select --</option>
+								<option *ngFor="let item of statusJaundice.associatedEvents">{{item[1]}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="row padding-10-y no-padding-top">
+						<div class="input-group input-group-labeled col-md-12 right">
+							<div class="desktop-column-20 padding-0-x force-left">
+								<textarea
+									class="desktop-column-20 max-height-36 set-font-size-default"
+									rows="4" [(ngModel)]="statusJaundice.jaundice.comment"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="assesment-container"
+			*ngIf="statusJaundice.jaundice != null && statusJaundice.jaundice != undefined">
+			<div class="col-md-12 no-padding">
+				<div class="col-md-4 no-padding"></div>
+				<div class="col-md-4 no-padding border-radius-5 center-aligned">
+					<span class="alert alert-small margin-10-x border-radius-5 "
+						[ngClass]="{ 'alert-red' : responseType !='success','alert-green' : responseType =='success'}"
+						*ngIf="vanishSubmitResponseVariable">{{responseMessage}}</span>
+				</div>
+				<div class="col-md-4 no-padding"></div>
+			</div>
+			<div
+				class="desktop-column-20 padding-0-x force-left padding-top-2 center-aligned">
+				<div id="footer">
+					<span class=""></span>
+					<button (click)="submitJaundice();"
+						class="button button-blue button-large" type="submit">SUBMIT</button>
+					<!--[disabled]="(!jaundiceForm.$valid)"-->
+					<span class="button button-blue-transparent button-large"
+						(click)="refreshJaundice()"> <i class="refresh"></i>
+						REFRESH
+					</span>
+				</div>
+			</div>
+		</div>
+		<!-- </form> -->
+		<div style="background-color: white">
+			<div
+				class="desktop-column-20 table full padding-0-x force-left padding-10-y assesment-container">
+				<div class="desktop-column-9 table-cell left-aligned">
+					<h1 class="light margin-5-y blue-text"
+						*ngIf="isJaundiceGraph == true">Past History</h1>
+					<div class="col-md-12 table full" *ngIf="isJaundiceGraph == false">
+						<div class="table-cell col-md-4">
+							<h1 class="light margin-5-y blue-text">Graph View</h1>
+						</div>
+						<div class="table-cell col-md-8 no-padding">
+							<div class="toggle-options-radio padding-top-1">
+								<input type="radio" name="GraphViewToggle" [value]="false"
+									[(ngModel)]="GraphViewToggle" id="GraphViewToggleDay"
+									(ngModelChange)="switchPastGraph()"> <label
+									for="GraphViewToggleDay">Day</label><input type="radio"
+									name="GraphViewToggle" [value]="true"
+									[(ngModel)]="GraphViewToggle" id="GraphViewToggleHour"
+									(ngModelChange)="switchPastGraph()"> <label
+									for="GraphViewToggleHour">Hour</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="desktop-column-9 table-cell right-aligned top-aligned">
+					<span class="button button-blue button-large"
+						*ngIf="isJaundiceGraph == true" (click)="jaundiceView()">
+						Graph View</span> <span
+						class="button button-blue-transparent button-large"
+						*ngIf="isJaundiceGraph == false" (click)="jaundiceView()">Past
+						History</span>
+				</div>
+			</div>
+			<div
+				class="desktop-column-20 padding-0-x force-left assesment-container padding-5-y margin-bottom-100"
+				*ngIf="isJaundiceGraph == true">
+				<table
+					class="table table-striped table-bordered headed-table desktop-column-20">
+					<tr>
+						<td class="center-aligned">Date</td>
+						<td class="center-aligned">Jaundice State</td>
+						<td class="center-aligned">Age</td>
+						<td class="center-aligned">TcB</td>
+						<td class="center-aligned">TcB State</td>
+						<td class="center-aligned">Order Investigation</td>
+						<td class="center-aligned">Treatment Plan</td>
+						<td class="center-aligned">Cause Of Jaundice</td>
+						<td class="center-aligned">Progress Notes</td>
+
+					</tr>
+					<tr *ngFor="let option of statusJaundice.listJaundice">
+						<td class="center-aligned"
+							(click)="navi(this.option.sajaundiceid)"
+							*ngIf="option.assessmentTime!=null"><span>{{option.assessmentTime
+								| date:'dd-MM-yyyy hh:mm a'}}</span></td>
+						<td class="center-aligned"
+							(click)="navi(this.option.sajaundiceid)"><span
+							*ngIf="option.jaundicestatus=='No'">Passive</span> <span
+							*ngIf="option.jaundicestatus=='Yes'">Active</span> <span
+							*ngIf="option.jaundicestatus=='Inactive'" (click)="showmodel()">Inactive</span></td>
+						<td class="center-aligned"
+							(click)="navi(this.option.sajaundiceid)"><span>{{option.ageofonset}}
+								<div>
+									<label *ngIf="option.isageofonsetinhours">Hours</label><label
+										*ngIf="!option.isageofonsetinhours">Days</label>
+								</div>
+						</span></td>
+						<td class="center-aligned"
+							(click)="navi(this.option.sajaundiceid)"><span>{{option.tbcvalue}}</span></td>
+						<td class="center-aligned"
+							(click)="navi(this.option.sajaundiceid)"><span
+							*ngIf="option.isphotobelowthreshold == 'belowThreshold'">Below
+								Threshold</span> <span
+							*ngIf="option.isphotobelowthreshold == 'aboveThreshold'">Above
+								Threshold</span> <span
+							*ngIf="option.isphotobelowthreshold == 'threshold'">Threshold</span>
+						</td>
+						<td class="center-aligned"
+							(click)="navi(this.option.sajaundiceid)">
+							<div *ngFor="let temp of option.orderinvestigationList">
+								<div>
+									<div *ngIf="!$last">{{temp}},</div>
+									<div *ngIf="$last">{{temp}}</div>
+								</div>
+							</div>
+						</td>
+						<td class="center-aligned"
+							(click)="navi(this.option.sajaundiceid)">
+							<div
+								*ngFor="let item of statusJaundice.dropDowns.treatmentAction">
+								<div *ngFor="let temp of option.actiontypeList; let i = index"
+									[attr.data-index]="i">
+									<!-- track by $index-->
+									<div *ngIf="temp == item.key">{{item.value}}</div>
+								</div>
+							</div>
+						</td>
+						<td class="center-aligned"
+							(click)="navi(this.option.sajaundiceid)">
+							<div
+								*ngFor="let item of statusJaundice.dropDowns.causeOfJaundice">
+								<div *ngFor="let temp of option.causeofjaundiceList">
+									<div *ngIf="temp == item.key">{{item.value}}</div>
+								</div>
+							</div>
+						</td>
+						<td class="center-aligned"
+							(click)="navi(this.option.sajaundiceid)"><span>{{option.comment}}</span></td>
+					</tr>
+				</table>
+			</div>
+			<div
+				class="desktop-column-20 padding-0-x force-left assesment-container padding-5-y"
+				*ngIf="isJaundiceGraph == false">
+
+				<div *ngIf="GraphViewToggle == true">
+					<!-- <div class="col-md-12"><h1>Hours {{GraphViewToggle}}</h1></div> -->
+					<div class="col-md-12">
+						<div class="desktop-column-20 padding-0-x force-left"
+							style="margin-left: 0%; padding-bottom: 2%">
+							<div id="jaundiceHourGraphContainer" [chart]="chartJaundiceHour"
+								style="height: 500px; width: 1024px; border-style: solid; border: 1px; overflow: hidden"></div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="GraphViewToggle == false">
+					<div class="col-md-12">
+						<div class="desktop-column-20 padding-0-x force-left"
+							style="margin-left: 0%; padding-bottom: 2%">
+							<div id="jaundiceDayGraphContainer" [chart]="chartJaundiceDay"
+								style="height: 500px; width: 1024px; border-style: solid; border: 1px; overflow: hidden"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- model popup for Graph -->
+<div class="overlay" id="ballardOverlay"></div>
+<div class="modal-box-lg bhutani-popup" id="bhutaniPopup">
+	<button (click)='closeModalBhutani()' class="modal-popup-close-btn"></button>
+	<div class="inicu-tab-container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1
+					class="assessment-heading no-margin left-aligned padding-20-x padding-10-y border-bottom-grey">{{phototherapyGraphType}}</h1>
+			</div>
+			<div class="col-md-12 padding-20-y" *ngIf="phototherapyGraph==true">
+				<div class="" style="padding-left: 2%; padding-right: 4%">
+					<div class="desktop-column-20 padding-0-x force-left">
+						<div id="bhutaniContainer" [chart]="chartBhutani"
+							style="height: 400px; width: 800px; border-style: solid; border: 1px; overflow: hidden; text-align: center"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 padding-20-y"
+				*ngIf="phototherapyGraph == false">
+				<div class="" style="padding-left: 2%; padding-right: 4%">
+					<div class="desktop-column-20 padding-0-x force-left">
+						<div id="niceContainer" [chart]="chartNice"
+							style="height: 400px; width: 100%; border-style: solid; border: 1px; overflow: hidden; text-align: center"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- below code is for the bind score popUP -->
+<div class="overlay" id="scoresOverlay"></div>
+<div class="modal-box-lg bind-popup"
+	*ngIf="scoreBindObj != null && scoreBindObj != undefined"
+	id="bindScorePopup">
+	<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+	<button class="modal-popup-close-btn" (click)="closeBind()"></button>
+	<div class="inicu-tab-container">
+		<div class="tab-header">
+			<!-- data-ng-init="tabContent = 'bind'"-->
+			<div class="tab-header-menu">
+				<input type="radio" id="bindScoreRadio" name="bind tab menu"
+					[(ngModel)]="tabContent" value="bind"><label
+					for="bindScoreRadio">Bind Score</label>
+			</div>
+		</div>
+		<div class="tab-content-cont full">
+			<div class="tab-content full bind-tab" id="bindScore">
+				<div class="table" style="">
+					<div class="table-row">
+						<div class="table-cell">
+							<span></span>
+						</div>
+						<div class="table-cell">
+							<span>0(None)</span>
+						</div>
+						<div class="table-cell">
+							<span>1(Mild)</span>
+						</div>
+						<div class="table-cell">
+							<span>2(Moderate)</span>
+						</div>
+						<div class="table-cell">
+							<span>3(Severe)</span>
+						</div>
+					</div>
+					<div class="table-row" *ngFor="let status of bindStructure">
+						<div class="table-cell middle-aligned">
+							<span>{{status.clinicalStatus}}</span>
+						</div>
+						<div class="table-cell middle-aligned"
+							*ngFor="let scores of status.scoreList; let i = index"
+							[attr.data-index]="i">
+							<!-- {{statusScore[scores.scoreName]}} track by $index-->
+							<input type="radio" [value]="i"
+								[(ngModel)]="statusScore[scores.scoreName]"
+								name="{{status.clinicalStatus}}"
+								id="{{status.clinicalStatus.split(' ').join('')}}{{status.statusIndex}}{{i}}"
+								class="hidden"> <label class="score-radio">
+								<div class="bind-score-list">
+									<ul>
+										<li *ngFor="let item of scores.signList">
+											<!--[value]="true"  [checked]="item.selected"--> <input
+											type="checkbox" id="{{item.dbRefId}}" name="{{item.dbRefId}}"
+											value=true [(ngModel)]="item.selected" class="bind-check"
+											(ngModelChange)="scoreSelect(item.dbRefId, status.clinicalStatus.split(' ').join(''),scores.scoreValue,i)">
+											<label for="{{item.dbRefId}}" class="inline"><span>{{item.clinicalSign}}
+											</span></label>
+										</li>
+									</ul>
+								</div>
+							</label>
+						</div>
+					</div>
+					<div class="table-row">
+						<div class="table-cell"></div>
+						<div class="table-cell"></div>
+						<div class="table-cell"></div>
+						<div class="table-cell"></div>
+						<div class="table-cell">
+							<input type="text" [disabled]="true"
+								[(ngModel)]="scoreBindObj.bindscore" class="pull-right">
+						</div>
+					</div>
+				</div>
+				<div
+					class="block right-aligned col-md-12 table full margin-20-y pull-right">
+					<div class="col-md-10 no-padding-right">
+						<label id="bindNotValid" style="display: none;"
+							class="no-padding right-aligned error-labels">Some fields
+							are not selected</label>
+					</div>
+					<div class="col-md-1 no-padding-right">
+						<button class="center-aligned button button-blue button-large"
+							(click)="saveBindScorefunctionlity()">Save</button>
+					</div>
+				</div>
+				<div class="table">
+					<div class="table-cell"></div>
+					<div class="table-cell"></div>
+				</div>
+				<pre>{{scoreInputs}}</pre>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of the above code -->
+<!-- below code is for inactive jaundice popUP -->
+<div class="overlay" id="scoresOverlay"></div>
+<div class="modal-box-lg bind-popup" id="OkCancelPopUp"
+	style="width: 400px; top: 50px;">
+	<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+	<button class="modal-popup-close-btn" (click)="closeOkPopUp()"></button>
+	<div class="inicu-tab-container">
+		<div class="tab-content-cont full padding-10-y">
+			<div class="table full center-aligned">
+				<span style="color: red; font-size: 80px">?</span>
+			</div>
+			<span class="bold" style="font-size: 17px">Are you Sure you
+				want to Inactivate Jaundice Assessment?</span>
+			<div class="col-md-12 padding-20-y">
+				<div class="col-md-6 center-aligned">
+					<span class="center-aligned button button-blue"
+						(click)="submitInactive()">Submit</span>
+				</div>
+				<div class="col-md-6 center-aligned">
+					<span class="center-aligned button button-blue-transparent"
+						(click)="closeOkPopUp()">Cancel</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of the above code -->
+<!-- below code is for inactive jaundice Active Medication-->
+<div class="overlay" id="MedicationOverlay"></div>
+<div class="modal-box-lg bind-popup" id="medicationPopup"
+	style="width: 80%; top: 50px;">
+	<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+	<button class="modal-popup-close-btn" (click)="closeMedicationPopUp()"></button>
+	<div>
+		<div class="tab-content-cont full padding-10-y">
+			<div class="table">
+				<span style="color: #74afff;font-size: 20px;margin-left: 14px;">Medication status at Inactive state</span>
+			</div>
+			<div class="col-md-12 padding-20-y" style="height:500px;overflow-y:scroll">
+				<div class="row padding-2-y">
+					<div class="col-md-2">
+						<span style="float: left;">Medicine Name</span>
+					</div>
+					<div class="col-md-2">
+						<span style="float: left;">Start Date | Time</span>
+					</div>
+					<div class="col-md-2">
+						<input type="checkbox" name="stop" style="width: 13px;height: auto;display: inline-block;float: left;-webkit-appearance: checkbox;" [ngModel]="selectAll" (click)="stopAllMed(selectAll)">&nbsp;
+						<span style="float:left;">Stop All</span>
+					</div>
+
+				</div>
+			<div *ngFor="let medicine of pastPrescriptionList; let i = index" [attr.data-index]="i">
+				<div class="row padding-2-y" *ngIf="medicine.eventname == 'Jaundice' && medicine.isactive == true">
+					<div class="col-md-2">
+						<span style="float: left;">{{medicine.medicinename}}</span>
+					</div>
+					<div class="col-md-2">
+						<span style="float: left;">{{medicine.startdate | date:'dd-MM-yyyy hh:mm a'}}</span>
+					</div>
+					<div class="col-md-1">
+						<input type="checkbox" name="stop" [ngModel]="medicine.isStopped" (ngModelChange)="setEndDate(i)" style="width: 13px;height: auto;float: left;-webkit-appearance: checkbox;">Stop
+					</div>
+					<div class="col-md-3">
+						<owl-date-time class="owl-dateTime" [(ngModel)]="medicine.enddate" [ngModelOptions]="{standalone: true}" [max]="maxDate" (ngModelChange)="toggleIscontinue(i)"></owl-date-time>
+					</div>
+					<div class="col-md-2">
+						<span style="float: left;"><button class="btn button-blue" (click)="commentBoxEnable(i)">Continue</button></span>
+					</div>
+					<div class="col-md-2" *ngIf="medicine.isContinue">
+						<input type="text" name="free" [(ngModel)]="medicine.continueReason" style="float: left;">
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 15px">
+				<span><button class="btn button-blue" (click)="saveMedicine()">Save</button></span>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of the above code -->
+<!-- below code is used to modal of order investigation -->
+<div class="overlay" id="ballardOverlay"></div>
+<div class="modal-box-lg ballard-popup"
+	*ngIf="statusJaundice.dropDowns != undefined && statusJaundice.dropDowns != null"
+	id="OrderInvestigationPopup">
+	<button class="modal-popup-close-btn"
+		(click)="closeModalOrderInvestigation()"></button>
+
+	<div class="inicu-tab-container">
+		<div class="tab-header" ng-init="tabContent = 'neuro'">
+			<div class="padding-20-x table full">
+				<div class="table-cell pull-left">
+					<h1
+						class="assessment-heading no-margin font-size-16 left-aligned padding-10-y">Tests</h1>
+				</div>
+				<div class="table-cell pull-right padding-5-y">
+					<span class="button button-green  middle-aligned pull-right"
+						(click)="orderSelected()">Order</span>
+				</div>
+			</div>
+		</div>
+		<hr class="no-margin">
+		<div class="tab-content-cont full">
+			<div class="col-md-12 no-padding border-bottom-2">
+				<div class="col-md-3 no-padding border-right-2">
+					<div class="table full"
+						*ngFor="let item of statusJaundice.dropDowns.testsList | JaundiceKeysPipe"
+						style="border-bottom: 2px solid #eeeeee">
+						<div class=" padding-20-y"
+							[ngClass]="{'highlighttab' : selectedDecease == item.key}"
+							(click)="populateTestsListByCategory(item.key)">
+							<span class="bold">{{item.key}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="table full padding-10-y left-aligned"
+						*ngFor="let testsList of listTestsByCategory">
+						<div class="blue-round-tick setting-checkbox-without-margin">
+							<input type="checkbox" name="{{'testid' +testsList.testid}}"
+								id="{{'testid' + testsList.testid}}"
+								[(ngModel)]="testsList.isSelected"> <label
+								for="{{'testid' + testsList.testid}}">{{testsList.testname}}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<!-- end of the above code -->
+<div class="overlay" id="warningOverlay"></div>
+<div class="modal-box-lg bind-popup" id="OkWarningPopUp"
+	style="width: 400px; top: 50px;">
+	<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+	<button class="modal-popup-close-btn" (click)="closeWarningPopUp()"></button>
+	<div class="inicu-tab-container">
+		<div class="tab-content-cont full padding-10-y">
+			<span class="bold" style="font-size: 17px"> {{warningMessage}}
+			</span>
+		</div>
+	</div>
+</div>
+<!-- code of loader -->
+<span class="inicu-loader" *ngIf="isLoaderVisible">
+	<span class="inicu-loader-content">
+        <span class="inicu-adding-image"></span>
+		<span class="inicu-loading-content">{{loaderContent}}</span>
+	</span>
+</span>
+<!-- end of Above Code -->

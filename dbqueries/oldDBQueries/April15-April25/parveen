@@ -1,0 +1,271 @@
+
+CREATE OR REPLACE VIEW apollo.vw_doctornotes_list_raw
+            (assesmentid, uhid, creationtime, modificationtime, sa_event, treatment, plan, testname, progressnotes) as
+SELECT j.sajaundiceid                  AS assesmentid,
+       j.uhid,
+       j.assessment_time               AS creationtime,
+       j.modificationtime,
+       'Jaundice'::text                AS sa_event,
+       j.actiontype                    AS treatment,
+       j.planother AS plan,
+       i.testname,
+       j.comment                       AS progressnotes
+FROM apollo.sa_jaundice j
+         LEFT JOIN apollo.investigation_ordered i
+                   ON i.assesmentid::text = j.sajaundiceid::text AND lower(i.assesment_type::text) = 'jaundice'::text
+UNION
+SELECT j.resprdsid              AS assesmentid,
+       j.uhid,
+       j.assessment_time        AS creationtime,
+       j.modificationtime,
+       'RDS'::text              AS sa_event,
+       j.treatmentaction        AS treatment,
+       j.othercomments AS plan,
+       i.testname,
+       j.progressnotes
+FROM apollo.sa_resp_rds j
+         LEFT JOIN apollo.investigation_ordered i
+                   ON i.assesmentid::text = j.resprdsid::text AND lower(i.assesment_type::text) = 'respiratory'::text
+UNION
+SELECT j.resppphnid             AS assesmentid,
+       j.uhid,
+       j.assessment_time        AS creationtime,
+       j.modificationtime,
+       'PPHN'::text             AS sa_event,
+       j.treatmentaction        AS treatment,
+       j.pphnplan AS plan,
+       i.testname,
+       j.progressnotes
+FROM apollo.sa_resp_pphn j
+         LEFT JOIN apollo.investigation_ordered i
+                   ON i.assesmentid::text = j.resppphnid::text AND lower(i.assesment_type::text) = 'pphn'::text
+UNION
+SELECT j.resppneumothoraxid     AS assesmentid,
+       j.uhid,
+       j.assessment_time        AS creationtime,
+       j.modificationtime,
+       'Pneumothorax'::text     AS sa_event,
+       j.treatmentaction        AS treatment,
+       j.otherplan_comments AS plan,
+       i.testname,
+       j.progressnotes
+FROM apollo.sa_resp_pneumothorax j
+         LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.resppneumothoraxid::text AND
+                                                     lower(i.assesment_type::text) = 'pneumothorax'::text
+UNION
+SELECT j.apneaid                    AS assesmentid,
+       j.uhid,
+       j.assessment_time            AS creationtime,
+       j.modificationtime,
+       'Apnea'::text                AS sa_event,
+       j.actiontype                 AS treatment,
+       j.action_plan AS plan,
+       i.testname,
+       j.apnea_comment              AS progressnotes
+FROM apollo.sa_resp_apnea j
+         LEFT JOIN apollo.investigation_ordered i
+                   ON i.assesmentid::text = j.apneaid::text AND lower(i.assesment_type::text) = 'apnea'::text
+UNION
+SELECT j.sacnsasphyxiaid        AS assesmentid,
+       j.uhid,
+       j.assessment_time        AS creationtime,
+       j.modificationtime,
+       'Asphyxia'::text         AS sa_event,
+       j.treatmentaction        AS treatment,
+       j.otherplan_comments AS plan,
+       i.testname,
+       j.progressnotes
+FROM apollo.sa_cns_asphyxia j
+         LEFT JOIN apollo.investigation_ordered i
+                   ON i.assesmentid::text = j.sacnsasphyxiaid::text AND lower(i.assesment_type::text) = 'asphyxia'::text
+UNION
+SELECT j.sacnsseizuresid        AS assesmentid,
+       j.uhid,
+       j.assessment_time        AS creationtime,
+       j.modificationtime,
+       'Seizures'::text         AS sa_event,
+       j.treatmentaction        AS treatment,
+       j.otherplan_comments AS plan,
+       i.testname,
+       j.progressnotes
+FROM apollo.sa_cns_seizures j
+         LEFT JOIN apollo.investigation_ordered i
+                   ON i.assesmentid::text = j.sacnsseizuresid::text AND lower(i.assesment_type::text) = 'seizures'::text
+UNION
+SELECT j.sacnsivhid             AS assesmentid,
+       j.uhid,
+       j.creationtime,
+       j.modificationtime,
+       'IVH'::text              AS sa_event,
+       j.treatmentaction        AS treatment,
+       j.othercomments AS plan,
+       i.testname,
+       j.progressnotes
+FROM apollo.sa_cns_ivh j
+         LEFT JOIN apollo.investigation_ordered i
+                   ON i.assesmentid::text = j.sacnsivhid::text AND lower(i.assesment_type::text) = 'ivh'::text
+UNION
+SELECT j.sasepsisid             AS assesmentid,
+       j.uhid,
+       j.assessment_time        AS creationtime,
+       j.modificationtime,
+       'Sepsis'::text           AS sa_event,
+       j.treatmentaction        AS treatment,
+       j.otherplan_comments AS plan,
+       i.testname,
+       j.progressnotes
+FROM apollo.sa_infection_sepsis j
+         LEFT JOIN apollo.investigation_ordered i
+                   ON i.assesmentid::text = j.sasepsisid::text AND lower(i.assesment_type::text) = 'sepsis'::text
+UNION
+SELECT sn.id                  AS assesmentid,
+       sn.uhid,
+       sn.entrytime           AS creationtime,
+       sn.modificationtime,
+       'Stable Notes'::text   AS sa_event,
+       'NA'::text             AS treatment,
+       sn.plan             AS plan,
+       'NA'::text             AS testname,
+       sn.provisionaltemplate AS progressnotes
+FROM apollo.stable_notes sn
+UNION
+SELECT j.sa_miscellaneous_id           AS assesmentid,
+       j.uhid,
+       j.assessment_time               AS creationtime,
+       j.modificationtime,
+       'Misc'::text                    AS sa_event,
+       j.treatment,
+       j.planother AS plan,
+       i.testname,
+       j.comment                       AS progressnotes
+FROM apollo.sa_miscellaneous j
+         LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.sa_miscellaneous_id::text AND
+                                                     lower(i.assesment_type::text) = 'miscellaneous'::text
+UNION
+SELECT j.renalid                       AS assesmentid,
+       j.uhid,
+       j.assessment_time               AS creationtime,
+       j.modificationtime,
+       'Renal'::text                   AS sa_event,
+       j.action_type                   AS treatment,
+       j.plancomment AS plan,
+       i.testname,
+       j.comment                       AS progressnotes
+FROM apollo.sa_renalfailure j
+         LEFT JOIN apollo.investigation_ordered i
+                   ON i.assesmentid::text = j.renalid::text AND lower(i.assesment_type::text) = 'renal'::text
+UNION
+SELECT j.feedintoleranceid      AS assesmentid,
+       j.uhid,
+       j.assessment_time        AS creationtime,
+       j.modificationtime,
+       'Feed Intolerance'::text AS sa_event,
+       j.action_type            AS treatment,
+       j.planother                AS plan,
+       i.testname,
+       j.comment                AS progressnotes
+FROM apollo.sa_feed_intolerance j
+         LEFT JOIN apollo.investigation_ordered i ON i.assesmentid::text = j.feedintoleranceid::text AND
+                                                     lower(i.assesment_type::text) = 'feedintolerance'::text
+UNION
+SELECT j.sashockid       AS assesmentid,
+       j.uhid,
+       j.assessment_time AS creationtime,
+       j.modificationtime,
+       'Shock'::text     AS sa_event,
+       j.actiontype      AS treatment,
+       j.planother         AS plan,
+       i.testname,
+       j.comment         AS progressnotes
+FROM apollo.sa_shock j
+         LEFT JOIN apollo.investigation_ordered i
+                   ON i.assesmentid::text = j.sashockid::text AND lower(i.assesment_type::text) = 'Shock'::text
+UNION
+SELECT j.painid          AS assesmentid,
+       j.uhid,
+       j.assessment_time AS creationtime,
+       j.modificationtime,
+       'Pain'::text      AS sa_event,
+       j.action_string   AS treatment,
+       j.planother        AS plan,
+       i.testname,
+       j.comment         AS progressnotes
+FROM apollo.sa_pain j
+         LEFT JOIN apollo.investigation_ordered i
+                   ON i.assesmentid::text = j.painid::text AND lower(i.assesment_type::text) = 'Pain'::text
+UNION
+SELECT j.sanec_id        AS assesmentid,
+       j.uhid,
+       j.assessment_time AS creationtime,
+       j.modificationtime,
+       'NEC'::text       AS sa_event,
+       j.treatmentaction AS treatment,
+       j.other_plan_comments         AS plan,
+       i.testname,
+       j.progressnotes
+FROM apollo.sa_infection_nec j
+         LEFT JOIN apollo.investigation_ordered i
+                   ON i.assesmentid::text = j.sanec_id::text AND lower(i.assesment_type::text) = 'NEC'::text;
+
+
+alter table apollo.vw_doctornotes_list_raw
+    owner to postgres;
+
+-- View: apollo.vw_doctornotes_list_rule
+
+-- DROP VIEW apollo.vw_doctornotes_list_rule;
+
+CREATE OR REPLACE VIEW apollo.vw_doctornotes_list_rule AS
+ SELECT j.assesmentid,
+    string_agg(j.testname::text, ', '::text) AS testname
+   FROM apollo.vw_doctornotes_list_control j
+  GROUP BY j.assesmentid;
+
+ALTER TABLE apollo.vw_doctornotes_list_rule
+  OWNER TO postgres;
+
+
+
+
+-- View: apollo.vw_doctornotes_list_control
+
+-- DROP VIEW apollo.vw_doctornotes_list_control;
+
+CREATE OR REPLACE VIEW apollo.vw_doctornotes_list_control AS
+ SELECT j.assesmentid,
+    j.uhid,
+    j.creationtime,
+    j.modificationtime,
+    j.sa_event,
+    j.treatment,
+    j.plan,
+    j.testname,
+    j.progressnotes
+   FROM apollo.vw_doctornotes_list_raw j
+  ORDER BY j.uhid, j.creationtime DESC;
+
+ALTER TABLE apollo.vw_doctornotes_list_control
+  OWNER TO postgres;
+
+
+  -- View: apollo.vw_doctornotes_list_final
+
+  -- DROP VIEW apollo.vw_doctornotes_list_final;
+
+  CREATE OR REPLACE VIEW apollo.vw_doctornotes_list_final AS
+   SELECT DISTINCT j.assesmentid,
+      j.uhid,
+      j.creationtime,
+      j.modificationtime,
+      j.sa_event,
+      j.treatment,
+      j.plan,
+      r.testname,
+      j.progressnotes
+     FROM apollo.vw_doctornotes_list_control j
+       LEFT JOIN apollo.vw_doctornotes_list_rule r ON j.assesmentid = r.assesmentid
+    ORDER BY j.uhid, j.creationtime DESC;
+
+  ALTER TABLE apollo.vw_doctornotes_list_final
+    OWNER TO postgres;
+

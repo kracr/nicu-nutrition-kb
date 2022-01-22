@@ -1,0 +1,42 @@
+.individual-box {
+	border: 1px solid #eeeeee;
+    box-shadow: 0px 4px 35px 0px #eeeeee;
+}
+.panel-box{
+    background-color: #fff;
+    border: 2px solid #eeeeee;
+    box-shadow: 0px 4px 35px 0px #eeeeee;
+    height: 242px;
+    margin-top: 28px;
+    margin-left: 14px;
+    overflow-y: scroll;
+}
+.checkbox{
+    width: 13px !important;
+    height: 13px !important;
+    -webkit-appearance: checkbox !important;
+}
+#createPanelModal{
+    width: 900px !important;
+}
+.search-bar{
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCS…vJZU+pHvhT+b7fudwTAGSUzytUGIZOGIb3/8rDb/TP6zcFAQ5Mq/LfbQAAAABJRU5ErkJggg==);
+    content: '';
+    height: 30px!important;
+    width: 30px!important;
+    display: block!important;
+    position: absolute!important;
+    top: 3px!important;
+    right: 115px !important;
+}
+.selected-panel-box{
+    padding:0px;
+    width: 30%;
+}
+.selected-panel{
+    border: 1px solid lightgray;
+    padding-left: 0px;
+}
+.active{
+    background-color: lightgray;
+}

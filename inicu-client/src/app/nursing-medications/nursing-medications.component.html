@@ -1,0 +1,1046 @@
+<nusring-panel></nusring-panel>
+<div *ngIf="nursingMedicationModel != null" class="clear desktop-column-20 nursing-medication-background-color">
+	<div class="col-md-12" (click)="orderSectionVisible()">
+		<div class="table-cell middle-aligned">
+			<div class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+				<span class="sprite sprite-clinical-assessment"></span>
+			</div>
+		</div>
+		<div class="table-cell middle-aligned" style="width: 5%">
+			<h1 class="no-margin system-main-heading clinical-assessment-color">Orders</h1>
+		</div>
+		<div class="table-cell padding-10-x no-padding-right middle-aligned" style="width: 100%">
+			<hr class="clinical-assessment-line ">
+		</div>
+		<div class="table-cell middle-aligned">
+			<a class="sprite sprite-minus-clinical middle-aligned" *ngIf="isOrderVisible"></a>
+			<a class="sprite sprite-plus-clinical middle-aligned" *ngIf="!(isOrderVisible)"></a>
+		</div>
+	</div>
+	<div *ngIf="isOrderVisible">
+		<div class="col-md-12 margin-10-y">
+			<div class="col-md-4 no-padding-left"></div>
+			<div class="col-md-4 no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="bold">From</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" name="fromdate" type="both" [(ngModel)]="fromDate" [min]="minValidDate" [max]="maxDate" autoClose=true></owl-date-time>
+				</div>
+			</div>
+			<div class="col-md-3 no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="bold">To</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" name="todate" type="both" [(ngModel)]="toDate" [min]="minValidDate" [max]="maxDate" autoClose=true></owl-date-time>
+				</div>
+			</div>
+			<div class="col-md-1 no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">To</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<button class="button button-blue button-large" type="button" (click)="filterDoctorMedication(fromDate, toDate)"> SHOW</button>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="(nursingMedicationModel.allMedicationList != null && nursingMedicationModel.allMedicationList.length > 0)
+			|| (nursingMedicationModel.assessmentMedicineList != null && nursingMedicationModel.assessmentMedicineList.length > 0)">
+			<div class="col-md-12">
+				<div class="col-md-1"></div>
+				<div class="col-md-2">
+					<span class="bold">Order Time</span>
+				</div>
+				<div class="col-md-7">
+					<span class="bold">Medicine Instruction</span>
+				</div>
+				<div class="col-md-2"></div>
+			</div>
+		</div>
+		<div *ngFor="let item of nursingMedicationModel.allMedicationList">
+			<div class="col-md-12">
+				<div class="col-md-12 margin-10-y" (click)="selectMedicine(item, false)" *ngIf="item.visibility" style="width: 100%; border: 3px solid #EBB744;background-color:#FDF7E9">
+					<div class="col-md-1 center-aligned" style="padding: 6px; border-right: 1px solid #EBB744">
+						<span class="" [ngClass]="{'nursing-medication-selected': selectedMedication.babyPresid == item.babyPresid, 'nursing-medication-unselected': selectedMedication.babyPresid != item.babyPresid}">x</span>
+					</div>
+					<div class="col-md-2" style="padding: 7px;">
+						<span class="blue-text" *ngIf="item.isactive">{{item.startdate | date:'dd-MM-yyyy hh:mm a'}}</span>
+						<span class="blue-text" *ngIf="!item.isactive">{{item.enddate | date:'dd-MM-yyyy hh:mm a'}}</span>
+					</div>
+					<div class="" [ngClass]="{'col-md-7': (item.isactive && item.due_date != null),'col-md-9': !(item.isactive && item.due_date != null) }" style="padding: 7px">
+						<div class="" [ngClass]="{'col-md-9': item.preparationObj.medication_preparation_id != null,'col-md-12': item.preparationObj.medication_preparation_id == null }">
+							<span class="bold">{{item.nursingInstruction}}</span>
+						</div>
+						<div class="col-md-3" *ngIf="item.preparationObj.medication_preparation_id != null">
+							<button class="button button-blue margin-5-x" type="button" (click)="showPreparationModal()"> Revise Order </button>
+						</div>
+					</div>
+					<div class="col-md-2" style="padding: 7px;" *ngIf="item.isactive && item.due_date != null">
+						<div class="col-md-12 no-padding">
+							<span class="red-text bold">Next Dose Due on</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<span class="red-text bold">{{item.due_date | date:'dd-MM-yyyy hh:mm a'}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="nursingMedicationModel.assessmentMedicineList != null && nursingMedicationModel.assessmentMedicineList.length > 0">
+			<div class="col-md-12">
+				<span class="light margin-5-y blue-text bold font-18">Caffeine & Surfactants</span>
+			</div>
+		</div>
+		<div *ngFor="let item of nursingMedicationModel.assessmentMedicineList">
+			<div class="col-md-12">
+				<div class="col-md-12 margin-10-y" (click)="selectMedicine(item, true)" style="width: 100%; border: 3px solid #EBB744;background-color:#FDF7E9">
+					<div class="col-md-1 center-aligned" style="padding: 6px; border-right: 1px solid #EBB744">
+						<span [ngClass]="{'nursing-medication-selected': selectedMedication.assessmentid == item.assessmentid, 'nursing-medication-unselected': selectedMedication.assessmentid != item.assessmentid}">x</span>
+					</div>
+					<div class="col-md-2" style="padding: 7px;">
+						<span class="blue-text">{{item.assessmenttime | date:'dd-MM-yyyy hh:mm a'}}</span>
+					</div>
+					<div class="col-md-7" style="padding: 7px">
+						<span class="bold">{{item.nursingInstruction}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="nursingMedicationModel.bloodProductList.length > 0">
+			<div class="col-md-12">
+				<span class="bold blue-text">Blood Product</span>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="col-md-12 margin-10-y" *ngFor="let item of nursingMedicationModel.bloodProductList"
+			 style="width: 100%; border: 3px solid #EBB744;background-color:#FDF7E9" (click)="selectBloodProduct(item)"
+			 [hidden]="item.nursingObj.delivered_volume != null && item.nursingObj.delivered_volume != ''
+			 && (maxDate.getTime() - item.assessment_time.getTime()) > (24 * 60 * 60 *1000)">
+				<div class="col-md-1 center-aligned" style="padding: 6px; border-right: 1px solid #EBB744">
+					<span [ngClass]="{'nursing-medication-selected': selectedBloodProduct.doctor_blood_products_id == item.doctor_blood_products_id,
+					'nursing-medication-unselected': selectedMedication.doctor_blood_products_id != item.doctor_blood_products_id}">x</span>
+				</div>
+				<div class="col-md-2" style="padding: 7px;">
+					<span class="blue-text">{{item.assessment_time | date:'dd-MM-yyyy hh:mm a'}}</span>
+				</div>
+				<div class="col-md-9" style="padding: 7px">
+					<p class="bold no-margin" *ngIf="item.bag_number != null && item.bag_number != '' && item.checked_by != null && item.checked_by != ''">
+						Bag no. {{item.bag_number}} of {{item.blood_group}} blood group, total volume of {{item.bag_volume}} ml with expiry date
+						 {{item.expiry_date | date:'dd-MM-yyyy'}} collected on {{item.collection_date | date:'dd-MM-yyyy'}} checked by Dr. {{item.checked_by}}.
+					</p>
+					<p class="bold no-margin" *ngIf="item.blood_volume_kg != null && item.blood_volume_kg != '' && item.infusion_time != null && item.infusion_time != ''">
+						Give {{item.blood_product}} {{item.blood_volume_kg}} ml/kg (total volume {{item.total_volume}} ml) over
+						 {{item.infusion_time}} hr @ {{item.infusion_rate}} ml/hr through {{item.venous_access}} vein.
+					</p>
+					<p class="bold no-margin">
+						<span *ngIf="item.vital_time != null && item.vital_time != ''">
+							Monitor vital every {{item.vital_time}} {{item.vital_time_type}}.
+						</span>
+						<span *ngIf="item.plan_test != null && item.plan_test != '' && item.test_time != null && item.test_time != ''">
+							Repeat {{item.plan_test}} after {{item.test_time}} {{item.test_time_type}}.
+						</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
+    <div *ngIf="nursingMedicationModel.centralLineList != null && nursingMedicationModel.centralLineList != undefined &&  nursingMedicationModel.centralLineList.length > 0">
+			<div class="col-md-12">
+				<span class="bold blue-text">Heplock</span>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="col-md-12 margin-10-y" *ngFor="let item of nursingMedicationModel.centralLineList"
+			 style="width: 100%; border: 3px solid #EBB744;background-color:#FDF7E9" (click)="selectHeplock(item)">
+				<div class="col-md-1 center-aligned" style="padding: 6px; border-right: 1px solid #EBB744">
+          <span [ngClass]="{'nursing-medication-selected': selectedHeplock.central_line_id == item.centralLineId,
+					'nursing-medication-unselected': selectedHeplock.central_line_id != item.centralLineId}">x</span>
+        </div>
+				<div class="col-md-2" style="padding: 7px;">
+					<span class="blue-text">{{item.creationtime | date:'dd-MM-yyyy hh:mm a'}}</span>
+				</div>
+				<div class="col-md-9" style="padding: 7px">
+					<p class="bold no-margin">
+					  {{ item.orderString }}
+				</div>
+			</div>
+		</div>
+		<!-- model popup for Graph -->
+		<div class="overlay" id="PreparationOverlay"></div>
+		<div class="modal-box-lg bhutani-popup" id="PreparationPopup" style="top:20%;min-height:400px">
+			<button (click)='closePreparation(false)' class="modal-popup-close-btn"></button>
+			<div class="inicu-tab-container">
+				<div class="col-md-12 no-padding" *ngIf="isMedicationOrder == true && selectedMedication != null && selectedMedication.preparationObj != null">
+					<div class="col-md-12 padding-10-y left-aligned">
+						<span class="light blue-text system-main-heading">Doctor Order</span>
+					</div>
+					<div class="col-md-12 padding-10-y left-aligned">
+						<span class="bold">{{selectedMedication.instruction}}</span>
+					</div>
+					<div class="col-md-12 padding-10-y">
+						<div class="col-md-2 no-padding-left">
+							<div class="col-md-12 left-aligned no-padding">
+								<span class="bold">Medicine Name</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="input-cont block visibility-text">
+									<input type="text" class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+									[(ngModel)]="selectedMedication.medicinename" disabled>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-left">
+							<div class="col-md-12 left-aligned no-padding">
+								<span class="bold">Brand Name</span>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf="!isBrandsAvailable">
+								<div class="input-cont block">
+									<input type="text" class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+									[(ngModel)]="selectedMedication.preparationObj.brand" (ngModelChange)="getMedInstruction(selectedMedication)">
+								</div>
+							</div>
+							<div class="col-md-12 no-padding" *ngIf="isBrandsAvailable">
+								<select class="input input-medium desktop-column-20"
+									[(ngModel)]="selectedMedication.preparationObj.brand"
+									[ngModelOptions]="{standalone: true}"
+									(ngModelChange)="getMedInstruction(selectedMedication)">
+									<option value="" hidden>--Select--</option>
+									<option *ngFor="let obj of brands" [ngValue]="obj.key">{{obj.value}}</option>
+								</select>
+								<div *ngFor="let temp of nursingMedicationModel.brandList"><p style="color:#74afff!important;" *ngIf="selectedMedication.preparationObj.brand != null && selectedMedication.preparationObj.brand == temp.refmedbrandid">{{temp.brandStrength}} {{temp.brandStrengthUnit}}</p></div>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-left">
+							<div class="col-md-12 left-aligned no-padding">
+								<span class="bold">Type</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<select name="medType" type="text" class="input input-medium col-md-12 no-margin"
+								[(ngModel)]="selectedMedication.preparationObj.content_type" (ngModelChange)="medTypeChange(selectedMedication)">
+									<option value="Liquid" *ngIf="!(selectedMedication.route == 'PO'
+									&& selectedMedication.po_type == 'Tablet')" selected>Liquid</option>
+									<option value="Powder" *ngIf="selectedMedication.route != 'PO'" selected>Powder</option>
+									<option value="Tablet" *ngIf="selectedMedication.route == 'PO'
+									&& selectedMedication.po_type == 'Tablet'" selected>Tablet</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="col-md-12 padding-10-y">
+							<div class="col-md-4 col-lg-2 no-padding-left">
+								<div class="col-md-12 left-aligned no-padding">
+									<span class="bold">Med. Content per vial</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<div class="relative-input-group block desktop-column-20">
+										<input type="number" name="powderContent" class="input input-medium desktop-column-8"
+										[(ngModel)]="selectedMedication.preparationObj.content_dose" (ngModelChange)="calMedStrength(selectedMedication)">
+										<select name="powderContentDrop" type="text" class="input input-medium desktop-column-12"
+										[(ngModel)]="selectedMedication.preparationObj.content_dose_type"  (ngModelChange)="getMedInstruction(selectedMedication)">
+											<option value="mg" selected>mg</option>
+											<option value="μg" selected>μg</option>
+											<option value="IU" selected>IU</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4 col-lg-2 no-padding-left" *ngIf="selectedMedication.preparationObj.content_type == 'Liquid'">
+								<div class="col-md-12 left-aligned no-padding">
+									<span class="bold">Medicine Vol per vial</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<div class="relative-input-group block desktop-column-20">
+										<input type="number" name="medVolume" class="input input-medium desktop-column-8"
+										[(ngModel)]="selectedMedication.preparationObj.med_volume" (ngModelChange)="calMedStrength(selectedMedication)">
+										<span class="input-group-icon center-aligned desktop-column-12">ml</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4 col-lg-2 no-padding-left" *ngIf="selectedMedication.preparationObj.content_type != 'Powder'">
+								<div class="col-md-12 left-aligned no-padding">
+									<span class="bold">Medicine Strength</span>
+								</div>
+								<div class="col-md-12 no-padding">
+									<div class="relative-input-group block desktop-column-20">
+										<input type="number" name="liquidStrength" class="input input-medium desktop-column-8 visibility-text"
+										[(ngModel)]="selectedMedication.preparationObj.med_strength" disabled>
+										<span class="input-group-icon center-aligned desktop-column-12">
+											{{selectedMedication.preparationObj.content_dose_type}}/
+											<span *ngIf="!(selectedMedication.route == 'PO'
+											&& selectedMedication.po_type == 'Tablet')">ml</span>
+											<span *ngIf="selectedMedication.route == 'PO'
+											&& selectedMedication.po_type == 'Tablet'">tablet</span>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div *ngIf="selectedMedication.preparationObj.content_type != 'Tablet'">
+								<div class="col-md-4 col-lg-2 no-padding-left">
+									<div class="col-md-12 left-aligned no-padding">
+										<span class="bold">Reconstituted Vol.</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number" name="powderReconstVol" class="input input-medium desktop-column-8"
+											[(ngModel)]="selectedMedication.preparationObj.reconstituted_volume"
+											(ngModelChange)="calReconstStrength(selectedMedication)">
+											<span class="input-group-icon center-aligned desktop-column-12">ml</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 col-lg-2 no-padding-left">
+									<div class="col-md-12 left-aligned no-padding">
+										<span class="bold">Reconst. Fluid Type</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="col-md-12 no-padding">
+											<select name="powderReconstType" type="text" class="input input-medium col-md-12 no-margin"
+											[(ngModel)]="selectedMedication.preparationObj.reconstituted_type" (ngModelChange)="getMedInstruction(selectedMedication)"
+											[disabled]="selectedMedication.preparationObj.reconstituted_volume == null || selectedMedication.preparationObj.reconstituted_volume == 0">
+											<option value="Select" disabled selected>-Select-</option>
+											<option value="Saline">Saline</option>
+											<option value="Distilled water">Distilled Water</option>
+											<option value="5% Dextrose">5% Dextrose</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 col-lg-2 no-padding-left">
+									<div class="col-md-12 left-aligned no-padding">
+										<span class="bold">Reconstituted Strength</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number" name="powderStrength" class="input input-medium desktop-column-8"
+											[(ngModel)]="selectedMedication.preparationObj.final_strength" disabled>
+											<span class="input-group-icon center-aligned desktop-column-12">
+												{{selectedMedication.preparationObj.content_dose_type}}/ml</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 padding-10-y red-text bold" *ngIf="prepMsg != null">{{prepMsg}}</div>
+					<div class="col-md-12 padding-10-y">
+						<div class="col-md-12 no-padding left-aligned">
+							<span class="bold">Preparation and Admistration Order</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<textarea class="desktop-column-20 max-height-36 set-font-size-default no-margin visibility-text" rows="4"
+							[(ngModel)]="selectedMedication.preparationObj.nursing_instruction" disabled></textarea>
+						</div>
+					</div>
+					<div class="col-md-12 center-aligned padding-10-y">
+						<button class="button button-blue" type="button" [disabled]="prepMsg != null
+						|| selectedMedication.preparationObj.content_dose == null
+						|| selectedMedication.preparationObj.content_dose == 0"
+						(click)="setMedicationPreparation(selectedMedication.preparationObj)">
+						Submit</button>
+					</div>
+				</div>
+				<div class="col-md-12 no-padding" *ngIf="isMedicationOrder == false">
+					<div class="col-md-12 padding-10-y left-aligned">
+						<span class="bold blue-text">Blood Product Order</span>
+					</div>
+					<div class="col-md-12 padding-5-y left-aligned">
+						<span class="bold" *ngIf="selectedBloodProduct.bag_number != null && selectedBloodProduct.bag_number != ''
+						 && selectedBloodProduct.checked_by != null && selectedBloodProduct.checked_by != ''">
+							Bag no. {{selectedBloodProduct.bag_number}} of {{selectedBloodProduct.blood_group}} blood group, total volume of
+							 {{selectedBloodProduct.bag_volume}} ml with expiry date {{selectedBloodProduct.expiry_date | date:'dd-MM-yyyy'}}
+							  collected on {{selectedBloodProduct.collection_date | date:'dd-MM-yyyy'}} checked by Dr. {{selectedBloodProduct.checked_by}}.
+						</span>
+					</div>
+					<div class="col-md-12 padding-10-y left-aligned">
+						<div class="col-md-2 no-padding-left">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Date of collection</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<owl-date-time class="owl-dateTime no-margin" [max]="maxDate" [(ngModel)]="nursingMedicationModel.currentBloodProductObj.collection_date" dateFormat='DD-MM-YYYY'></owl-date-time>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-left">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Date of expiry</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<owl-date-time class="owl-dateTime no-margin" [(ngModel)]="nursingMedicationModel.currentBloodProductObj.expiry_date" dateFormat='DD-MM-YYYY'></owl-date-time>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-left">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Blood Bag Number</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="relative-input-group block desktop-column-20">
+									<input class="input input-medium desktop-column-20" type="text" [(ngModel)]="nursingMedicationModel.currentBloodProductObj.bag_number">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-left">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Blood Group</span>
+							</div>
+							<div class="col-md-12 no-padding no-margin">
+								<select type="text" class="input input-medium col-md-12" [(ngModel)]="nursingMedicationModel.currentBloodProductObj.blood_group">
+									<option value="" hidden> -- Selected -- </option>
+									<option value="A +ve">A +ve</option>
+									<option value="A -ve">A -ve</option>
+									<option value="B +ve">B +ve</option>
+									<option value="B -ve">B -ve</option>
+									<option value="AB +ve">AB +ve</option>
+									<option value="AB -ve">AB -ve</option>
+									<option value="O +ve">O +ve</option>
+									<option value="O -ve">O -ve</option>
+									<option value="Unknown">Unknown</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-left">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Volume of Blood</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="relative-input-group block desktop-column-20">
+									<input class="input input-medium desktop-column-8" type="number" [(ngModel)]="nursingMedicationModel.currentBloodProductObj.bag_volume">
+									<span class="input-group-icon center-aligned desktop-column-12">
+										ml
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 no-padding-left">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Checked By</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<input class="input input-medium desktop-column-20 visibility-text" type="text" disabled
+								 [(ngModel)]="nursingMedicationModel.currentBloodProductObj.checked_by">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 padding-10-y left-aligned">
+						<div class="col-md-2 no-padding-left">
+							<div class="col-md-12 no-padding">
+								<span class="bold">Cross Check By</span>
+							</div>
+							<div class="col-md-12 no-padding">
+								<div class="relative-input-group block desktop-column-20">
+									<input class="input input-medium desktop-column-20" type="text"
+									 [(ngModel)]="nursingMedicationModel.currentBloodProductObj.cross_checked_by">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 center-aligned padding-10-y">
+						<button class="button button-blue" type="button" (click)="submitCloseBloodProductPopup()"
+						[disabled]="nursingMedicationModel.currentBloodProductObj.cross_checked_by == null
+						|| nursingMedicationModel.currentBloodProductObj.cross_checked_by == ''">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end of modal code -->
+	</div>
+	<div>
+		<div class="col-md-12" (click)="ExecutionSectionVisible()">
+			<div class="table-cell middle-aligned">
+				<div class="clinical-assessment-grey-outer margin-5-x no-margin-left">
+					<span class="sprite sprite-action"></span>
+				</div>
+			</div>
+			<div class="table-cell middle-aligned" style="width: 6%">
+				<h1 class="no-margin system-main-heading action-assessment-color">Execution</h1>
+			</div>
+			<div class="table-cell padding-10-x no-padding-right middle-aligned"
+				style="width: 100%">
+				<hr class="action-assessment-line">
+			</div>
+			<div class="table-cell middle-aligned">
+				<a class="sprite sprite-minus-action middle-aligned" *ngIf="isExecutionVisible"></a>
+				<a class="sprite sprite-plus-action middle-aligned" *ngIf="!(isExecutionVisible)"></a>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="isExecutionVisible">
+		<div *ngIf="(nursingMedicationModel.allMedicationList != null && nursingMedicationModel.allMedicationList.length > 0) || (nursingMedicationModel.assessmentMedicineList != null && nursingMedicationModel.assessmentMedicineList.length > 0)">
+			<div class="col-md-12 margin-10-y" *ngIf="selectedMedication.medicinename != null">
+				<h1 class="no-margin system-sub-heading">{{selectedMedication.medicinename}}</h1>
+			</div>
+			<div class="col-md-12 padding-10-y">
+				<div class="col-md-3 col-lg-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Given Date Time</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<owl-date-time class="owl-dateTime no-margin" autoClose=true [(ngModel)]="nursingMedicationModel.currentEmptyObj.given_time" (ngModelChange)="callNextDose()" [min]="minDate" [max]="today" [ngModelOptions]="{standalone: true}"></owl-date-time>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 padding-10-y" *ngIf="selectedMedication.dose != null && selectedMedication.topical_frequency == null">
+				<div class="col-md-1 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold" *ngIf="selectedMedication.medicinename == 'survanta' || selectedMedication.medicinename == 'curosurf' || selectedMedication.medicinename == 'neosurf'">Dose (ml)</span>
+						<span class="bold" *ngIf="selectedMedication.medicinename != 'survanta' && selectedMedication.medicinename != 'curosurf' && selectedMedication.medicinename != 'neosurf'">Dose (mg)</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="text" [(ngModel)]="nursingMedicationModel.currentEmptyObj.given_dose" class="desktop-column-20 input-coloured-gray input-medium assesment-select visibility-text" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Route</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="text" [(ngModel)]="selectedMedication.route" class="desktop-column-20 input-coloured-gray input-medium assesment-select visibility-text" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1 no-padding">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Delivery Mode</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="text" [(ngModel)]="selectedMedication.freq_type" class="desktop-column-20 input-coloured-gray input-medium assesment-select visibility-text" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Dilution(ml)</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="text" [(ngModel)]="selectedMedication.inf_volume" class="desktop-column-20 input-coloured-gray input-medium assesment-select visibility-text" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Dilution Type</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="text" [(ngModel)]="selectedMedication.dilution_type" class="desktop-column-20 input-coloured-gray input-medium assesment-select visibility-text" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Rate (ml/hr)</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="text" [(ngModel)]="selectedMedication.rate" class="desktop-column-20 input-coloured-gray input-medium assesment-select visibility-text" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-left" *ngIf="selectedMedication.freq_type != null && selectedMedication.freq_type.toLowerCase() == 'intermittent'">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Next Dose</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<owl-date-time class="owl-dateTime no-margin visibility-text" autoClose=true [(ngModel)]="nursingMedicationModel.currentEmptyObj.next_dose" [ngModelOptions]="{standalone: true}" disabled></owl-date-time>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Medicine Day</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="text" [(ngModel)]="nursingMedicationModel.currentEmptyObj.day_number" class="desktop-column-20 input-coloured-gray input-medium assesment-select visibility-text" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-left" *ngIf="!selectedMedication.bolus && selectedMedication.freq_type != null && selectedMedication.freq_type.toLowerCase() == 'continuous'">
+					<div class="col-md-12 no-padding required">
+						<span>Delivered Volume (ml)</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="number" [(ngModel)]="nursingMedicationModel.currentEmptyObj.delivered_volume" class="desktop-column-20 input-coloured-gray input-medium assesment-select" [required]="!selectedMedication.bolus && selectedMedication.freq_type != null && selectedMedication.freq_type.toLowerCase() == 'continuous'">
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-md-12 padding-10-y" *ngIf="selectedMedication.dose == null && selectedMedication.topical_frequency != null">
+
+				<div class="col-md-1 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Route</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="text" [(ngModel)]="selectedMedication.route" class="desktop-column-20 input-coloured-gray input-medium assesment-select visibility-text" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Delivery Mode</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="text" [(ngModel)]="selectedMedication.freq_type" class="desktop-column-20 input-coloured-gray input-medium assesment-select visibility-text" disabled>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Frequency</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block" *ngFor="let temp of nursingMedicationModel.freqList">
+							<input type="text" *ngIf="temp.freqid == selectedMedication.topical_frequency" class="desktop-column-20 input-coloured-gray input-medium assesment-select visibility-text" [(ngModel)]="temp.freqvalue" disabled>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-2 no-padding-left" *ngIf="selectedMedication.topical_drops != null">
+					<div class="col-md-12 no-padding required">
+						<span class="bold required">Delivered Drops</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="number" [(ngModel)]="nursingMedicationModel.currentEmptyObj.delivered_volume" class="desktop-column-20 input-coloured-gray input-medium assesment-select">
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-2 no-padding-left" *ngIf="selectedMedication.quantity != null">
+					<div class="col-md-12 no-padding required">
+						<span class="bold required">Quantity</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="number" [(ngModel)]="nursingMedicationModel.currentEmptyObj.delivered_volume" class="desktop-column-20 input-coloured-gray input-medium assesment-select">
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-2 no-padding-left" *ngIf="selectedMedication.sachets != null">
+					<div class="col-md-12 no-padding required">
+						<span class="bold required">No of Sachets</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="number" [(ngModel)]="nursingMedicationModel.currentEmptyObj.delivered_volume" class="desktop-column-20 input-coloured-gray input-medium assesment-select">
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-1 no-padding-left" *ngIf="selectedMedication.volume != null">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Dilution Type</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="text" [(ngModel)]="selectedMedication.dilution_type" class="desktop-column-20 input-coloured-gray input-medium assesment-select visibility-text" disabled>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-2 no-padding-left" *ngIf="selectedMedication.volume != null && selectedMedication.dose == null">
+					<div class="col-md-12 no-padding required">
+						<span class="bold">Delivered Volume (ml)</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="number" [(ngModel)]="nursingMedicationModel.currentEmptyObj.delivered_volume" class="desktop-column-20 input-coloured-gray input-medium assesment-select">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-12 padding-10-y" *ngIf="selectedMedication.route != null && selectedMedication.freq_type == null">
+
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Route</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="text" [(ngModel)]="selectedMedication.route" class="desktop-column-20 input-coloured-gray input-medium assesment-select visibility-text" disabled>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Brand</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="input-cont block">
+							<input type="text" [(ngModel)]="nursingMedicationModel.currentEmptyObj.brand" class="desktop-column-20 input-coloured-gray input-medium assesment-select">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-12 padding-10-y">
+				<div class="col-md-12 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Comments</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<input type="text" [(ngModel)]="nursingMedicationModel.currentEmptyObj.nursing_comment" class="desktop-column-20 input-coloured-gray input-medium assesment-select">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="(nursingMedicationModel.bloodProductList != null && nursingMedicationModel.bloodProductList.length > 0)">
+			<div class="col-md-12">
+				<span class="bold blue-text">Blood Product</span>
+			</div>
+			<div class="col-md-12 padding-10-y">
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Execution Date Time</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<owl-date-time class="owl-dateTime no-margin" autoClose=true
+						[(ngModel)]="nursingMedicationModel.currentBloodProductObj.execution_time"
+						(ngModelChange)="callNextDose()" [min]="selectedBloodProduct.assessment_time"
+						[max]="today" [ngModelOptions]="{standalone: true}"></owl-date-time>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 padding-5-y">
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Volume</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="relative-input-group block desktop-column-20">
+							<input class="input input-medium desktop-column-8 visibility-text" type="number" [(ngModel)]="selectedBloodProduct.blood_volume_kg" disabled>
+							<span class="input-group-icon center-aligned desktop-column-12">
+								ml/kg
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Total Volume</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="relative-input-group block desktop-column-20">
+							<input class="input input-medium desktop-column-8 visibility-text" type="number" [(ngModel)]="selectedBloodProduct.total_volume" disabled>
+							<span class="input-group-icon center-aligned desktop-column-12">
+								ml
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Infusion Time</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="relative-input-group block desktop-column-20">
+							<input class="input input-medium desktop-column-8 visibility-text" type="number" [(ngModel)]="selectedBloodProduct.infusion_time" disabled>
+							<span class="input-group-icon center-aligned desktop-column-12">
+								Hrs
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Infusion Rate</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="relative-input-group block desktop-column-20">
+							<input class="input input-medium desktop-column-8 visibility-text" type="number" [(ngModel)]="selectedBloodProduct.infusion_rate" disabled>
+							<span class="input-group-icon center-aligned desktop-column-12">
+								ml/hr
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-left">
+					<div class="col-md-12 no-padding">
+						<span class="bold">Delivered Volume</span>
+					</div>
+					<div class="col-md-12 no-padding">
+						<div class="relative-input-group block desktop-column-20">
+							<input class="input input-medium desktop-column-8" type="number"
+							 [(ngModel)]="nursingMedicationModel.currentBloodProductObj.delivered_volume">
+							<span class="input-group-icon center-aligned desktop-column-12">
+								ml
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 padding-10-y">
+				<div class="col-md-12 no-padding">
+					<span class="bold">Comments</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<input type="text" class="desktop-column-20 input-coloured-gray input-medium assesment-select"
+					 [(ngModel)]="nursingMedicationModel.currentBloodProductObj.comments">
+				</div>
+			</div>
+		</div>
+		<!-- code for heplock -->
+		<div *ngIf="(nursingMedicationModel.centralLineList != null && nursingMedicationModel.centralLineList.length > 0)">
+			<div class="col-md-12 no-padding">
+				<div class="col-md-12 padding-10-y">
+					<span class="bold blue-text">Heplock</span>
+				</div>
+				<div class="col-md-12 padding-10-y no-padding-bottom">
+					<div class="col-md-2 form-summary no-padding-left">
+						<span class="bold">Given Date and Time</span>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime no-margin" [max]="maxDate" [(ngModel)]="nursingMedicationModel.currentHeplockObj.execution_time" dateFormat='DD-MM-YYYY hh:mm A' [ngModelOptions]="{standalone: true}"></owl-date-time>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<span class="bold">Solution</span>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-20 visibility-text" type="text" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="nursingMedicationModel.currentHeplockObj.solutionType" disabled>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<span class="bold">Anti-Coagulent</span>
+						<div class="col-md-12 no-padding">
+              <div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-20 visibility-text" type="text" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="nursingMedicationModel.currentHeplockObj.antiCoagulentType" disabled>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 brand no-padding-left">
+						<span class="bold">Brand</span>
+						<div class="col-md-12 no-padding">
+              <div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-20 visibility-text" type="text" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="nursingMedicationModel.currentHeplockObj.antiCoagulentBrand" disabled>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<span class="bold">Total Volume</span>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20 visibility-text">
+								<input class="input input-medium desktop-column-8" type="text" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="nursingMedicationModel.currentHeplockObj.heparinTotalVolume" disabled>
+								<span class="input-group-icon center-aligned desktop-column-12"> ml </span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 no-padding-left">
+						<span class="bold">Rate</span>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20 visibility-text">
+								<input class="input input-medium desktop-column-8" type="text" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="nursingMedicationModel.currentHeplockObj.heparinRate" disabled>
+								<span class="input-group-icon center-aligned desktop-column-12"> ml / hr </span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-md-12 padding-10-y">
+					<div class="col-md-2 no-padding-left">
+						<span class="bold">Delivered Vol.</span>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block desktop-column-20">
+								<input class="input input-medium desktop-column-8" type="text" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="nursingMedicationModel.currentHeplockObj.deliveredVolume"
+                (ngModelChange)="calculateRemHeplock()">
+								<span class="input-group-icon center-aligned desktop-column-12"> ml </span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-10 no-padding">
+						<span class="bold">Comments</span>
+						<div class="col-md-12 no-padding-left">
+							<input type="text" class="desktop-column-20 input-coloured-gray input-medium assesment-select" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="nursingMedicationModel.currentHeplockObj.comments">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end for the code of Heplock -->
+	</div>
+	<div class="desktop-column-20 padding-0-x force-left center-aligned" *ngIf="isSubmitVisible == true">
+		<div id="footer">
+			<span class="inicu-loader" *ngIf="isLoaderVisible">
+				<span class="inicu-loader-content">
+					<span class="inicu-adding-image"></span>
+					<span class="inicu-loading-content">{{loaderContent}}.</span>
+				</span>
+			</span>
+			<button class="button button-blue button-large" type="submit"
+				(click)="submitObject()">SUBMIT</button>
+		</div>
+	</div>
+	<div class="col-md-12 set-AssessmentSystemtEvent-background">
+		<div class="col-md-12 no-padding margin-10-y">
+			<div class="col-md-2 col-lg-3 no-padding-left">
+				<h1 class="light margin-5-y blue-text">Summary</h1>
+			</div>
+			<div class="col-md-0 col-lg-1 no-padding"></div>
+			<div class="col-md-2 form-summary no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="bold">From</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" name="fromDateTable" dateFormat='DD-MM-YYYY hh:mm A' [(ngModel)]="fromDateTable"
+						type="both" [min]="minValidDate" [max]="maxDate" autoClose=true></owl-date-time>
+				</div>
+			</div>
+			<div class="col-md-2 form-summary no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="bold">To</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<owl-date-time class="owl-dateTime" name="toDateTable" type="both" dateFormat='DD-MM-YYYY hh:mm A' [(ngModel)]="toDateTable" [min]="minValidDate" [max]="maxDate" autoClose=true></owl-date-time>
+				</div>
+			</div>
+			<div class="col-md-5 col-lg-4 no-padding-left">
+				<div class="col-md-12 no-padding">
+					<span class="visiblity-hidden">To</span>
+				</div>
+				<div class="col-md-12 no-padding">
+					<button class="button button-blue margin-5-x" type="button" (click)="filterNursingMedication(fromDateTable, toDateTable, 'table')"> SHOW </button>
+					<button class="button button-blue margin-5-x" type="button" (click)="filterNursingMedication(fromDateTable, toDateTable, 'print')"> PRINT </button>
+					<button class="button button-blue margin-5-x" type="button" (click)="filterNursingMedication(fromDateTable, toDateTable, 'csv')"> EXPORT CSV </button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12 padding-10-y">
+		<span class="bold blue-text">Medication Summary</span>
+	</div>
+	<div class="desktop-column-20 padding-0-x force-left col-md-12 padding-5-y">
+		<table class="table table-striped table-bordered headed-table desktop-column-20">
+			<tr>
+				<td class="center-aligned">Date & Time</td>
+				<td class="center-aligned">Status</td>
+				<td class="center-aligned">Medicine</td>
+				<td class="center-aligned">Dose</td>
+				<td class="center-aligned">Mode</td>
+				<td class="center-aligned">Route</td>
+				<td class="center-aligned">Frequency</td>
+				<td class="center-aligned">Dilution</td>
+				<td class="center-aligned">Type</td>
+				<td class="center-aligned">Next Dose</td>
+				<td class="center-aligned">Day</td>
+				<td class="center-aligned">Delivered Vol</td>
+				<td class="center-aligned">Comments</td>
+			</tr>
+			<tr *ngFor="let item of nursingMedicationModel.pastNursingList" [hidden] = "!item.visibility">
+				<td class="center-aligned">{{item.given_time | date:'dd-MM-yyyy hh:mm a'}}</td>
+				<td class="center-aligned">
+					<span *ngIf="!item.stop_flag">Active</span>
+					<span *ngIf="item.stop_flag">Stopped</span>
+				</td>
+				<td class="center-aligned">{{item.doctorMedicine.medicinename}}</td>
+				<td class="center-aligned"><span *ngIf="item.given_dose != null && item.given_dose != 0">{{item.given_dose}}
+					<span *ngIf="item.doctorMedicine.medicinename == 'survanta' || item.doctorMedicine.medicinename == 'curosurf' || item.doctorMedicine.medicinename == 'neosurf'"> ml</span>
+					<span *ngIf="item.doctorMedicine.medicinename != 'survanta' && item.doctorMedicine.medicinename != 'curosurf' && item.doctorMedicine.medicinename != 'neosurf'"> mg</span></span>
+				</td>
+				<td class="center-aligned">{{item.doctorMedicine.freq_type}}</td>
+				<td class="center-aligned">{{item.doctorMedicine.route}}</td>
+				<td class="center-aligned">{{item.doctorMedicine.medicationFreqStr}}</td>
+				<td class="center-aligned">
+					<span *ngIf="item.doctorMedicine.inf_volume != undefined && item.doctorMedicine.inf_volume != null">
+						{{item.doctorMedicine.inf_volume}} ml
+					</span>
+				</td>
+				<td class="center-aligned">{{item.doctorMedicine.dilution_type}}</td>
+				<td class="center-aligned"><span *ngIf="!item.stop_flag">{{item.next_dose | date:'dd-MM-yyyy hh:mm a'}}</span></td>
+				<td class="center-aligned">{{item.day_number}}</td>
+				<td class="center-aligned">
+					<span *ngIf="item.delivered_volume != null && item.doctorMedicine.medicinename != 'Gentil' && item.doctorMedicine.medicinename != 'Tobramycin' && item.doctorMedicine.medicinename != 'Nasal saline drops' && item.doctorMedicine.sachets == null">{{item.delivered_volume}} ml</span>
+					<span *ngIf="item.delivered_volume != null && (item.doctorMedicine.medicinename == 'Gentil' || item.doctorMedicine.medicinename == 'Tobramycin' || item.doctorMedicine.medicinename == 'Nasal saline drops')">{{item.delivered_volume}} drops</span>
+					<span *ngIf="item.delivered_volume != null && item.doctorMedicine.sachets != null">{{item.delivered_volume}} sachets</span>
+				</td>
+				<td class="center-aligned"><span class="blue-text" (click)="viewCommentsPopUp(item.nursing_comment)">View</span></td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-md-12 padding-10-y">
+		<span class="bold blue-text">Blood Product Summary</span>
+	</div>
+	<div class="desktop-column-20 padding-0-x force-left col-md-12 padding-5-y">
+		<table class="table table-striped table-bordered headed-table desktop-column-20">
+			<tr>
+				<td class="center-aligned">Date & Time</td>
+				<td class="center-aligned">Status</td>
+				<td class="center-aligned">Blood Product</td>
+				<td class="center-aligned">Total Volume</td>
+				<td class="center-aligned">Delivered Volume</td>
+				<td class="center-aligned">Comments</td>
+			</tr>
+			<tr *ngFor="let item of nursingMedicationModel.bloodProductList"
+			 [hidden]="item.nursingObj.delivered_volume == null || item.nursingObj.delivered_volume == ''">
+				<td class="center-aligned">{{item.nursingObj.execution_time | date:'dd-MM-yyyy hh:mm a'}}</td>
+				<td class="center-aligned">Active</td>
+				<td class="center-aligned">{{item.blood_product}}</td>
+				<td class="center-aligned">{{item.total_volume}} ml</td>
+				<td class="center-aligned">{{item.nursingObj.delivered_volume}} ml</td>
+				<td class="center-aligned"><span class="blue-text" (click)="viewCommentsPopUp(item.nursingObj.comments)">View</span></td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-md-12 padding-10-y">
+		<span class="bold blue-text">Heplock Summary</span>
+	</div>
+	<div class="desktop-column-20 padding-0-x force-left col-md-12 padding-5-y" style="margin-bottom:500px !important">
+		<table class="table table-striped table-bordered headed-table desktop-column-20">
+			<tr>
+				<td class="center-aligned">Date & Time</td>
+				<td class="center-aligned">Status</td>
+				<td class="center-aligned">Sol.</td>
+				<td class="center-aligned">Anti-Coagulent</td>
+				<td class="center-aligned">Total Vol.</td>
+				<td class="center-aligned">Rate</td>
+				<td class="center-aligned">Delivered Vol.</td>
+				<td class="center-aligned">Comments</td>
+			</tr>
+			<tr *ngFor="let item of nursingMedicationModel.nursingHeplockList">
+				<td class="center-aligned">{{item.execution_time | date:'dd-MM-yyyy hh:mm a'}}</td>
+				<td class="center-aligned">Active</td>
+				<td class="center-aligned">{{item.solutionType}}</td>
+				<td class="center-aligned">{{item.antiCoagulentType}}</td>
+				<td class="center-aligned">{{item.heparinTotalVolume}} ml</td>
+				<td class="center-aligned">{{item.heparinRate}}</td>
+				<td class="center-aligned">{{item.deliveredVolume}} ml</td>
+				<td class="center-aligned"><span class="blue-text" (click)="viewCommentsPopUp(item.comments)">View</span></td>
+			</tr>
+		</table>
+	</div>
+	<div class="overlay" id="scoresOverlay"></div>
+	<div class="modal-box-lg bind-popup" id="OkCancelPopUp" style="width: 400px; top: 170px;">
+		<button class="modal-popup-close-btn" (click)="closeCommentsPopUp()"></button>
+		<div class="inicu-tab-container">
+			<div class="tab-content-cont full padding-10-y">
+				<div class="col-md-12">
+					<span class="bold" *ngIf="currentComment == null">no comments</span>
+					<span class="bold" *ngIf="currentComment != null">{{currentComment}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

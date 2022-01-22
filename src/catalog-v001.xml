@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1630561220284" name="duplicate:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="Nutrition.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1630561220284" name="duplicate:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="NutritionOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1630561220284" name="shadowed:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="target/Nutrition.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1630561220284" name="shadowed:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="target/NutritionOntology.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1630561220284" name="shadowed:http://www.childhealthimprints.com/NutritionalGuidelines/" uri="src/NutritionOntology.owl"/>
+    </group>
+</catalog>

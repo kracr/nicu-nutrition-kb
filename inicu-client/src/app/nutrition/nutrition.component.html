@@ -1,0 +1,3641 @@
+<doctor-panel></doctor-panel>
+<div *ngIf="tpnFeed != undefined && tpnFeed != null">
+	<div class="container-fluid padding-10-x padding-10-y"
+		style="background-color: white">
+		<form #frm="ngForm" (ngSubmit)="saveTpnFeedDetails()"
+			name="babyFeedsForm">
+			<div class="row padding-20-y">
+				<div class="col-md-12 padding-10-x padding-10-y">
+					<div class="col-md-2 weight-for-cal no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold" [ngClass]="{'required':true}">Weight for Calculation</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block">
+								<input type="text" class="input input-medium desktop-column-10"
+									[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.workingWeight"
+									(ngModelChange)="calculateCommonData()"
+									[ngModelOptions]="{standalone: true}" [required] disabled/> <span
+									class="input-group-icon desktop-column-10 center-aligned"
+									style="top: 0px; left: 1px">Kg</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1 no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold" [ngClass]="{'required':true}">Duration</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block">
+								<input type="text" class="input duration input-medium desktop-column-10"
+									[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.duration"
+									(ngModelChange)="calculateDuration()"
+									[ngModelOptions]="{standalone: true}" style="width:100px;" [required]/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 total-fluid-limit no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold"
+								[ngClass]="{'required': !(tpnFeed.currentFeedInfo.babyFeed.feedmethodList != null && tpnFeed.currentFeedInfo.babyFeed.feedmethodList.length == 1
+			        && tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD03') && tpnFeed.currentFeedInfo.babyFeed.isAdLibGiven != null
+			        && (tpnFeed.currentFeedInfo.babyFeed.isAdLibGiven || tpnFeed.currentFeedInfo.babyFeed.feedduration != null) && !(tpnFeed.currentFeedInfo.babyFeed.additiveenteral == true && tpnFeed.currentFeedInfo.babyFeed.isAdditiveInENCalculation == true))}">
+								Total Fluid Limit</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block">
+								<input type="text" class="input input-medium desktop-column-10 fluid-limit-input"
+									[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.totalfluidMlDay"
+									name="totalfluidMlDay" (ngModelChange)="calculateCommonData()"
+									pattern="/^[0-9]*[.]?[0-9]+$/"
+									required [ngModelOptions]="{standalone: true}" /> <span
+									class="input-group-icon desktop-column-10 center-aligned"
+									style="top: 0px; left: 1px">(ml/kg/day)</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 total-fluid no-padding-left">
+						<div class="col-md-12 no-padding">
+							<span class="bold"
+								[ngClass]="{'required': !(tpnFeed.currentFeedInfo.babyFeed.feedmethodList != null && tpnFeed.currentFeedInfo.babyFeed.feedmethodList.length == 1
+			        && tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD03') && tpnFeed.currentFeedInfo.babyFeed.isAdLibGiven != null
+			        && (tpnFeed.currentFeedInfo.babyFeed.isAdLibGiven || tpnFeed.currentFeedInfo.babyFeed.feedduration != null) && !(tpnFeed.currentFeedInfo.babyFeed.additiveenteral == true && tpnFeed.currentFeedInfo.babyFeed.isAdditiveInENCalculation == true))}">Total
+								Fluid (ml)</span>
+						</div>
+						<div class="col-md-12 no-padding">
+							<div class="relative-input-group block">
+								<input type="text" class="input input-medium desktop-column-10"
+									[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.totalIntake"
+									[ngModelOptions]="{standalone: true}" step="0.01" disabled />
+								<span class="input-group-icon desktop-column-10 center-aligned total-fluid-input "
+									style="top: 0px; left: 1px">(ml)</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 date-time-feed left-aligned no-padding-left center-aligned">
+						<div class="col-md-12 no-padding center-aligned">
+							<label class="bold required"><strong>Date And
+									Time of Feed</strong></label>
+						</div>
+						<div class="col-md-12 no-padding">
+							<owl-date-time class="owl-dateTime"
+								[(ngModel)]="tpnFeed.currentFeedInfo.feedGivenDateTime"
+								dateFormat='DD-MM-YYYY hh:mm A' [min]="minDate" [max]="maxDate"
+								[ngModelOptions]="{standalone: true}"></owl-date-time>
+						</div>
+						<div class="col-md-12 no-padding"></div>
+					</div>
+					<div class="col-md-2 feed-entry-type left-aligned ">
+						<div class="col-md-12 no-padding">
+							<label class="bold required"><strong>Feed Entry
+									Type</strong></label>
+						</div>
+						<div class="col-md-12 no-padding-left">
+						 <fieldset [disabled]="isDisabled">
+							<div class="no-padding-left toggle-options-radio">
+								<input type="radio" name="FeedEntryType" [value]="true"
+									[(ngModel)]="tpnFeed.currentFeedInfo.isNewEntry" id="feedNew">
+								<label for="feedNew">New</label> <input type="radio"
+									name="FeedEntryType" [value]="false"
+									[(ngModel)]="tpnFeed.currentFeedInfo.isNewEntry" id="feedOld">
+								<label for="feedOld">Edit</label>
+							</div>
+						</fieldset>
+						</div>
+					</div>
+					<div *ngIf="tpnFeed.lastFeedInfo != null">
+						<span class="red-text">{{feedTempObject.pastBolusText}}</span>
+					</div>
+					<div class="col-md-1 left-aligned no-padding-left center-aligned" style="margin-top: 22px;">
+						<button class="button button-blue button-large respSub" type="button" (click)="redirectToPrint()">Print</button>
+					</div>
+				</div>
+			</div>
+			<div class="row padding-10-y"
+				style="border-bottom: 1px solid #eeeeee; border-top: 1px solid #eeeeee; background-color: #F7FAFE !important">
+				<div class="col-md-2 no-padding-right">
+					<div>
+						<div class="feed-tab-box padding-10-y"
+							[ngClass]="{'resp-event-box-selected':  isEnternalVisible == true,'event-background-yes': tpnFeed.currentFeedInfo.babyFeed.isenternalgiven, 'event-background-no' : tpnFeed.currentFeedInfo.babyFeed.isenternalgiven == false}"
+							(click)="EnternalSectionVisible()">
+							<div class="table full">
+								<div class="blue-round-tick setting-checkbox middle-aligned">
+									<span class="bold">Enteral</span>
+								</div>
+							</div>
+							<div class="table full padding-5-y">
+								<div class="table-cell border-right-2 width-50"
+									style="padding: 5px">
+									<input type="radio" name="feedEnteralInput" [value]="true"
+										[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isenternalgiven"
+										id="feedEnteralYes" /> <label for="feedEnteralYes"
+										class="resp-event-icons set-font-size-default"
+										[ngClass]="{'resp-event-yes' : tpnFeed.currentFeedInfo.babyFeed.isenternalgiven == true}">Feed</label>
+								</div>
+								<div class="table-cell width-50" style="padding: 5px">
+									<input type="radio" name="feedEnteralInput" [value]="false"
+										[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isenternalgiven"
+										id="feedEnteralNoInput" (ngModelChange)="refreshEnteral()"/> <label for="feedEnteralNoInput"
+										class="resp-event-icons set-font-size-default"
+										[ngClass]="{'resp-event-no' : tpnFeed.currentFeedInfo.babyFeed.isenternalgiven == false}">NPO</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-right">
+					<div>
+						<div class="feed-tab-box padding-10-y"
+							[ngClass]="{'resp-event-box-selected':  isParenteralVisible == true,'event-background-yes': tpnFeed.currentFeedInfo.babyFeed.isparentalgiven,
+									'event-background-no' : tpnFeed.currentFeedInfo.babyFeed.isparentalgiven == false}"
+							(click)="ParenteralSectionVisible()">
+							<div class="table full">
+								<span class="bold">Parenteral</span>
+							</div>
+							<div class="table full padding-5-y">
+								<div class="table-cell border-right-2" style="padding: 5px">
+									<input type="radio" name="feedParenteralInput" [value]="true"
+										[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isparentalgiven"
+										id="feedParenteralYes" (ngModelChange)="includeIVMed()" [disabled]="(tpnFeed.currentFeedInfo.babyFeed.isenternalgiven == null)"/> <label
+										for="feedParenteralYes"
+										class="resp-event-icons set-font-size-default"
+										[ngClass]="{'resp-event-yes' : tpnFeed.currentFeedInfo.babyFeed.isparentalgiven == true}">Yes</label>
+								</div>
+								<div class="table-cell" style="padding: 5px">
+									<input type="radio" name="feedParenteralInput" [value]="false"
+										[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isparentalgiven"
+										id="feedParenteralNoInput" (ngModelChange)="refreshDailyPN()" [disabled]="(tpnFeed.currentFeedInfo.babyFeed.isenternalgiven == null)"/>
+									<label for="feedParenteralNoInput"
+										class="resp-event-icons set-font-size-default"
+										[ngClass]="{'resp-event-no' : tpnFeed.currentFeedInfo.babyFeed.isparentalgiven == false}">No</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 no-padding-right">
+					<div>
+						<div class="feed-tab-box padding-10-y"
+							[ngClass]="{'resp-event-box-selected':  isStopVisible == true,'event-background-yes': tpnFeed.currentFeedInfo.babyFeed.stopPN,
+									'event-background-no' : tpnFeed.currentFeedInfo.babyFeed.stopPN == false}"
+							(click)="stopSectionVisible()">
+							<div class="table full">
+								<span class="bold">STOP</span>
+							</div>
+							<div class="table full padding-5-y">
+								<div class="table-cell border-right-2" style="padding: 5px">
+									<input type="checkbox" name="feedStopPN" [value]="true"
+										[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.stopPN"
+										id="feedStopPN" /> <label
+										for="feedStopPN"
+										class="resp-event-icons set-font-size-default"
+										[ngClass]="{'resp-event-yes' : tpnFeed.currentFeedInfo.babyFeed.stopPN == true}">PN</label>
+								</div>
+								<div class="table-cell" style="padding: 5px">
+									<input type="checkbox" name="feedStopAdditionalPN" [value]="true"
+										[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.stopAdditionalPN"
+										id="feedStopAdditionalPN" [disabled]="(tpnFeed.additionalPNStatus==null)"/>
+									<label for="feedStopAdditionalPN"
+										class="resp-event-icons set-font-size-default"
+										[ngClass]="{'resp-event-no' : tpnFeed.currentFeedInfo.babyFeed.stopAdditionalPN == true}">Additional PN</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 no-padding-right"></div>
+			</div>
+			<div class="row padding-5-y padding-10-x">
+				<div class="col-md-7 no-padding">
+					<div>
+						<div class="EnteralFirst"
+							*ngIf="isEnternalVisible==true && tpnFeed.currentFeedInfo.babyFeed.isenternalgiven==true">
+							<div class="col-md-12 no-padding">
+								<div class="col-md-4 table full no-padding">
+									<div class="col-md-4 no-padding padding-top-2">
+										<span class="light margin-5-y blue-text bold"
+											style="font-size: 16px">Feed</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding padding-10-y">
+								<div class="col-md-3 force-left no-padding-left">
+									<label [ngClass]="{'required':true}"><strong>Feed
+											Method</strong></label>
+									<div class="multiselect desktop-column-20">
+										<div class="selectBox"
+											(click)="showCheckboxes('multiple-selectbox-1')"
+											id="multiple-selectbox-1">
+											<select>
+												<option>-- Select --</option>
+											</select>
+											<div class="overSelect"></div>
+										</div>
+										<ul id="checkboxes-1" class="multiple-select">
+											<li *ngFor="let item of dropdownData.feedMethod">
+												<!-- [disabled]="item.isDisabled" --> <input type="checkbox"
+												id="{{item.key}}feedMethod" value=true
+												[(ngModel)]="item.flag"
+												[required]="feedTempObject.feedMethodSelectedText==null || feedTempObject.feedMethodSelectedText==''"
+												(click)="systemValue('normalFeed',item.key)"
+												[ngModelOptions]="{standalone: true}" /> <label
+												for="{{item.key}}feedMethod">{{item.value}}</label>
+											</li>
+										</ul>
+									</div>
+									<span
+										*ngIf="feedTempObject.feedMethodSelectedText!=null && feedTempObject.feedMethodSelectedText!=''">
+										<span class="bold selected-text">Selected: </span>{{feedTempObject.feedMethodSelectedText}}
+									</span> <span
+										*ngIf="feedTempObject.feedMethodSelectedText==null || feedTempObject.feedMethodSelectedText==''"
+										class="error-labels"> Please select at least one.</span>
+								</div>
+								<div class="col-md-2 no-padding-left force-left"
+									*ngIf="tpnFeed.currentFeedInfo.babyFeed.feedmethodList != null && !tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD01')
+							&& (tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD03')|| tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD02') || tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD04'))">
+									<div class="col-md-12 no-padding">
+										<span class="bold" [ngClass]="{'required' : true}">AD-LIB</span>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="toggle-options-radio padding-top-1">
+											<input type="radio" name="lib" required [value]="true"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isAdLibGiven"
+												id="libYes"> <label for="libYes">Yes</label> <input
+												type="radio" name="lib" required [value]="false"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isAdLibGiven"
+												id="libNo"> <label for="libNo">No</label>
+										</div>
+									</div>
+									<div class="col-md-12 no-padding">
+										<span
+											*ngIf="tpnFeed.currentFeedInfo.babyFeed.isAdLibGiven==null"
+											class="error-labels"> Please select AD-LIB type </span>
+									</div>
+								</div>
+								<div class="col-md-3 left-aligned"
+									*ngIf="tpnFeed.currentFeedInfo.babyFeed.feedmethodList != null && tpnFeed.currentFeedInfo.babyFeed.feedmethodList.length > 1">
+									<div class="col-md-12 no-padding">
+										<label class="visiblity-hidden">dummy</label>
+									</div>
+									<div class="col-md-12 no-padding-left">
+										<div class="no-padding-left toggle-options-radio">
+											<input type="radio" name="TypeOfFeed" [value]="true"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.feedmethod_type"
+												id="per-shift"> <label for="per-shift">Per
+												Shift</label> <input type="radio" name="TypeOfFeed" [value]="false"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.feedmethod_type"
+												id="alternate"> <label for="alternate">Alternate</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3 no-padding-left"
+									*ngIf="tpnFeed.currentFeedInfo.babyFeed.feedmethodList != null && tpnFeed.currentFeedInfo.babyFeed.feedmethodList.length == 1
+								&& tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD03') && tpnFeed.currentFeedInfo.babyFeed.isAdLibGiven != null && tpnFeed.currentFeedInfo.babyFeed.isAdLibGiven">
+									<div class="col-md-12 no-padding">
+										<label class="input-label" [ngClass]="{'required' : true}">
+											<strong>Frequency</strong>
+										</label>
+									</div>
+									<div class="col-md-12 no-padding">
+										<div class="relative-input-group block padding-top-1">
+											<select class="input input-medium desktop-column-14"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.feedduration"
+												[ngModelOptions]="{standalone: true}" required>
+												<option value="" selected disabled>--Select--</option>
+												<option value="1" selected>1</option>
+												<option value="2" selected>2</option>
+												<option value="3" selected>3</option>
+												<option value="4" selected>4</option>
+												<option value="6" selected>6</option>
+											</select> <span
+												class="input-group-icon desktop-column-6 center-aligned"
+												style="top: 0px; left: 1px">hr</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding padding-10-y"
+								*ngIf="tpnFeed.currentFeedInfo.babyFeed.feedmethodList != null && tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('Others')">
+								<div class="col-md-3 force-left no-padding-left">
+									<span class="bold"
+										[ngClass]="{'required' : tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('Others') }">Feed
+										Method Other</span>
+									<div
+										class="input-group input-group-labeled desktop-column-20 right">
+										<div class="desktop-column-20 padding-0-x force-left">
+											<input type="text"
+												class="input input-medium desktop-column-20"
+												[required]="tpnFeed.currentFeedInfo.babyFeed.feedmethodList!=null && tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('Others')"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.feedMethodOther">
+										</div>
+									</div>
+								</div>
+							</div>
+							<fieldset class="no-padding"
+								*ngIf="tpnFeed.currentFeedInfo.babyFeed.feedmethodList != null && tpnFeed.currentFeedInfo.babyFeed.feedmethodList.length > 0 &&
+							!(tpnFeed.currentFeedInfo.babyFeed.feedmethodList.length == 1 && tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD03')) &&
+							(tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD01') || tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD02')
+							|| tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD04'))">
+								<div class="col-md-12 no-padding padding-10-y">
+									<div class="col-md-3" style="padding-left: 0%">
+										<div class="col-md-12 no-padding">
+											<label
+												[ngClass]="{'required': ((feedTempObject.feedTypeSelectedText==null || feedTempObject.feedTypeSelectedText=='') && (feedTempObject.feedTypeSecondarySelectedText==null || feedTempObject.feedTypeSecondarySelectedText==''))}">
+												<strong>Human Milk</strong>
+											</label>
+											<div class="multiselect desktop-column-20">
+												<div class="selectBox"
+													(click)="showCheckboxes('multiple-selectbox-feedType')"
+													id="multiple-selectbox-feedType">
+													<select>
+														<option>-- Select --</option>
+													</select>
+													<div class="overSelect"></div>
+												</div>
+												<ul id="checkboxes-feedType" class="multiple-select">
+													<li *ngFor="let item of dropdownData.feedType"
+														[hidden]="!(item.value.includes('EBM') || (item.value.includes('Donor')))"><input
+														type="checkbox" id="{{item.key}}feedType"
+														[required]="(feedTempObject.feedTypeSelectedText==null || feedTempObject.feedTypeSelectedText=='') && (feedTempObject.feedTypeSecondarySelectedText==null || feedTempObject.feedTypeSecondarySelectedText=='')"
+														(click)="systemValue('feedType',item.key)"
+														[(ngModel)]="item.flag" value=true
+														[ngModelOptions]="{standalone: true}" /> <label
+														for="{{item.key}}feedType">{{item.value}}</label></li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-12 no-padding">
+											<span
+												*ngIf="feedTempObject.feedTypeSelectedText!=null && feedTempObject.feedTypeSelectedText!=''">
+												<span class="bold">Selected: </span>{{feedTempObject.feedTypeSelectedText}}
+											</span> <span
+												*ngIf="(feedTempObject.feedTypeSelectedText==null || feedTempObject.feedTypeSelectedText=='') && (feedTempObject.feedTypeSecondarySelectedText==null || feedTempObject.feedTypeSecondarySelectedText=='')"
+												class="error-labels"> Please select at least one. </span>
+										</div>
+									</div>
+									<div class="col-md-3" style="padding-left: 0%">
+										<div class="col-md-12 no-padding">
+											<label class="required"
+												*ngIf="((feedTempObject.feedTypeSelectedText==null || feedTempObject.feedTypeSelectedText=='') && (feedTempObject.feedTypeSecondarySelectedText==null || feedTempObject.feedTypeSecondarySelectedText==''))">
+												<strong>Formula Milk</strong>
+											</label> <label
+												*ngIf="!(((feedTempObject.feedTypeSelectedText==null || feedTempObject.feedTypeSelectedText=='') && (feedTempObject.feedTypeSecondarySelectedText==null || feedTempObject.feedTypeSecondarySelectedText=='')))">
+												<strong>Formula Milk</strong>
+											</label>
+											<div class="multiselect desktop-column-20">
+												<div class="selectBox"
+													(click)="showCheckboxes('multiple-selectbox-feedTypeSecondary')"
+													id="multiple-selectbox-feedTypeSecondary">
+													<select>
+														<option>-- Select --</option>
+													</select>
+													<div class="overSelect"></div>
+												</div>
+												<ul id="checkboxes-feedTypeSecondary"
+													class="multiple-select">
+													<li *ngFor="let item of dropdownData.feedType"><span
+														[hidden]="!(!item.value.includes('EBM') && !(item.value.includes('Donor')))">
+															<input type="checkbox" id="{{item.key}}feedTypeSecondary"
+															[required]="((feedTempObject.feedTypeSelectedText==null || feedTempObject.feedTypeSelectedText=='')
+											&& (feedTempObject.feedTypeSecondarySelectedText==null || feedTempObject.feedTypeSecondarySelectedText==''))"
+															(click)="systemValue('feedTypeSecondary',item.key)"
+															[(ngModel)]="item.flag" [value]="true"
+															[ngModelOptions]="{standalone: true}" /> <label
+															for="{{item.key}}feedTypeSecondary">{{item.value}}
+														</label>
+													</span></li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-12 no-padding">
+											<span
+												*ngIf="feedTempObject.feedTypeSecondarySelectedText!=null && feedTempObject.feedTypeSecondarySelectedText!=''"><span
+												class="bold">Selected: </span>{{feedTempObject.feedTypeSecondarySelectedText}}</span>
+											<span
+												*ngIf="(feedTempObject.feedTypeSelectedText==null || feedTempObject.feedTypeSelectedText=='') && (feedTempObject.feedTypeSecondarySelectedText==null || feedTempObject.feedTypeSecondarySelectedText=='')"
+												class="error-labels"> Please select at least one.</span>
+										</div>
+									</div>
+									<div class="col-md-3 no-padding-left">
+										<div class="col-md-12 no-padding">
+											<label class="input-label required"> <strong>Total
+													Feed</strong>
+											</label> <span class="relative-input-group block padding-top-1">
+												<input type="text"
+												required [disabled]="(feedTempObject.feedTypeSelectedText==null ||
+											feedTempObject.feedTypeSelectedText=='') && (feedTempObject.feedTypeSecondarySelectedText==null ||
+											feedTempObject.feedTypeSecondarySelectedText=='')"
+												class="input input-medium desktop-column-10"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.totalfeedMlDay"
+												(ngModelChange)="changeOralFeed('totalFeed')"
+												[ngModelOptions]="{standalone: true}"> <span
+												class="input-group-icon desktop-column-10 center-aligned"
+												style="top: 0px; left: 1px"> ml </span>
+											</span>
+										</div>
+									</div>
+									<div class="col-md-3 no-padding-left">
+										<div class="col-md-12 no-padding">
+											<label class="input-label" [ngClass]="{'required' : true}">
+												<strong>Frequency</strong>
+											</label>
+										</div>
+										<div class="col-md-12 no-padding">
+											<div class="relative-input-group block padding-top-1">
+												<select class="input input-medium desktop-column-14"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.feedduration"
+													[ngModelOptions]="{standalone: true}"
+													(ngModelChange)="calEnFeedNo()" required>
+													<option value="" selected disabled>--Select--</option>
+													<option value="1" selected>1</option>
+													<option value="2" selected>2</option>
+													<option value="3" selected>3</option>
+													<option value="4" selected>4</option>
+													<option value="6" selected>6</option>
+													<option value="Continuous" selected>Continuous</option>
+												</select> <span
+													class="input-group-icon desktop-column-6 center-aligned"
+													style="top: 0px; left: 1px">hr</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div *ngIf ="tpnFeed.currentFeedInfo.babyFeed.feedduration!='Continuous'">
+									<div class="col-md-12 no-padding">
+										<div class="col-md-3 no-padding-left"></div>
+										<div class="col-md-3 no-padding-left">
+											<span class="input-label required bold">Feed Volume</span>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<span class="input-label required bold">No. of Feed</span>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<span class="bold">Total Vol.</span>
+										</div>
+									</div>
+									<div class="col-md-12 no-padding padding-10-y"
+										*ngFor="let item of tpnFeed.enFeedDetailList; let i = index"
+										[attr.data-index]="i">
+										<div class="col-md-3 no-padding-left"></div>
+										<div class="col-md-3 no-padding-left">
+											<div class="col-md-12 no-padding">
+												<div class="relative-input-group block padding-top-1">
+													<input type="number"
+														class="input input-medium desktop-column-10"
+														[ngModelOptions]="{standalone: true}"
+														[(ngModel)]="item.feed_volume"
+														(ngModelChange)="calEnFeedValues()" required /> <span
+														class="input-group-icon desktop-column-10 center-aligned"
+														style="top: 0px; left: 1px">ml/feed</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<div class="col-md-12 no-padding">
+												<div class="relative-input-group block padding-top-1">
+													<input type="number"
+														class="input input-medium desktop-column-20"
+														[ngModelOptions]="{standalone: true}"
+														[(ngModel)]="item.no_of_feed"
+														(ngModelChange)="validateEnFeed()"
+														[disabled]="tpnFeed.currentFeedInfo.babyFeed.totalfeedMlDay == null ||
+												tpnFeed.currentFeedInfo.babyFeed.totalfeedMlDay == '' || tpnFeed.currentFeedInfo.babyFeed.feedduration == null
+												|| tpnFeed.currentFeedInfo.babyFeed.feedduration == ''"
+														required />
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 no-padding">
+											<div class="col-md-8 no-padding-left">
+												<div class=" col-md-12 no-padding">
+													<input type="number"
+														class="input input-medium desktop-column-20"
+														[value]="round(item.feed_volume * item.no_of_feed, 0)"
+														disabled />
+												</div>
+											</div>
+											<div class="col-md-4 no-padding table full"
+												*ngIf="!(tpnFeed.currentFeedInfo.babyFeed.totalfeedMlDay == null || tpnFeed.currentFeedInfo.babyFeed.totalfeedMlDay == '' || tpnFeed.currentFeedInfo.babyFeed.feedduration == null || tpnFeed.currentFeedInfo.babyFeed.feedduration == '')">
+												<span
+													class="col-md-6 sprite sprite-minus-clinical middle-aligned table-cell"
+													*ngIf="tpnFeed.enFeedDetailList.length != 1"
+													(click)="removeEnfeedRow(i)"></span> <span
+													class=" col-md-6  sprite sprite-plus-clinical middle-aligned"
+													*ngIf="i == (tpnFeed.enFeedDetailList.length - 1)"
+													(click)="addEnfeedRow(i)"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div *ngIf ="tpnFeed.currentFeedInfo.babyFeed.feedduration=='Continuous'">
+									<div class="col-md-12 no-padding">
+										<div class="col-md-3 no-padding-left"></div>
+										<div class="col-md-3 no-padding-left">
+										</div>
+										<div class="col-md-3 no-padding-left">
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<span class="bold">Rate</span>
+										</div>
+									</div>
+									<div class="col-md-12 no-padding padding-10-y"
+										*ngFor="let item of tpnFeed.enFeedDetailList; let i = index"
+										[attr.data-index]="i">
+										<div class="col-md-3 no-padding-left"></div>
+										<div class="col-md-3 no-padding-left">
+										</div>
+										<div class="col-md-3 no-padding-left">
+										</div>
+										<div class="col-md-3 no-padding">
+											<div class="col-md-8 no-padding-left">
+												<div class=" col-md-12 no-padding">
+													<input type="number"
+														class="input input-medium desktop-column-20"
+														[value]="round(tpnFeed.currentFeedInfo.babyFeed.totalfeedMlDay / tpnFeed.currentFeedInfo.babyFeed.duration, 1)"
+														disabled />
+												</div>
+											</div>
+											<div class="col-md-4 no-padding table full">
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-12 no-padding" *ngIf="enFeedDisableSubmit">
+									<div class="col-md-3 no-padding"></div>
+									<div class="col-md-9 no-padding">
+										<span class="error-labels"> Total EN Feed Volume
+											mis-match, Please check the values. </span>
+									</div>
+								</div>
+							</fieldset>
+							<div class="col-md-12 no-padding">
+								<div class="col-md-3 table full no-padding">
+									<div class="col-md-12 no-padding">
+										<span class="visiblity-hidden">dummy</span>
+									</div>
+									<div
+										class="col-md-4 no-padding middle-aligned line-height-standard ">
+										<span class="light margin-5-y blue-text bold"
+											style="font-size: 16px">Additive</span>
+									</div>
+									<div class="col-md-4">
+										<div class="toggle-options-radio padding-top-1">
+											<input type="radio" name="AdditiveStatus" [value]="true"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.additiveenteral"
+												id="AdditiveStatusYes"
+												(ngModelChange)="calculateCommonData()"> <label
+												for="AdditiveStatusYes">Yes</label> <input type="radio"
+												name="AdditiveStatus" [value]="false"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.additiveenteral"
+												(ngModelChange)="calculateCommonData()"
+												id="AdditiveStatusNo"> <label for="AdditiveStatusNo">No</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 no-padding-right"
+									*ngIf="tpnFeed.currentFeedInfo.babyFeed.additiveenteral!=null && tpnFeed.currentFeedInfo.babyFeed.additiveenteral==true">
+									<label class="input-label"><strong>Use
+											Additive In EN total</strong></label>
+									<div class="toggle-options-radio padding-top-1">
+										<input type="radio" name="isAdditiveInENCalculation"
+											[value]="true"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isAdditiveInENCalculation"
+											id="isAdditiveInENCalculationYes"
+											(ngModelChange)="calculateCommonData()"> <label
+											for="isAdditiveInENCalculationYes">Yes</label> <input
+											type="radio" name="isAdditiveInENCalculation" [value]="false"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isAdditiveInENCalculation"
+											(ngModelChange)="calculateCommonData()"
+											id="isAdditiveInENCalculationNo"> <label
+											for="isAdditiveInENCalculationNo">No</label>
+									</div>
+								</div>
+							</div>
+							<fieldset
+								*ngIf="tpnFeed.currentFeedInfo.babyFeed.additiveenteral!=null && tpnFeed.currentFeedInfo.babyFeed.additiveenteral==true">
+								<div class="row padding-10-y">
+									<div class="col-md-1">
+										<label class="blue-text">Name</label>
+									</div>
+									<div class="col-md-3" style="padding-left: 40px;">
+										<label class="blue-text">Dose (mg/kg/day)</label>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<label class="blue-text">Brand</label>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<label class="blue-text">Total Volume(ml/day)</label>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<label class="blue-text">Freq (hr)</label>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<label class="blue-text">Additive volume per feed(ml)</label>
+									</div>
+								</div>
+
+								<div class="row padding-10-y">
+									<div class="col-md-1 ">
+										<span class="bold">Calcium</span>
+									</div>
+									<div class="col-md-3">
+										<div class="relative-input-group block desktop-column-20" style="padding-left: 40px;">
+											<input type="number"
+												class="input input-medium desktop-column-15"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.calsyrupVolume"
+												(ngModelChange)="calculateCommonData('nonfeed')">
+										</div>
+									</div>
+									<div
+										class="relative-input-group block col-md-2 no-padding-left">
+										<select class="input input-medium desktop-column-20"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.calBrand"
+											[ngModelOptions]="{standalone: true}"
+											(ngModelChange)="calculateCommonData('nonfeed')" required>
+                      <option value="" hidden>--Select--</option>
+                      <option
+                        *ngFor="let item of tpnFeed.addtivesbrandList" 	[hidden]="!(item.addtivename.includes('Calcium'))"
+                        [value]="item.enaddtivesbrandid">{{item.brandname}}</option>
+										</select>
+                    <div *ngFor="let temp of tpnFeed.addtivesbrandList"><p style="color:#74afff!important;" *ngIf="tpnFeed.currentFeedInfo.babyFeed.calBrand != null && tpnFeed.currentFeedInfo.babyFeed.calBrand == temp.enaddtivesbrandid">{{temp.strength}} {{temp.unit}}</p></div>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.calsyrupTotal"
+												step="0.01" disabled>
+										</div>
+									</div>
+									<div
+										class="relative-input-group block col-md-2 no-padding-left">
+
+										<select class="input input-medium desktop-column-20"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.calsyrupDuration"
+											[ngModelOptions]="{standalone: true}"
+											(ngModelChange)="calculateCommonData('nonfeed')" required>
+											<option value="" selected disabled>--Select--</option>
+											<option value="1" selected>1</option>
+											<option value="2" selected>2</option>
+											<option value="3" selected>3</option>
+											<option value="4" selected>4</option>
+											<option value="5" selected>5</option>
+											<option value="6" selected>6</option>
+											<option value="8" selected>8</option>
+											<option value="12" selected>12</option>
+											<option value="24" selected>24</option>
+										</select>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.calsyrupFeed"
+												(ngModelChange)="calculateCommonData('feed')" step="0.01">
+										</div>
+									</div>
+								</div>
+								<div class="row padding-10-y">
+									<div class="col-md-1">
+										<span class="bold">Iron</span>
+									</div>
+									<div class="col-md-3">
+										<div class="relative-input-group block desktop-column-20" style="padding-left: 40px;">
+											<input type="number"
+												class="input input-medium desktop-column-15"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.ironVolume"
+												(ngModelChange)="calculateCommonData('nonfeed')">
+										</div>
+									</div>
+                  <div
+										class="relative-input-group block col-md-2 no-padding-left">
+										<select class="input input-medium desktop-column-20"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.ironBrand"
+											[ngModelOptions]="{standalone: true}"
+											(ngModelChange)="calculateCommonData('nonfeed')" required>
+                      <option value="" hidden>--Select--</option>
+                      <option
+                        *ngFor="let item of tpnFeed.addtivesbrandList" 	[hidden]="!(item.addtivename.includes('Iron'))"
+                        [value]="item.enaddtivesbrandid">{{item.brandname}}</option>
+										</select>
+                    <div *ngFor="let temp of tpnFeed.addtivesbrandList"><p style="color:#74afff!important;" *ngIf="tpnFeed.currentFeedInfo.babyFeed.ironBrand != null && tpnFeed.currentFeedInfo.babyFeed.ironBrand == temp.enaddtivesbrandid">{{temp.strength}} {{temp.unit}}</p></div>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.ironTotal"
+												[ngModelOptions]="{standalone: true}" step="0.01" disabled>
+										</div>
+									</div>
+
+									<div
+										class="relative-input-group block col-md-2 no-padding-left">
+										<select class="input input-medium desktop-column-20"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.ironDuration"
+											[ngModelOptions]="{standalone: true}"
+											(ngModelChange)="calculateCommonData('nonfeed')" required>
+											<option value="" selected disabled>--Select--</option>
+											<option value="1" selected>1</option>
+											<option value="2" selected>2</option>
+											<option value="3" selected>3</option>
+											<option value="4" selected>4</option>
+											<option value="5" selected>5</option>
+											<option value="6" selected>6</option>
+											<option value="8" selected>8</option>
+											<option value="12" selected>12</option>
+											<option value="24" selected>24</option>
+										</select>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.ironFeed"
+												(ngModelChange)="calculateCommonData('feed')" step="0.01">
+										</div>
+									</div>
+								</div>
+								<div class="row padding-10-y">
+									<div class="col-md-2">
+										<span class="bold">Multi Vitamin</span>
+									</div>
+                  <div class="col-md-2">
+										<div class="relative-input-group block desktop-column-20" style="padding-left: 40px;">
+										</div>
+									</div>
+                  <div
+										class="relative-input-group block col-md-2 no-padding-left">
+										<select class="input input-medium desktop-column-20"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.multiVitaminBrand"
+											[ngModelOptions]="{standalone: true}"
+											(ngModelChange)="calculateCommonData('nonfeed')" required>
+                      <option value="" hidden>--Select--</option>
+                      <option
+                        *ngFor="let item of tpnFeed.addtivesbrandList" 	[hidden]="!(item.addtivename.includes('Multivitamin'))"
+                        [value]="item.enaddtivesbrandid">{{item.brandname}}</option>
+										</select>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.vitaminaTotal"
+												[ngModelOptions]="{standalone: true}"
+                        (ngModelChange)="calculateCommonData('nonfeed')" step="0.01">
+										</div>
+									</div>
+
+									<div
+										class="relative-input-group block col-md-2 no-padding-left">
+										<select class="input input-medium desktop-column-20"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.vitaminaDuration"
+											[ngModelOptions]="{standalone: true}"
+											(ngModelChange)="calculateCommonData('nonfeed')" required>
+											<option value="" selected disabled>--Select--</option>
+											<option value="1" selected>1</option>
+											<option value="2" selected>2</option>
+											<option value="3" selected>3</option>
+											<option value="4" selected>4</option>
+											<option value="5" selected>5</option>
+											<option value="6" selected>6</option>
+											<option value="8" selected>8</option>
+											<option value="12" selected>12</option>
+											<option value="24" selected>24</option>
+										</select>
+									</div>
+
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.vitaminaFeed"
+												(ngModelChange)="calculateCommonData('feed')" step="0.01">
+										</div>
+									</div>
+								</div>
+
+								<div class="row padding-10-y">
+									<div class="col-md-2">
+										<span class="bold">Vitamin D</span>
+									</div>
+                  <div class="col-md-2">
+										<div class="relative-input-group block desktop-column-20" style="padding-left: 40px;">
+										</div>
+									</div>
+                  <div
+										class="relative-input-group block col-md-2 no-padding-left">
+										<select class="input input-medium desktop-column-20"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.vitaminDBrand"
+											[ngModelOptions]="{standalone: true}"
+											(ngModelChange)="calculateCommonData('nonfeed')" required>
+                      <option value="" hidden>--Select--</option>
+                      <option
+                        *ngFor="let item of tpnFeed.addtivesbrandList" 	[hidden]="!(item.addtivename.includes('VitaminD'))"
+                        [value]="item.enaddtivesbrandid">{{item.brandname}}</option>
+										</select>
+                    <div *ngFor="let temp of tpnFeed.addtivesbrandList"><p style="color:#74afff!important;" *ngIf="tpnFeed.currentFeedInfo.babyFeed.vitaminDBrand != null && tpnFeed.currentFeedInfo.babyFeed.vitaminDBrand == temp.enaddtivesbrandid">{{temp.strength}} {{temp.unit}}</p></div>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.vitamindTotal"
+                        (ngModelChange)="calculateCommonData('nonfeed')"
+												[ngModelOptions]="{standalone: true}" step="0.01">
+										</div>
+									</div>
+
+									<div
+										class="relative-input-group block col-md-2 no-padding-left">
+										<select class="input input-medium desktop-column-20"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.vitaminDDuration"
+											[ngModelOptions]="{standalone: true}"
+											(ngModelChange)="calculateCommonData('nonfeed')" required>
+											<option value="" selected disabled>--Select--</option>
+											<option value="1" selected>1</option>
+											<option value="2" selected>2</option>
+											<option value="3" selected>3</option>
+											<option value="4" selected>4</option>
+											<option value="5" selected>5</option>
+											<option value="6" selected>6</option>
+											<option value="8" selected>8</option>
+											<option value="12" selected>12</option>
+											<option value="24" selected>24</option>
+										</select>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.vitaminDFeed"
+												(ngModelChange)="calculateCommonData('feed')" step="0.01">
+										</div>
+									</div>
+								</div>
+
+								<div class="row padding-10-y">
+									<div class="col-md-1">
+										<span class="bold">MCT Oil(Drops)</span>
+									</div>
+									<div class="col-md-3">
+										<div class="relative-input-group block desktop-column-20" style="padding-left: 40px;">
+											<input type="number"
+												class="input input-medium desktop-column-15"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.mctVolume"
+												(ngModelChange)="calculateCommonData('nonfeed')">
+										</div>
+									</div>
+                  <div
+										class="relative-input-group block col-md-2 no-padding-left">
+										<select class="input input-medium desktop-column-20"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.mctBrand"
+											[ngModelOptions]="{standalone: true}"
+											(ngModelChange)="calculateCommonData('nonfeed')" required>
+                      <option value="" hidden>--Select--</option>
+                      <option
+                        *ngFor="let item of tpnFeed.addtivesbrandList" 	[hidden]="!(item.addtivename.includes('Mct Oil'))"
+                        [value]="item.enaddtivesbrandid">{{item.brandname}}</option>
+										</select>
+                    <div *ngFor="let temp of tpnFeed.addtivesbrandList"><p style="color:#74afff!important;" *ngIf="tpnFeed.currentFeedInfo.babyFeed.mctBrand != null && tpnFeed.currentFeedInfo.babyFeed.mctBrand == temp.enaddtivesbrandid">{{temp.strength}} {{temp.unit}}</p></div>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.mctTotal"
+												[ngModelOptions]="{standalone: true}" step="0.01" disabled>
+										</div>
+									</div>
+
+									<div
+										class="relative-input-group block col-md-2 no-padding-left">
+										<select class="input input-medium desktop-column-20"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.mctDuration"
+											[ngModelOptions]="{standalone: true}"
+											(ngModelChange)="calculateCommonData('nonfeed')" required>
+											<option value="" selected disabled>--Select--</option>
+											<option value="1" selected>1</option>
+											<option value="2" selected>2</option>
+											<option value="3" selected>3</option>
+											<option value="4" selected>4</option>
+											<option value="5" selected>5</option>
+											<option value="6" selected>6</option>
+											<option value="8" selected>8</option>
+											<option value="12" selected>12</option>
+											<option value="24" selected>24</option>
+										</select>
+									</div>
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.mctFeed"
+												(ngModelChange)="calculateCommonData('feed')" step="0.01">
+										</div>
+									</div>
+								</div>
+
+								<!-- <div class="row padding-10-y">
+									<div class="col-md-2">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="text"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}" placeholder="others"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.otherAdditive"
+												(keyup)="calculateCommonData()">
+										</div>
+									</div>
+                  <div class="col-md-2">
+										<div class="relative-input-group block desktop-column-20" style="padding-left: 40px;">
+                      <input type="text"
+                        class="input input-medium desktop-column-20"
+                        [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.otherVolume"
+                        (ngModelChange)="calculateCommonData()"
+                         step="0.01">
+										</div>
+									</div>
+                  <div class="col-md-2">
+										<div class="relative-input-group block desktop-column-20">
+                      <input type="text"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.otherBrand">
+										</div>
+									</div>
+
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+                        (ngModelChange)="calculateCommonData()"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.otherTotal"
+												step="0.01">
+										</div>
+									</div>
+
+									<div
+										class="relative-input-group block col-md-2 no-padding-left">
+										<select class="input input-medium desktop-column-20"
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.otherDuration"
+											[ngModelOptions]="{standalone: true}"
+											(ngModelChange)="calculateCommonData()" required>
+											<option value="1" selected>1</option>
+											<option value="2" selected>2</option>
+											<option value="3" selected>3</option>
+											<option value="4" selected>4</option>
+											<option value="5" selected>5</option>
+											<option value="6" selected>6</option>
+											<option value="8" selected>8</option>
+											<option value="12" selected>12</option>
+											<option value="24" selected>24</option>
+										</select>
+									</div>
+
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.otherFeed"
+												(ngModelChange)="calculateCommonData('feed')" step="0.01">
+										</div>
+									</div>
+								</div>
+
+                <div class="row padding-10-y">
+                  <div class="col-md-1 right-aligned" style="margin-top: 8px;">Strength</div>
+                  <div class="col-md-2 no-padding-right">
+  									<div class="toggle-options-radio padding-top-1">
+  										<input type="radio" name="isStrengthYes"
+  											[value]="true"
+  											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isStrengthOther"
+                        (ngModelChange)="calculateCommonData()"
+  											id="isStrengthOtherYes"> <label
+  											for="isStrengthOtherYes">Yes</label> <input
+  											type="radio" name="isStrengthNo" [value]="false"
+  											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isStrengthOther"
+                        (ngModelChange)="calculateCommonData()"
+  											id="isStrengthOtherNo"> <label
+  											for="isStrengthOtherNo">No</label>
+  									</div>
+  								</div>
+
+                  <div *ngIf="tpnFeed.currentFeedInfo.babyFeed.isStrengthOther != null && tpnFeed.currentFeedInfo.babyFeed.isStrengthOther" class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="number"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.otherStrength"
+                        (ngModelChange)="calculateCommonData()"
+												 step="0.01">
+										</div>
+									</div>
+
+                  <div *ngIf="tpnFeed.currentFeedInfo.babyFeed.isStrengthOther != null && tpnFeed.currentFeedInfo.babyFeed.isStrengthOther" class="col-md-3 no-padding-right">
+  									<div class="toggle-options-radio padding-top-1">
+  										<input type="radio" name="unitOtherYes"
+  											value="mg/kg/d"
+  											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.unitOther"
+  											id="unitOtherYes"> <label
+  											for="unitOtherYes">mg/kg/d</label> <input
+  											type="radio" name="unitOtherNo" value="ml/kg/d"
+  											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.unitOther"
+  											id="unitOtherNo"> <label
+  											for="unitOtherNo">ml/kg/d</label>
+  									</div>
+  								</div>
+                </div> -->
+
+                <div class="row padding-10-y">
+									<div class="col-md-2 ">
+										<span class="bold">Additive volume per day(ml)</span>
+									</div>
+									<div class="col-md-2 right-aligned"></div>
+                  <div class="col-md-2 right-aligned"></div>
+
+									<div class="col-md-2 no-padding-left">
+										<div class="relative-input-group block desktop-column-20">
+											<input type="text"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.totalenteraAdditivelvolume"
+												step="0.01" disabled />
+										</div>
+									</div>
+								</div>
+
+							</fieldset>
+						</div>
+					</div>
+					<div>
+						<!-- This code is for parenteral -->
+						<div class="ParenteralFirst"
+							*ngIf="isParenteralVisible!=null && isParenteralVisible==true &&
+					tpnFeed.currentFeedInfo.babyFeed.isparentalgiven!=null && tpnFeed.currentFeedInfo.babyFeed.isparentalgiven==true">
+              <div class="row padding-20-x padding-10-y">
+                <div class="col-md-8 col-lg-7 table full no-padding-left">
+                	<div class="table-cell">
+                    <div class="toggle-options-radio padding-top-1">
+                      <input type="radio" name="makeDailyPN" value="dailyPN"
+                        [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.ismakeDailyPN"
+                        id="makeDailyPNYes"> <label for="makeDailyPNYes">Make
+                        Daily PN</label>
+											<input type="radio" name="additionalBolus"
+                        value="additionalBolus"
+                        [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.ismakeDailyPN"
+                        id="makeDailyPNNo" (ngModelChange)="refreshDailyPN()" [disabled]="(tpnFeed.lastFeedInfo==null)">
+                        <label for="makeDailyPNNo">Additional
+                        Bolus</label>
+											<input type="radio" name="additionalPN"
+                        value="additionalPN"
+                        [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.ismakeDailyPN"
+                        id="additionalPNYes" [disabled]="(tpnFeed.lastFeedInfo==null)">
+                        <label for="additionalPNYes">Additional
+                        PN</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="tpnFeed.currentFeedInfo.babyFeed.ismakeDailyPN!=null && tpnFeed.currentFeedInfo.babyFeed.ismakeDailyPN =='additionalBolus'" class="col-md-12 padding-20-y">
+                <div class="row padding-20-x padding-10-y">
+
+                  <div class="col-md-3 no-padding-left">
+                    <label class="input-label"><strong>Type </strong></label>
+                    <div class="relative-input-group block col-md-12 no-padding">
+                      <select class="input input-medium col-md-12 no-margin"
+                        required name="bolusType"
+                        [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.bolusType">
+                        <option value="null" selected>--Select--</option>
+                        <option value="10% dextrose" selected>10% dextrose</option>
+                        <option value="saline" selected>saline</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3 no-padding-left">
+                    <label class="input-label" [ngClass]="{'required' : true}"><strong>Volume
+                    </strong></label>
+                    <div class="relative-input-group block col-md-12 no-padding">
+                      <input type="text"
+                        class="input input-medium desktop-column-8"
+                        pattern="/^[0-9]*[.]?[0-9]+$/" name="bolusVolume"
+                        required [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.bolusVolume"
+                        (keyup)="calculateAdditionalBolusData()" /> <span
+                        class="input-group-icon center-aligned desktop-column-12">ml/kg/day</span>
+                    </div>
+                  </div>
+                  <div class="col-md-3 no-padding-left">
+                    <label class="input-label" [ngClass]="{'required' : true}"><strong>Total
+                        Bolus</strong></label>
+                    <div class="relative-input-group block col-md-12 no-padding">
+                      <input type="text"
+                        class="input input-medium desktop-column-8"
+                        [ngModelOptions]="{standalone: true}" disabled
+                        name="totalBolus"
+                        required [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.bolusTotalFeed"
+                        step="0.01" /> <span
+                        class="input-group-icon center-aligned desktop-column-12">ml</span>
+                    </div>
+                  </div>
+                </div>
+                <fieldset>
+                  <div class="row padding-10-x">
+                    <div class="col-md-3 table full no-padding-left">
+                      <label class="input-label" [ngClass]="{'required' : true}"><strong>Type</strong></label>
+                      <div class="toggle-options-radio padding-top-1">
+                        <input type="radio" name="InfusionStatus" [value]="true"
+                          [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isInfusion"
+                          id="InfusionStatusYes"> <label
+                          for="InfusionStatusYes">Infusion</label> <input
+                          type="radio" name="InfusionStatusStatus" [value]="false"
+                          [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isInfusion"
+                          id="InfusionStatusNo"> <label
+                          for="InfusionStatusNo">Stat</label>
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="tpnFeed.currentFeedInfo.babyFeed.isInfusion!=null && tpnFeed.currentFeedInfo.babyFeed.isInfusion==true"
+                      class="col-md-3 no-padding-left">
+                      <label class="input-label" [ngClass]="{'required' : true}"><strong>Infusion
+                          Time</strong></label>
+                      <div class="relative-input-group block col-md-12 no-padding">
+                        <input type="number"
+                          class="input input-medium desktop-column-8"
+                          [ngModelOptions]="{standalone: true}" name="InfusionTime"
+                          [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.bolus_infusiontime"
+                          (keyup)="calculateAdditionalBolusData()" step="0.01" /> <span
+                          class="input-group-icon center-aligned desktop-column-12">min</span>
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="tpnFeed.currentFeedInfo.babyFeed.isInfusion!=null && tpnFeed.currentFeedInfo.babyFeed.isInfusion==true"
+                      class="col-md-3 no-padding-left">
+                      <label class="input-label"><strong>Rate</strong></label>
+                      <div class="relative-input-group block col-md-12 no-padding">
+                        <input type="number"
+                          class="input input-medium desktop-column-8"
+                          [ngModelOptions]="{standalone: true}" disabled
+                          name="infusionRate"
+                          [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.bolus_rate"
+                          step="0.01" /> <span
+                          class="input-group-icon center-aligned desktop-column-12">ml/hr</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-20-x padding-10-y">
+                    <div class="col-md-12 no-padding">
+                      <span
+                        *ngIf="feedTempObject.bolusSelectedText!=null && feedTempObject.bolusSelectedText!=''">
+                        <label class="bold">Bolus Method Selected:</label>{{feedTempObject.bolusSelectedText}}
+                      </span>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <div *ngIf = "tpnFeed.currentFeedInfo.babyFeed.bolusTotalFeed != null && tpnFeed.currentFeedInfo.babyFeed.bolusTotalFeed != undefined" class="row padding-20-x padding-10-y">
+									<div class="col-md-5 table full no-padding-left">
+										<label class="input-label"><strong>Do you want to deduct from PN Volume? </strong></label>
+										<div class="relative-input-group block col-md-12 no-padding">
+											<div class="toggle-options-radio padding-top-1">
+												<input type="radio" name="additionalBlousStatusYes" [value]="true"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isPNDeduct"
+													id="additionalBlousStatusYes" (ngModelChange) = "submitBolusModal('Yes')"> <label for="additionalBlousStatusYes">Yes</label>
+												<input type="radio" name="additionalBlousStatusNo" [value]="false"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isPNDeduct"
+													id="additionalBlousStatusNo" (ngModelChange) = "submitBolusModal('No')"> <label for="additionalBlousStatusNo">No</label>
+											</div>
+										</div>
+									</div>
+                </div>
+
+                <div *ngIf = "tpnFeed.currentFeedInfo.babyFeed.isPNDeduct != null && tpnFeed.currentFeedInfo.babyFeed.isPNDeduct == false" class="row padding-20-x padding-10-y">
+									<div class="col-md-5 table full no-padding-left">
+										<label class="input-label"><strong>{{additionalBolusNo}}</strong></label>
+									</div>
+                </div>
+
+                <div *ngIf = "tpnFeed.currentFeedInfo.babyFeed.isPNDeduct != null && tpnFeed.currentFeedInfo.babyFeed.isPNDeduct == true" class="row padding-20-x padding-10-y">
+									<div class="col-md-5 table full no-padding-left">
+										<label class="input-label"><strong>{{additionalBolusYes}}</strong></label>
+									</div>
+                </div>
+        			</div>
+
+							<div *ngIf="tpnFeed.currentFeedInfo.babyFeed.ismakeDailyPN != null && tpnFeed.currentFeedInfo.babyFeed.ismakeDailyPN =='additionalPN'" class="col-md-12 padding-20-y">
+								<div class="row padding-20-x padding-10-y">
+
+									<div class="col-md-3 no-padding-left">
+										<label class="input-label" [ngClass]="{'required' : true}"><strong>Duration
+										</strong></label>
+										<div class="relative-input-group block col-md-12 no-padding">
+											<input type="text"
+												class="input input-medium desktop-column-8"
+												pattern="/^[0-9]*[.]?[0-9]+$/" name="additionalDuration"
+												required [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.additionalDuration"
+												 (ngModelChange) = "calculateAdditionalRate()"/> <span
+												class="input-group-icon center-aligned desktop-column-12">hrs</span>
+										</div>
+									</div>
+
+									<div class="col-md-3 no-padding-left">
+										<label class="input-label" [ngClass]="{'required' : true}"><strong>Total Volume
+										</strong></label>
+										<div class="relative-input-group block col-md-12 no-padding">
+											<input type="text"
+												class="input input-medium desktop-column-8"
+												pattern="/^[0-9]*[.]?[0-9]+$/" name="additionalTotalVolume"
+												required [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.additionalTotalVolume"/> <span
+												class="input-group-icon center-aligned desktop-column-12">ml</span>
+										</div>
+									</div>
+								</div>
+								<fieldset>
+									<div class="row padding-10-x">
+
+										<div class="col-md-3 no-padding-left">
+											<label class="input-label"><strong>Type </strong></label>
+											<div class="relative-input-group block col-md-12 no-padding">
+												<select class="input input-medium col-md-12 no-margin"
+													required name="additionalPNType"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.additionalPNType">
+													<option value="null" selected>--Select--</option>
+													<option value="RL" selected>RL</option>
+													<option value="NS" selected>NS</option>
+													<option value="N/2" selected>N/2</option>
+													<option value="N/3" selected>N/3</option>
+													<option value="N/5" selected>N/5</option>
+												</select>
+											</div>
+										</div>
+										<div
+											class="col-md-3 no-padding-left">
+											<label class="input-label" [ngClass]="{'required' : true}"><strong>Volume</strong></label>
+											<div class="relative-input-group block col-md-12 no-padding">
+												<input type="number"
+													class="input input-medium desktop-column-8"
+													[ngModelOptions]="{standalone: true}" name="additionalVolume"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.additionalVolume"
+													(ngModelChange) = "calculateAdditionalRate()"/> <span
+													class="input-group-icon center-aligned desktop-column-12">ml</span>
+											</div>
+										</div>
+										<div
+											class="col-md-3 no-padding-left">
+											<label class="input-label"><strong>Addtives (KCL)</strong></label>
+											<div class="relative-input-group block col-md-12 no-padding">
+												<input type="number"
+													class="input input-medium desktop-column-8"
+													[ngModelOptions]="{standalone: true}" name="additionalKCL"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.additionalKCL"
+													(ngModelChange) = "calculateAdditionalRate()"/> <span
+													class="input-group-icon center-aligned desktop-column-12">ml</span>
+											</div>
+										</div>
+										<div
+											class="col-md-3 no-padding-left">
+											<label class="input-label" [ngClass]="{'required' : true}"><strong>Rate</strong></label>
+											<div class="relative-input-group block col-md-12 no-padding">
+												<input type="number"
+													class="input input-medium desktop-column-8" disabled
+													[ngModelOptions]="{standalone: true}" name="additionalRate"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.additionalRate"/> <span
+													class="input-group-icon center-aligned desktop-column-12">ml/hr</span>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+							</div>
+
+              <div *ngIf="tpnFeed.currentFeedInfo.babyFeed.ismakeDailyPN !=null && tpnFeed.currentFeedInfo.babyFeed.ismakeDailyPN == 'dailyPN'" class="col-md-12 no-padding">
+								<div class="row padding-20-x padding-10-y">
+									<div class="col-md-3 table full no-padding-left">
+										<label class="input-label"><strong>Revise </strong></label>
+										<div class="relative-input-group block col-md-12 no-padding">
+											<div class="toggle-options-radio padding-top-1">
+												<input type="radio" name="reviseStatus" [value]="true"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isRevise" [disabled]="(tpnFeed.lastFeedInfo==null)"
+													id="reviseStatusYes"> <label for="reviseStatusYes">Yes</label>
+												<input type="radio" name="reviseStatus" [value]="false"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isRevise"
+													id="reviseStatusNo"> <label for="reviseStatusNo">No</label>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row padding-20-x padding-10-y">
+									<div class="col-md-3 table full no-padding-left">
+										<label class="input-label"><strong>Bolus </strong></label>
+										<div class="relative-input-group block col-md-12 no-padding">
+											<div class="toggle-options-radio padding-top-1">
+												<input type="radio" name="BlousStatus" [value]="true"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isBolusGiven"
+													id="BlousStatusYes"> <label for="BlousStatusYes">Yes</label>
+												<input type="radio" name="BlousStatus" [value]="false"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isBolusGiven"
+													id="BlousStatusNo"> <label for="BlousStatusNo">No</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 no-padding-left"
+										*ngIf="tpnFeed.currentFeedInfo.babyFeed.isBolusGiven!=null && tpnFeed.currentFeedInfo.babyFeed.isBolusGiven==true">
+										<label class="input-label"><strong>Type </strong></label>
+										<div class="relative-input-group block col-md-12 no-padding">
+											<select class="input input-medium col-md-12 no-margin"
+												required name="bolusType"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.bolusType">
+												<option value="null" selected>--Select--</option>
+												<option value="10% dextrose" selected>10% dextrose</option>
+												<option value="saline" selected>saline</option>
+											</select>
+										</div>
+									</div>
+									<div
+										*ngIf="tpnFeed.currentFeedInfo.babyFeed.isBolusGiven!=null && tpnFeed.currentFeedInfo.babyFeed.isBolusGiven==true"
+										class="col-md-3 no-padding-left">
+										<label class="input-label" [ngClass]="{'required' : true}"><strong>Volume
+										</strong></label>
+										<div class="relative-input-group block col-md-12 no-padding">
+											<input type="text"
+												class="input input-medium desktop-column-8"
+												pattern="/^[0-9]*[.]?[0-9]+$/" name="bolusVolume"
+												required [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.bolusVolume"
+												(keyup)="calculateCommonData()" /> <span
+												class="input-group-icon center-aligned desktop-column-12">ml/kg/day</span>
+										</div>
+									</div>
+									<div
+										*ngIf="tpnFeed.currentFeedInfo.babyFeed.isBolusGiven!=null && tpnFeed.currentFeedInfo.babyFeed.isBolusGiven==true"
+										class="col-md-3 no-padding-left">
+										<label class="input-label" [ngClass]="{'required' : true}"><strong>Total
+												Bolus</strong></label>
+										<div class="relative-input-group block col-md-12 no-padding">
+											<input type="text"
+												class="input input-medium desktop-column-8"
+												[ngModelOptions]="{standalone: true}" disabled
+												name="totalBolus"
+												required [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.bolusTotalFeed"
+												step="0.01" /> <span
+												class="input-group-icon center-aligned desktop-column-12">ml</span>
+										</div>
+									</div>
+
+
+								</div>
+								<fieldset
+									*ngIf="tpnFeed.currentFeedInfo.babyFeed.isBolusGiven!=null && tpnFeed.currentFeedInfo.babyFeed.isBolusGiven==true">
+									<div class="row padding-10-x">
+										<div class="col-md-3 table full no-padding-left">
+											<label class="input-label" [ngClass]="{'required' : true}"><strong>Type</strong></label>
+											<div class="toggle-options-radio padding-top-1">
+												<input type="radio" name="InfusionStatus" [value]="true"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isInfusion"
+													id="InfusionStatusYes"> <label
+													for="InfusionStatusYes">Infusion</label> <input
+													type="radio" name="InfusionStatusStatus" [value]="false"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isInfusion"
+													id="InfusionStatusNo"> <label
+													for="InfusionStatusNo">Stat</label>
+											</div>
+										</div>
+										<div
+											*ngIf="tpnFeed.currentFeedInfo.babyFeed.isInfusion!=null && tpnFeed.currentFeedInfo.babyFeed.isInfusion==true"
+											class="col-md-3 no-padding-left">
+											<label class="input-label" [ngClass]="{'required' : true}"><strong>Infusion
+													Time</strong></label>
+											<div class="relative-input-group block col-md-12 no-padding">
+												<input type="number"
+													class="input input-medium desktop-column-8"
+													[ngModelOptions]="{standalone: true}" name="InfusionTime"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.bolus_infusiontime"
+													(keyup)="calculateCommonData()" step="0.01" /> <span
+													class="input-group-icon center-aligned desktop-column-12">min</span>
+											</div>
+										</div>
+										<div
+											*ngIf="tpnFeed.currentFeedInfo.babyFeed.isInfusion!=null && tpnFeed.currentFeedInfo.babyFeed.isInfusion==true"
+											class="col-md-3 no-padding-left">
+											<label class="input-label"><strong>Rate</strong></label>
+											<div class="relative-input-group block col-md-12 no-padding">
+												<input type="number"
+													class="input input-medium desktop-column-8"
+													[ngModelOptions]="{standalone: true}" disabled
+													name="infusionRate"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.bolus_rate"
+													step="0.01" /> <span
+													class="input-group-icon center-aligned desktop-column-12">ml/hr</span>
+											</div>
+										</div>
+									</div>
+									<div class="row padding-20-x padding-10-y">
+										<div class="col-md-12 no-padding">
+											<span
+												*ngIf="feedTempObject.bolusSelectedText!=null && feedTempObject.bolusSelectedText!=''">
+												<label class="bold">Bolus Method Selected:</label>{{feedTempObject.bolusSelectedText}}
+											</span>
+										</div>
+									</div>
+								</fieldset>
+
+								<div class="row padding-20-x padding-10-y">
+									<div class="col-md-5 table full no-padding">
+										<div class="col-md-7 no-padding line-height-standard">
+											<span class="light margin-5-y blue-text bold"
+												style="font-size: 16px">IV Medicine -
+												{{tpnFeed.currentFeedInfo.babyFeed.totalMedvolume}} ml</span>
+											<!-- <span class="light margin-5-y blue-text bold">{{medicineStr}}</span> -->
+										</div>
+									</div>
+								</div>
+								<div class="row padding-20-x padding-10-y">
+									<div class="col-md-6 table full no-padding">
+										<div class="col-md-7 no-padding line-height-standard">
+											<span class="light margin-5-y blue-text bold"
+												style="font-size: 16px">Blood Product Volume -
+												{{tpnFeed.currentFeedInfo.babyFeed.totalBloodProductVolume}} ml</span>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-12 no-padding">
+									<hr class="no-margin grey-color">
+								</div>
+								<fieldset>
+									<div class="row padding-10-y">
+										<div class="col-md-2 right-aligned">
+											<label class="blue-text">Name</label>
+										</div>
+										<div class="col-md-2 no-padding-left">
+											<label class="blue-text">Type</label>
+										</div>
+										<div class="col-md-2 no-padding-left">
+											<label class="blue-text">Concentration</label>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<label class="blue-text">Dose</label>
+										</div>
+										<div class="col-md-2 no-padding-left">
+											<label class="blue-text">Volume</label>
+										</div>
+									</div>
+									<div class="row padding-10-y">
+										<div class="col-md-2 padding-top-1">
+											<span class="bold">Amino Acids (gm/kg/d)</span>
+										</div>
+										<div class="col-md-2 no-padding"></div>
+										<div class="col-md-2 no-padding">
+											<input type="text"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.aminoacidPnvolume"
+												disabled>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<div
+												class="relative-input-group block col-md-12 no-padding padding-top-1">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.aminoacidConc"
+													(keyup)="calculateCommonData()"> <span
+													class="input-group-icon center-aligned desktop-column-12">gm/kg/day</span>
+											</div>
+										</div>
+										<div class="col-md-2 no-padding">
+											<div
+												class="relative-input-group block col-md-12 no-padding padding-top-1">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.aminoacidTotal"
+													step="0.01" disabled> <span
+													class="input-group-icon center-aligned desktop-column-12">ml</span>
+											</div>
+										</div>
+									</div>
+									<div class="row padding-10-y">
+										<div class="col-md-2 padding-top-1">
+											<span class="bold">Lipids (gm/kg/d)</span>
+										</div>
+										<div class="col-md-2 no-padding-left">
+											<select name="lipidType" type="text"
+												class="input input-medium col-md-12 no-margin"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.lipidType"
+												[required]=true>
+												<option value="" selected>--Select--</option>
+												<option value="Intra Lipid" selected>Intra Lipid</option>
+												<option value="Smof" selected>Smof</option>
+												<option value="Omega Ven" selected>Omega Ven</option>
+											</select>
+										</div>
+										<div class="col-md-2 no-padding-left">
+											<input type="text"
+												class="input input-medium desktop-column-20"
+												[ngModelOptions]="{standalone: true}"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.lipidPnvolume"
+												disabled>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<div
+												class="relative-input-group block col-md-12 no-padding padding-top-1">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.lipidConc"
+													[ngModelOptions]="{standalone: true}"
+													(keyup)="calculateCommonData()"> <span
+													class="input-group-icon center-aligned desktop-column-12">gm/kg/day</span>
+											</div>
+
+										</div>
+										<div class="col-md-2 no-padding">
+											<div
+												class="relative-input-group block col-md-12 no-padding padding-top-1">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.lipidTotal"
+													[ngModelOptions]="{standalone: true}" step="0.01" disabled>
+												<span
+													class="input-group-icon center-aligned desktop-column-12">ml</span>
+											</div>
+
+										</div>
+									</div>
+								</fieldset>
+								<div class="col-md-12 no-padding">
+									<hr class="no-margin grey-text">
+								</div>
+								<fieldset class="no-margin padding-5-x">
+									<div class="col-md-12 no-padding-left">
+										<div class="col-md-3 table full no-padding">
+											<div class="col-md-12 no-padding">
+												<span class="visiblity-hidden">dummy</span>
+											</div>
+											<div class="col-md-4 no-padding-left padding-top-2">
+												<span class="light margin-5-y blue-text bold"
+													style="font-size: 16px">Additive</span>
+											</div>
+											<div class="col-md-4">
+												<div class="toggle-options-radio padding-top-1">
+													<input type="radio" name="AdditiveParenteral"
+														[value]="true"
+														[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.additiveparenteral"
+														id="AdditiveParenteralStatusYes"
+														(ngModelChange)="calculateCommonData()"> <label
+														for="AdditiveParenteralStatusYes">Yes</label> <input
+														type="radio" name="AdditiveParenteral" [value]="false"
+														[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.additiveparenteral"
+														id="AdditiveParenteralStatusNo"
+														(ngModelChange)="calculateCommonData()"> <label
+														for="AdditiveParenteralStatusNo">No</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+								<fieldset
+									*ngIf="tpnFeed.currentFeedInfo.babyFeed.additiveparenteral">
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-3 right-aligned">
+											<span class="bold blue-text">Name</span>
+										</div>
+										<div class="col-md-3 left-aligned no-padding-left">
+											<span class="bold blue-text">Concentration</span>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<span class="bold blue-text">Content</span>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<span class="bold blue-text">Total Volume</span>
+										</div>
+									</div>
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-3 right-aligned padding-top-1">
+											<span class="bold">Sodium</span>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block padding-top-1">
+												<select class="input input-medium desktop-column-20"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.sodiumVolume"
+													[ngModelOptions]="{standalone: true}"
+													(ngModelChange)="calculateCommonData()">
+													<option value="" selected>--select--</option>
+													<option value="0.15">Normal Saline 0.9 %</option>
+													<option value="0.5">3 % Sodium Concentration</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block padding-top-1">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.sodiumMeg"
+													(keyup)="calculateCommonData()"> <span
+													class="input-group-icon desktop-column-12 center-aligned"
+													style="top: 0px; left: 1px">meq/kg/d</span>
+											</div>
+										</div>
+
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block padding-top-1">
+												<input type="text"
+													class="input input-medium desktop-column-10"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.sodiumTotal"
+													step="0.01" disabled> <span
+													class="input-group-icon desktop-column-10 center-aligned"
+													style="top: 0px; left: 1px">ml</span>
+											</div>
+										</div>
+									</div>
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-3 right-aligned padding-top-1 potassium">
+											<span class="bold">Potassium( KCL )</span>
+										</div>
+										<div class="col-md-3 right-aligned"></div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block padding-top-1">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.potassiumVolume"
+													(keyup)="calculateCommonData()"> <span
+													class="input-group-icon desktop-column-12 center-aligned"
+													style="top: 0px; left: 1px">meq/kg/d</span>
+											</div>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block padding-top-1">
+												<input type="text"
+													class="input input-medium desktop-column-10"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.potassiumTotal"
+													step="0.01" disabled> <span
+													class="input-group-icon desktop-column-10 center-aligned"
+													style="top: 0px; left: 1px">ml</span>
+											</div>
+										</div>
+									</div>
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-3 right-aligned padding-top-1">
+											<span class="bold">Calcium</span>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block padding-top-1">
+												<select class="input input-medium desktop-column-20"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.calciumConcentrationType"
+													[ngModelOptions]="{standalone: true}">
+													<option value="" selected>--select--</option>
+													<option value="Calcium Gluconate">Calcium
+														Gluconate</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block padding-top-1">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.calciumVolume"
+													(keyup)="calculateCommonData()"
+													[disabled]="tpnFeed.currentFeedInfo.babyFeed.hco3Volume">
+												<span
+													class="input-group-icon desktop-column-12 center-aligned"
+													style="top: 0px; left: 1px">ml/kg/d</span>
+											</div>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block padding-top-1">
+												<input type="text"
+													class="input input-medium desktop-column-10"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.calciumTotal"
+													step="0.01" disabled> <span
+													class="input-group-icon desktop-column-10 center-aligned"
+													style="top: 0px; left: 1px">ml</span>
+											</div>
+
+										</div>
+									</div>
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-3 right-aligned padding-top-1">
+											<span class="bold">Phosphorus (Glycerol Phosphate)</span>
+										</div>
+										<div class="col-md-3 right-aligned padding-top-1"></div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block desktop-column-20">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.phosphorousVolume"
+													(blur)="showOkPopUp('parenteral','phosphorus')"> <span
+													class="input-group-icon center-aligned desktop-column-12 no-padding">ml/kg/d</span>
+											</div>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block desktop-column-20">
+												<input type="text"
+													class="input input-medium desktop-column-10"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.phosphorousTotal"
+													step="0.01" disabled> <span
+													class="input-group-icon center-aligned desktop-column-10 no-padding">ml</span>
+											</div>
+										</div>
+									</div>
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-3 right-aligned padding-top-1">
+											<span class="bold">Multi Vitamin Infusion</span>
+										</div>
+										<div class="col-md-3 right-aligned padding-top-1"></div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block desktop-column-20">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.mviTotal"
+													(keyup)="calculateCommonData()"
+													[ngModelOptions]="{standalone: true}"> <span
+													class="input-group-icon center-aligned desktop-column-12 no-padding">ml</span>
+											</div>
+
+										</div>
+									</div>
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-3 right-aligned padding-top-1">
+											<span class="bold">NaHCO3</span>
+										</div>
+										<div class="col-md-3 right-aligned padding-top-1"></div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block desktop-column-20">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.hco3Volume"
+													(blur)="showOkPopUp('parenteral','NaHCO3')"
+													[disabled]="tpnFeed.currentFeedInfo.babyFeed.calciumVolume">
+												<span
+													class="input-group-icon center-aligned desktop-column-12 no-padding">ml/kg/d</span>
+											</div>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block desktop-column-20">
+												<input type="text"
+													class="input input-medium desktop-column-10"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.hco3Total"
+													step="0.01" disabled> <span
+													class="input-group-icon center-aligned desktop-column-10 no-padding">ml</span>
+											</div>
+										</div>
+									</div>
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-3 right-aligned padding-top-1">
+											<span class="bold">Magnesium</span>
+										</div>
+										<div class="col-md-3 right-aligned padding-top-1"></div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block desktop-column-20">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.magnesiumVolume"
+													(keyup)="calculateCommonData()"> <span
+													class="input-group-icon center-aligned desktop-column-12 no-padding">ml/kg/d</span>
+											</div>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<div class="relative-input-group block desktop-column-20">
+												<input type="text"
+													class="input input-medium desktop-column-10"
+													[ngModelOptions]="{standalone: true}"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.magnesiumTotal"
+													step="0.01" disabled> <span
+													class="input-group-icon center-aligned desktop-column-10 no-padding">ml</span>
+											</div>
+										</div>
+									</div>
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-3 right-aligned padding-top-1"></div>
+										<div class="col-md-3 right-aligned padding-top-1"></div>
+										<div class="col-md-3 no-padding-left"></div>
+										<div class="col-md-3 no-padding-left">
+											<div class="col-md-12 no-padding"
+												*ngIf="tpnFeed.currentFeedInfo.babyFeed.additiveparenteral!=null && tpnFeed.currentFeedInfo.babyFeed.additiveparenteral==true">
+												<label class="input-label"
+													[ngClass]="{'required' : tpnFeed.currentFeedInfo.babyFeed.additiveparenteral}"><strong>Total
+														Volume</strong></label>
+												<div class="relative-input-group block padding-top-1">
+													<input type="text"
+														class="input input-medium desktop-column-8"
+														[ngModelOptions]="{standalone: true}"
+														[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.totalparenteralAdditivevolume"
+														step="0.01"
+														disabled
+												[required]="tpnFeed.currentFeedInfo.babyFeed.additiveparenteral!=null && tpnFeed.currentFeedInfo.babyFeed.additiveparenteral==true" />
+													<span
+														class="input-group-icon desktop-column-12 center-aligned"
+														style="top: 0px; left: 1px">ml</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+
+
+								<div class="col-md-12 no-padding" style = "padding-left:20px">
+									<hr class="no-margin grey-color">
+								</div>
+								<div class="row padding-20-x padding-10-y">
+									<div class="col-md-7 table full no-padding-left">
+										<div class="table-cell">
+											<div class="toggle-options-radio padding-top-1">
+												<input
+												type="radio" name="readymadeSolStatus" [value]="false"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven"
+												id="readymadeSolStatusNo"
+												(ngModelChange)="refreshReadymadeConc()"> <label
+												for="readymadeSolStatusNo">Customize PN</label>
+												<input type="radio" name="readymadeSolStatus" [value]="true"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven"
+													id="readymadeSolStatusYes"
+													(ngModelChange)="refreshParenteralConc()"> <label
+													for="readymadeSolStatusYes">Readymade Solution</label>
+											</div>
+										</div>
+									</div>
+								</div>
+
+                <fieldset
+									*ngIf="tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven!=null && tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven==true">
+									<div class="row padding-10-x">
+										<div class="col-md-3 no-padding-left">
+											<label class="input-label"><strong
+												[ngClass]="{'required':tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven==true}">Fluid
+													Type</strong></label>
+											<div class="multiselect desktop-column-20">
+												<div class="selectBox"
+													(click)="showCheckboxes('multiple-selectbox-fluidType')"
+													id="multiple-selectbox-fluidType">
+													<select>
+														<option>-- Select --</option>
+													</select>
+													<div class="overSelect"></div>
+												</div>
+												<ul id="checkboxes-fluidType"
+													class="multiple-select">
+													<li *ngFor="let item of dropdownData.fluidType"><span>
+															<input type="checkbox" id="{{item.key}}fluidType"
+															[required]="tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven==true"
+															(click)="systemValue('fluidType',item.key)"
+															[(ngModel)]="item.flag" [value]="true"
+															[ngModelOptions]="{standalone: true}"/> <label
+															for="{{item.key}}fluidType">{{item.value}}
+														</label>
+													</span></li>
+												</ul>
+											</div>
+											<span
+												*ngIf="tpnFeed.currentFeedInfo.babyFeed.readymadeFluidType!=null && tpnFeed.currentFeedInfo.babyFeed.readymadeFluidType!=''">
+												<span class="bold selected-text">Selected: </span>{{tpnFeed.currentFeedInfo.babyFeed.readymadeFluidType}}
+											</span>
+													<!-- <select class="input input-medium col-md-12 no-margin"
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.readymadeFluidType"
+												(ngModelChange)="calculateCommonData()" name="solType"
+												[required]="tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven==true">
+												<option value="D5">D5</option>
+												<option value="D10">D10</option>
+												<option value="D25">D25</option>
+												<option value="D50">D50</option>
+												<option value="ISO P(N/6)">ISO P(N/6)</option>
+												<option value="0.45 NS in D5(N/2)">0.45 NS in
+													D5(N/2)</option>
+												<option value="0.3 NS in D5(N/3)">0.3 NS in D5(N/3)</option>
+												<option value="0.2 NS in D5(N/4)">0.2 NS in D5(N/4)</option>
+												<option value="0.18 NS in D5(N/5)">0.18 NS in
+													D5(N/5)</option>
+												<option value="0.45 NS in D10(N/2)">0.45 NS in
+													D10(N/2)</option>
+												<option value="0.3 NS in D10(N/3)">0.3 NS in
+													D10(N/3)</option>
+												<option value="0.2 NS in D10(N/4)">0.2 NS in
+													D10(N/4)</option>
+												<option value="0.18 NS in D10(N/5)">0.18 NS in
+													D10(N/5)</option>
+											</select> -->
+										</div>
+
+										<div class="col-md-3 no-padding-left">
+											<label class="input-label"><strong>Total Volume </strong></label>
+											<div class="relative-input-group block col-md-12 no-padding">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													name="solTotalVolume"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.readymadeTotalFluidVolume"
+													disabled /> <span
+													class="input-group-icon center-aligned desktop-column-12">ml</span>
+											</div>
+										</div>
+
+                    <div class="col-md-3 no-padding-left">
+                      <label class="input-label"><strong>Volume</strong></label>
+                      <div class="relative-input-group block col-md-12 no-padding">
+                        <input type="text"
+                          class="input input-medium desktop-column-8"
+                          pattern="/^[0-9]*[.]?[0-9]+$/" name="solVolume"
+                          [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.readymadeFluidVolume"
+                          disabled/> <span
+                          class="input-group-icon center-aligned desktop-column-12">ml/kg</span>
+                      </div>
+                    </div>
+                  </div>
+								</fieldset>
+                <fieldset *ngIf="tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven!=null && tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven==true">
+                  <div class="row padding-10-x">
+                    <div class="col-md-3 no-padding-left">
+											<label class="input-label"><strong>Rate</strong></label>
+											<div class="relative-input-group block col-md-12 no-padding">
+												<input type="text"
+													class="input input-medium desktop-column-8"
+													name="readymadeRate"
+													[required]="tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven==true"
+													disabled
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.readymadeFluidRate" />
+												<span
+													class="input-group-icon center-aligned desktop-column-12">ml/hr</span>
+											</div>
+										</div>
+										<div *ngIf = "selectedFluidType != null && selectedFluidType.length > 1" class="col-md-3 no-padding-left">
+											<label class="input-label visiblity-hidden"><strong>Rate</strong></label>
+											<div class="toggle-options-radio padding-top-1">
+												<input type="radio" name="isGirStatus" [value]="true"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isGirCalculate"
+													id="isGirYes" (ngModelChange)="refreshIsGirCalculate()"> <label
+													for="isGirYes">GIR</label> <input
+													type="radio" name="isGirStatus" [value]="false"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isGirCalculate"
+													id="isGirNo" (ngModelChange)="refreshIsGirCalculate()"> <label
+													for="isGirNo">Dex Conc</label>
+											</div>
+										</div>
+
+
+                    <div class="col-md-3 no-padding-left">
+											<label class="input-label" [ngClass]="{'required' : true}"><strong>GIR</strong></label>
+											<div
+												class="relative-input-group block col-md-12 no-padding padding-top-1">
+												<input type="text" pattern="/^[0-9]*[.]?[0-9]+$/" name="gir"
+													class="input input-medium col-md-5 no-padding" [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.girvalue"
+														(ngModelChange)="calculateCommonData()" [disabled]="tpnFeed.currentFeedInfo.babyFeed.isGirCalculate == false || tpnFeed.currentFeedInfo.babyFeed.isGirCalculate == null"/><span
+													class="input-group-icon col-md-7 no-padding center-aligned">mg/kg/min</span>
+											</div>
+										</div>
+										<div *ngIf = "selectedFluidType != null && selectedFluidType.length > 1" class="col-md-3 no-padding-left">
+											<label class="input-label" [ngClass]="{'required' : true}"><strong>Dextrose Conc.(%)</strong></label>
+											<div
+												class="relative-input-group block col-md-12 no-padding padding-top-1">
+												<input type="text" pattern="/^[0-9]*[.]?[0-9]+$/" name="actualDextrose"
+													class="input input-medium col-md-5 no-padding" [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcentration" (ngModelChange)="calculateCommonData()" [disabled]="tpnFeed.currentFeedInfo.babyFeed.isGirCalculate == true"/><span
+													class="input-group-icon col-md-7 no-padding center-aligned">%</span>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+
+								<fieldset
+									*ngIf="tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven!=null && tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven==true && selectedFluidType != null && selectedFluidType.length > 1">
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-5 col-lg-4 no-padding-left">
+											<label class="input-label">
+												<strong>Lower Dextrose Concentration</strong>
+											</label>
+											<div
+												class="relative-input-group block desktop-column-20 padding-top-1">
+												<select class="input input-medium desktop-column-14"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcLowType"
+													name="lowerDextrose"
+													(ngModelChange)="calculateCommonData()" required>
+													<option value="" selected>--Select--</option>
+													<option
+		                        *ngFor="let item of selectedFluidType"
+		                        [value]="item">{{item}}</option>
+												</select> <span
+													class="input-group-icon center-aligned desktop-column-6 no-padding">%</span>
+											</div>
+											<div
+												*ngIf="tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcLow!=null && tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcentration!=null &&
+															 tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcentration!='' && tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcLow>tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcentration">
+												<span class="red-text"> Lower concentration must be
+													less than actual concentration.</span>
+											</div>
+										</div>
+										<div class="col-md-4 no-padding-left">
+											<label class="input-label">
+												<strong>Volume</strong>
+											</label>
+											<div
+												class="relative-input-group block desktop-column-20 padding-top-1">
+												<input type="number" name="readymadeDextroseConcLowvolume"
+													class="input input-medium desktop-column-10"
+													required
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcLowvolume"
+													step="0.01" [ngModelOptions]="{standalone: true}" /> <span
+													class="input-group-icon center-aligned desktop-column-10 no-padding">ml</span>
+											</div>
+										</div>
+									</div>
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-4 higher-dextrose no-padding-left">
+											<label class="input-label">
+												<strong>Higher Dextrose Concentration</strong>
+											</label>
+											<div
+												class="relative-input-group block desktop-column-20 padding-top-1">
+												<select class="input input-medium desktop-column-14"
+													name="higherDextrose"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcHighType"
+													(ngModelChange)="calculateCommonData()" required>
+													<option value="" selected>--Select--</option>
+													<option
+		                        *ngFor="let item of selectedFluidType"
+		                        [value]="item">{{item}}</option>
+												</select> <span
+													class="input-group-icon center-aligned desktop-column-6 no-padding">%</span>
+											</div>
+											<div
+												*ngIf="tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcentration!=null && tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcHigh!=null
+															 && tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcHigh!='' && tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcHigh<tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcentration">
+												<span class="red-text"> Higher concentration must be
+													greater than actual concentration.</span>
+											</div>
+										</div>
+										<div class="col-md-4 no-padding-left">
+											<label class="input-label">
+												<strong>Volume</strong>
+											</label>
+											<div
+												class="relative-input-group block desktop-column-20 padding-top-1">
+												<input type="number" name="readymadeDextroseConcHighvolume"
+													class="input input-medium desktop-column-10"
+													required [(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.readymadeDextroseConcHighvolume"
+													step="0.01" /> <span
+													class="input-group-icon center-aligned desktop-column-10 no-padding">ml</span>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+								<fieldset *ngIf = "tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven!=null && tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven==true">
+									<div class="row padding-5-x" style="margin-top:-30px">
+										<div class="table full padding-20-y">
+											<div class="blue-round-tick setting-checkbox-without-margin">
+												<input type="checkbox" name="calcaarate"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isAminoRate" id="calcaarate"
+													(click)="calculateAminoRate()"> <label
+													for="calcaarate">Separate Infusion for Aminovin</label>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+								<fieldset
+									*ngIf="tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven!=null && tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven==false">
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-3 no-padding-left	">
+											<label class="input-label"><strong><span>Dextrose
+														Volume</span></strong></label>
+											<div
+												class="relative-input-group block desktop-column-20 padding-top-1">
+												<input type="text"
+													class="input input-medium desktop-column-10"
+													required
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.dextroseVolumemlperday"
+													(keyup)="calculateCommonData()"
+													disabled [ngModelOptions]="{standalone: true}" /> <span
+													class="input-group-icon center-aligned desktop-column-10 no-padding">ml</span>
+											</div>
+										</div>
+										<div class="col-md-3 no-padding-left">
+											<label class="input-label" [ngClass]="{'required' : true}"><strong>GIR</strong></label>
+											<div
+												class="relative-input-group block col-md-12 no-padding padding-top-1">
+												<input type="text" pattern="/^[0-9]*[.]?[0-9]+$/" name="gir"
+													class="input input-medium col-md-5 no-padding"
+													required
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.girvalue"
+													[disabled]="(tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven!=null && tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven==true)"
+													(keyup)="calculateCommonData('dexPN')" /><span
+													class="input-group-icon col-md-7 no-padding center-aligned">mg/kg/min</span>
+											</div>
+										</div>
+
+										<div>
+										</div>
+									</div>
+									<div class="row padding-5-x padding-10-y">
+										<div class="col-md-3 no-padding-left">
+											<label class="input-label"><strong>Rate
+											</strong></label>
+											<div class="relative-input-group block desktop-column-20">
+												<input type="text"
+													class="input input-medium desktop-column-10"
+													[disabled]=true
+													required
+											[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.ivfluidrate"
+													step="0.01" disabled [ngModelOptions]="{standalone: true}" />
+												<span
+													class="input-group-icon center-aligned desktop-column-10 no-padding">ml/hr</span>
+											</div>
+										</div>
+										<div class="col-md-4 col-lg-3 no-padding">
+											<label class="input-label">
+												<strong>Actual Dextrose Conc.(%)</strong>
+											</label> <input type="text"
+												class="input input-medium col-md-12 no-margin"
+												[disabled]=true required
+												disabled
+										[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.currentDextroseConcentration"
+												step="0.01" [ngModelOptions]="{standalone: true}" />
+										</div>
+										<div class="col-md-4 no-padding">
+											<div class="table full padding-20-y">
+												<div class="blue-round-tick setting-checkbox-without-margin">
+													<input type="checkbox" name="calcaarate"
+														[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.isAminoRate" id="calcaarate"
+														(click)="calculateAminoRate()"> <label
+														for="calcaarate">Separate Infusion for AA</label>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div
+										*ngIf="tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven!=null && tpnFeed.currentFeedInfo.babyFeed.isReadymadeSolutionGiven==false">
+										<div class="row padding-5-x padding-10-y">
+											<div class="col-md-4 no-padding-left">
+												<label class="input-label" [ngClass]="{'required' : true}">
+													<strong>Lower Dextrose Concentration</strong>
+												</label>
+												<div
+													class="relative-input-group block desktop-column-20 padding-top-1">
+													<select class="input input-medium desktop-column-14"
+														[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.dextroseConcLow"
+														name="lowerDextrose"
+														(ngModelChange)="calculateCommonData()" required>
+														<option value="" selected>--Select--</option>
+														<option value="5">5 % dextrose</option>
+														<option value="10">10 % dextrose</option>
+														<option value="25">25 % dextrose</option>
+														<option value="50">50 % dextrose</option>
+													</select> <span
+														class="input-group-icon center-aligned desktop-column-6 no-padding">%</span>
+												</div>
+												<div
+													*ngIf="tpnFeed.currentFeedInfo.babyFeed.dextroseConcLow!=null &&
+								tpnFeed.currentFeedInfo.babyFeed.currentDextroseConcentration!=null &&
+								tpnFeed.currentFeedInfo.babyFeed.currentDextroseConcentration!=''  && tpnFeed.currentFeedInfo.babyFeed.dextroseConcLow>tpnFeed.currentFeedInfo.babyFeed.currentDextroseConcentration">
+													<span class="red-text"> Lower concentration must be
+														less than actual concentration.</span>
+												</div>
+											</div>
+											<div class="col-md-4 no-padding-left">
+												<label class="input-label" [ngClass]="{'required' : true}">
+													<strong>Volume</strong>
+												</label>
+												<div
+													class="relative-input-group block desktop-column-20 padding-top-1">
+													<input type="number" name="dextroseConcLowvolume"
+														class="input input-medium desktop-column-10"
+														required
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.dextroseConcLowvolume"
+														step="0.01" [ngModelOptions]="{standalone: true}" /> <span
+														class="input-group-icon center-aligned desktop-column-10 no-padding">ml</span>
+												</div>
+											</div>
+										</div>
+										<div class="row padding-5-x padding-10-y">
+											<div class="col-md-4 no-padding-left">
+												<label class="input-label" [ngClass]="{'required' : true}">
+													<strong>Higher Dextrose Concentration</strong>
+												</label>
+												<div
+													class="relative-input-group block desktop-column-20 padding-top-1">
+													<select class="input input-medium desktop-column-14"
+														name="higherDextrose"
+														[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.dextroseConcHigh"
+														(ngModelChange)="calculateCommonData()" required>
+														<option value="" selected>--Select--</option>
+														<option value="5">5 % dextrose</option>
+														<option value="10">10 % dextrose</option>
+														<option value="25">25 % dextrose</option>
+														<option value="50">50 % dextrose</option>
+													</select> <span
+														class="input-group-icon center-aligned desktop-column-6 no-padding">%</span>
+												</div>
+												<div
+													*ngIf="tpnFeed.currentFeedInfo.babyFeed.currentDextroseConcentration!=null &&
+								tpnFeed.currentFeedInfo.babyFeed.dextroseConcHigh!=null
+								&& tpnFeed.currentFeedInfo.babyFeed.dextroseConcHigh!='' && tpnFeed.currentFeedInfo.babyFeed.dextroseConcHigh<tpnFeed.currentFeedInfo.babyFeed.currentDextroseConcentration">
+													<span class="red-text"> Higher concentration must be
+														greater than actual concentration.</span>
+												</div>
+											</div>
+											<div class="col-md-4 no-padding-left">
+												<label class="input-label" [ngClass]="{'required' : true}">
+													<strong>Volume</strong>
+												</label>
+												<div
+													class="relative-input-group block desktop-column-20 padding-top-1">
+													<input type="number" name="dextroseConcHighvolume"
+														class="input input-medium desktop-column-10"
+														required
+												[(ngModel)]="tpnFeed.currentFeedInfo.babyFeed.dextroseConcHighvolume"
+														step="0.01" /> <span
+														class="input-group-icon center-aligned desktop-column-10 no-padding">ml</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5 no-padding"
+					*ngIf="((isEnternalVisible && tpnFeed.currentFeedInfo.babyFeed.isenternalgiven==true)||
+			(isParenteralVisible && tpnFeed.currentFeedInfo.babyFeed.isparentalgiven==true))">
+					<div class="feed-right-box">
+						<div class="table full">
+							<div class="table-cell center-aligned"
+								(click)="rightSectionFunction('current')"
+								[ngClass]="{'background-white' : isrightSectionHeader}"
+								style="width: 50%; border: 1px solid #F4EDC0">
+								<h1 class="feed-right-box-heading no-margin padding-10-y"
+									style="font-size: 16px">Current</h1>
+							</div>
+							<div class="table-cell center-aligned"
+								(click)="rightSectionFunction('last')"
+								[ngClass]="{'background-white' : !(isrightSectionHeader)}"
+								style="width: 50%; border: 1px solid #F4EDC0">
+								<h1 class="feed-right-box-heading no-margin padding-10-y"
+									style="font-size: 16px">Last Feed</h1>
+							</div>
+						</div>
+						<div *ngIf="isrightSectionHeader">
+							<div class="table full center-aligned padding-10-y"
+								style="border-bottom: 1px solid #F4EDC0">
+								<div class="table-cell"
+									style="width: 33%; border-right: 1px solid #eeeeee">
+									<div class="table full">
+										<span class="bold" style="font-size: 18px"
+											*ngIf="feedTempObject.feedmethodList != null && feedTempObject.feedmethodList.includes('METHOD03')">Mother's
+											Milk</span> <span class="bold" style="font-size: 18px"
+											*ngIf="feedTempObject.pastEnteralTotalFeed != null && feedTempObject.pastEnteralTotalFeed != 0">
+											<span class="bold" style="font-size: 18px"
+											*ngIf="feedTempObject.feedmethodList != null && feedTempObject.feedmethodList.includes('METHOD03')">
+												+ </span> {{feedTempObject.pastEnteralTotalFeed | number:'1.0-2'}}
+											ml
+										</span>
+									</div>
+									<div class="table full">
+										<span class="blue-text" style="font-size: 12px">ENTERAL</span>
+									</div>
+								</div>
+								<div class="table-cell"
+									style="width: 33%; border-right: 1px solid #eeeeee">
+									<div class="table full">
+										<span class="bold" style="font-size: 18px">{{(feedTempObject.pastParenteralTotalFeed*1)|
+											number:'1.0-2'}} ml</span>
+									</div>
+									<div class="table full">
+										<span class="blue-text" style="font-size: 12px">PARENTERAL</span>
+									</div>
+								</div>
+								<div class="table-cell"
+									style="width: 33%; border-right: 1px solid #eeeeee">
+									<div class="table full">
+										<span class="bold" style="font-size: 18px">{{feedTempObject.totalIntake
+											| number:'1.0-2'}} ml</span>
+									</div>
+									<div class="table full">
+										<span class="blue-text" style="font-size: 12px">TOTAL
+											FLUID</span>
+									</div>
+								</div>
+							</div>
+							<div
+								class="table full center-aligned padding-10-y no-padding-bottom">
+								<div class="table full">
+									<span class="bold" style="font-size: 18px"> <span
+										*ngIf="feedTempObject.totalIntake != null && feedTempObject.totalIntake > 0">
+											{{this.round((feedTempObject.totalIntake-((feedTempObject.pastEnteralTotalFeed*1)
+											+ feedTempObject.pastParenteralTotalFeed*1)), 2)}}</span> ml
+									</span>
+								</div>
+								<div class="table full">
+									<span class="blue-text" style="font-size: 12px">REMAINING</span>
+								</div>
+							</div>
+							<div class="table full center-aligned padding-10-y"
+								style="border-bottom: 1px solid #F4EDC0">
+								<div class="table-cell"
+									style="width: 50%; border-right: 1px solid #eeeeee">
+									<div class="table full">
+										<span class="bold" style="font-size: 18px">{{feedTempObject.dextroseNetConcentration|number:'1.0-2'}}
+											%</span>
+									</div>
+									<div class="table full">
+										<span class="blue-text" style="font-size: 12px">NET
+											CONCENTRATION</span>
+									</div>
+								</div>
+								<div class="table-cell" style="width: 50%">
+									<div class="table full"
+										*ngIf="feedTempObject.osmolarity != null">
+										<span class="bold" style="font-size: 18px">{{this.round(feedTempObject.osmolarity,
+											2)}} mosmol/L</span>
+									</div>
+									<div class="table full">
+										<span class="blue-text" style="font-size: 12px">OSMOLARITY</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 no-padding padding-10-y"
+								style="border-bottom: 1px solid #F4EDC0">
+								<div class="col-md-1 no-padding"></div>
+								<div class="col-md-4 no-padding">
+									<div class="table full padding-5-y left-aligned">
+										<span class="visiblity-hidden display-inline-block">dummy</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block">Calorie</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block">Protein :
+											Energy(%)</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block">Protein</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block">Fat</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block">Vitamin A</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block">Vitamin D</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block">Calcium</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block">Phosphorus</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block">Iron</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block">Protein (gm/100
+											cal)</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block">Carbohydrates/Fat</span>
+									</div>
+								</div>
+								<div class="col-md-2 no-padding">
+									<div class="table full padding-5-y left-aligned">
+										<span class="blue-text display-inline-block">ENTERAL</span>
+									</div>
+									<div
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow != null && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != null">
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy != null &&tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned"
+											*ngIf="feedTempObject.pastCal.enProteinEnergyRatio != null && feedTempObject.pastCal.enProteinEnergyRatio != NaN">
+											<span class="bold display-inline-block">{{feedTempObject.pastCal.enProteinEnergyRatio*100
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein != null && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat != null && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina != null && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind != null && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium != null && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus != null && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron != null && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron
+												| number:'1.0-2'}}</span>
+										</div>
+
+										<div class="table full padding-5-y left-aligned"
+											*ngIf="feedTempObject.pastCal.enProteinIngmsEnergyRatio != null && feedTempObject.pastCal.enProteinIngmsEnergyRatio != NaN">
+											<span class="bold display-inline-block">{{feedTempObject.pastCal.enProteinIngmsEnergyRatio
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned"
+											*ngIf="feedTempObject.pastCal.enCarbohydratesLipidsRatio != null && feedTempObject.pastCal.enCarbohydratesLipidsRatio != NaN">
+											<span class="bold display-inline-block">{{feedTempObject.pastCal.enCarbohydratesLipidsRatio}}</span>
+										</div>
+									</div>
+
+								</div>
+								<div class="col-md-3 no-padding">
+									<div class="table full padding-5-y left-aligned">
+										<span class="blue-text display-inline-block">PARENTERAL</span>
+									</div>
+									<div
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow != null && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake != null">
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy != null && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned"
+											*ngIf="feedTempObject.pastCal.pnProteinEnergyRatio != null && feedTempObject.pastCal.pnProteinEnergyRatio != NaN">
+											<span class="bold display-inline-block">{{feedTempObject.pastCal.pnProteinEnergyRatio*100
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein != null && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat != null && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina != null && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind != null && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium != null && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy.Calcium != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus != null && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned">
+											<span class="bold display-inline-block"
+												*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron != null && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned"
+											*ngIf="feedTempObject.pastCal.pnProteinIngmsEnergyRatio != null && feedTempObject.pastCal.pnProteinIngmsEnergyRatio != NaN">
+											<span class="bold display-inline-block">{{feedTempObject.pastCal.pnProteinIngmsEnergyRatio
+												| number:'1.0-2'}}</span>
+										</div>
+										<div class="table full padding-5-y left-aligned"
+											*ngIf="feedTempObject.pastCal.pnCarbohydratesLipidsRatio != null && feedTempObject.pastCal.pnCarbohydratesLipidsRatio != NaN">
+											<span class="bold display-inline-block">{{feedTempObject.pastCal.pnCarbohydratesLipidsRatio}}</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2 no-padding">
+									<div class="table full padding-5-y left-aligned">
+										<span class="blue-text display-inline-block">TOTAL</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy
+											+
+											tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy)
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="table full padding-5-y left-aligned"
+										*ngIf="feedTempObject.pastCal.totalProteinEnergyRatio != null && !feedTempObject.pastCal.totalProteinEnergyRatio != NaN">
+										<span class="bold display-inline-block">{{feedTempObject.pastCal.totalProteinEnergyRatio*100
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein
+											+
+											tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein)
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat
+											+ tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat)
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina
+											+
+											tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina)
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind
+											+
+											tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind)
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium
+											+
+											tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium)
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus
+											+
+											tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus)
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="table full padding-5-y left-aligned">
+										<span class="bold display-inline-block"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron
+											+ tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron)
+											| number:'1.0-2'}}</span>
+									</div>
+
+									<div class="table full padding-5-y left-aligned"
+										*ngIf="feedTempObject.pastCal.totalProteinIngmsEnergyRatio != null && feedTempObject.pastCal.totalProteinIngmsEnergyRatio != NaN">
+										<span class="bold display-inline-block">{{feedTempObject.pastCal.totalProteinIngmsEnergyRatio
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="table full padding-5-y left-aligned"
+										*ngIf="feedTempObject.pastCal.totalCarbohydratesLipidsRatio != null && feedTempObject.pastCal.totalCarbohydratesLipidsRatio != NaN">
+										<span class="bold display-inline-block">{{feedTempObject.pastCal.totalCarbohydratesLipidsRatio}}</span>
+									</div>
+								</div>
+								<div class="col-md-0 no-padding"></div>
+							</div>
+							<div class="table full no-padding padding-10-y center-aligned">
+								<span class="button button-blue"
+									(click)="viewCalculationInDatils()">VIEW DETAILS</span>
+							</div>
+						</div>
+						<div *ngIf="!(isrightSectionHeader)">
+							<div class="table full center-aligned padding-10-y"
+								style="border-bottom: 1px solid #F4EDC0">
+								<div class="table-cell"
+									style="width: 33%; border-right: 1px solid #eeeeee">
+									<div class="table full">
+										<span class="bold" style="font-size: 18px"
+											*ngIf="tpnFeed.currentFeedInfo.babyFeed.feedmethodList != null
+										&& tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD03')">Mother's
+											Milk</span> <span class="bold" style="font-size: 18px"
+											*ngIf="tpnFeed.currentFeedInfo.babyFeed != null && tpnFeed.currentFeedInfo.babyFeed.totalenteralvolume != null">
+											<span class="bold" style="font-size: 18px"
+											*ngIf="tpnFeed.currentFeedInfo.babyFeed.feedmethodList != null
+												&& tpnFeed.currentFeedInfo.babyFeed.feedmethodList.includes('METHOD03')">
+												+ </span> {{tpnFeed.currentFeedInfo.babyFeed.totalenteralvolume |
+											number:'1.0-2'}} ml
+										</span>
+									</div>
+									<div class="table full">
+										<span class="blue-text" style="font-size: 12px">ENTERAL</span>
+									</div>
+								</div>
+								<div class="table-cell"
+									style="width: 33%; border-right: 1px solid #eeeeee">
+									<div class="table full">
+										<span class="bold" style="font-size: 18px"
+											*ngIf="tpnFeed.currentFeedInfo.babyFeed != null && tpnFeed.currentFeedInfo.babyFeed.totalparenteralvolume != null">{{(tpnFeed.currentFeedInfo.babyFeed.totalparenteralvolume)
+											| number:'1.0-2'}} ml</span>
+									</div>
+									<div class="table full">
+										<span class="blue-text" style="font-size: 12px">PARENTERAL</span>
+									</div>
+								</div>
+								<div class="table-cell"
+									style="width: 33%; border-right: 1px solid #eeeeee">
+									<div class="table full">
+										<span class="bold" style="font-size: 18px">{{tpnFeed.currentFeedInfo.babyFeed.totalIntake}}
+											ml</span>
+									</div>
+									<div class="table full">
+										<span class="blue-text" style="font-size: 12px">TOTAL
+											FLUID</span>
+									</div>
+								</div>
+							</div>
+							<div class="table full center-aligned padding-10-y">
+								<div class="table full">
+									<span class="bold" style="font-size: 18px"> <span
+										*ngIf="tpnFeed.currentFeedInfo.babyFeed.totalIntake != null && tpnFeed.currentFeedInfo.babyFeed.totalIntake > 0">
+											{{this.round((tpnFeed.currentFeedInfo.babyFeed.totalIntake -
+											(tpnFeed.currentFeedInfo.babyFeed.totalenteralvolume * 1 +
+											tpnFeed.currentFeedInfo.babyFeed.totalparenteralvolume * 1)),
+											2)}}</span> ml
+									</span>
+								</div>
+								<div class="table full">
+									<span class="blue-text" style="font-size: 12px">REMAINING</span>
+								</div>
+							</div>
+							<div class="table full center-aligned padding-10-y"
+								style="border-bottom: 1px solid #F4EDC0">
+								<div class="table-cell"
+									style="width: 50%; border-right: 1px solid #eeeeee">
+									<div class="table full">
+										<span class="bold" style="font-size: 18px">{{this.round(tpnFeed.currentFeedInfo.babyFeed.dextroseNetConcentration,
+											2)}} %</span>
+									</div>
+									<div class="table full">
+										<span class="blue-text" style="font-size: 12px">NET
+											CONCENTRATION</span>
+									</div>
+								</div>
+								<div class="table-cell" style="width: 50%">
+									<div class="table full">
+										<span class="bold" style="font-size: 18px"
+											*ngIf="tpnFeed.currentFeedInfo.babyFeed.osmolarity != null">
+											{{this.round(tpnFeed.currentFeedInfo.babyFeed.osmolarity,
+											2)}} mosmol/L</span>
+									</div>
+									<div class="table full">
+										<span class="blue-text" style="font-size: 12px">OSMOLARITY</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="BloodFirst"
+					*ngIf="isBloodVisible!=null && isBloodVisible==true && tpnFeed.currentFeedInfo.babyBloodProduct.isBloodGiven!=null && tpnFeed.currentFeedInfo.babyBloodProduct.isBloodGiven==true">
+					<div
+						class="table full col-md-12 padding-10-x padding-10-y no-padding">
+						<div class="table-cell left-aligned" style="width: 12%">
+							<h1 class="assessment-heading no-margin font-size-16">Blood
+								Products</h1>
+						</div>
+					</div>
+					<div>
+						<div class="blood-products padding-20-y">
+							<fieldset class="no-padding no-margin" style="padding: 0px">
+								<div>
+									<div class="table full">
+										<div class="table-cell">
+											<label class="block"
+												[ngClass]="{'required':tpnFeed.currentFeedInfo.babyBloodProduct.isBloodGiven}"><strong>Select
+													Blood Product</strong></label>
+											<div class="padding-10-y">
+												<input type="radio" class="blue-round-radio" id="prbc"
+													name="bloodProduct" value="PRBC"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodproduct" />
+												<label for="prbc">PRBC</label> <input type="radio"
+													class="blue-round-radio" id="ffp" name="bloodProduct"
+													value="FFP"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodproduct" />
+												<label for="ffp">FFP</label> <input type="radio"
+													class="blue-round-radio" id="sdpcRdpc" name="bloodProduct"
+													value="SDPC/RDPC"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodproduct" />
+												<label for="sdpcRdpc">SDPC/RDPC</label> <input type="radio"
+													class="blue-round-radio" id="wholeBlood"
+													name="bloodProduct" value="Whole Blood"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodproduct" />
+												<label for="wholeBlood">Whole Blood</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<label class="block"
+												[ngClass]="{'required':tpnFeed.currentFeedInfo.babyBloodProduct.isBloodGiven}"><strong>Dose</strong></label>
+											<div class="relative-input-group block desktop-column-15">
+												<input type="text"
+													class="input input-medium desktop-column-12"
+													[required]="tpnFeed.currentFeedInfo.babyBloodProduct.isBloodGiven"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.dose"
+													pattern="/^[0-9]*[.]?[0-9]+$/" name="bloodDose" /> <span
+													class="input-group-icon center-aligned desktop-column-8">ml</span>
+												<!-- <label class="col-md-12 no-padding right-aligned ng-hide"
+												style="color: red; font-size: 10px"
+												*ngIf="babyFeedsForm.bloodDose.$dirty && babyFeedsForm.bloodDose.$invalid">
+												Not a valid Value</label> -->
+
+											</div>
+										</div>
+										<div class="table-cell">
+											<label class="block"
+												[ngClass]="{'required':tpnFeed.currentFeedInfo.babyBloodProduct.isBloodGiven}"><strong>Duration</strong></label>
+											<div class="relative-input-group block desktop-column-15">
+												<input type="text"
+													class="input input-medium desktop-column-12"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.duration"
+													[required]="tpnFeed.currentFeedInfo.babyBloodProduct.isBloodGiven"
+													pattern="/^[0-9]*[.]?[0-9]+$/" name="bloodDose" />
+												<span
+													class="input-group-icon center-aligned col-md-4 no-padding">Hourly</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="desktop-column-20 full margin-20-y">
+									<div class="block desktop-column-8 margin-10-y">
+										<label
+											[ngClass]="{'requried' :tpnFeed.currentFeedInfo.babyBloodProduct.isBloodGiven}">Blood
+											Group</label>
+									</div>
+									<div class="table full">
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio"
+													[required]="tpnFeed.currentFeedInfo.babyBloodProduct.isBloodGiven"
+													name="blood-group" id="group1"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="A1 -ve"><label for="group1">A1 −ve</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio" name="blood-group" id="group2"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="A1 +ve"><label for="group2">A1 +ve</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio" name="blood-group" id="group3"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="A1B -ve"><label for="group3">A1B
+													−ve</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio" name="blood-group" id="group4"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="A1B +ve"><label for="group4">A1B +ve</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio" name="blood-group" id="group5"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="A2 -ve"><label for="group5">A2 −ve</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio" name="blood-group" id="group6"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="A2 +ve"><label for="group6">A2 +ve</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio" name="blood-group" id="group7"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="A2B -ve"><label for="group7">A2B
+													−ve</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio" name="blood-group" id="group8"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="A2B +ve"><label for="group8">A2B +ve</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio" name="blood-group" id="group9"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="B -ve"><label for="group9">B −ve</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio" name="blood-group" id="group10"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="B +ve"><label for="group10">B +ve</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio" name="blood-group" id="group11"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="B1 +ve"><label for="group11">B1 +ve</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio" name="blood-group" id="group12"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="O -ve"><label for="group12">O −ve</label>
+											</div>
+										</div>
+										<div class="table-cell">
+											<div class="blood-group">
+												<input type="radio" name="blood-group" id="group13"
+													[(ngModel)]="tpnFeed.currentFeedInfo.babyBloodProduct.bloodgroup"
+													value="O +ve"><label for="group13">O +ve</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- Above code is for Blood Products -->
+			<div class="assesment-container">
+				<div class="col-md-12 center-aligned">
+					<span class="red-text"
+						*ngIf="tpnFeed.currentFeedInfo.babyFeed.dextroseVolumemlperday!=null
+				&& tpnFeed.currentFeedInfo.babyFeed.dextroseVolumemlperday!='' && tpnFeed.currentFeedInfo.babyFeed.dextroseVolumemlperday<0">
+						Total feed must be greater than sum of prescribed feeds</span>
+				</div>
+
+				<div class="col-md-12 no-padding">
+					<div class="col-md-4 no-padding"></div>
+					<div class="col-md-4 no-padding border-radius-5">
+						<span class="alert alert-small margin-10-x border-radius-5 "
+							[ngClass]="{'alert-red': responseType !='success' , 'alert-green' : responseType =='success'}"
+							*ngIf="vanishSubmitResponseVariable">{{responseMessage}}</span>
+					</div>
+					<div class="col-md-4 no-padding"></div>
+				</div>
+				<div id="footer">
+					<div *ngIf="enFeedDisableSubmit">
+						<span class="error-labels">Total EN Feed Volume mis-match,
+							Please check the values.</span>
+					</div>
+					<button type="submit" [disabled]="enFeedDisableSubmit"
+						class="button button-blue button-large respSub">SUBMIT</button>
+					<button type="button"
+						class="button button-blue button-large respSub"
+						(click)="ngOnInit()">REFRESH</button>
+				</div>
+			</div>
+			<div class="clear margin-20-y">
+				<h1 class="light blue-text">Past Nutrition Records</h1>
+				<table
+					class="table table-striped table-bordered headed-table desktop-column-20 nursing-data-table margin-bottom-100">
+					<tr>
+						<td class="center-aligned">Date</td>
+						<td class="center-aligned">Weight for calculation(kg)</td>
+						<td class="center-aligned">Total fluid limit(ml/kg/day)</td>
+						<td class="center-aligned">Total fluid(ml)</td>
+						<td class="center-aligned">Enteral ( ml )</td>
+						<td class="center-aligned">Parenteral ( ml )</td>
+						<td class="center-aligned">Remaining ( ml )</td>
+					</tr>
+					<tr *ngFor="let option of tpnFeed.babyFeedList">
+						<td class="center-aligned"
+							(click)="populatePastFeed(option.babyfeedid)">{{option.creationtime
+							| date:'dd-MM-yyyy hh:mm a'}}</td>
+						<td class="center-aligned"
+							(click)="populatePastFeed(option.babyfeedid)">{{option.workingWeight*1}}</td>
+						<td class="center-aligned"
+							(click)="populatePastFeed(option.babyfeedid)">{{(option.totalfluidMlDay*1)}}</td>
+						<td class="center-aligned"
+							(click)="populatePastFeed(option.babyfeedid)">{{(option.totalIntake*1) | number:'1.0-1'}}</td>
+						<td class="center-aligned"
+							(click)="populatePastFeed(option.babyfeedid)">{{(option.totalenteralvolume)*1 | number:'1.0-1'}}</td>
+						<td class="center-aligned"
+							(click)="populatePastFeed(option.babyfeedid)">{{option.totalparenteralvolume*1 | number:'1.0-1'}}</td>
+						<td class="center-aligned"
+							(click)="populatePastFeed(option.babyfeedid)">{{((option.totalIntake*1)-(option.totalenteralvolume*1
+							+ option.totalparenteralvolume*1)) | number:'1.0-2'}}</td>
+					</tr>
+				</table>
+			</div>
+		</form>
+	</div>
+	<!-- code for the View details of calculations -->
+	<div class="overlay" id="viewCalculationOverlay"></div>
+	<div class="modal-box-lg ballard-popup" id="viewCalculationPopup">
+		<div *ngIf="tpnFeed.feedCalulator.deficitCalToShow">
+			<button class="modal-popup-close-btn"
+				(click)="closeModalviewCalculation()"></button>
+			<div class="inicu-tab-container">
+				<div class="tab-header left-aligned">
+					<div class="padding-10-x">
+						<h1 class="blue-text">Feed Calculations</h1>
+					</div>
+				</div>
+				<div class="tab-content-cont full">
+					<fieldset>
+						<div>
+							<div class="row padding-20-x padding-20-y">
+								<div class="col-md-1 no-padding-left right-aligned">
+									<span class="blue-text">Name</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned ">
+									<span class="blue-text">Enteral</span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="blue-text">Parenteral</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="blue-text">Total</span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="blue-text">Total per Kg</span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned"
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy>0">
+									<span class="blue-text">ESPGHAN Recommendation(EN)</span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned"
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy<=0">
+									<span class="blue-text">ESPGHAN Recommendation(PN)</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="blue-text">Deficit</span>
+								</div>
+							</div>
+							<div class="row padding-20-x padding-10-y">
+								<div class="col-md-1 no-padding-left right-aligned">
+									<span class="bold">Energy</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy
+										| number:'1.0-2'}}</span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy
+										| number:'1.0-2'}}</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy)
+										| number:'1.0-2'}} </span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy != NaN">{{((tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy)
+										/ tpnFeed.currentFeedInfo.babyFeed.workingWeight) |
+										number:'1.0-2'}} </span>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy > 0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Energy != NaN">
+										{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Energy
+										| number:'1.0-2'}}</div>
+									<div class="col-md-1 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Energy != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Energy != NaN">
+										<span class="grey-text">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy + tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Energy)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy <= 0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Energy != NaN">
+										{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Energy
+										| number:'1.0-2'}}</div>
+									<div class="col-md-1 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Energy != NaN">
+										<span class="grey-text">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Energy)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy<=0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Energy != NaN">
+										{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Energy
+										| number:'1.0-2'}}</div>
+									<div class="col-md-1 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Energy != NaN">
+										<span class="grey-text">{{(tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Energy
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Energy)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+							</div>
+							<div class="row padding-20-x padding-10-y">
+								<div class="col-md-1 no-padding-left right-aligned">
+									<span class="bold">Protein</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein
+										| number:'1.0-2'}}</span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein
+										| number:'1.0-2'}}</span>
+
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein)
+										| number:'1.0-2'}}</span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein != NaN">{{((tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein)
+										/ tpnFeed.currentFeedInfo.babyFeed.workingWeight) |
+										number:'1.0-2'}}</span>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein > 0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Protein != NaN">
+										{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Protein
+										| number:'1.0-2'}}</div>
+									<div class="col-md-1 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Protein != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Protein != NaN">
+										<span class="grey-text">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein + tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Protein)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein <= 0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Protein != NaN">
+										{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Protein
+										| number:'1.0-2'}}</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Protein != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Protein)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Protein<=0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Protein != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Protein
+										| number:'1.0-2'}}</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Protein != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Protein
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Protein)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+							</div>
+							<div class="row padding-20-x padding-10-y">
+								<div class="col-md-1 no-padding-left right-aligned">
+									<span class="bold">Fat</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat
+										| number:'1.0-2'}}</span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat
+										| number:'1.0-2'}}</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat
+										+ tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat) |
+										number:'1.0-2'}}</span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat != NaN">{{((tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat)/tpnFeed.currentFeedInfo.babyFeed.workingWeight)
+										| number:'1.0-2'}}</span>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat > 0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Fat != NaN">
+										{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Fat
+										| number:'1.0-2'}}</div>
+									<div class="col-md-1 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Fat != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Fat != NaN">
+										<span class="grey-text">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat + tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Fat)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat <= 0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Fat != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Fat
+										| number:'1.0-2'}}</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text" *ngIf="x != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat
+											- tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Fat)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Fat<=0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Fat != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Fat
+										| number:'1.0-2'}}</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Fat != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Fat
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Fat)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+							</div>
+							<div class="row padding-20-x padding-10-y">
+								<div class="col-md-1 no-padding-left right-aligned">
+									<span class="bold">Vitamin A</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina
+										| number:'1.0-2'}}</span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina
+										| number:'1.0-2'}}</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina)
+										| number:'1.0-2'}} </span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina != NaN">{{((tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina)/tpnFeed.currentFeedInfo.babyFeed.workingWeight)
+										| number:'1.0-2'}} </span>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina > 0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamina != NaN">
+										{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamina
+										| number:'1.0-2'}}</div>
+									<div class="col-md-1 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamina != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Vitamina != NaN">
+										<span class="grey-text">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina + tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamina)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina <= 0">
+									<div class="col-md-2 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamina != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamina
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamina != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamina)
+											| number:'1.0-2'}} </span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamina<=0">
+									<div class="col-md-2 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Vitamina != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Vitamina
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Vitamina != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamina
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Vitamina)
+											| number:'1.0-2'}} </span>
+									</div>
+								</div>
+							</div>
+							<div class="row padding-20-x padding-10-y">
+								<div class="col-md-1 no-padding-left right-aligned">
+									<span class="bold">Vitamin D</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind
+										| number:'1.0-2'}} </span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind
+										| number:'1.0-2'}} </span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind)
+										| number:'1.0-2'}} </span>
+
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind != NaN">{{((tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind)/tpnFeed.currentFeedInfo.babyFeed.workingWeight)
+										| number:'1.0-2'}} </span>
+								</div>
+								<div
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind > 0">
+										<div class="col-md-2 no-padding-left center-aligned"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamind != NaN">
+											{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamind
+											| number:'1.0-2'}}</div>
+										<div class="col-md-1 no-padding-left center-aligned"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamind != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Vitamind != NaN">
+											<span class="grey-text">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind + tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind
+												-
+												tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamind)
+												| number:'1.0-2'}}</span>
+										</div>
+									</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Vitamind <= 0">
+									<div class="col-md-2 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamind != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamind
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamind != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Vitamind)
+											| number:'1.0-2'}} </span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Vitamind<=0">
+									<div class="col-md-2 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Vitamind != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Vitamind
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parenteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.parenteralIntake.Vitamind != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Vitamind != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.parenteralIntake.Vitamind
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Vitamind)
+											| number:'1.0-2'}} </span>
+									</div>
+								</div>
+							</div>
+							<div class="row padding-20-x padding-10-y">
+								<div class="col-md-1 no-padding-left right-aligned">
+									<span class="bold">Calcium</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium
+										| number:'1.0-2'}} </span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium
+										| number:'1.0-2'}} </span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium)
+										| number:'1.0-2'}} </span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium != NaN">{{((tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium)/tpnFeed.currentFeedInfo.babyFeed.workingWeight)
+										| number:'1.0-2'}} </span>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium > 0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Calcium != NaN">
+										{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Calcium
+										| number:'1.0-2'}}</div>
+									<div class="col-md-1 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Calcium != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Calcium != NaN">
+										<span class="grey-text">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium + tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Calcium)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Calcium <= 0">
+									<div class="col-md-2 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Calcium != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Calcium
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Calcium != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Calcium)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Calcium<=0">
+									<div class="col-md-2 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Calcium != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Calcium
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parenteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.parenteralIntake.Calcium != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Calcium != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.parenteralIntake.Calcium
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Calcium)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+							</div>
+							<div class="row padding-20-x padding-10-y">
+								<div class="col-md-1 no-padding-left right-aligned">
+									<span class="bold">Phosphorus</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus
+										| number:'1.0-2'}}</span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus
+										| number:'1.0-2'}}</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus)
+										| number:'1.0-2'}}</span>
+
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus != NaN">{{((tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus)/tpnFeed.currentFeedInfo.babyFeed.workingWeight)
+										| number:'1.0-2'}} </span>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus > 0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Phosphorus != NaN">
+										{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Phosphorus
+										| number:'1.0-2'}}</div>
+									<div class="col-md-1 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Phosphorus != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Phosphorus != NaN">
+										<span class="grey-text">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus + tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Phosphorus)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Phosphorus < 0">
+									<div class="col-md-2 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Phosphorus != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Phosphorus
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Phosphorus)
+											| number:'1.0-2'}} </span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Phosphorus<=0">
+									<div class="col-md-2 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Phosphorus != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Phosphorus
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parenteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.parenteralIntake.Phosphorus != NaN">{{(tpnFeed.feedCalulator.deficitCalToShow.parenteralIntake.Phosphorus
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Phosphorus)
+											| number:'1.0-2'}} </span>
+									</div>
+								</div>
+							</div>
+							<div class="row padding-20-x padding-10-y">
+								<div class="col-md-1 no-padding-left right-aligned">
+									<span class="bold">Iron</span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron
+										| number:'1.0-2'}} </span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parentalIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron
+										| number:'1.0-2'}} </span>
+								</div>
+								<div class="col-md-1 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron != NaN">
+										{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron +
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron) |
+										number:'1.0-2'}} </span>
+								</div>
+								<div class="col-md-2 no-padding-left center-aligned">
+									<span class="grey-text"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron != NaN">
+										{{((tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron
+										+
+										tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron)/tpnFeed.currentFeedInfo.babyFeed.workingWeight)
+										| number:'1.0-2'}}</span>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron > 0">
+									<div class="col-md-2 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Iron != NaN">
+										{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Iron </div>
+									<div class="col-md-1 no-padding-left center-aligned"
+										*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Iron != NaN && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Iron != NaN">
+										<span class="grey-text">{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron + tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Iron)
+											| number:'1.0-2'}}</span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Energy>0 && tpnFeed.feedCalulator.deficitCalToShow.parentalIntake.Iron < 0">
+									<div class="col-md-2 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Iron != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Iron
+											| number:'1.0-2'}}</span>
+									</div>
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Iron != NaN">
+											{{(tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganIntake.Iron)
+											| number:'1.0-2'}} </span>
+									</div>
+								</div>
+								<div
+									*ngIf="tpnFeed.feedCalulator.deficitCalToShow.enteralIntake.Iron<=0">
+									<div class="col-md-2 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake != NaN">{{tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Iron
+											| number:'1.0-2'}}</span>
+									</div>
+
+									<div class="col-md-1 no-padding-left center-aligned">
+										<span class="grey-text"
+											*ngIf="tpnFeed.feedCalulator.deficitCalToShow.parenteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake != undefined && tpnFeed.feedCalulator.deficitCalToShow.parenteralIntake.Iron != NaN && tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Iron != NaN">
+											{{(tpnFeed.feedCalulator.deficitCalToShow.parenteralIntake.Iron
+											-
+											tpnFeed.feedCalulator.deficitCalToShow.eshphaganParenteralIntake.Iron)
+											| number:'1.0-2'}} </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					<div class="row padding-20-y right-aligned padding-20-x">
+						<span (click)="closeModalviewCalculation()"
+							class="button button-blue">Close</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end of the above code -->
+	<!-- below code is for inactive jaundice popUP -->
+	<div class="overlay" id="scoresOverlay"></div>
+	<div class="modal-box-lg bind-popup" id="OkCancelPopUp"
+		style="width: 400px; top: 50px;">
+		<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+		<button class="modal-popup-close-btn" (click)="closeOkPopUp()"></button>
+		<div class="inicu-tab-container">
+			<div class="tab-content-cont full padding-10-y">
+				<div class="table full center-aligned">
+					<span style="color: red; font-size: 80px">?</span>
+				</div>
+				<span class="bold" style="font-size: 17px">Do you Want to
+					calculate sodium based on {{feedTempObject.textMessage}}
+					concentration</span>
+				<div class="col-md-12 padding-20-y">
+					<div class="col-md-6 center-aligned">
+						<button type="button" class="center-aligned button button-blue"
+							(click)="submitPopup('true')">Yes</button>
+					</div>
+					<div class="col-md-6 center-aligned">
+						<button type="button"
+							class="center-aligned button button-blue-transparent"
+							(click)="closeOkPopUp('false')">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end of the above code -->
+</div>
+<!-- below code is for warning popUP -->
+<div class="overlay" id="warningOverlay"></div>
+<div class="modal-box-lg bind-popup" id="OkWarningPopUp"
+	style="width: 400px; top: 50px;">
+	<!-- <div class="sepsis-popup" id="sepsisScorePopup"> -->
+	<button class="modal-popup-close-btn" (click)="closeWarningPopUp()"></button>
+	<div class="inicu-tab-container">
+		<div class="tab-content-cont full padding-10-y">
+			<span class="bold" style="font-size: 17px"> Order exceeds the
+				range of total fluid limit!! </span>
+		</div>
+	</div>
+</div>
+<!-- end of the above code -->
+<!-- code of loader -->
+<span class="inicu-loader" *ngIf="isLoaderVisible"> <span
+	class="inicu-loader-content"> <span class="inicu-adding-image"></span>
+		<span class="inicu-loading-content">{{loaderContent}}</span>
+</span>
+</span>
+<!-- end of Above Code -->

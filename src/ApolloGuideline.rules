@@ -1,0 +1,675 @@
+@prefix CHIL: <http://www.childhealthimprints.com/NutritionalGuidelines/>.
+@prefix type: <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>.
+@prefix datatype: <http://www.w3.org/2001/XMLSchema#boolean>.
+
+[group1rule:(?a  type:   CHIL:#Neonate), ( ?a CHIL:hasGestationalAgeAtBirth ?c), lessThan(?c, 26.0) -> (?a type: CHIL:Group1)]
+
+[group2rule:(?a  type:   CHIL:#Neonate), ( ?a CHIL:hasGestationalAgeAtBirth ?c), lessThan(?c, 28.0),ge(?c,26.0) -> (?a type: CHIL:Group2)]
+[group3rule:(?a  type:   CHIL:#Neonate), ( ?a CHIL:hasGestationalAgeAtBirth ?c), lessThan(?c, 30.0),ge(?c,28.0) -> (?a type: CHIL:Group3)]
+[group4rule:(?a  type:   CHIL:#Neonate), ( ?a CHIL:hasGestationalAgeAtBirth ?c), lessThan(?c, 32.0),ge(?c,30.0) -> (?a type: CHIL:Group4)]
+[group5rule:(?a  type:   CHIL:#Neonate), ( ?a CHIL:hasGestationalAgeAtBirth ?c), lessThan(?c, 35.0),ge(?c,32.0) -> (?a type: CHIL:Group5)]
+[group6rule:(?a  type:   CHIL:#Neonate), ( ?a CHIL:hasGestationalAgeAtBirth ?c),  ge(?c,35.0) -> (?a type: CHIL:Group6)]
+
+
+ 						 
+[ruleFeedintol1: (?a     CHIL:hasAbdominalDistension "true"^^datatype:),   
+                 (?a     CHIL:hasGastricAspirateAbnormalColor "true")	
+                 (?a     CHIL:hasXRayAbdominStatus ?d),listEqual(?d,"Abnormal")	
+				 (?a   CHIL:hasVomitColor ?e)      
+				  ->  (?a     CHIL:hasFeedIntolerance "true") ]
+
+[ruleFeedintol2: (?a     CHIL:hasFeedIntolerance "true")     					 
+     						 ->  (?a  CHIL:hasNPO  "true"),(?a CHIL:hasInitialFeedingVolume   "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" )]						 
+
+[ruleReverse: (?a     CHIL:hasReversedEndBloodFlow  "true")     						 
+     						 ->   (?a  CHIL:hasNPO  "true"),(?a CHIL:hasInitialFeedingVolume   "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" )]			 
+
+[ruleRisk1: (?a     CHIL:isStoolPassed  "false"), (?a   CHIL:hasAbdominalDistension  "true")  						 
+     						 ->   (?a  CHIL:hasNPO  "true"),(?a CHIL:hasInitialFeedingVolume   "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" ),(?a CHIL:hasFinalFeedingVolume   "0" ) ,(?a CHIL:hasFinalFeedingAdvancement   "0" )]     						 
+
+[ruleRisk2: (?a     CHIL:hasAbsentEndDiastolicFlow  "true")     						 
+     						 ->   (?a  CHIL:hasNPO  "true"),(?a CHIL:hasInitialFeedingVolume   "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" ),(?a CHIL:hasFinalFeedingVolume   "0" ) ,(?a CHIL:hasFinalFeedingAdvancement   "0" )]
+
+[ruleResus: (?a     CHIL:hasResuscitation  "true")     						 
+     						 ->  (?a  CHIL:hasNPO  "true"), (?a CHIL:hasInitialFeedingVolume   "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" ),(?a CHIL:hasFinalFeedingVolume   "0" ) ,(?a CHIL:hasFinalFeedingAdvancement   "0" )]     						 
+
+[ruleRisk5: (?a     CHIL:hasIncreasedLactate  "true")     						 
+     						 ->  (?a  CHIL:hasNPO  "true"), (?a CHIL:hasInitialFeedingVolume   "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" ),(?a CHIL:hasFinalFeedingVolume   "0" ) ,(?a CHIL:hasFinalFeedingAdvancement   "0" )]       
+
+[ruleNEC: (?a     CHIL:hasDiseaseNecrotizingEnterocolitis  "true")   						 
+     						 ->  (?a  CHIL:hasNPO  "true"), (?a CHIL:hasInitialFeedingVolume  "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" ),(?a CHIL:hasFinalFeedingVolume   "0" ) ,(?a CHIL:hasFinalFeedingAdvancement   "0" )]
+     						 						 
+[ruleNEC1: (?a     CHIL:hasDiseaseNecrotizingEnterocolitis  ?d),listEqual(?d,'IA')   						 
+     						 ->  (?a  CHIL:hasNPO  "true"), (?a CHIL:hasInitialFeedingVolume  "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" ),(?a CHIL:hasFinalFeedingVolume   "0" ) ,(?a CHIL:hasFinalFeedingAdvancement   "0" )]
+     						 
+[ruleNEC2: (?a     CHIL:hasDiseaseNecrotizingEnterocolitis  ?d),listEqual(?d,'IB')      						 
+     						 ->  (?a  CHIL:hasNPO  "true"), (?a CHIL:hasInitialFeedingVolume  "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" ),(?a CHIL:hasFinalFeedingVolume   "0" ) ,(?a CHIL:hasFinalFeedingAdvancement   "0" )]
+     						 
+[ruleNEC3: (?a     CHIL:hasDiseaseNecrotizingEnterocolitis  ?d),listEqual(?d,'IIA')       						 
+     						 ->  (?a  CHIL:hasNPO  "true"), (?a CHIL:hasInitialFeedingVolume  "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" ),(?a CHIL:hasFinalFeedingVolume   "0" ) ,(?a CHIL:hasFinalFeedingAdvancement   "0" )]
+     						 
+[ruleNEC4: (?a     CHIL:hasDiseaseNecrotizingEnterocolitis  ?d),listEqual(?d,'IIB')       						 
+     						 ->  (?a  CHIL:hasNPO  "true"), (?a CHIL:hasInitialFeedingVolume   "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" ),(?a CHIL:hasFinalFeedingVolume   "0" ) ,(?a CHIL:hasFinalFeedingAdvancement   "0" )]
+     						 
+[ruleNEC5: (?a     CHIL:hasDiseaseNecrotizingEnterocolitis  ?d),listEqual(?d,'IIIA')   						 
+     						 ->   (?a  CHIL:hasNPO  "true"),(?a CHIL:hasInitialFeedingVolume   "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" ),(?a CHIL:hasFinalFeedingVolume   "0" ) ,(?a CHIL:hasFinalFeedingAdvancement   "0" )]
+     						 
+[ruleNEC6: (?a     CHIL:hasDiseaseNecrotizingEnterocolitis ?d),listEqual(?d,'IIIB')    						 
+     						 ->   (?a  CHIL:hasNPO  "true"),(?a CHIL:hasInitialFeedingVolume   "0" ) ,(?a CHIL:hasInitialFeedingAdvancement   "0" ),(?a CHIL:hasFinalFeedingVolume   "0" ) ,(?a CHIL:hasFinalFeedingAdvancement   "0" )]
+        						 
+     			         						 
+[Group1-Rule1: (?a  type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,0)
+                     ->  (?a CHIL:hasInitialFeedingVolume  "12" ), (?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+[Group1-Rule2: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,1) 
+					-> (?a CHIL:hasInitialFeedingVolume  "24" ) , (?a CHIL:hasInitialFeedingAdvancement   "12" ) ]
+
+
+[Group1-Rule3: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+        (?a     CHIL:hasDayOfLife    ?d), equal(?d,2)
+  		-> (?a CHIL:hasInitialFeedingVolume  "36" ) , (?a CHIL:hasInitialFeedingAdvancement   "12" ) ]
+
+     
+[Group1-Rule4: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,3)
+    -> (?a CHIL:hasInitialFeedingVolume   "48"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+    
+[Group1-Rule5: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,4)
+    -> (?a CHIL:hasInitialFeedingVolume  "60"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+    
+[Group1-Rule6: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,5)
+    -> (?a CHIL:hasInitialFeedingVolume   "72"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+    
+[Group1-Rule7: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,6),
+    -> (?a CHIL:hasInitialFeedingVolume    "84"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+    
+[Group1-Rule8: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,7)
+    -> (?a CHIL:hasInitialFeedingVolume   "96"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+    
+[Group1-Rule9: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,8)
+    -> (?a CHIL:hasInitialFeedingVolume   "108"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+
+
+[Group1-Rule10: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,9)
+    -> (?a CHIL:hasInitialFeedingVolume   "120"), (?a CHIL:hasInitialFeedingAdvancement  "12" )]
+    
+[Group1-Rule11: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,10)
+    -> (?a CHIL:hasInitialFeedingVolume  "132"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+    
+[Group1-Rule12: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,11)
+    -> (?a CHIL:hasInitialFeedingVolume   "144"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+    
+    
+[Group1-Rule13: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO)
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,12)
+    -> (?a CHIL:hasInitialFeedingVolume   "150"),(?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+
+[Group1-Rule14: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), greaterThan(?d,12)
+    -> (?a CHIL:hasInitialFeedingVolume  "150"), (?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+
+[Group2-Rule1: (?a  type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,0)
+                     -> (?a CHIL:hasInitialFeedingVolume  "12" ), (?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+[Group2-Rule2: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,1) 
+					-> (?a CHIL:hasInitialFeedingVolume  "24" ) , (?a CHIL:hasInitialFeedingAdvancement   "12" ) ]
+
+[Group2-Rule3: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+        (?a     CHIL:hasDayOfLife    ?d), equal(?d,2)
+  		-> (?a CHIL:hasInitialFeedingVolume   "36" ) , (?a CHIL:hasInitialFeedingAdvancement   "12" ) ]
+
+     
+[Group2-Rule4: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,3)
+    -> (?a CHIL:hasInitialFeedingVolume  "48"), (?a CHIL:hasInitialFeedingAdvancement  "12" )]
+    
+[Group2-Rule5: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,4),
+    -> (?a CHIL:hasInitialFeedingVolume   "60"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+    
+[Group2-Rule6: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,5),
+    -> (?a CHIL:hasInitialFeedingVolume  "72"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+    
+[Group2-Rule7: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,6),
+    -> (?a CHIL:hasInitialFeedingVolume  "84"),(?a CHIL:hasInitialFeedingAdvancement   "12" )]
+    
+[Group2-Rule8: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,7),
+    -> (?a CHIL:hasInitialFeedingVolume  "96"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+    
+[Group2-Rule9: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,8),
+    -> (?a CHIL:hasInitialFeedingVolume   "108"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+
+
+[Group2-Rule10: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,9),
+    -> (?a CHIL:hasInitialFeedingVolume   "120"), (?a CHIL:hasInitialFeedingAdvancement   "12" )]
+    
+[Group2-Rule11: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,10),
+    -> (?a CHIL:hasInitialFeedingVolume   "132"),(?a CHIL:hasInitialFeedingAdvancement    "12" )]
+    
+[Group2-Rule12: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,11),
+    -> (?a CHIL:hasInitialFeedingVolume   "144"), (?a CHIL:hasInitialFeedingAdvancement    "12" )]
+    
+    
+[Group2-Rule13: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,12),
+    -> (?a CHIL:hasInitialFeedingVolume   "150"), (?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+
+[Group2-Rule14: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), greaterThan(?d,12),
+    -> (?a CHIL:hasInitialFeedingVolume   "150"),(?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+
+[Group3-Rule1: (?a  type:    CHIL:Group3),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,0)
+                     -> (?a CHIL:hasInitialFeedingVolume  "12" ),(?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+[Group3-Rule2: (?a    type:    CHIL:Group3),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,1) 
+					-> (?a CHIL:hasInitialFeedingVolume  "32" ) , (?a CHIL:hasInitialFeedingAdvancement   "20" ) ]
+
+
+[Group3-Rule3: (?a    type:    CHIL:Group3),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+        (?a     CHIL:hasDayOfLife    ?d), equal(?d,2)
+  		-> (?a CHIL:hasInitialFeedingVolume  "52" ) ,(?a CHIL:hasInitialFeedingAdvancement   "20" ) ]
+
+     
+[Group3-Rule4: (?a    type:    CHIL:Group3),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,3)
+    -> (?a CHIL:hasInitialFeedingVolume "72"), (?a CHIL:hasInitialFeedingAdvancement   "20" )]
+    
+[Group3-Rule5: (?a    type:    CHIL:Group3),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,4)
+    -> (?a CHIL:hasInitialFeedingVolume  "92"), (?a CHIL:hasInitialFeedingAdvancement   "20" )]
+    
+[Group3-Rule6: (?a    type:    CHIL:Group3),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,5)
+    -> (?a CHIL:hasInitialFeedingVolume   "112"), (?a CHIL:hasInitialFeedingAdvancement   "20" )]
+    
+[Group3-Rule7: (?a    type:    CHIL:Group3),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,6)
+    -> (?a CHIL:hasInitialFeedingVolume  "132"), (?a CHIL:hasInitialFeedingAdvancement   "20" )]
+    
+[Group3-Rule8: (?a    type:    CHIL:Group3),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,7)
+    -> (?a CHIL:hasInitialFeedingVolume   "150"), (?a CHIL:hasInitialFeedingAdvancement   "20" )]
+
+
+[Group3-Rule9: (?a    type:    CHIL:Group3),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), ge(?d,8)
+    -> (?a CHIL:hasInitialFeedingVolume  "150"), (?a CHIL:hasInitialFeedingAdvancement  "0" )]
+
+
+[Group4-Rule1: (?a  type:    CHIL:Group4),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,0)
+                     -> (?a CHIL:hasInitialFeedingVolume  "60" ), (?a CHIL:hasFinalFeedingVolume   "80" ),(?a  CHIL:hasInitialFeedingAdvancement   "0" )]
+
+[Group4-Rule2: (?a    type:    CHIL:Group4),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,1) 
+			-> (?a CHIL:hasInitialFeedingVolume  "80" ) ,(?a CHIL:hasFinalFeedingVolume  "100" ),(?a CHIL:hasInitialFeedingAdvancement "20") ]
+
+
+[Group4-Rule3: (?a    type:    CHIL:Group4),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+        (?a     CHIL:hasDayOfLife    ?d), equal(?d,2)
+  		-> (?a CHIL:hasInitialFeedingVolume  "100" ) ,(?a CHIL:hasFinalFeedingVolume   "120" ),(?a CHIL:hasInitialFeedingAdvancement   "20" ) ]
+
+     
+[Group4-Rule4: (?a    type:    CHIL:Group4),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,3)
+    -> (?a CHIL:hasInitialFeedingVolume   "120"),(?a CHIL:hasFinalFeedingVolume   "140" ),(?a CHIL:hasInitialFeedingAdvancement   "20" )]
+    
+[Group4-Rule5: (?a    type:    CHIL:Group4),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,4)
+    -> (?a CHIL:hasInitialFeedingVolume   "140"),(?a CHIL:hasFinalFeedingVolume  "160" ),(?a CHIL:hasInitialFeedingAdvancement   "20" )]
+    
+[Group4-Rule6: (?a    type:    CHIL:Group4),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,5)
+    -> (?a CHIL:hasInitialFeedingVolume  "160"),(?a CHIL:hasFinalFeedingVolume  "180" ),(?a CHIL:hasInitialFeedingAdvancement   20 )]
+    
+[Group4-Rule7: (?a    type:    CHIL:Group4),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,6)
+    -> (?a CHIL:hasInitialFeedingVolume  "180"), (?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+
+
+[Group4-Rule9: (?a    type:    CHIL:Group4),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,7)
+    -> (?a CHIL:hasInitialFeedingVolume  "180"), (?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+
+
+[Group4-Rule10: (?a    type:    CHIL:Group4),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), greaterThan(?d,7)
+    -> (?a CHIL:hasInitialFeedingVolume  "180"), (?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+[Group5-Rule1: (?a  type:    CHIL:Group5),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,0)
+                     -> (?a CHIL:hasInitialFeedingVolume  "60" ), (?a CHIL:hasFinalFeedingVolume  "80" ), (?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+[Group5-Rule2: (?a    type:    CHIL:Group5),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,1) 
+-> (?a CHIL:hasInitialFeedingVolume  "80" ),(?a CHIL:hasFinalFeedingVolume "120" ) ,(?a CHIL:hasInitialFeedingAdvancement "20" ),(?a CHIL:hasFinalFeedingAdvancement    "30" ) ]
+
+
+[Group5-Rule3: (?a    type:    CHIL:Group5),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+        (?a     CHIL:hasDayOfLife    ?d), equal(?d,2),
+  		-> (?a CHIL:hasInitialFeedingVolume     "100" ) ,(?a CHIL:hasFinalFeedingVolume    "140" ) ,(?a CHIL:hasInitialFeedingAdvancement    "20" ) ,(?a CHIL:hasFinalFeedingAdvancement    "30" )]
+
+     
+[Group5-Rule4: (?a    type:    CHIL:Group5),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,3),
+    -> (?a CHIL:hasInitialFeedingVolume    "120"),(?a CHIL:hasFinalFeedingVolume  "170" ), (?a CHIL:hasFinalFeedingAdvancement   "30" ),(?a CHIL:hasInitialFeedingAdvancement  "20" )]
+    
+[Group5-Rule5: (?a    type:    CHIL:Group5),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,4),
+    -> (?a CHIL:hasInitialFeedingVolume    "140"),(?a CHIL:hasFinalFeedingVolume     "180" ), (?a CHIL:hasFinalFeedingAdvancement     "30" ),(?a CHIL:hasInitialFeedingAdvancement  "20" )]
+    
+[Group5-Rule6: (?a    type:    CHIL:Group5),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,5),
+    -> (?a CHIL:hasInitialFeedingVolume     "160"),(?a CHIL:hasFinalFeedingVolume  "180" ), (?a CHIL:hasFinalFeedingAdvancement    "30" ),(?a CHIL:hasInitialFeedingAdvancement   "20" )]
+    
+[Group5-Rule7: (?a    type:    CHIL:Group5),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,6),
+    -> (?a CHIL:hasInitialFeedingVolume  "180"), (?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+[Group5-Rule8: (?a    type:    CHIL:Group5),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,7),
+    -> (?a CHIL:hasInitialFeedingVolume     "180"), (?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+[Group5-Rule9: (?a    type:    CHIL:Group5),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), greaterThan(?d,7),
+    -> (?a CHIL:hasInitialFeedingVolume     "180"), (?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+[Group6-Rule1: (?a  type:    CHIL:Group6),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,0)
+                     -> (?a CHIL:hasInitialFeedingVolume   "60" ), (?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+[Group6-Rule2: (?a    type:    CHIL:Group6),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,1) 
+					-> (?a CHIL:hasInitialFeedingVolume  "80" ),(?a CHIL:hasFinalFeedingVolume   "90" ), (?a CHIL:hasFinalFeedingAdvancement   "30" ) ,(?a CHIL:hasInitialFeedingAdvancement   "20" ) ]
+
+[Group6-Rule3: (?a    type:    CHIL:Group6),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+        (?a     CHIL:hasDayOfLife    ?d), equal(?d,2),
+  		-> (?a CHIL:hasInitialFeedingVolume  "100" ) ,(?a CHIL:hasFinalFeedingVolume  "120" ), (?a CHIL:hasFinalFeedingAdvancement    "30" ),(?a CHIL:hasInitialFeedingAdvancement   "20" ) ]
+
+     
+[Group6-Rule4: (?a    type:    CHIL:Group6),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,3),
+    -> (?a CHIL:hasInitialFeedingVolume  "120"),(?a CHIL:hasFinalFeedingVolume   "150" ), (?a CHIL:hasFinalFeedingAdvancement  "30" ),(?a CHIL:hasInitialFeedingAdvancement   "20" )]
+    
+[Group6-Rule5: (?a    type:    CHIL:Group6),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,4),
+    -> (?a CHIL:hasInitialFeedingVolume  "140"),(?a CHIL:hasFinalFeedingVolume  "180" ), (?a CHIL:hasFinalFeedingAdvancement    "30" ),(?a CHIL:hasInitialFeedingAdvancement  "20" )]
+    
+[Group6-Rule6: (?a    type:    CHIL:Group6),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), equal(?d,5),
+    -> (?a CHIL:hasInitialFeedingVolume  "180"), (?a CHIL:hasInitialFeedingAdvancement   "20" ),(?a CHIL:hasFinalFeedingAdvancement  "30" )]
+   
+[Group6-Rule7: (?a    type:    CHIL:Group6),
+ noValue(?a     CHIL:hasFeedIntolerance),noValue(?a  CHIL:hasNPO),
+(?a     CHIL:hasDayOfLife    ?d), ge(?d,6),
+    -> (?a CHIL:hasInitialFeedingVolume  "180"),(?a CHIL:hasInitialFeedingAdvancement   "0" )]
+
+    
+[Group1-Rule15: (?a    type:    CHIL:Group1),
+ noValue(?a     CHIL:hasFeedIntolerance),
+    -> (?a CHIL:hasFeedMilkType "Breast milk|Donor Milk|LBW Formula"),(?a CHIL:hasFeedingMethod "OG Feeds" )]
+
+    
+[Group2-Rule16: (?a    type:    CHIL:Group2),
+ noValue(?a     CHIL:hasFeedIntolerance),
+    -> (?a CHIL:hasFeedMilkType "Breast milk|Donor Milk|LBW Formula"),(?a CHIL:hasFeedingMethod "OG Feeds" )]
+
+    
+[Group3-Rule17: (?a    type:    CHIL:Group3),
+ noValue(?a     CHIL:hasFeedIntolerance),
+    -> (?a CHIL:hasFeedMilkType "Breast milk|Donor Milk|LBW Formula"),(?a CHIL:hasFeedingMethod "OG Feeds" )]
+
+    
+[Group4-Rule18: (?a    type:    CHIL:Group4),
+ noValue(?a     CHIL:hasFeedIntolerance),
+    -> (?a CHIL:hasFeedMilkType "Breast milk|Donor Milk|LBW Formula"),(?a CHIL:hasFeedingMethod "OG Feeds" )]
+
+    
+[Group5-Rule19: (?a    type:    CHIL:Group5),
+ noValue(?a     CHIL:hasFeedIntolerance),
+    -> (?a CHIL:hasFeedMilkType "Breast milk|Donor Milk|LBW Formula"),(?a CHIL:hasFeedingMethod "OG|paladai|breast feeds" )]
+
+[Group6-Rule20: (?a    type:    CHIL:Group6),
+ noValue(?a     CHIL:hasFeedIntolerance),
+    -> (?a CHIL:hasFeedMilkType "Breast milk|Donor Milk|LBW Formula"),(?a CHIL:hasFeedingMethod "paladai|breast feeds" )]
+
+
+[rulefeed1:(?a     CHIL:hasSignAndSymptom  CHIL:Vomit),
+     		(?a     CHIL:hasVomitColor CHIL:DarkBile)
+     						 -> (?a CHIL:hasFeedIntoleranceSign  "true"^^datatype:)]
+     
+[rulefeed2: (?a     CHIL:hasVomitColor  ?d),listEqual(?d,"blood stained")
+     						 -> (?a CHIL:hasFeedIntoleranceSign  "true"^^datatype:)]
+       						 
+[rulefeed3:    (?a     CHIL:hasVomitVolume  ?d),listEqual(?d,"Large")
+     		                  ->       (?a CHIL:hasFeedIntoleranceSign  "true"^^datatype:)]
+
+[ruleabdomin:  (?a   CHIL:hasAbdominalDistension  "true")	 
+     		                  ->       (?a CHIL:hasFeedIntoleranceSign  "true"^^datatype:)]
+
+
+[ruleskin:  (?a   CHIL:hasAbdominalTenderness  "true")	 
+     		                  ->       (?a   CHIL:hasFeedIntoleranceSign  "true"^^datatype:)]
+
+
+[rulegastric:  (?a   CHIL:hasGastricAspirateAbnormalColor  "true")	 
+     		                  ->       (?a   CHIL:hasFeedIntoleranceSign  "true"^^datatype:)]
+
+ 
+  						 
+[ParenteralRule1: (?a    type:    CHIL:#Neonate), (?a CHIL:hasDayOfLife     ?d) , equal(?d,0), (?a  CHIL:hasPNFeed      "true")
+
+					->   (?a  CHIL:hasPNInitialFeedingVolumeOfCHO   "4"), (?a  CHIL:hasPNFinalFeedingVolumeOfCHO  "6"), (?a   CHIL:hasPNInitialFeedingAdvancementOfCHO  "0")] 
+
+[ParenteralRule2: (?a    type:    CHIL:#Neonate),  (?a  CHIL:hasDayOfLife    ?d), equal(?d,1) ,(?a  CHIL:hasPNFeed      "true")
+					->  (?a  CHIL:hasPNInitialFeedingVolumeOfCHO   "5"), (?a  CHIL:hasPNFinalFeedingVolumeOfCHO   "8") ,(?a   CHIL:hasPNInitialFeedingAdvancementOfCHO   "1") ,(?a  CHIL:hasPNFinalFeedingAdvancementOfCHO   "2")] 
+
+[ParenteralRule3: (?a    type:    CHIL:#Neonate),  (?a  CHIL:hasDayOfLife    ?d), equal(?d,2) ,(?a  CHIL:hasPNFeed      "true")
+					->  (?a  CHIL:hasPNInitialFeedingVolumeOfCHO    "6"), (?a  CHIL:hasPNFinalFeedingVolumeOfCHO   "8"), (?a   CHIL:hasPNInitialFeedingAdvancementOfCHO   "1"), (?a  CHIL:hasPNFinalFeedingAdvancementOfCHO   "2")] 
+
+
+[ParenteralRule4: (?a    type:    CHIL:#Neonate),  (?a   CHIL:hasDayOfLife     ?d),greaterThan(?d,2),(?a  CHIL:hasPNFeed      "true")
+ 					->(?a  CHIL:hasPNInitialFeedingVolumeOfCHO    "6"), (?a  CHIL:hasPNFinalFeedingVolumeOfCHO   "8"), (?a   CHIL:hasPNInitialFeedingAdvancementOfCHO    "0")] 
+ 
+
+
+[ParenteralRule5: (?a    type:    CHIL:Group1), (?a  CHIL:hasDayOfLife     ?d), equal(?d,0),(?a  CHIL:hasPNFeed      "true")
+					->(?a  CHIL:hasPNInitialFeedingVolumeOfProtein    "2") (?a  CHIL:hasPNFinalFeedingVolumeOfProtein   "3")  (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein   "0")] 
+
+
+[ParenteralRule6: (?a    type:    CHIL:Group1),  (?a   CHIL:hasDayOfLife     ?d), equal(?d,1), (?a  CHIL:hasPNFeed      "true") 
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein  "4") (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein   "1")] 
+
+
+
+[ParenteralRule7: (?a    type:    CHIL:Group1),  (?a   CHIL:hasDayOfLife     ?d), equal(?d,2), (?a  CHIL:hasPNFeed      "true") 
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3.5") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein   "4") (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein   "1")] 
+
+
+[ParenteralRule8: (?a    type:    CHIL:Group1),  (?a  CHIL:hasDayOfLife    ?d), greaterThan(?d,2), (?a  CHIL:hasPNFeed      "true") 
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein    "3.5") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein   "4")  (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein   "0")] 
+
+
+ [ParenteralRule9: (?a    type:    CHIL:Group2), (?a CHIL:hasDayOfLife    ?d) , equal(?d,0),(?a  CHIL:hasPNFeed      "true")
+ 					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "2") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein  "3")  (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "0")] 
+ 
+
+[ParenteralRule10: (?a    type:    CHIL:Group2),  (?a  CHIL:hasDayOfLife    ?d), equal(?d,1),(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein  "4") (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "1") ] 
+
+
+[ParenteralRule11: (?a    type:    CHIL:Group2),  (?a  CHIL:hasDayOfLife    ?d), equal(?d,2),(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein  "3.5") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein   "4") (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein   "1") ] 
+
+
+[ParenteralRule12: (?a    type:    CHIL:Group2),  (?a  CHIL:hasDayOfLife    ?d), greaterThan(?d,2), (?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3.5") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein  "4")  (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein   "0")] 
+
+ 
+[Parentera1Rule13: (?a    type:    CHIL:Group3), (?a CHIL:hasDayOfLife    ?d),equal(?d,0) ,(?a  CHIL:hasPNFeed      "true")
+			->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "2") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein   "3")  (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "0")] 
+					
+
+[Parentera1Rule14: (?a    type:    CHIL:Group3),  (?a  CHIL:hasDayOfLife       ?d),equal(?d,1),(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein  "3.5") (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "1") ] 
+					
+
+[ParenteralRule15: (?a    type:    CHIL:Group3),  (?a  CHIL:hasDayOfLife      ?d),equal(?d,2),(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3.5") (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "0")] 
+
+ 
+[ParenteralRule16: (?a    type:    CHIL:Group3),  (?a  CHIL:hasDayOfLife      ?d), greaterThan(?d,2),(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3.5") (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "0")] 
+
+ 
+[ParenteralRule17: (?a    type:    CHIL:Group4), (?a CHIL:hasDayOfLife    ?d),equal(?d,0) ,(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "2") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein   "3") (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "0")] 
+
+[ParenteralRule18: (?a    type:    CHIL:Group4),  (?a  CHIL:hasDayOfLife    ?d),equal(?d,1),(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein   "3.5") (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "1") ] 
+
+[ParenteralRule19: (?a    type:    CHIL:Group4),  (?a  CHIL:hasDayOfLife    ?d), equal(?d,2),(?a  CHIL:hasPNFeed      "true")
+				->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3.5")  (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "0") ] 
+		
+[ParenteraRule20: (?a    type:    CHIL:Group4),  (?a  CHIL:hasDayOfLife    ?d), greaterThan(?d,2),(?a  CHIL:hasPNFeed      "true")
+				->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3.5")  (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein   "0")] 
+					
+[ParenteralRule21: (?a    type:    CHIL:Group5), (?a CHIL:hasDayOfLife    ?d),equal(?d,0),(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3")  (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "0") ] 
+					
+
+[ParenteralRule22: (?a    type:    CHIL:Group5),  (?a  CHIL:hasDayOfLife    ?d),equal(?d,1),(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein   "3.5") (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein   "1")] 
+					
+
+[Parentera1Rule23: (?a    type:    CHIL:Group5),  (?a  CHIL:hasDayOfLife    ?d),equal(?d,2),(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3.5")(?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "1") ] 
+					
+
+[ParenteralRule24: (?a    type:    CHIL:Group5),  (?a  CHIL:hasDayOfLife    ?d),greaterThan(?d,2),(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein    "3.5")  (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "0")] 
+					
+								
+					
+[ParenteralRule25: (?a    type:    CHIL:Group6), (?a CHIL:hasDayOfLife    ?d),equal(?d,0) ,(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein  "3")  (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "0")] 
+
+
+[ParenteralRule26: (?a    type:    CHIL:Group6),  (?a  CHIL:hasDayOfLife    ?d),equal(?d,1), (?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein  "3.5") (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "1")] 
+
+
+
+[ParenteralRule27: (?a    type:    CHIL:Group6),  (?a  CHIL:hasDayOfLife    ?d),equal(?d,2), (?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein   "3") (?a    CHIL:hasPNFinalFeedingVolumeOfProtein  "3.5") (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein   "1")] 
+
+[ParenteralRule28: (?a    type:    CHIL:Group6),  (?a  CHIL:hasDayOfLife    ?d),greaterThan(?d,2),(?a  CHIL:hasPNFeed      "true")
+					->(?a    CHIL:hasPNInitialFeedingVolumeOfProtein    "3.5")  (?a     CHIL:hasPNInitialFeedingAdvancementOfProtein  "0") ] 								
+					
+
+
+[Parenteralsodium1: (?a    type:    CHIL:#Neonate),  (?a  CHIL:hasDayOfLife    ?d), equal(?d,0) ,(?a  CHIL:hasPNFeed      "true")
+					->  (?a  CHIL:hasPNInitialFeedingVolumeOfSodium   "0")] 
+
+
+[Parenteralsodium2: (?a    type:    CHIL:#Neonate),  (?a   CHIL:hasDayOfLife     ?d), equal(?d,1),(?a  CHIL:hasPNFeed      "true")
+ 					->(?a  CHIL:hasPNInitialFeedingVolumeOfSodium   "0")] 
+ 
+
+[Parenteralsodium3: (?a    type:    CHIL:#Neonate),  (?a  CHIL:hasDayOfLife    ?d), equal(?d,2) ,(?a  CHIL:hasPNFeed      "true")
+					->  (?a  CHIL:hasPNInitialFeedingVolumeOfSodium    "3")] 
+
+
+[Parenteralsodium4: (?a    type:    CHIL:#Neonate),  (?a   CHIL:hasDayOfLife     ?d),greaterThan(?d,2),(?a  CHIL:hasPNFeed      "true")
+ 					->(?a  CHIL:hasPNInitialFeedingVolumeOfSodium    "3"), (?a  CHIL:hasPNFinalFeedingVolumeOfSodium   "4")] 
+ 
+
+
+
+
+[ParenteralPotassium1: (?a    type:    CHIL:#Neonate),  (?a  CHIL:hasDayOfLife    ?d), equal(?d,0) ,(?a  CHIL:hasPNFeed      "true")
+					->  (?a  CHIL:hasPNInitialFeedingVolumeOfPotassium   "0"), (?a   CHIL:hasPNInitialFeedingAdvancementOfPotassium   "0")] 
+
+
+[ParenteralPotassium2: (?a    type:    CHIL:#Neonate),  (?a   CHIL:hasDayOfLife     ?d),equal(?d,1),(?a  CHIL:hasPNFeed      "true")
+ 					->(?a  CHIL:hasPNInitialFeedingVolumeOfPotassium   "0"),  (?a   CHIL:hasPNInitialFeedingAdvancementOfPotassium  "0")] 
+ 
+
+[ParenteralPotassium3: (?a    type:    CHIL:#Neonate),  (?a  CHIL:hasDayOfLife    ?d), equal(?d,2) ,(?a  CHIL:hasPNFeed      "true")
+					->  (?a  CHIL:hasPNInitialFeedingVolumeOfPotassium    "2"), (?a   CHIL:hasPNInitialFeedingAdvancementOfPotassium  "0")] 
+
+
+[ParenteralPotassium4: (?a    type:    CHIL:#Neonate),  (?a   CHIL:hasDayOfLife     ?d),greaterThan(?d,2),(?a  CHIL:hasPNFeed      "true")
+ 					->(?a  CHIL:hasPNInitialFeedingVolumeOfPotassium   "2"),  (?a   CHIL:hasPNInitialFeedingAdvancementOfPotassium  "0")] 
+ 
+ 
+[ParenteralPotassium5: (?a    type:    CHIL:#Neonate),  (?a   CHIL:hasDayOfLife     ?d),ge(?d,2),(?a  CHIL:hasPNFeed      "true")
+ 					->(?a  CHIL:hasPNInitialFeedingVolumeOfPotassium   "2"),  (?a   CHIL:hasPNInitialFeedingAdvancementOfPotassium  "0")] 
+ 
+ 
+
+[ParenteralPotassium6: (?a    type:    CHIL:#Neonate),  (?a  CHIL:hasDayOfLife    ?d), equal(?d,0) ,(?a  CHIL:hasPNFeed      "true")
+					->  (?a  CHIL:hasPNFeedingVolumeOfCalcium   "80")] 
+
+
+[ParenteralPotassium7: (?a    type:    CHIL:#Neonate),  (?a   CHIL:hasDayOfLife     ?d),equal(?d,1),(?a  CHIL:hasPNFeed      "true")
+ 					->(?a  CHIL:hasPNFeedingVolumeOfCalcium   "80")] 
+ 
+
+[ParenteralPotassium8: (?a    type:    CHIL:#Neonate),  (?a   CHIL:hasDayOfLife     ?d),greaterThan(?d,1),(?a  CHIL:hasPNFeed      "true")
+ 					->(?a  CHIL:hasPNFeedingVolumeOfCalcium   "80")] 
+ 
+
+[ParenteralPotassium9: (?a    type:    CHIL:#Neonate),  (?a   CHIL:hasDayOfLife     ?d),ge(?d,1),(?a  CHIL:hasPNFeed      "true")
+ 					->(?a  CHIL:hasPNFeedingVolumeOfCalcium   "80")] 
+ 
+
+
+     						     						 
+[fortifier-rule1:(?a  type:   CHIL:#Neonate), 
+  (?a  CHIL:hasBirthWeight   ?b), greaterThan(?b,800), lessThan(?b, 1800)
+    (?a  CHIL:hasInitialFeedingVolume    ?c), greaterThan(?c, 100)
+       						 ->  (?a CHIL:hasForitifiers "true" )]
+  
+ [fortifier-rule2:(?a  type:   CHIL:#Neonate), 
+  (?a  CHIL:hasBirthWeight   ?b), lessThan(?b,800)
+    (?a  CHIL:hasInitialFeedingVolume    ?c), greaterThan(?c, 100)
+       						 ->  (?a CHIL:hasForitifiers "true" )]
+[fortifier-rule3:(?a  type:   CHIL:#Group1), 
+    (?a  CHIL:hasInitialFeedingVolume    ?c), ge(?c, 150)
+       						 ->  (?a CHIL:hasForitifiers "true" )]
+        						 
+[fortifier-rule4:(?a  type:   CHIL:#Group2), 
+    (?a  CHIL:hasInitialFeedingVolume    ?c), ge(?c, 150)
+       						 ->  (?a CHIL:hasForitifiers "true" )]
+       						 
+[fortifier-rule5:(?a  type:   CHIL:#Group3), 
+    (?a  CHIL:hasInitialFeedingVolume    ?c), ge(?c, 150)
+       						 ->  (?a CHIL:hasForitifiers "true" )]
+       						 
+[fortifier-rule6:(?a  type:   CHIL:#Group4), 
+    (?a  CHIL:hasInitialFeedingVolume    ?c), ge(?c, 180)
+       						 ->  (?a CHIL:hasForitifiers "true" )]
+       						 
+[fortifier-rule7:(?a  type:   CHIL:#Group5), 
+    (?a  CHIL:hasInitialFeedingVolume    ?c), ge(?c, 180)
+       						 ->  (?a CHIL:hasForitifiers "true" )]
+       						
+          						 
+[fortifier-rule8:(?a  type:   CHIL:#Group6), 
+    (?a  CHIL:hasInitialFeedingVolume    ?c), ge(?c, 180)
+       						 ->  (?a CHIL:hasForitifiers "true" )]
+       						 
+ 
+[Energy-Rule1: (?a    type:    CHIL:Group1)
+					-> (?a CHIL:hasInitialEnergyRequirement "90" ) (?a CHIL:hasFinalEnergyRequirement "110" ) (?a CHIL:hasMaxFluidRequirement "150" ) ]
+ 
+[Energy-Rule2: (?a    type:    CHIL:Group2)
+					-> (?a CHIL:hasInitialEnergyRequirement "90" )(?a CHIL:hasFinalEnergyRequirement "110" ) (?a CHIL:hasMaxFluidRequirement "150" ) ]
+					
+[Energy-Rule3: (?a    type:    CHIL:Group3)
+					-> (?a CHIL:hasInitialEnergyRequirement "90" )(?a CHIL:hasFinalEnergyRequirement "110" ) (?a CHIL:hasMaxFluidRequirement "150" ) ]
+					
+[Energy-Rule4: (?a    type:    CHIL:Group4)
+					-> (?a CHIL:hasInitialEnergyRequirement "90" )(?a CHIL:hasFinalEnergyRequirement "110" ) (?a CHIL:hasMaxFluidRequirement "150" ) ]
+					
+[Energy-Rule5: (?a    type:    CHIL:Group5)
+					-> (?a CHIL:hasInitialEnergyRequirement "110" ) (?a CHIL:hasMaxFluidRequirement "150" ) ]
+					
+[Energy-Rule6: (?a    type:    CHIL:Group6)
+					-> (?a CHIL:hasInitialEnergyRequirement "110" )  (?a CHIL:hasMaxFluidRequirement "180" ) ]
+
+
+					
+[Energy-Rule7: (?a    type:    CHIL:Group1), (?a   CHIL:hasForitifiers   "true" )
+		 -> (?a   CHIL:hasEnergyRequirement   "110 kCal/kg/day" ) (?a   CHIL:hasMaxFluidRequirement   "180 ml/kg/day" ) ]
+					
+
