@@ -1,3 +1,0 @@
-alter table apollo.nursing_notes add column flag boolean;
-
-update apollo.nursing_notes set flag = true;

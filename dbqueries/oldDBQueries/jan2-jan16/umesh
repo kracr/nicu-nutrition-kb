@@ -1,1 +1,0 @@
-alter table kdah.babyfeed_detail add blood_product_given boolean;

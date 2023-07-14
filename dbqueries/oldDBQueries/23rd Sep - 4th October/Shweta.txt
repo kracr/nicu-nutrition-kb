@@ -1,5 +1,0 @@
-
-Alter table kdah.screen_usg ADD column current_findings TEXT;
-
-
-Alter table kdah.screen_rop ADD column current_findings TEXT;

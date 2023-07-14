@@ -1,6 +1,0 @@
-alter table apollo.stable_notes add column tcb character varying(20);
-
-alter table apollo.stable_notes add column rbs real;
-
-alter table apollo.respsupport drop column is_eventid_updated;
-alter table apollo.respsupport add column is_eventid_updated boolean;
