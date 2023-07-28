@@ -1,0 +1,1276 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.childhealthimprints.com/NutritionalGuidelines/"
+     xml:base="http://www.childhealthimprints.com/NutritionalGuidelines/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/">
+        <rdfs:comment>Creators:
+Monika Jain, Raghava Mutharaju, Ravneet Kaur , Ryan McAdams, Yao Sun, Shubham Gupta, Avneet Kaur, Su Jin Cho, Satish Saluja, Jonathan Palma, Harpreet Singh
+Date:12 July 2023</rdfs:comment>
+        <rdfs:comment>Title:
+Nutrition Recommendation Ontology (NRO)</rdfs:comment>
+        <rdfs:seeAlso>Description:
+NRO is developed incorporating standard nutrition guidelines.
+NRO is created to represent clinal data (e.g., details related to birth, nutrition, and current health) of neonates admitted to the NICU. These details are captured to provide feed recommendation to neonates based on these clinical details.</rdfs:seeAlso>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasLaboratoryInvestigation -->
+
+    <owl:ObjectProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasLaboratoryInvestigation">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/LaboratoryInvestigation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasParenteralFeed -->
+
+    <owl:ObjectProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasParenteralFeed">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/ParenteralFeed"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPhysicalSign -->
+
+    <owl:ObjectProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPhysicalSign">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/PhysicalSign"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasRadiologyInvestigation -->
+
+    <owl:ObjectProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasRadiologyInvestigation">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/RadiologyInvestigation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasSymptom -->
+
+    <owl:ObjectProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasSymptom">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.co-ode.org/ontologies/galen#Symptom"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasVomitVolume -->
+
+    <owl:ObjectProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasVomitVolume">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/PhysicalSign"/>
+        <rdfs:comment>Small ,Medium , Large as per nurse perception</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasXRayAbdominStatus -->
+
+    <owl:ObjectProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasXRayAbdominStatus">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/bloodPresentInStool -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/bloodPresentInStool">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/bloodPresentInVomit -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/bloodPresentInVomit">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/givenFeedVolume -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/givenFeedVolume">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasAbdominalDistension -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasAbdominalDistension">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment>2 cm above the baseline (Abdominal girth)  where baseline is defined as lowest value recorded in the last 24 hours.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasAbdominalTenderness -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasAbdominalTenderness">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasAbsentEndDiastolicFlow -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasAbsentEndDiastolicFlow">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasBaseDeficitValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasBaseDeficitValue">
+        <rdfs:domain rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/LaboratoryInvestigation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasBirthWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasBirthWeight">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasBloodPressureValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasBloodPressureValue">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasCentralPeripheralDifference -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasCentralPeripheralDifference">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasChestCompressionDuration -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasChestCompressionDuration">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasColdPeripheries -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasColdPeripheries">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasCordGaspHValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasCordGaspHValue">
+        <rdfs:domain rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/LaboratoryInvestigation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasDetails -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasDetails">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasDiseaseNecrotizingEnterocolitis -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasDiseaseNecrotizingEnterocolitis">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Necrotizing enterocolitis (NEC) is a life-threatening illness almost exclusively affecting neonates with a mortality rate as high as 50 percent</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasFeedIntolerance -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasFeedIntolerance">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasFeedIntoleranceSign -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasFeedIntoleranceSign">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasFinalEnergyRequirement -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasFinalEnergyRequirement">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasFinalFeedingAdvancement -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasFinalFeedingAdvancement">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasFinalFeedingVolume -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasFinalFeedingVolume">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasFluidRequirement -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasFluidRequirement">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasGastricAspirate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasGastricAspirate">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasGastricAspirateAbnormalColor -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasGastricAspirateAbnormalColor">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasGestationalAgeAtBirth -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasGestationalAgeAtBirth">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasIncreasedLactate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasIncreasedLactate">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasInitialEnergyRequirement -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasInitialEnergyRequirement">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasInitialFeedingAdvancement -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasInitialFeedingAdvancement">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasInitialFeedingVolume -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasInitialFeedingVolume">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasInotrope -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasInotrope">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasLactateLevel -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasLactateLevel">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasLactateValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasLactateValue">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasLongCapillaryRefillTime -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasLongCapillaryRefillTime">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasLowBloodPressure -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasLowBloodPressure">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasMetabolicAcidosis -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasMetabolicAcidosis">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment>Above base access as -6 as cut off, if it is worse than -6 then will be considered as metabolic acidosis</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFeed -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFeed">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFeedingVolumeOfCalcium -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFeedingVolumeOfCalcium">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFeedingVolumeOfPotassium -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFeedingVolumeOfPotassium">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFinalFeedingAdvancementOfCHO -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFinalFeedingAdvancementOfCHO">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFinalFeedingAdvancementOfProtein -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFinalFeedingAdvancementOfProtein">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFinalFeedingVolumeOfCHO -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFinalFeedingVolumeOfCHO">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFinalFeedingVolumeOfProtein -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFinalFeedingVolumeOfProtein">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFinalFeedingVolumeOfSodium -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFinalFeedingVolumeOfSodium">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNInitialFeedingAdvancementOfCHO -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNInitialFeedingAdvancementOfCHO">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNInitialFeedingAdvancementOfProtein -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNInitialFeedingAdvancementOfProtein">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNInitialFeedingVolumeOfCHO -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNInitialFeedingVolumeOfCHO">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNInitialFeedingVolumeOfProtein -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNInitialFeedingVolumeOfProtein">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasPNInitialFeedingVolumeOfSodium -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNInitialFeedingVolumeOfSodium">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasParenteralTotalVolume -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasParenteralTotalVolume">
+        <rdfs:domain rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/ParenteralFeed"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasRespiratoryDistress -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasRespiratoryDistress">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment></rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasResuscitation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasResuscitation">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasReversedEndBloodFlow -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasReversedEndBloodFlow">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasRiskFactor -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasRiskFactor">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasTechycardia -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasTechycardia">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasVisibleBowelLoop -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasVisibleBowelLoop">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment>Bowel loop will be visible on baby belly, visible on abdominal X-Ray</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/hasVomitColor -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/hasVomitColor">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/haslowPlateletCount -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/haslowPlateletCount">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment>Platelet count less than 1.5 lakh</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/isStoolPassed -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/isStoolPassed">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/pressorGiven -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/pressorGiven">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment>Medicine given to baby to increase blood pressure, inotrope category</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/vomitTimeAfterFeed -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/vomitTimeAfterFeed">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/#hasDayOfLife -->
+
+    <owl:DatatypeProperty rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/#hasDayOfLife">
+        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/DiagnosticInvestigation -->
+
+    <owl:Class rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/DiagnosticInvestigation"/>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/EnteralFeed -->
+
+    <owl:Class rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/EnteralFeed">
+        <owl:equivalentClass rdf:resource="https://uts.nlm.nih.gov/uts/umls/concept/C0086225"/>
+        <rdfs:subClassOf rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/FeedType"/>
+        <rdfs:comment>Enteral feeding is a method of supplying nutrients directly into the gastrointestinal tract.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/FeedType -->
+
+    <owl:Class rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/FeedType">
+        <rdfs:comment>feed category given to baby</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/FormulaMilk -->
+
+    <owl:Class rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/FormulaMilk">
+        <owl:equivalentClass rdf:resource="https://uts.nlm.nih.gov/uts/umls/concept/C0452742"/>
+        <rdfs:subClassOf rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/MilkType"/>
+        <owl:disjointWith rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/HumanMilk"/>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:comment>It is a manufactured food designed and marketed for feeding to babies</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/HumanMilk -->
+
+    <owl:Class rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/HumanMilk">
+        <owl:equivalentClass rdf:resource="https://uts.nlm.nih.gov/uts/umls/concept/C0026140"/>
+        <rdfs:subClassOf rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/MilkType"/>
+        <rdfs:comment>Breast milk or mother&apos;s milk is milk produced by mammary glands located in the breast of a human female.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/LaboratoryInvestigation -->
+
+    <owl:Class rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/LaboratoryInvestigation">
+        <rdfs:subClassOf rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/DiagnosticInvestigation"/>
+        <rdfs:comment>A medical procedure that involves testing a sample of blood, urine, or other substance from the body.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/MilkType -->
+
+    <owl:Class rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/MilkType"/>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/ParenteralFeed -->
+
+    <owl:Class rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/ParenteralFeed">
+        <owl:equivalentClass rdf:resource="https://uts.nlm.nih.gov/uts/umls/concept/C1527385"/>
+        <rdfs:subClassOf rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/FeedType"/>
+        <rdfs:comment>Parenteral feed is  infusing a specialized form of feed through a vein. Parenteral feed includes carbohydrates, proteins, fats, vitamins, minerals and electrolytes</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/PhysicalSign -->
+
+    <owl:Class rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/PhysicalSign">
+        <owl:equivalentClass rdf:resource="https://uts.nlm.nih.gov/uts/umls/concept/C0311392"/>
+        <rdfs:comment>A  sign is a physical response linked medical fact or characteristic that is detected by a physician, nurse, or medical device during the examination of a patient</rdfs:comment>
+        <rdfs:label>Sign</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/RadiologyInvestigation -->
+
+    <owl:Class rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/RadiologyInvestigation">
+        <rdfs:subClassOf rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/DiagnosticInvestigation"/>
+        <rdfs:comment>It uses imaging technology to diagnose and treat disease.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.co-ode.org/ontologies/galen#Neonate -->
+
+    <owl:Class rdf:about="http://www.co-ode.org/ontologies/galen#Neonate">
+        <owl:equivalentClass rdf:resource="https://uts.nlm.nih.gov/uts/umls/concept/C0021289"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasParenteralFeed"/>
+                <owl:someValuesFrom rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/ParenteralFeed"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasPhysicalSign"/>
+                <owl:someValuesFrom rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/PhysicalSign"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasRadiologyInvestigation"/>
+                <owl:someValuesFrom rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/RadiologyInvestigation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasSymptom"/>
+                <owl:someValuesFrom rdf:resource="http://www.co-ode.org/ontologies/galen#Symptom"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasAbdominalDistension"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasChestCompressionDuration"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasInitialFeedingAdvancement"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasInitialFeedingVolume"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasPNFeed"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasAbdominalTenderness"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasFeedIntolerance"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasGestationalAgeAtBirth"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/hasRespiratoryDistress"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/#hasDayOfLife"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Neoborn child</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.co-ode.org/ontologies/galen#Symptom -->
+
+    <owl:Class rdf:about="http://www.co-ode.org/ontologies/galen#Symptom">
+        <owl:equivalentClass rdf:resource="https://uts.nlm.nih.gov/uts/umls/concept/C1457887"/>
+        <rdfs:comment>A change in body that is a sign of illness</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://uts.nlm.nih.gov/uts/umls/concept/C0021289 -->
+
+    <owl:Class rdf:about="https://uts.nlm.nih.gov/uts/umls/concept/C0021289">
+        <rdfs:comment>Infant, Newborn
+An infant during the first 28 days after birth
+UMLS CUI: C0021289
+Semantic Types: Age group</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://uts.nlm.nih.gov/uts/umls/concept/C0026140 -->
+
+    <owl:Class rdf:about="https://uts.nlm.nih.gov/uts/umls/concept/C0026140">
+        <rdfs:comment>Milk, Human
+UMLS CUI:C0026140
+Semantic Types :Body Substance</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://uts.nlm.nih.gov/uts/umls/concept/C0086225 -->
+
+    <owl:Class rdf:about="https://uts.nlm.nih.gov/uts/umls/concept/C0086225">
+        <rdfs:comment>Enteral Feeding
+UMLS CUI: C0086225
+Semantic Types:Therapeutic or Preventive Procedure</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://uts.nlm.nih.gov/uts/umls/concept/C0311392 -->
+
+    <owl:Class rdf:about="https://uts.nlm.nih.gov/uts/umls/concept/C0311392">
+        <rdfs:comment>Physical findings
+UMLS CUI: C0311392
+Semantic Types:Finding
+Objective evidence of disease perceptible to the examining healthcare provider.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://uts.nlm.nih.gov/uts/umls/concept/C0452742 -->
+
+    <owl:Class rdf:about="https://uts.nlm.nih.gov/uts/umls/concept/C0452742">
+        <rdfs:comment>Formula milk
+UMLS CUI: C0452742
+Semantic Types:Food</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://uts.nlm.nih.gov/uts/umls/concept/C1457887 -->
+
+    <owl:Class rdf:about="https://uts.nlm.nih.gov/uts/umls/concept/C1457887">
+        <rdfs:comment>Sign or Symptom
+UMLS CUI: C1457887
+Subjective evidence of disease perceived by the patient.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://uts.nlm.nih.gov/uts/umls/concept/C1527385 -->
+
+    <owl:Class rdf:about="https://uts.nlm.nih.gov/uts/umls/concept/C1527385">
+        <rdfs:comment>Parenteral Feeding
+MLS CUI: C1527385
+Semantic Types:Therapeutic or Preventive Procedure
+Nutrients administered by a route other than the alimentary canal, for example intravenously or subcutaneously.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Abdominal -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Abdominal"/>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/AbdominalDistension -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/AbdominalDistension">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/PhysicalSign"/>
+        <rdfs:comment>2 cm above the baseline (Abdominal girth)  where baseline is defined as lowest value recorded in the last 24 hours.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Abnormal -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Abnormal"/>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Apnea -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Apnea">
+        <rdf:type rdf:resource="http://www.co-ode.org/ontologies/galen#Symptom"/>
+        <rdfs:comment>Apnea is absence of breathing. Diagnosed by the doctor</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/BaseDeficitCountTest -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/BaseDeficitCountTest">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/LaboratoryInvestigation"/>
+        <rdfs:comment>an excess or deficit, respectively, in the amount of base present in the blood.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/BloodCultureTest -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/BloodCultureTest">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/LaboratoryInvestigation"/>
+        <rdfs:comment>Lab investigation to rule out any particular bacterial and viral infection and it&apos;s sensitivity to Drugs</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/BloodStained -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/BloodStained"/>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/CHO -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/CHO">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/ParenteralFeed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Calcium -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Calcium">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/ParenteralFeed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/ChestCompression -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/ChestCompression">
+        <rdfs:comment>Chest compression is applied to few babies when is not responding</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/CordGaspHValueTest -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/CordGaspHValueTest">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/LaboratoryInvestigation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/DarkBile -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/DarkBile"/>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Decrease -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Decrease"/>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/DonorBreastMilk -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/DonorBreastMilk">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/HumanMilk"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/ExpressedBreastMilk -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/ExpressedBreastMilk">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/HumanMilk"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/ExtremelyPreterm_I -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/ExtremelyPreterm_I">
+        <rdf:type rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:comment>Less than 26 weeks of gestational age</rdfs:comment>
+        <rdfs:seeAlso>https://www.who.int/news-room/fact-sheets/detail/preterm-birth#:~:text=Preterm%20is%20defined%20as%20babies,to%20less%20than%2032%20weeks)</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/ExtremelyPreterm_II -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/ExtremelyPreterm_II">
+        <rdf:type rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:comment>Greater than 26 and less than 28 weeks of gestational age</rdfs:comment>
+        <rdfs:seeAlso>https://www.who.int/news-room/fact-sheets/detail/preterm-birth#:~:text=Preterm%20is%20defined%20as%20babies,to%20less%20than%2032%20weeks)</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/GastroIntestinalSurgery -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/GastroIntestinalSurgery"/>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/IntraUterineGrowthRetardationTest -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/IntraUterineGrowthRetardationTest">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/RadiologyInvestigation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/KUB -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/KUB"/>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/LatePreterm -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/LatePreterm">
+        <rdf:type rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:comment>Greater than 35 weeks of gestational age</rdfs:comment>
+        <rdfs:seeAlso>https://www.who.int/news-room/fact-sheets/detail/preterm-birth#:~:text=Preterm%20is%20defined%20as%20babies,to%20less%20than%2032%20weeks)</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/MaternalBreastMilk -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/MaternalBreastMilk">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/HumanMilk"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/MetabolicAcidosisTest -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/MetabolicAcidosisTest">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/LaboratoryInvestigation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/ModeratePreterm -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/ModeratePreterm">
+        <rdf:type rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:comment>Greater than 32 and less than 35 weeks of gestational age</rdfs:comment>
+        <rdfs:seeAlso>https://www.who.int/news-room/fact-sheets/detail/preterm-birth#:~:text=Preterm%20is%20defined%20as%20babies,to%20less%20than%2032%20weeks)</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/NecrotizingEnterocolitis -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/NecrotizingEnterocolitis">
+        <rdfs:comment>Necrotizing enterocolitis (NEC) is a serious gastrointestinal problem that mostly affects premature babies. The condition inflames intestinal tissue, causing it to die.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Normal -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Normal"/>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/PlateletCountTest -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/PlateletCountTest">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/LaboratoryInvestigation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Potassium -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Potassium">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/ParenteralFeed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Pressor -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Pressor">
+        <rdfs:comment>Medicine given to baby to increase blood pressure, inotrope category</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Protein -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Protein">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/ParenteralFeed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/RespiratoryDistress -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/RespiratoryDistress">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/PhysicalSign"/>
+        <rdfs:comment>Severe lung condition causes difficult to breath</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Resuscitation -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Resuscitation">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/PhysicalSign"/>
+        <rdfs:comment>Resuscitation is the process of correcting physiological disorders in an acutely ill patient.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Same -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Same"/>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Similac19 -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Similac19">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/FormulaMilk"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/SimilacSpiralCare20 -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/SimilacSpiralCare20">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/FormulaMilk"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Skin -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Skin"/>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Sodium -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Sodium">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/ParenteralFeed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/VeryPreterm_I -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/VeryPreterm_I">
+        <rdf:type rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:comment>Greater than 30 and less than 28 weeks of gestational age</rdfs:comment>
+        <rdfs:seeAlso>https://www.who.int/news-room/fact-sheets/detail/preterm-birth#:~:text=Preterm%20is%20defined%20as%20babies,to%20less%20than%2032%20weeks)</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/VeryPreterm_II -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/VeryPreterm_II">
+        <rdf:type rdf:resource="http://www.co-ode.org/ontologies/galen#Neonate"/>
+        <rdfs:comment>Greater than 30 and less than 32 weeks of gestational age</rdfs:comment>
+        <rdfs:seeAlso>https://www.who.int/news-room/fact-sheets/detail/preterm-birth#:~:text=Preterm%20is%20defined%20as%20babies,to%20less%20than%2032%20weeks)</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/Vomit -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/Vomit">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/PhysicalSign"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/X-RayAbdominStatusTest -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/X-RayAbdominStatusTest">
+        <rdf:type rdf:resource="http://www.childhealthimprints.com/NutritionalGuidelines/RadiologyInvestigation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.childhealthimprints.com/NutritionalGuidelines/centimeter -->
+
+    <owl:NamedIndividual rdf:about="http://www.childhealthimprints.com/NutritionalGuidelines/centimeter"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
